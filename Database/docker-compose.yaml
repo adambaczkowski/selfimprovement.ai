@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+    postgres:
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=selfimprovement
+            - POSTGRES_DB=postgres
+        ports: 
+            - 5432:5432
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+    pgadmin:
+        image: dpage/pgadmin4
+        environment: 
+            - PGADMIN_DEFAULT_EMAIL=s20132@pjwstk.edu.pl
+            - PGADMIN_DEFAULT_PASSWORD=s20132password
+        ports: 
+            - "5050:80"
