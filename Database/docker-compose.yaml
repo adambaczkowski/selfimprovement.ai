@@ -1,21 +1,27 @@
 version: '3.7'
 services:
     postgres:
-        image: postgres:latest
+        container_name: postgres
+        image: postgres:16
+        restart: always
         environment:
             - POSTGRES_USER=admin
-            - POSTGRES_PASSWORD=selfimprovement
+            - POSTGRES_PASSWORD=selfimprovement123$
             - POSTGRES_DB=postgres
         ports: 
             - 5432:5432
+        #command: ["postgres", "-c", "listen_addresses=0.0.0.0"]
         logging:
             options:
                 max-size: 10m
                 max-file: "3"
     pgadmin:
+        container_name: pgadmin4
         image: dpage/pgadmin4
+        restart: always
         environment: 
-            - PGADMIN_DEFAULT_EMAIL=s20132@pjwstk.edu.pl
-            - PGADMIN_DEFAULT_PASSWORD=s20132password
+            - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
+            - PGADMIN_DEFAULT_PASSWORD=selfimprovement123$
         ports: 
             - "5050:80"
+        #command: ["python", "run_pgadmin.py"]
