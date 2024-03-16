@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+  identity:
+      container_name: grindr-identity
+      mem_limit: 400m
+      cpu_percent: 25
+      # image:
+      build:
+        context: ../
+        dockerfile: IdentityApi/Dockerfile.local
+      environment:   
+        - ConnectionStrings__GrindrDbContext=Server=db;Database=GrindrDb;User=test;Password=The_Password;MultipleActiveResultSets=True;TrustServerCertificate=True
+        - CorsOrigin=http://localhost:3000
+      ports:
+        - "8080:8080"
+        - "8081:8081"
+  # prompt:
+  #     container_name: grindr-prompt
+  #     mem_limit: 400m
+  #     cpu_percent: 25
+  #     # image:
+  #     build:
+  #       context: ../
+  #       dockerfile: PromptApi/Dockerfile.local
+  #     environment:   
+  #       - ConnectionStrings__AggregateDbContext=Server=db;Database=AggregatesDb;User=sa;Password=The_Password;MultipleActiveResultSets=True;TrustServerCertificate=True
+  #       - CorsOrigin=https://localhost:3000
+  # web:
+  #   mem_limit: 400m
+  #   cpu_percent: 25
+  #   container_name: csp-web
+  #   image: apnsoftware.azurecr.io/csp-web:develop
+  #   # build:
+  #   #   context: ../Source/Web
+  #   #   dockerfile: Dockerfile.local
+  #   environment:
+  #     - ENV_NAME=local-docker
+  #     - URL_USER='https://user.local.b2b2c/api/'
+  #     - URL_IDENTITY='https://identity.local.b2b2c/api/'   
+  #   entrypoint: [ "./runtime-config.sh", "nginx", "-g", "daemon off;" ]
+
+  db:
+    mem_limit: 4096m
+    cpu_percent: 50
+    container_name: grindr-db
+    image: "postgres"
+    ports:
+      - "1433:1433"
+    environment:
+      POSTGRES_PASSWORD: "The_Password"
+      ACCEPT_EULA: "Y"
+        
