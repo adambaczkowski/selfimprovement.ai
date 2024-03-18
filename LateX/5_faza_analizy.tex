@@ -1,23 +1,92 @@
 \section{Faza analizy}
 \subsection{Wstęp}
 
-\indent Block elo
+\indent Block
 
 \clearpage
 
 \subsection{Cele i założenia}
 
 \subsection{Podstawa teoretyczna}
+\begin{enumerate}
+    
+    \item {\bf Model językowy} - Model językowy w dziedzinie informatyki i sztucznej inteligencji to system komputerowy zaprojektowany do rozumienia, interpretowania i generowania ludzkiego języka naturalnego. Opiera się on na algorytmach uczenia maszynowego, głównie uczenia głębokiego, które uczą się struktury, semantyki i kontekstu języka przez analizę i przetwarzanie ogromnych zbiorów tekstów.
+
+    Takie modele składają się z wielowarstwowych sieci neuronowych, z których każda warstwa przetwarza różne aspekty języka, od rozpoznawania słów po interpretację znaczeń. Centralnym elementem jest algorytm 'transformer', który efektywnie przetwarza długie sekwencje tekstu, zachowując kontekst i znaczenie.
+    
+    Modele językowe są trenowane na dużych zbiorach tekstowych, zawierających różnorodne formy języka. Proces treningu polega na dostosowywaniu parametrów sieci neuronowej, aby jak najlepiej odwzorować naturalne użycie języka. W wyniku tego treningu, modele te są zdolne do tworzenia nowych, koherentnych wypowiedzi, reagowania na zapytania i analizy języka na wysokim poziomie.
+    \\
+    \item {\bf Model GPT} - Modele GPT (Generative Pre-trained Transformer) to rodzaj zaawansowanych modeli językowych opracowanych przez firmę OpenAI wykorzystujących architekturę transformer w dziedzinie sztucznej inteligencji. Zostały one zaprojektowane do generowania tekstu, interpretacji języka naturalnego oraz wykonywania różnorodnych zadań związanych z przetwarzaniem języka. Ich główną cechą jest zdolność do generowania spójnego i kontekstualnie odpowiedniego tekstu na podstawie dostarczonych informacji wejściowych.
+
+    GPT opiera się na technice uczenia głębokiego, gdzie modele są trenowane na ogromnych zbiorach tekstowych w celu nauki struktury języka, jego semantyki oraz różnorodnych kontekstów. Model GPT, wykorzystując architekturę transformer, skutecznie przetwarza i analizuje długie sekwencje tekstu, co pozwala na zachowanie złożonego kontekstu i generowanie koherentnych odpowiedzi.
+    
+    Kluczowym aspektem modeli GPT jest ich pre-trening, czyli wstępne szkolenie na szerokiej gamie danych tekstowych. Dzięki temu modele te rozwijają ogólną zdolność do rozumienia i generowania języka, którą następnie można dostosować do konkretnych zastosowań (tzw. fine-tuning).
+    
+    Modele GPT są wykorzystywane w różnych aplikacjach, od automatycznego generowania tekstu, przez tworzenie odpowiedzi w systemach dialogowych, po zaawansowane analizy językowe. Ich zdolność do generowania naturalnego, spójnego i kontekstowo odpowiedniego języka sprawia, że znajdują one zastosowanie w wielu dziedzinach, w tym w rozrywce, edukacji oraz biznesie.
+    \\
+     
+ \end{enumerate}
+
+\clearpage
 
 \subsection{Prompt engineering}
 
 \subsubsection{Opis modeli językowych}
 
+\begin{enumerate}
+ \item {\bf ChatGPT} - to specjalistyczna wersja modelu językowego opracowana przez OpenAI, zaprojektowana głównie do prowadzenia konwersacji w formie tekstowej. Jest to aplikacja modelu GPT (Generative Pre-trained Transformer) skoncentrowana na interakcjach dialogowych, zdolna do generowania naturalnie brzmiących, koherentnych i kontekstualnie adekwatnych odpowiedzi w czasie rzeczywistym.
+
+    Podstawą działania ChatGPT jest zaawansowany model językowy oparty na architekturze transformer, który został wytrenowany na ogromnych zbiorach danych tekstowych, w tym na dialogach i rozmowach. Dzięki temu ChatGPT wykazuje zdolność do zrozumienia zapytań w kontekście konwersacji i generowania płynnych, spójnych odpowiedzi.
+    
+    ChatGPT wyróżnia się zdolnością do utrzymania spójnego kontekstu rozmowy, co pozwala na prowadzenie dłuższych interakcji, które wydają się naturalne i są bardziej angażujące dla użytkownika. Może on odpowiadać na pytania, prowadzić dyskusje na różne tematy, oferować pomoc lub informacje, a także angażować się w bardziej twórcze zadania, takie jak pisanie opowiadań czy wierszy.
+    
+    Model ten jest często wykorzystywany w aplikacjach do obsługi klienta, asystentach cyfrowych, edukacji, a także jako narzędzie do interakcji i angażowania użytkowników na platformach internetowych. Zdolność ChatGPT do naturalnej interakcji językowej sprawia, że znajduje on zastosowanie w różnorodnych środowiskach, gdzie istotna jest zdolność do prowadzenia płynnej, ludzko brzmiącej konwersacji.
+    \\
+    \item {\bf Gemini} - to duży model językowy (LLM), który jest szkolony na ogromnym zbiorze danych tekstu i kodu. LLM-y są w stanie generować tekst, tłumaczyć języki, pisać różnego rodzaju kreatywne treści i odpowiadać na pytania w sposób informacyjny.
+    \\
+
+\end{enumerate}
+
 \subsubsection{Analiza przypdaków użycia modeli językowych}
+
+Rozwój modeli językowych, szczególnie za sprawą zaawansowanych technologii opartych na sztucznej inteligencji, wprowadził nowe możliwości w dziedzinie przetwarzania języka naturalnego. Jednym z kluczowych obszarów wykorzystania tych modeli jest prompt engineering, czyli kształtowanie i dostosowywanie zapytań (promptów) w celu uzyskania pożądanych odpowiedzi od modeli językowych. Niniejszy rozdział skupia się na analizie konkretnych przypadków użycia modeli językowych w kontekście prompt engineeringu.
+
+Przed przystąpieniem do analizy przypadków użycia istotne jest określenie modeli językowych, które będą poddane ocenie. W ramach niniejszej pracy magisterskiej skupimy się na modelach opartych na architekturze GPT (Generative Pre-trained Transformer), a w szczególności na, GPT-3.5,GPT-4, oraz Bard. Wybór tych modeli wynika z ich doskonałej zdolności do zrozumienia kontekstu, elastyczności w generowaniu tekstów oraz szerokiej gamy zastosowań w dziedzinie języka naturalnego.
+
+Analiza przypadków użycia rozpocznie się od szczegółowego zrozumienia procesu prompt engineeringu. Proces ten obejmuje identyfikację celu zapytania, dostosowanie struktury promptu, a także optymalizację parametrów modelu w celu uzyskania precyzyjnych i zadowalających wyników. Przeanalizujemy różne strategie prompt engineeringu, w tym zmiany w sformułowaniu pytań, manipulacje długością promptu oraz eksperymenty z parametrami kontekstowymi.
 
 \subsubsection{Projektowanie promptów}
 
+\noindent\textbf{Wprowadzenie}
+
+Projektowanie prompt'ów jest kluczowym aspektem w tworzeniu efektywnych interakcji z modelami językowymi. Precyzyjne i dobrze sformułowane pytania mają decydujący wpływ na jakość generowanych odpowiedzi. W tym rozdziale skoncentrujemy się na procesie projektowania prompt'ów, w tym na strategiach wyboru słów kluczowych, formatowaniu zapytań oraz eksperymentach z różnymi rodzajami promptów.
+\\
+
+\noindent\textbf{Analiza celu naszego prompta}
+
+Każdy prompt, musi zostac tak zaprojektowany aby spełniał wymagania techniczne aplikacji.
+Aplikacja jest podzielona na wiele etapów gdzie użytkownik otrzymuje specjalnie przygotowane odpowiedzi w zależności od opcji, które wybierze.
+\\
+\noindent\textbf{Wybór Słów Kluczowych}
+
+Pierwszym etapem projektowania prompt'ów jest staranne dobranie słów kluczowych. Te słowa stanowią istotny element, który kieruje modelem językowym w odpowiednim kierunku. Analiza semantyczna i kontekstualna danego zadania jest kluczowa w identyfikacji słów, które mają kluczowe znaczenie dla uzyskania precyzyjnych odpowiedzi. W tym kontekście eksperymenty z różnymi formułowaniami pytań mogą prowadzić do odkrycia najbardziej efektywnych kombinacji słów kluczowych.
+\\
+
+\noindent\textbf{Struktura Prompt'ów}
+
+Struktura promptów odgrywa istotną rolę w wydobywaniu pożądanych informacji z modeli językowych. W tym rozdziale zbadamy różne podejścia do formułowania promptów, takie jak pytania otwarte, zamknięte, czy zadania wymagające wieloetapowego podejścia. Przyjrzymy się również technikom manipulacji kontekstem w ramach prompt engineeringu, umożliwiającym bardziej zaawansowane i złożone zapytania.
+
 \subsubsection{Prompt security}
+
+\subsubsection{Fine-tuning}
+
+\subsubsection{Large Language Models}
+Duże modele językowe (LLM) to zaawansowane algorytmy sztucznej inteligencji, które wykorzystują techniki głębokiego uczenia się i obszerne zbiory danych do generowania, podsumowywania i przewidywania nowych treści w języku naturalnym. Modele te, takie jak LLM oparte na transformatorach, są zaprojektowane tak, aby rozumieć relacje między słowami i frazami, umożliwiając im równoległe przetwarzanie całych sekwencji tekstu. Modele LLM są szkolone na ogromnych ilościach danych, zazwyczaj z miliardami parametrów, co pozwala im na dostarczanie dokładnych i szybkich odpowiedzi w różnych dziedzinach. LLM mają wiele zalet dla organizacji i użytkowników, w tym rozszerzalność, zdolność adaptacji, elastyczność, wysoką wydajność, dokładność i łatwość szkolenia. Można je dostosować do konkretnych przypadków użycia, wykonywać różne zadania i generować odpowiedzi z niskim opóźnieniem. Jednak LLM wiążą się również z wyzwaniami, takimi jak wysokie koszty rozwoju i operacyjne, potencjalna stronniczość danych szkoleniowych, brak możliwości wyjaśnienia wyników, ryzyko halucynacji (dostarczanie niedokładnych odpowiedzi) oraz złożoność ze względu na dużą liczbę parametrów. Modele te mają szeroki zakres zastosowań w dziedzinach takich jak technologia, opieka zdrowotna, obsługa klienta, marketing, prawo, bankowość i wiele innych. Mogą pomagać w zadaniach takich jak copywriting, odpowiadanie na pytania z bazy wiedzy, transformacja miejsca pracy i konwersacyjna sztuczna inteligencja. LLM zmieniają sposób, w jaki technologia wchodzi w interakcję z użytkownikami i są uważane za kluczowy element nowoczesnego krajobrazu cyfrowego, rewolucjonizując i ulepszając środowisko pracy.
+
+\subsubsection{Ranking Modeli}
+
+\subsubsection{Etyka}
+Etyczne wykorzystanie modeli językowych oraz sztucznej inteligencji jest kluczowe w dzisiejszym świecie technologicznym. W kontekście rozwijających się Large Language Models (LLMs) i sztucznej inteligencji, istnieje konieczność uwzględnienia kwestii etycznych, moralnych oraz odpowiedzialnego podejścia do ich zastosowań. Modeli językowych, takich jak GPT-3.5 czy inne zaawansowane systemy AI, mogą generować treści, odpowiadać na pytania, tłumaczyć języki, czy nawet projektować. Jednakże, istnieje ryzyko, że te modele mogą przekazywać błędne informacje, szerzyć dezinformację, lub być źródłem treści szkodliwych. Dlatego ważne jest, aby organizacje i twórcy tych modeli dbali o uczciwość, transparentność, oraz odpowiedzialność za generowane treści. W kontekście etyki, istotne jest również zapewnienie, że modele językowe nie promują dyskryminacji, uprzedzeń, czy szkodliwych treści. Konieczne jest monitorowanie i regulacja sposobu, w jaki te modele są używane, aby zapewnić, że służą dobrobytowi społeczeństwa i nie naruszają praw człowieka. Ważne jest również, aby modele językowe były rozwijane z poszanowaniem prywatności danych, zapewnieniem bezpieczeństwa informacji oraz zgodności z przepisami dotyczącymi ochrony danych osobowych. Odpowiedzialne podejście do tworzenia i wykorzystywania modeli językowych jest kluczowe dla budowania zaufania społecznego do sztucznej inteligencji i technologii opartych na AI.
 
 \subsection{Platformy chmurowe}
 

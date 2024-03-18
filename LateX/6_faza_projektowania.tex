@@ -4,23 +4,278 @@
 
 \subsubsection{Mikroserwisy}
 
+Historia architektury oprogramowania stanowi fascynujące pole badawcze, obejmujące rozmaite etapy rozwoju technologicznego. W niniejszym rozdziale przedstawiono ewolucję od tradycyjnych struktur monolitycznych do nowoczesnych koncepcji mikro usług.
+
+**Rozdział II: Monolit (lata 60-90)**
+
+2.1 Definicja Monolitu
+
+W początkowym okresie rozwoju programowania, aplikacje kształtowano jako jednolite, monolityczne struktury. Koncepcja ta zakładała zintegrowanie całej logiki biznesowej, interfejsu użytkownika oraz warstwy danych w jednym, spójnym bloku kodu.
+
+2.2 Zalety i Wyzwania Monolitów
+
+Monolity oferowały wygodę w zakresie rozwoju, wdrażania i utrzymania, lecz z biegiem czasu pojawiły się problemy związane ze skalowalnością, elastycznością i trudnościami w utrzymaniu w miarę wzrostu złożoności systemów.
+
+**Rozdział III: Rozbicie Monolitu (lata 90-2000)**
+
+3.1 Architektura Warstwowa
+
+W miarę postępu technologicznego pojawiła się konieczność zwiększenia modularności i rozdzielenia odpowiedzialności. Wprowadzenie architektury warstwowej, takiej jak Model-Widok-Kontroler, umożliwiło podział monolitycznych aplikacji na logicznie zorganizowane moduły.
+
+3.2 EJB i .NET Framework
+
+Era ta charakteryzowała się również wprowadzeniem nowych technologii, takich jak Enterprise JavaBeans (EJB) czy .NET Framework, umożliwiających tworzenie bardziej złożonych, ale jednocześnie lepiej zorganizowanych systemów.
+
+**Rozdział IV: Usługi Internetowe (lata 2000-2010)**
+
+4.1 Era Usług Internetowych
+
+Wraz z globalizacją i rozwojem Internetu pojawiła się potrzeba interakcji między różnymi systemami. Usługi internetowe, bazujące na standardach takich jak SOAP i REST, stały się powszechnym narzędziem do integracji aplikacji na poziomie usług.
+
+**Rozdział V: Mikrousługi (lata 2010-obecnie)**
+
+5.1 Koncept Mikrousług
+
+W odpowiedzi na rosnące wymagania związane z elastycznością, skalowalnością i łatwością utrzymania, pojawiło się podejście mikrousługowe. Zamiast jednego, monolitycznego systemu, aplikacje zostały rozbite na małe, niezależne serwisy, komunikujące się ze sobą poprzez interfejsy programistyczne (API).
+
+5.2 Narzędzia i Platformy Mikrousług
+
+Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury obliczeniowej, umożliwiają efektywne zarządzanie i wdrażanie mikrousług, co stanowi kluczowy element nowoczesnych środowisk biznesowych.
+
+**Rozdział VI: Podsumowanie i Perspektywy**
+
+6.1 Ewolucja Architektury Oprogramowania
+
+Przedstawione rozważania ukazują ewolucję architektury oprogramowania, od monolitów po mikrousługi. Ostatecznym celem jest zrozumienie wpływu tych zmian na rozwój systemów informatycznych oraz perspektywy dalszych badań nad architekturą oprogramowania.
 \subsection{DevOps}
+**DevOps: Synergia Pomiędzy Rozwojem a Operacjami**
 
+DevOps, skrócony od "Development" (rozwój) i "Operations" (operacje), to koncepcja i praktyka, która zakłada ścisłą współpracę między zespołami odpowiedzialnymi za rozwój oprogramowania (Dev) a tymi, które zajmują się operacjami IT (Ops). Celem DevOps jest skrócenie cyklu dostarczania oprogramowania, zwiększenie częstotliwości wdrożeń, poprawa stabilności systemów oraz usprawnienie komunikacji i współpracy między różnymi działami organizacji.
+
+**Kluczowe Aspekty DevOps:**
+
+1. **Automatyzacja:**
+   - Wykorzystanie narzędzi do automatyzacji procesów wytwarzania oprogramowania, testowania, wdrażania oraz monitorowania.
+   - Automatyzacja pomaga zminimalizować błędy związane z interwencją ludzką i przyspiesza procesy.
+
+2. **Kontrola Wersji:**
+   - Korzystanie z systemów kontroli wersji, takich jak Git, w celu śledzenia zmian w kodzie źródłowym i ułatwienia współpracy pomiędzy członkami zespołu.
+
+3. **Konteneryzacja:**
+   - Wykorzystanie technologii konteneryzacji, na przykład Docker, umożliwiającej pakowanie oprogramowania w izolowane jednostki, co ułatwia przenośność i wdrażanie aplikacji.
+
+4. **Infrastruktura Jako Kod:**
+   - Traktowanie infrastruktury jak kodu programistycznego, co umożliwia jej zarządzanie, wdrażanie i skalowanie przy użyciu praktyk znanym z programowania.
+
+5. **Kultura i Współpraca:**
+   - Zmiana kultury organizacyjnej, promowanie współpracy i komunikacji pomiędzy zespołami Dev i Ops.
+   - Eliminacja barier i podziałów, tworząc zintegrowane zespoły mające wspólny cel.
+
+6. **Monitorowanie i Analiza:**
+   - Utrzymywanie ciągłego monitorowania działania systemu, zbieranie danych, analiza i reakcja na ewentualne problemy.
+
+**Korzyści DevOps:**
+
+1. **Skrócenie Cyklu Dostarczania:**
+   - Dzięki automatyzacji i zintegrowanym procesom, czas potrzebny na dostarczenie nowej funkcjonalności lub poprawki zostaje znacznie zredukowany.
+
+2. **Zwiększenie Stabilności:**
+   - Stałe monitorowanie i automatyczne testowanie pomagają zminimalizować ryzyko błędów oraz poprawiają stabilność i niezawodność systemów.
+
+3. **Elastyczność i Skalowalność:**
+   - Konteneryzacja i elastyczne zarządzanie infrastrukturą umożliwiają łatwe skalowanie zasobów w zależności od potrzeb.
+
+4. **Efektywność Kosztowa:**
+   - Automatyzacja procesów i bardziej efektywne zarządzanie zasobami przekładają się na oszczędności czasu i środków.
+
+W skrócie, DevOps stanowi holistyczne podejście do wytwarzania oprogramowania, łączące aspekty kulturowe, procesowe i technologiczne w celu stworzenia efektywnego i responsywnego środowiska IT.
 \subsubsection{CI/CD}
+**CI/CD: Ciągła Integracja i Ciągłe Dostarczanie/Dostosowywanie**
 
+CI/CD to skrót od dwóch kluczowych praktyk w inżynierii oprogramowania: Ciągłej Integracji (Continuous Integration) i Ciągłego Dostarczania/Dostosowywania (Continuous Delivery/Continuous Deployment). Te praktyki są kluczowymi elementami podejścia DevOps, mającym na celu skrócenie cyklu dostarczania oprogramowania i poprawę jakości wytwarzanego kodu.
+
+**Ciągła Integracja (CI):**
+
+Ciągła Integracja odnosi się do praktyki regularnego i automatycznego łączenia zmian wprowadzanych przez różnych członków zespołu programistycznego do wspólnego repozytorium kodu. Głównym celem CI jest wczesne wykrywanie i rozwiązywanie konfliktów oraz zapewnienie, że kod jest zawsze w spójnym i testowalnym stanie. Kluczowymi elementami CI są:
+
+1. **Automatyczne Budowanie (Build):**
+   - Automatyzacja procesu kompilacji i budowy aplikacji po wprowadzeniu nowych zmian.
+
+2. **Automatyczne Testowanie (Test):**
+   - Wykonywanie automatycznych testów jednostkowych, integracyjnych oraz innych, aby zweryfikować, czy wprowadzone zmiany nie wprowadzają błędów.
+
+3. **Ciągła Weryfikacja Kodu (Code Quality):**
+   - Analiza jakości kodu poprzez narzędzia sprawdzające zgodność z ustalonymi standardami.
+
+**Ciągłe Dostarczanie (CD) i Ciągłe Dostosowywanie (CD):**
+
+Ciągłe Dostarczanie i Ciągłe Dostosowywanie to dwa powiązane, ale różniące się podejścia do dostarczania oprogramowania do produkcji.
+
+1. **Ciągłe Dostarczanie (Continuous Delivery - CD):**
+   - Proces, w którym każda zmiana w kodzie, która przejdzie przez etap CI, jest automatycznie gotowa do dostarczenia do produkcji.
+   - Ręczne potwierdzenie może być wymagane przed finalnym wdrożeniem, ale sama procedura dostarczania jest zautomatyzowana.
+
+2. **Ciągłe Dostosowywanie (Continuous Deployment - CD):**
+   - Bardziej radykalne podejście, w którym każda zmiana, która przejdzie przez etap CI, jest automatycznie wdrażana w środowisku produkcyjnym bez ręcznej interwencji.
+
+**Korzyści CI/CD:**
+
+1. **Skrócenie Cyklu Dostarczania:**
+   - Automatyzacja procesów przyspiesza cykl dostarczania oprogramowania.
+
+2. **Poprawa Jakości:**
+   - Systematyczne testowanie i weryfikacja kodu przyczyniają się do poprawy jakości oprogramowania.
+
+3. **Elastyczność i Odporność na Błędy:**
+   - Automatyczne wdrażanie ułatwia wprowadzanie zmian oraz umożliwia szybką reakcję na ewentualne problemy.
+
+4. **Zwiększenie Efektywności:**
+   - Redukcja czasu i nakładu pracy związanych z ręcznymi procesami wytwarzania i wdrażania oprogramowania.
+
+W sumie, CI/CD to kluczowy element podejścia DevOps, przyczyniający się do bardziej efektywnego, responsywnego i jakościowego dostarczania oprogramowania.
 \subsubsection{Kubernetes}
+**Kubernetes: Orkiestracja Kontenerów dla Skalowalnych i Zdecentralizowanych Aplikacji**
 
+Kubernetes, często nazywany "K8s" (gdzie "8s" oznacza osiem liter 'ubernete'), to popularna platforma do automatyzacji, zarządzania i orkiestracji kontenerów. Kontenery są lekkimi, przenośnymi jednostkami uruchomieniowymi, a Kubernetes ułatwia zarządzanie ich cyklem życia, skalowaniem i dystrybucją w rozproszonych środowiskach.
+
+**Podstawowe Koncepcje Kubernetes:**
+
+1. **Kontener:**
+   - Izolowana jednostka, która zawiera aplikację i jej zależności, co umożliwia przenośność i jednolitość środowiska wykonawczego.
+
+2. **Pod:**
+   - Najmniejsza jednostka w środowisku Kubernetes, składająca się z jednego lub wielu kontenerów, które współdzielą zasoby i przestrzeń sieciową.
+
+3. **Węzeł (Node):**
+   - Fizyczna lub wirtualna maszyna, na której uruchamiane są kontenery. Węzły stanowią infrastrukturę, na której działa klastr Kubernetes.
+
+4. **Klastr:**
+   - Zbiór węzłów, które współpracują w celu uruchamiania i zarządzania kontenerami.
+
+5. **Kontroler:**
+   - Element zarządzający cyklem życia podów, np. Deployment Controller, ReplicaSet Controller, czy DaemonSet Controller.
+
+6. **Usługa:**
+   - Abstrakcja, która umożliwia dostęp do zestawu podów, oferując trwały adres IP i nazwę hosta.
+
+7. **Przestrzeń Nazw (Namespace):**
+   - Sposób na grupowanie i izolację zasobów w klastrze. Umożliwia tworzenie logicznych segmentów w klastrze.
+
+**Funkcje i Zastosowania Kubernetes:**
+
+1. **Orkiestracja:**
+   - Automatyczne zarządzanie cyklem życia kontenerów, w tym ich uruchamianiem, zatrzymywaniem i skalowaniem.
+
+2. **Skalowalność:**
+   - Możliwość dynamicznego dostosowywania liczby instancji kontenerów w zależności od obciążenia aplikacji.
+
+3. **Równoważenie Obciążenia:**
+   - Rozdział ruchu sieciowego między różnymi instancjami kontenerów, aby zoptymalizować dostępność i wydajność.
+
+4. **Zarządzanie Konfiguracją:**
+   - Automatyczne dostosowywanie konfiguracji aplikacji bez potrzeby zatrzymywania i uruchamiania kontenerów.
+
+5. **Dystrybucja i Wersjonowanie:**
+   - Kontrola wersji aplikacji, ułatwiająca wprowadzanie zmian i aktualizacji bezprzerwowego dostarczania.
+
+6. **Bezpieczeństwo:**
+   - Mechanizmy kontroli dostępu, zarządzania tożsamością oraz izolacji podów dla zwiększenia bezpieczeństwa.
+
+**Korzyści Korzystania z Kubernetes:**
+
+1. **Elastyczność i Skalowalność:**
+   - Łatwe skalowanie i zarządzanie zasobami, co umożliwia dostosowanie klastra do zmieniających się potrzeb.
+
+2. **Trwałość i Niezawodność:**
+   - Automatyczna naprawa i przenoszenie podów w przypadku awarii, zapewniając ciągłość działania aplikacji.
+
+3. **Jednolite Środowisko:**
+   - Zapewnienie jednolitego środowiska uruchomieniowego dla kontenerów niezależnie od lokalizacji czy infrastruktury.
+
+4. **Automatyzacja i Współpraca:**
+   - Ułatwienie automatyzacji procesów wytwarzania oprogramowania oraz współpracy między zespołami Dev i Ops.
+
+Kubernetes stał się fundamentalnym narzędziem w świecie kontenerów, pomagając organizacjom osiągnąć elastyczność, niezawodność i skalowalność ich aplikacji w środowiskach chmurowych i lokalnych.
 \subsubsection{Monitorowanie aplikacji}
+**Monitorowanie Aplikacji: Kluczowy Element Zarządzania i Utrzymania Wysokiej Jakości Systemów**
 
+Monitorowanie aplikacji to proces zbierania, analizy i interpretacji danych dotyczących działania aplikacji w celu zapewnienia wydajności, niezawodności oraz efektywności operacyjnej. Skuteczne monitorowanie jest kluczowym elementem w zarządzaniu systemami informatycznymi, umożliwiając szybkie wykrywanie, diagnozowanie i rozwiązywanie potencjalnych problemów.
+
+**Elementy Składowe Monitorowania Aplikacji:**
+
+1. **Logi Aplikacyjne:**
+   - Rejestracja zdarzeń i informacji z działania aplikacji w celu analizy błędów, śledzenia działań użytkowników oraz audytu.
+
+2. **Metryki Aplikacyjne:**
+   - Liczby, statystyki i wskaźniki mierzące wydajność i zachowanie aplikacji, takie jak czas odpowiedzi, zużycie zasobów czy ilość błędów.
+
+3. **Śledzenie Zdarzeń (Tracing):**
+   - Monitorowanie ścieżki wykonania żądania poprzez aplikację, co ułatwia identyfikację i analizę opóźnień czy błędów.
+
+4. **Infrastruktura i Zasoby:**
+   - Monitorowanie stanu fizycznych i wirtualnych zasobów, takich jak CPU, pamięć RAM, dyski, sieć, aby ocenić wydajność i dostępność infrastruktury.
+
+5. **Alarmy i Powiadomienia:**
+   - Ustawianie alertów na podstawie ustalonych progów, które informują o potencjalnych problemach, umożliwiając szybką reakcję.
+
+**Cele Monitorowania Aplikacji:**
+
+1. **Wczesne Wykrywanie Problemów:**
+   - Monitorowanie pozwala na szybkie identyfikowanie i diagnozowanie potencjalnych problemów, zanim wpłyną negatywnie na użytkowników.
+
+2. **Optymalizacja Wydajności:**
+   - Analiza metryk i logów umożliwia optymalizację wydajności aplikacji poprzez identyfikację obszarów wymagających ulepszeń.
+
+3. **Zarządzanie Zasobami:**
+   - Monitorowanie infrastruktury pozwala na efektywne zarządzanie zasobami, skalowanie w odpowiedzi na obciążenie oraz unikanie zbędnych kosztów.
+
+4. **Zapewnienie Dostępności:**
+   - Śledzenie dostępności aplikacji i jej komponentów, co pozwala na szybkie reagowanie na ewentualne awarie i minimalizowanie czasu niedostępności.
+
+5. **Planowanie Pojemności:**
+   - Analiza trendów zużycia zasobów pozwala na prognozowanie potrzeb pojemnościowych i planowanie przyszłych rozszerzeń.
+
+**Popularne Narzędzia do Monitorowania Aplikacji:**
+
+1. **Prometheus:**
+   - Otwarte źródło, przeznaczone do monitorowania metryk i alarmów.
+
+2. **Grafana:**
+   - Narzędzie do wizualizacji danych monitorowania, integrujące się z różnymi źródłami danych.
+
+**Wnioski:**
+
+Monitorowanie aplikacji to nieodłączny element utrzymania nowoczesnych systemów informatycznych. Skuteczne monitorowanie pozwala na szybką reakcję na problemy, optymalizację wydajności oraz efektywne zarządzanie zasobami, przyczyniając się do zapewnienia niezawodności i satysfakcji użytkowników.
 \subsection{Baza danych}
+PostgreSQL, często po prostu "Postgres", to system zarządzania obiektowo-relacyjnymi bazami danych (ORDBMS) z naciskiem na rozszerzalność i zgodność ze standardami. Jako serwer bazy danych, jego podstawową funkcją jest przechowywanie danych, bezpieczne i wspierające najlepsze praktyki, oraz późniejsze ich pobieranie, zgodnie z wymaganiami innych aplikacji, zarówno tych na tym samym komputerze, jak i tych uruchomionych na innym komputerze w sieci (w tym w Internecie). Może obsługiwać obciążenia od małych aplikacji na jednym komputerze do dużych aplikacji internetowych z wieloma jednoczesnymi użytkownikami. Najnowsze wersje zapewniają również replikację samej bazy danych w celu zapewnienia bezpieczeństwa i skalowalności.
 
-\subsubsection{SQL}
+\subsubsection{Nginx}
+Nginx (wymawiane "engine-x") to potężny serwer WWW, serwer proxy odwrotny i równoważnik obciążenia. Pierwotnie stworzony przez Igora Sysoeva w 2004 roku, aby rozwiązać problem C10k (obsługi ponad 10 000 równoczesnych połączeń), Nginx zdobył powszechne uznanie ze względu na swoją wydajność, skalowalność i wszechstronność.
 
-\subsubsection{NoSQL}
+Główne cechy Nginx obejmują:
+
+1. **Wysoką wydajność**: Nginx jest znany ze swojej efektywności w obsłudze równoczesnych połączeń i żądań, co czyni go odpowiednim do obsługi witryn internetowych i aplikacji o dużej liczbie odwiedzin.
+
+2. **Proxy odwrotny**: Nginx może działać jako proxy odwrotne, siedząc przed serwerami WWW, aby obsłużyć przychodzące żądania klientów. Może rozprowadzać te żądania do wielu serwerów backendowych na podstawie różnych kryteriów, takich jak algorytmy równoważenia obciążenia, stan serwera lub lokalizacja geograficzna.
+
+3. **Równoważenie obciążenia**: Nginx obejmuje możliwości równoważenia obciążenia, pozwalając na rozprowadzenie przychodzącego ruchu na wiele serwerów w celu poprawy niezawodności, skalowalności i wydajności.
+
+4. **Serwer HTTP**: Nginx efektywnie obsługuje treści statyczne i może być również skonfigurowany do obsługi treści dynamicznych za pomocą różnych modułów, w tym FastCGI, SCGI i uwsgi.
+
+5. **Zakończenie SSL/TLS**: Nginx może obsługiwać zakończenie SSL/TLS, rozładowując proces szyfrowania i deszyfrowania z serwerów backendowych, poprawiając tym samym wydajność.
+
+6. **Pamięć podręczna proxy odwróconego**: Nginx może buforować treści statyczne i dynamiczne w pamięci lub na dysku, zmniejszając obciążenie serwerów backendowych i poprawiając czasy odpowiedzi dla klientów.
+
+7. **Obsługa HTTP/2 i HTTP/3**: Nginx obsługuje nowoczesne protokoły HTTP, w tym HTTP/2 i HTTP/3, które oferują lepszą wydajność i bezpieczeństwo w porównaniu do starszych wersji.
+
+8. **Bezpieczeństwo**: Nginx zawiera funkcje zapobiegające powszechnym zagrożeniom dla bezpieczeństwa sieci, takim jak ataki DDoS, wstrzykiwanie SQL i skrypty między witrynami (XSS).
+
+Nginx jest powszechnie używany przez programistów internetowych, administratorów systemów i specjalistów DevOps do budowy skalowalnych, wysoko wydajnych aplikacji internetowych i usług. Jest znany z lekkiej architektury, niskiego zużycia zasobów i łatwości konfiguracji, co czyni go popularnym wyborem dla szerokiego zakresu zastosowań, od małych witryn do rozległych rozproszonych systemów.
 
 \subsection{Model C4}
 
 \subsection{Aplikacje front-endowe}
+React MUI?
 
 \subsubsection{Opis bibliotek i frameworków}
 
@@ -28,7 +283,7 @@
 
 \subsection{Aplikacje back-endowe}
 
-\subsubsection{Opis bibliotek/szkiele}
+\subsubsection{Opis bibliotek/szkielet}
 
 \subsubsection{Przykłady implementacji}
 
