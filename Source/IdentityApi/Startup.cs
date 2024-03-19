@@ -5,6 +5,7 @@ using IdentityApi.Messaging.Http;
 using IdentityApi.Models;
 using IdentityApi.Services;
 using LS.Startup;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,7 @@ public class Startup
         {
             options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
         });
+        services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
         services.AddScoped<IIdentityEmailService, IdentityEmailService>();
         services.AddScoped<IEmailSender, EmailSender>();
         services.AddAuthorization();
@@ -53,7 +55,7 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
-        app.ApplyMigrations();
+        //app.ApplyMigrations();
         // app.UseApplicationDatabase<IdentityDbContext>();
         app
             .UseCors("default")

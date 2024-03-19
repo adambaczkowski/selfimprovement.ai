@@ -28,19 +28,17 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpRespons
     {
         var user = new User()
         {
-            Email = request.Email
+            UserName = request.Email,
+            Email = request.Email,
         };
-
+        
         var result = await _userManager.CreateAsync(user, request.Password);
-
         if (!result.Succeeded)
-        {
             return new SignUpResponse()
-            {
-                Message = "Something went wrong while creating user",
-                IsSuccess = false
-            };
-        }
+        {
+            Message = "Something went wrong while creating user",
+            IsSuccess = false
+        };
         
         await _identityEmailService.SendConfirmationEmail(user, WebExtensions.origin);
 
