@@ -44,10 +44,13 @@ services:
     mem_limit: 4096m
     cpu_percent: 50
     container_name: grindr-db
-    image: "postgres"
+    image: "postgres:16"
+    restart: always
     ports:
-      - "1433:1433"
+      - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: "The_Password"
-      ACCEPT_EULA: "Y"
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=SelfImprovementDb
+      - ACCEPT_EULA=Y
         

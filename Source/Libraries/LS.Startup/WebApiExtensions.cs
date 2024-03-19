@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LS.Startup;
 
@@ -21,5 +24,13 @@ public static class WebApiExtensions
         }
 
         return services;
+    }
+
+    public static void ApplyMigrations(this IApplicationBuilder app)
+    {
+        using IServiceScope scope = app.ApplicationServices.CreateScope();
+        using IdentityDbContext dbContext = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
+        
+        dbContext.Database.Migrate();
     }
 }
