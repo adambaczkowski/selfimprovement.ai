@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,13 @@
     <Folder Include="User\Dtos\" />
     <Folder Include="User\Queries\" />
     <Folder Include="User\Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
     <Exec Command="dotnet tool run swagger tofile --output swagger.json $(OutputPath)$(AssemblyName).dll v1" ContinueOnError="true" EnvironmentVariables="DOTNET_ROLL_FORWARD=LatestMajor" />

@@ -32,7 +32,7 @@ public class Startup
         services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IdentityDbContext>();
         services.AddDbContext<IdentityDbContext>(options =>
         {
-            options.UseSqlServer(_configuration.GetConnectionString("GrindrDbContext"));
+            options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
         });
         services.AddScoped<IIdentityEmailService, IdentityEmailService>();
         services.AddScoped<IEmailSender, EmailSender>();
@@ -52,7 +52,8 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
-        
+
+        app.ApplyMigrations();
         // app.UseApplicationDatabase<IdentityDbContext>();
         app
             .UseCors("default")
