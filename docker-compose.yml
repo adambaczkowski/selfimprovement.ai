@@ -1,0 +1,91 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=selfimprovement123$
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
+      - PGADMIN_DEFAULT_PASSWORD=selfimprovement123$
+    ports:
+      - "5050:80"
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./Nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./Nginx/index.html:/usr/share/nginx/html/index.html
+
+  identity:
+    container_name: grindr-identity
+    build:
+      context: /Source
+      dockerfile: IdentityApi/Dockerfile.local
+    environment:
+      - ConnectionStrings__GrindrDbContext=Server=db;Database=GrindrDb;User=test;Password=The_Password;MultipleActiveResultSets=True;TrustServerCertificate=True
+      - CorsOrigin=http://localhost:3000
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    # Optimize resource allocation
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # 50% CPU limit
+          memory: 500M # 500MB memory limit
+    restart: always
+
+  wiki:
+    container_name: Wiki
+    build:
+      context: /Wiki
+      dockerfile: Dockerfile
+    ports:
+      - "1313:1313"
+    restart: always
+
+  open-webui:
+      container_name: open-webui
+      build:
+        context: /Ollama
+        dockerfile: Dockerfile
+      ports:
+        - "3001:8080"
+      volumes:
+        - open-webui:/app/backend/data
+      restart: always
+
+  mailhog:
+    container_name: mailhog
+    build:
+      context: /Mail
+      dockerfile: Dockerfile
+    ports:
+      - "1025:1025"  # SMTP port
+      - "8025:8025"  # Web UI port
+    restart: always
+
+volumes:
+  open-webui:

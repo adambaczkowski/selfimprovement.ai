@@ -36,7 +36,6 @@ obj/
 
 # Ignore Docker artifacts
 docker-compose.override.yml
-docker-compose.yml
 docker-compose.yml.override
 
 # Ignore Visual Studio files
