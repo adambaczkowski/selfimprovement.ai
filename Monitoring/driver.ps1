@@ -1,0 +1,2 @@
+docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions && docker plugin ls &&
+docker run --log-driver=loki --log-opt loki-url="http:admin:admin@localhost:3100/loki/api/v1/push" --log-opt loki-retries=5 --log-opt loki-batch-size=400 grafana/grafana

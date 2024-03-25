@@ -6,8 +6,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     exit
 }
 
-# Function to handle errors
-function Handle-Error {
+function handleError {
     param (
         [string]$errorMessage
     )
@@ -17,7 +16,7 @@ function Handle-Error {
 
 # Check if WSL is already installed
 $wslInstalled = Get-WindowsOptionalFeature -Online | Where-Object FeatureName -eq "Microsoft-Windows-Subsystem-Linux"
-if ($wslInstalled -ne $null) {
+if ($null -ne $wslInstalled) {
     Write-Host "WSL is already installed."
     exit
 }
@@ -27,7 +26,7 @@ try {
     Write-Host "Enabling WSL feature..."
     Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
 } catch {
-    Handle-Error "Failed to enable WSL feature. Make sure you are connected to the internet and run this script as an administrator."
+    handleError "Failed to enable WSL feature. Make sure you are connected to the internet and run this script as an administrator."
 }
 
 # Enable Virtual Machine Platform feature
@@ -35,7 +34,7 @@ try {
     Write-Host "Enabling Virtual Machine Platform feature..."
     Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
 } catch {
-    Handle-Error "Failed to enable Virtual Machine Platform feature. Make sure you are connected to the internet and run this script as an administrator."
+    handleError "Failed to enable Virtual Machine Platform feature. Make sure you are connected to the internet and run this script as an administrator."
 }
 
 # Download and install the Linux kernel update package
@@ -45,7 +44,7 @@ try {
     Start-Process msiexec.exe -ArgumentList "/i $env:TEMP\wsl_update.msi /quiet /norestart" -Wait
     Remove-Item "$env:TEMP\wsl_update.msi"
 } catch {
-    Handle-Error "Failed to download and install the Linux kernel update package. Make sure you are connected to the internet and run this script as an administrator."
+    handleError "Failed to download and install the Linux kernel update package. Make sure you are connected to the internet and run this script as an administrator."
 }
 
 # Set WSL 2 as the default version
@@ -53,7 +52,7 @@ try {
     Write-Host "Setting WSL 2 as the default version..."
     wsl --set-default-version 2
 } catch {
-    Handle-Error "Failed to set WSL 2 as the default version."
+    handleError "Failed to set WSL 2 as the default version."
 }
 
 Write-Host "WSL 2 installation completed successfully."
