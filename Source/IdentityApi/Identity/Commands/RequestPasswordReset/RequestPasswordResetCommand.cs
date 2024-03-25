@@ -16,10 +16,10 @@ public class RequestPasswordResetCommand : IRequest
 
 public class RequestPasswordResetCommandHandler : IRequestHandler<RequestPasswordResetCommand>
 {
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<Models.User> _userManager;
     private readonly IIdentityEmailService _identityEmailService;
 
-    public RequestPasswordResetCommandHandler(UserManager<User> userManager, IIdentityEmailService identityEmailService)
+    public RequestPasswordResetCommandHandler(UserManager<Models.User> userManager, IIdentityEmailService identityEmailService)
     {
         _userManager = userManager;
         _identityEmailService = identityEmailService;

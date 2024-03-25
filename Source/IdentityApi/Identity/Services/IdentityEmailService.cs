@@ -9,15 +9,15 @@ namespace IdentityApi.Identity.Services;
 public class IdentityEmailService : IIdentityEmailService
 {
     private readonly IEmailSender _emailSender;
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<Models.User> _userManager;
 
-    public IdentityEmailService(IEmailSender emailSender, UserManager<User> userManager)
+    public IdentityEmailService(IEmailSender emailSender, UserManager<Models.User> userManager)
     {
         _emailSender = emailSender;
         _userManager = userManager;
     }
     
-    public async Task SendConfirmationEmail(User user, string origin)
+    public async Task SendConfirmationEmail(Models.User user, string origin)
     {
         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebExtensions.WebEncodeCode(code);
@@ -33,7 +33,7 @@ public class IdentityEmailService : IIdentityEmailService
             $"Click this link to confirm account {callbackUrl}");
     }
         
-    public async Task SendPasswordResetEmail(User user, string origin)
+    public async Task SendPasswordResetEmail(Models.User user, string origin)
     {
         var code = await _userManager.GeneratePasswordResetTokenAsync(user);
         code = WebExtensions.WebEncodeCode(code);

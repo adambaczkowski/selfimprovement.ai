@@ -4,6 +4,7 @@ using IdentityApi.Identity.Services;
 using IdentityApi.Messaging.Http;
 using IdentityApi.Models;
 using IdentityApi.Services;
+using LS.Common;
 using LS.Startup;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -30,13 +31,17 @@ public class Startup
             .AddDefaultCorsPolicy(_configuration["CorsOrigin"])
             .AddHttpContextAccessor();
         services.AddHttpClient<IPromptClient, HttpPromptClient>();
-        services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IdentityDbContext>();
+        services.AddIdentity<Models.User, IdentityRole>().AddEntityFrameworkStores<IdentityDbContext>();
         services.AddDbContext<IdentityDbContext>(options =>
         {
             options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
         });
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
         services.AddScoped<IIdentityEmailService, IdentityEmailService>();
+        services.AddScoped<IGenericRepository<Models.Goal>, GoalRepository>();
+        services.AddScoped<IGenericRepository<Models.User>, UserRepository>();
+        services.AddScoped<IGenericRepository<UserProfile>, UserProfileRepository>();
         services.AddScoped<IEmailSender, EmailSender>();
         services.AddAuthorization();
         services.AddAuthentication();
