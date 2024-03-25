@@ -2,4 +2,5 @@
 **hugo** port 1313
 **pgadmin** port 5050
 **postgres** port 5432
-**ollama ui** port 3001
+**Ollama UI** port 3001
+**Source** port 8080 && 8081
