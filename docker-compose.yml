@@ -49,12 +49,11 @@ services:
     ports:
       - "8080:8080"
       - "8081:8081"
-    # Optimize resource allocation
     deploy:
       resources:
         limits:
-          cpus: '0.5' # 50% CPU limit
-          memory: 500M # 500MB memory limit
+          cpus: '0.5'
+          memory: 500M
     restart: always
 
   wiki:
@@ -67,15 +66,15 @@ services:
     restart: always
 
   open-webui:
-      container_name: open-webui
-      build:
-        context: /Ollama
-        dockerfile: Dockerfile
-      ports:
-        - "3001:8080"
-      volumes:
-        - open-webui:/app/backend/data
-      restart: always
+    container_name: open-webui
+    build:
+      context: /Ollama
+      dockerfile: Dockerfile
+    ports:
+      - "3001:8080"
+    volumes:
+      - open-webui:/app/backend/data
+    restart: always
 
   mailhog:
     container_name: mailhog
@@ -83,9 +82,53 @@ services:
       context: /Mail
       dockerfile: Dockerfile
     ports:
-      - "1025:1025"  # SMTP port
-      - "8025:8025"  # Web UI port
+      - "1025:1025"
+      - "8025:8025"
     restart: always
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    user: "1000"
+    volumes:
+      - ./Monitoring/Grafana/lib:/var/lib/grafana
+    ports:
+      - "3002:3000"
+    restart: unless-stopped
+
+  loki:
+    container_name: loki
+    image: grafana/loki:latest
+    volumes:
+      - ./Monitoring/Loki:/etc/loki
+    ports:
+      - "3100:3100"
+    restart: unless-stopped
+    command: -config.file=/etc/loki/loki-config.yml
+
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:latest
+    volumes:
+      - ./Monitoring/Promtail:/etc/promtail
+    restart: unless-stopped
+    command: -config.expand-env=true -config.file=/etc/promtail/promtail-config.yml
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./Monitoring/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
 
 volumes:
   open-webui:
