@@ -31,7 +31,7 @@ const LoadingWithError: React.FC<Props> = ({ timeout, errorMessage }) => {
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <CircularProgress />
+        <CircularProgress color={"secondary"} />
       </div>
     );
   }

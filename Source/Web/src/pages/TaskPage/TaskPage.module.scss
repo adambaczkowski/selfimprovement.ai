@@ -1,0 +1,31 @@
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.infoHeading {
+  margin-bottom: 10px;
+  color: #000000;
+  text-align: center;
+}
+
+.infoSubheading {
+  margin-bottom: 10px;
+  color: #000000;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.glassContainer {
+  background: rgba(59, 59, 59, 0.48);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: rgba(238, 218, 218, 0.9);
+  backdrop-filter: blur(5.4px);
+  -webkit-backdrop-filter: blur(5.4px);
+  padding: 20px;
+  width: fit-content;
+  margin: 0 auto; /* Center the container horizontally */
+}
