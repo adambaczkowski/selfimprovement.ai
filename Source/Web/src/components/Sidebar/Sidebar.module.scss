@@ -1,0 +1,69 @@
+// Sidebar.module.scss
+.sidebar {
+    margin-right: 10px;
+}
+
+.menuButton {
+    border-radius: 80%;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+//   .drawer {
+//     padding: 5px;
+//     width: 200px;
+//     border-radius: 20px;
+//     background: rgba(255, 255, 255, 0.8);
+//     backdrop-filter: blur(10px);
+//     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+//   }
+  
+//   .closeButton {
+//     display: flex;
+//     align-items: center;
+//     justify-content: flex-end;
+//     gap: 0.5;
+//     margin-top: 1rem;
+//     margin-right: 2rem;
+//   }
+  
+//   .list {
+//     flex: none;
+//     font-size: xl;
+  
+//     & > div {
+//       justify-content: center;
+//     }
+  
+//     .MuiListItemButton-root {
+//       font-weight: bold;
+//     }
+//   }
+
+.drawer {
+    width: 200px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    margin-right: 5px; // Move 5 pixels away from the end of the screen
+  }
+  
+  .imageContainer {
+    height: 50%; // Half of the drawer height
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image {
+    max-height: 100%;
+    max-width: 100%;
+  }
+  
+  .listContainer {
+    height: 50%; // Half of the drawer height
+    padding: 0 10px; // Adjust padding as needed
+  }
