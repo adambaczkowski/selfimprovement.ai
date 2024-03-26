@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="GoalTask\" />
     <Folder Include="Goal\Validators\" />
     <Folder Include="Identity\Queries\" />
     <Folder Include="User\Validators\" />
