@@ -2,6 +2,7 @@ import React from "react";
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import SignInPage from "./pages/SignInPage/SignInPage";
+import TaskPage from "./pages/TaskPage/TaskPage";
 import ResendEmailConfirmationPage from "./pages/ResendEmailConfirmationPage/ResendEmailConfirmationPage";
 import { RequestPasswordResetPage } from "./pages/RequestPasswordResetPage/RequestPasswordResetPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage/ConfirmEmailPage";
@@ -34,6 +35,10 @@ const Routes = ({}: Props) => {
     {
       path: "/resetPassword",
       element: <PasswordResetPage />,
+    },
+    {
+      path: "/task",
+      element: <TaskPage />,
     },
   ]);
 

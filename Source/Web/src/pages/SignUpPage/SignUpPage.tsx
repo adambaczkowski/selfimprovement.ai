@@ -1,7 +1,6 @@
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import FormTextInput from "../../components/Formik/FormTextInput/FormTextInput";
-import CustomButton from "../../components/CustomButton/Button";
+import { CustomButton, FormTextInput } from "../../components/componentsIndex"
 import { SignUpCommand } from "../../utils/api/identity";
 import { signUpFormValidation } from "./signUpFormValidationSchema";
 import { signUp } from "../../utils/services/identityService";
