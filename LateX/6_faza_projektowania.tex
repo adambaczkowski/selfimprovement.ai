@@ -1,290 +1,376 @@
 \section{Faza projektowania}
+W tym rozdziale omówimy etap projektowania oraz ogólną architekturę aplikacji selfimprovement.ai. Przedstawimy składniki tworzące tę aplikację, ich wzajemne zależności oraz integracje z zewnętrznymi systemami. Architektura została opracowana zgodnie z modelem C4, co pozwoli na klarowne przedstawienie struktury systemu oraz jego poszczególnych komponentów.
 
 \subsection{Ogólny opis architektury}
+Selfimprovement.ai to platforma internetowa, która umożliwia użytkownikom tworzenie spersonalizowanych planów na bazie ich celów, takich jak plany treningowe, które pomagają użytkownikom osiągnąć swoje cele w optymalnie zaplanowanym czasie. Aplikacja składa się z dwóch głównych części: front-endu i back-endu.
+
+Front-end aplikacji selfimprovement.ai został napisany w React.js. Jest to popularne rozwiązanie do tworzenia aplikacji webowych, które pozwala na budowanie szybkich, responsywnych i dynamicznie generowanych stron. W aplikacji selfimprovement.ai front-end odpowiada za prezentację danych oraz interakcję z użytkownikiem. Cała interakcja użytkownika z front-endem jest realizowana przy użyciu React.js, co umożliwia dynamiczne generowanie zawartości, takie jak strony do tworzenia celów, przeglądanie ich w kalendarzu czy analiza postępów. Dodatkowo, aplikacja wykorzystuje architekturę mikroserwisów, co pozwala na elastyczne i skalowalne zarządzanie różnymi funkcjonalnościami systemu.
 
 \subsubsection{Mikroserwisy}
 
-Historia architektury oprogramowania stanowi fascynujące pole badawcze, obejmujące rozmaite etapy rozwoju technologicznego. W niniejszym rozdziale przedstawiono ewolucję od tradycyjnych struktur monolitycznych do nowoczesnych koncepcji mikro usług.
+Mikroserwisy to architektoniczny wzorzec projektowy, który polega na budowaniu aplikacji jako zestawu małych, autonomicznych serwisów, które są niezależne od siebie pod względem wdrożenia i skalowania. Każdy mikroserwis odpowiada za realizację jednej konkretnej funkcji lub usługi, co pozwala na elastyczne zarządzanie aplikacją oraz umożliwia uniezależnienie się od monolitycznej architektury.
 
-**Rozdział II: Monolit (lata 60-90)**
+Pojawienie się architektury mikroserwisowej wynikało z konieczności przeciwdziałania wadom tradycyjnych, monolitycznych systemów aplikacyjnych. W starszych rozwiązaniach monolitycznych wszystkie funkcjonalności aplikacji są zintegrowane w jednym, złożonym kodzie, co prowadziło do problemów związanych z skalowaniem, utrzymaniem i rozwijaniem aplikacji.
 
-2.1 Definicja Monolitu
+Monolity na początku oferowały wygodę w zakresie rozwoju, wdrażania i utrzymania, że nawet najmniejsze zmiany w jednej części aplikacji wymagały ponownego wdrażania całego systemu. Dodatkowo, rozwój aplikacji wymagał współpracy między różnymi zespołami, co często prowadziło do konfliktów i opóźnień.
 
-W początkowym okresie rozwoju programowania, aplikacje kształtowano jako jednolite, monolityczne struktury. Koncepcja ta zakładała zintegrowanie całej logiki biznesowej, interfejsu użytkownika oraz warstwy danych w jednym, spójnym bloku kodu.
+W odpowiedzi na te problemy, architektura mikroserwisowa została zaprojektowana jako alternatywa. W tym podejściu każda funkcja aplikacji jest implementowana jako oddzielny mikroserwis, komunikujący się ze sobą poprzez interfejsy programistyczne (API), co umożliwia niezależne wdrażanie, skalowanie i rozwijanie poszczególnych części aplikacji. Dzięki temu, nawet największe i najbardziej złożone aplikacje stają się bardziej elastyczne, skalowalne i łatwiejsze w utrzymaniu
 
-2.2 Zalety i Wyzwania Monolitów
+Architektura mikroserwisowa pozwala również na lepsze wykorzystanie zasobów sprzętowych poprzez niezależne skalowanie poszczególnych mikroserwisów w zależności od obciążenia, co prowadzi do lepszej wydajności i oszczędności kosztów operacyjnych. Dodatkowo, ułatwia ona wprowadzanie zmian i aktualizacji aplikacji poprzez możliwość modyfikacji jednego mikroserwisu bez wpływu na pozostałe.
 
-Monolity oferowały wygodę w zakresie rozwoju, wdrażania i utrzymania, lecz z biegiem czasu pojawiły się problemy związane ze skalowalnością, elastycznością i trudnościami w utrzymaniu w miarę wzrostu złożoności systemów.
-
-**Rozdział III: Rozbicie Monolitu (lata 90-2000)**
-
-3.1 Architektura Warstwowa
-
-W miarę postępu technologicznego pojawiła się konieczność zwiększenia modularności i rozdzielenia odpowiedzialności. Wprowadzenie architektury warstwowej, takiej jak Model-Widok-Kontroler, umożliwiło podział monolitycznych aplikacji na logicznie zorganizowane moduły.
-
-3.2 EJB i .NET Framework
-
-Era ta charakteryzowała się również wprowadzeniem nowych technologii, takich jak Enterprise JavaBeans (EJB) czy .NET Framework, umożliwiających tworzenie bardziej złożonych, ale jednocześnie lepiej zorganizowanych systemów.
-
-**Rozdział IV: Usługi Internetowe (lata 2000-2010)**
-
-4.1 Era Usług Internetowych
-
-Wraz z globalizacją i rozwojem Internetu pojawiła się potrzeba interakcji między różnymi systemami. Usługi internetowe, bazujące na standardach takich jak SOAP i REST, stały się powszechnym narzędziem do integracji aplikacji na poziomie usług.
-
-**Rozdział V: Mikrousługi (lata 2010-obecnie)**
-
-5.1 Koncept Mikrousług
-
-W odpowiedzi na rosnące wymagania związane z elastycznością, skalowalnością i łatwością utrzymania, pojawiło się podejście mikrousługowe. Zamiast jednego, monolitycznego systemu, aplikacje zostały rozbite na małe, niezależne serwisy, komunikujące się ze sobą poprzez interfejsy programistyczne (API).
-
-5.2 Narzędzia i Platformy Mikrousług
 
 Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury obliczeniowej, umożliwiają efektywne zarządzanie i wdrażanie mikrousług, co stanowi kluczowy element nowoczesnych środowisk biznesowych.
 
-**Rozdział VI: Podsumowanie i Perspektywy**
+\clearpage
 
-6.1 Ewolucja Architektury Oprogramowania
-
-Przedstawione rozważania ukazują ewolucję architektury oprogramowania, od monolitów po mikrousługi. Ostatecznym celem jest zrozumienie wpływu tych zmian na rozwój systemów informatycznych oraz perspektywy dalszych badań nad architekturą oprogramowania.
 \subsection{DevOps}
-**DevOps: Synergia Pomiędzy Rozwojem a Operacjami**
 
-DevOps, skrócony od "Development" (rozwój) i "Operations" (operacje), to koncepcja i praktyka, która zakłada ścisłą współpracę między zespołami odpowiedzialnymi za rozwój oprogramowania (Dev) a tymi, które zajmują się operacjami IT (Ops). Celem DevOps jest skrócenie cyklu dostarczania oprogramowania, zwiększenie częstotliwości wdrożeń, poprawa stabilności systemów oraz usprawnienie komunikacji i współpracy między różnymi działami organizacji.
+{\bf Synergia Pomiędzy Rozwojem a Operacjami:}
 
-**Kluczowe Aspekty DevOps:**
+\noindent DevOps, skrócony od "Development" (rozwój) i "Operations" (operacje), to koncepcja i praktyka, która zakłada ścisłą współpracę między zespołami odpowiedzialnymi za rozwój oprogramowania (Dev) a tymi, które zajmują się operacjami IT (Ops). Celem DevOps jest skrócenie cyklu dostarczania oprogramowania, zwiększenie częstotliwości wdrożeń, poprawa stabilności systemów oraz usprawnienie komunikacji i współpracy między różnymi działami organizacji.
+\\
 
-1. **Automatyzacja:**
+{\noindent\bf Kluczowe Aspekty DevOps:} 
+\begin{enumerate}
+\item {\bf Automatyzacja}
    - Wykorzystanie narzędzi do automatyzacji procesów wytwarzania oprogramowania, testowania, wdrażania oraz monitorowania.
    - Automatyzacja pomaga zminimalizować błędy związane z interwencją ludzką i przyspiesza procesy.
 
-2. **Kontrola Wersji:**
+\item {\bf Kontrola Wersji}
    - Korzystanie z systemów kontroli wersji, takich jak Git, w celu śledzenia zmian w kodzie źródłowym i ułatwienia współpracy pomiędzy członkami zespołu.
 
-3. **Konteneryzacja:**
+\item {\bf Konteneryzacja}
    - Wykorzystanie technologii konteneryzacji, na przykład Docker, umożliwiającej pakowanie oprogramowania w izolowane jednostki, co ułatwia przenośność i wdrażanie aplikacji.
 
-4. **Infrastruktura Jako Kod:**
+\item {\bf Infrastruktura Jako Kod}
    - Traktowanie infrastruktury jak kodu programistycznego, co umożliwia jej zarządzanie, wdrażanie i skalowanie przy użyciu praktyk znanym z programowania.
 
-5. **Kultura i Współpraca:**
+\item {\bf Kultura i Współpraca}
    - Zmiana kultury organizacyjnej, promowanie współpracy i komunikacji pomiędzy zespołami Dev i Ops.
    - Eliminacja barier i podziałów, tworząc zintegrowane zespoły mające wspólny cel.
 
-6. **Monitorowanie i Analiza:**
+\item {\bf Monitorowanie i Analiza}
    - Utrzymywanie ciągłego monitorowania działania systemu, zbieranie danych, analiza i reakcja na ewentualne problemy.
+\end{enumerate}
 
-**Korzyści DevOps:**
+\noindent{\bf Korzyści DevOps:}
 
-1. **Skrócenie Cyklu Dostarczania:**
+\begin{enumerate}
+\item {\bf Skrócenie Cyklu Dostarczania}
    - Dzięki automatyzacji i zintegrowanym procesom, czas potrzebny na dostarczenie nowej funkcjonalności lub poprawki zostaje znacznie zredukowany.
 
-2. **Zwiększenie Stabilności:**
+\item {\bf Zwiększenie Stabilności}
    - Stałe monitorowanie i automatyczne testowanie pomagają zminimalizować ryzyko błędów oraz poprawiają stabilność i niezawodność systemów.
 
-3. **Elastyczność i Skalowalność:**
+\item {\bf Elastyczność i Skalowalność}
    - Konteneryzacja i elastyczne zarządzanie infrastrukturą umożliwiają łatwe skalowanie zasobów w zależności od potrzeb.
 
-4. **Efektywność Kosztowa:**
+\item {\bf Efektywność Kosztowa}
    - Automatyzacja procesów i bardziej efektywne zarządzanie zasobami przekładają się na oszczędności czasu i środków.
+\end{enumerate}
 
 W skrócie, DevOps stanowi holistyczne podejście do wytwarzania oprogramowania, łączące aspekty kulturowe, procesowe i technologiczne w celu stworzenia efektywnego i responsywnego środowiska IT.
+
 \subsubsection{CI/CD}
-**CI/CD: Ciągła Integracja i Ciągłe Dostarczanie/Dostosowywanie**
+{\bf Ciągła Integracja i Ciągłe Dostarczanie/Dostosowywanie:}
 
-CI/CD to skrót od dwóch kluczowych praktyk w inżynierii oprogramowania: Ciągłej Integracji (Continuous Integration) i Ciągłego Dostarczania/Dostosowywania (Continuous Delivery/Continuous Deployment). Te praktyki są kluczowymi elementami podejścia DevOps, mającym na celu skrócenie cyklu dostarczania oprogramowania i poprawę jakości wytwarzanego kodu.
+\noindent CI/CD to skrót od dwóch kluczowych praktyk w inżynierii oprogramowania: Ciągłej Integracji (Continuous Integration) i Ciągłego Dostarczania/Dostosowywania (Continuous Delivery/Continuous Deployment). Te praktyki są kluczowymi elementami podejścia DevOps, mającym na celu skrócenie cyklu dostarczania oprogramowania i poprawę jakości wytwarzanego kodu.
+\\
 
-**Ciągła Integracja (CI):**
+{\bf Ciągła Integracja (CI):}
 
-Ciągła Integracja odnosi się do praktyki regularnego i automatycznego łączenia zmian wprowadzanych przez różnych członków zespołu programistycznego do wspólnego repozytorium kodu. Głównym celem CI jest wczesne wykrywanie i rozwiązywanie konfliktów oraz zapewnienie, że kod jest zawsze w spójnym i testowalnym stanie. Kluczowymi elementami CI są:
+\noindent Ciągła Integracja odnosi się do praktyki regularnego i automatycznego łączenia zmian wprowadzanych przez różnych członków zespołu programistycznego do wspólnego repozytorium kodu. Głównym celem CI jest wczesne wykrywanie i rozwiązywanie konfliktów oraz zapewnienie, że kod jest zawsze w spójnym i testowalnym stanie. Kluczowymi elementami CI są:
 
-1. **Automatyczne Budowanie (Build):**
-   - Automatyzacja procesu kompilacji i budowy aplikacji po wprowadzeniu nowych zmian.
+\begin{enumerate}
+\item {\bf Automatyczne Budowanie (Build)}
+- Automatyzacja procesu kompilacji i budowy aplikacji po wprowadzeniu nowych zmian.
 
-2. **Automatyczne Testowanie (Test):**
+\item {\bf Automatyczne Testowanie (Test)}
    - Wykonywanie automatycznych testów jednostkowych, integracyjnych oraz innych, aby zweryfikować, czy wprowadzone zmiany nie wprowadzają błędów.
 
-3. **Ciągła Weryfikacja Kodu (Code Quality):**
+\item {\bf Ciągła Weryfikacja Kodu (Code Quality)}
    - Analiza jakości kodu poprzez narzędzia sprawdzające zgodność z ustalonymi standardami.
+\end{enumerate}
 
-**Ciągłe Dostarczanie (CD) i Ciągłe Dostosowywanie (CD):**
+{\bf Ciągłe Dostarczanie (CD) i Ciągłe Dostosowywanie (CD):}
 
-Ciągłe Dostarczanie i Ciągłe Dostosowywanie to dwa powiązane, ale różniące się podejścia do dostarczania oprogramowania do produkcji.
+\noindent Ciągłe Dostarczanie i Ciągłe Dostosowywanie to dwa powiązane, ale różniące się podejścia do dostarczania oprogramowania do produkcji.
 
-1. **Ciągłe Dostarczanie (Continuous Delivery - CD):**
+\begin{enumerate}
+\item {\bf Ciągłe Dostarczanie (Continuous Delivery - CD)}
    - Proces, w którym każda zmiana w kodzie, która przejdzie przez etap CI, jest automatycznie gotowa do dostarczenia do produkcji.
    - Ręczne potwierdzenie może być wymagane przed finalnym wdrożeniem, ale sama procedura dostarczania jest zautomatyzowana.
 
-2. **Ciągłe Dostosowywanie (Continuous Deployment - CD):**
+\item {\bf Ciągłe Dostosowywanie (Continuous Deployment - CD)}
    - Bardziej radykalne podejście, w którym każda zmiana, która przejdzie przez etap CI, jest automatycznie wdrażana w środowisku produkcyjnym bez ręcznej interwencji.
+\end{enumerate}
 
-**Korzyści CI/CD:**
+\noindent{\bf Korzyści CI/CD:}
 
-1. **Skrócenie Cyklu Dostarczania:**
+\begin{enumerate}
+\item {\bf Skrócenie Cyklu Dostarczania}
    - Automatyzacja procesów przyspiesza cykl dostarczania oprogramowania.
 
-2. **Poprawa Jakości:**
+\item {\bf Poprawa Jakości}
    - Systematyczne testowanie i weryfikacja kodu przyczyniają się do poprawy jakości oprogramowania.
 
-3. **Elastyczność i Odporność na Błędy:**
+\item {\bf Elastyczność i Odporność na Błędy}
    - Automatyczne wdrażanie ułatwia wprowadzanie zmian oraz umożliwia szybką reakcję na ewentualne problemy.
 
-4. **Zwiększenie Efektywności:**
+\item {\bf Zwiększenie Efektywności}
    - Redukcja czasu i nakładu pracy związanych z ręcznymi procesami wytwarzania i wdrażania oprogramowania.
+\end{enumerate}
 
 W sumie, CI/CD to kluczowy element podejścia DevOps, przyczyniający się do bardziej efektywnego, responsywnego i jakościowego dostarczania oprogramowania.
 \subsubsection{Kubernetes}
-**Kubernetes: Orkiestracja Kontenerów dla Skalowalnych i Zdecentralizowanych Aplikacji**
 
-Kubernetes, często nazywany "K8s" (gdzie "8s" oznacza osiem liter 'ubernete'), to popularna platforma do automatyzacji, zarządzania i orkiestracji kontenerów. Kontenery są lekkimi, przenośnymi jednostkami uruchomieniowymi, a Kubernetes ułatwia zarządzanie ich cyklem życia, skalowaniem i dystrybucją w rozproszonych środowiskach.
+{\bf Orkiestracja Kontenerów dla Skalowalnych i Zdecentralizowanych Aplikacji}
 
-**Podstawowe Koncepcje Kubernetes:**
+\noindent Kubernetes, często nazywany "K8s" (gdzie "8s" oznacza osiem liter 'ubernete'), to popularna platforma do automatyzacji, zarządzania i orkiestracji kontenerów. Kontenery są lekkimi, przenośnymi jednostkami uruchomieniowymi, a Kubernetes ułatwia zarządzanie ich cyklem życia, skalowaniem i dystrybucją w rozproszonych środowiskach.
+\\
 
-1. **Kontener:**
+{\bf Podstawowe Koncepcje Kubernetes:}
+
+\begin{enumerate}
+\item {\bf Kontener}
    - Izolowana jednostka, która zawiera aplikację i jej zależności, co umożliwia przenośność i jednolitość środowiska wykonawczego.
 
-2. **Pod:**
+\item {\bf Pod}
    - Najmniejsza jednostka w środowisku Kubernetes, składająca się z jednego lub wielu kontenerów, które współdzielą zasoby i przestrzeń sieciową.
 
-3. **Węzeł (Node):**
+\item {\bf Węzeł (Node)}
    - Fizyczna lub wirtualna maszyna, na której uruchamiane są kontenery. Węzły stanowią infrastrukturę, na której działa klastr Kubernetes.
 
-4. **Klastr:**
+\item {\bf Klastr}
    - Zbiór węzłów, które współpracują w celu uruchamiania i zarządzania kontenerami.
 
-5. **Kontroler:**
+\item {\bf Kontroler}
    - Element zarządzający cyklem życia podów, np. Deployment Controller, ReplicaSet Controller, czy DaemonSet Controller.
 
-6. **Usługa:**
+\item {\bf Usługa:}
    - Abstrakcja, która umożliwia dostęp do zestawu podów, oferując trwały adres IP i nazwę hosta.
 
-7. **Przestrzeń Nazw (Namespace):**
+\item {\bf Przestrzeń Nazw (Namespace)}
    - Sposób na grupowanie i izolację zasobów w klastrze. Umożliwia tworzenie logicznych segmentów w klastrze.
+\end{enumerate}
 
-**Funkcje i Zastosowania Kubernetes:**
+{\bf Funkcje i Zastosowania Kubernetes:}
 
-1. **Orkiestracja:**
+\begin{enumerate}
+\item {\bf Orkiestracja}
    - Automatyczne zarządzanie cyklem życia kontenerów, w tym ich uruchamianiem, zatrzymywaniem i skalowaniem.
 
-2. **Skalowalność:**
+\item {\bf Skalowalność}
    - Możliwość dynamicznego dostosowywania liczby instancji kontenerów w zależności od obciążenia aplikacji.
 
-3. **Równoważenie Obciążenia:**
+\item {\bf Równoważenie Obciążenia}
    - Rozdział ruchu sieciowego między różnymi instancjami kontenerów, aby zoptymalizować dostępność i wydajność.
 
-4. **Zarządzanie Konfiguracją:**
+\item {\bf Zarządzanie Konfiguracją}
    - Automatyczne dostosowywanie konfiguracji aplikacji bez potrzeby zatrzymywania i uruchamiania kontenerów.
 
-5. **Dystrybucja i Wersjonowanie:**
+\item {\bf Dystrybucja i Wersjonowanie}
    - Kontrola wersji aplikacji, ułatwiająca wprowadzanie zmian i aktualizacji bezprzerwowego dostarczania.
 
-6. **Bezpieczeństwo:**
+\item {\bf Bezpieczeństwo}
    - Mechanizmy kontroli dostępu, zarządzania tożsamością oraz izolacji podów dla zwiększenia bezpieczeństwa.
+\end{enumerate}
 
-**Korzyści Korzystania z Kubernetes:**
+{\bf Korzyści Korzystania z Kubernetes:}
 
-1. **Elastyczność i Skalowalność:**
+\begin{enumerate}
+\item {\bf Elastyczność i Skalowalność}
    - Łatwe skalowanie i zarządzanie zasobami, co umożliwia dostosowanie klastra do zmieniających się potrzeb.
 
-2. **Trwałość i Niezawodność:**
+\item {\bf Trwałość i Niezawodność}
    - Automatyczna naprawa i przenoszenie podów w przypadku awarii, zapewniając ciągłość działania aplikacji.
 
-3. **Jednolite Środowisko:**
+\item {\bf Jednolite Środowisko}
    - Zapewnienie jednolitego środowiska uruchomieniowego dla kontenerów niezależnie od lokalizacji czy infrastruktury.
 
-4. **Automatyzacja i Współpraca:**
+\item {\bf Automatyzacja i Współpraca}
    - Ułatwienie automatyzacji procesów wytwarzania oprogramowania oraz współpracy między zespołami Dev i Ops.
+\end{enumerate}
 
 Kubernetes stał się fundamentalnym narzędziem w świecie kontenerów, pomagając organizacjom osiągnąć elastyczność, niezawodność i skalowalność ich aplikacji w środowiskach chmurowych i lokalnych.
 \subsubsection{Monitorowanie aplikacji}
-**Monitorowanie Aplikacji: Kluczowy Element Zarządzania i Utrzymania Wysokiej Jakości Systemów**
 
-Monitorowanie aplikacji to proces zbierania, analizy i interpretacji danych dotyczących działania aplikacji w celu zapewnienia wydajności, niezawodności oraz efektywności operacyjnej. Skuteczne monitorowanie jest kluczowym elementem w zarządzaniu systemami informatycznymi, umożliwiając szybkie wykrywanie, diagnozowanie i rozwiązywanie potencjalnych problemów.
+{\bf Kluczowy Element Zarządzania i Utrzymania Wysokiej Jakości Systemów}
 
-**Elementy Składowe Monitorowania Aplikacji:**
+\noindent Monitorowanie aplikacji to proces zbierania, analizy i interpretacji danych dotyczących działania aplikacji w celu zapewnienia wydajności, niezawodności oraz efektywności operacyjnej. Skuteczne monitorowanie jest kluczowym elementem w zarządzaniu systemami informatycznymi, umożliwiając szybkie wykrywanie, diagnozowanie i rozwiązywanie potencjalnych problemów.
 
-1. **Logi Aplikacyjne:**
+\noindent{\bf Elementy Składowe Monitorowania Aplikacji:}
+
+\begin{enumerate}
+\item {\bf Logi Aplikacyjne}
    - Rejestracja zdarzeń i informacji z działania aplikacji w celu analizy błędów, śledzenia działań użytkowników oraz audytu.
 
-2. **Metryki Aplikacyjne:**
+\item {\bf Metryki Aplikacyjne}
    - Liczby, statystyki i wskaźniki mierzące wydajność i zachowanie aplikacji, takie jak czas odpowiedzi, zużycie zasobów czy ilość błędów.
 
-3. **Śledzenie Zdarzeń (Tracing):**
+\item {\bf Śledzenie Zdarzeń (Tracing)}
    - Monitorowanie ścieżki wykonania żądania poprzez aplikację, co ułatwia identyfikację i analizę opóźnień czy błędów.
 
-4. **Infrastruktura i Zasoby:**
+\item {\bf Infrastruktura i Zasoby}
    - Monitorowanie stanu fizycznych i wirtualnych zasobów, takich jak CPU, pamięć RAM, dyski, sieć, aby ocenić wydajność i dostępność infrastruktury.
 
-5. **Alarmy i Powiadomienia:**
+\item {\bf Alarmy i Powiadomienia}
    - Ustawianie alertów na podstawie ustalonych progów, które informują o potencjalnych problemach, umożliwiając szybką reakcję.
+\end{enumerate}
 
-**Cele Monitorowania Aplikacji:**
+\noindent{\bf Cele Monitorowania Aplikacji:}
 
-1. **Wczesne Wykrywanie Problemów:**
+\begin{enumerate}
+\item {\bf Wczesne Wykrywanie Problemów}
    - Monitorowanie pozwala na szybkie identyfikowanie i diagnozowanie potencjalnych problemów, zanim wpłyną negatywnie na użytkowników.
 
-2. **Optymalizacja Wydajności:**
+\item {\bf Optymalizacja Wydajności}
    - Analiza metryk i logów umożliwia optymalizację wydajności aplikacji poprzez identyfikację obszarów wymagających ulepszeń.
 
-3. **Zarządzanie Zasobami:**
+\item {\bf Zarządzanie Zasobami}
    - Monitorowanie infrastruktury pozwala na efektywne zarządzanie zasobami, skalowanie w odpowiedzi na obciążenie oraz unikanie zbędnych kosztów.
 
-4. **Zapewnienie Dostępności:**
+\item {\bf Zapewnienie Dostępności}
    - Śledzenie dostępności aplikacji i jej komponentów, co pozwala na szybkie reagowanie na ewentualne awarie i minimalizowanie czasu niedostępności.
 
-5. **Planowanie Pojemności:**
+\item {\bf Planowanie Pojemności}
    - Analiza trendów zużycia zasobów pozwala na prognozowanie potrzeb pojemnościowych i planowanie przyszłych rozszerzeń.
+\end{enumerate}
 
-**Popularne Narzędzia do Monitorowania Aplikacji:**
+\noindent{\bf Popularne Narzędzia do Monitorowania Aplikacji:}
 
-1. **Prometheus:**
+\begin{enumerate}
+\item {\bf Prometheus}
    - Otwarte źródło, przeznaczone do monitorowania metryk i alarmów.
 
-2. **Grafana:**
+\item {\bf Grafana}
    - Narzędzie do wizualizacji danych monitorowania, integrujące się z różnymi źródłami danych.
+\end{enumerate}
 
-**Wnioski:**
+{\bf Wnioski:}
 
-Monitorowanie aplikacji to nieodłączny element utrzymania nowoczesnych systemów informatycznych. Skuteczne monitorowanie pozwala na szybką reakcję na problemy, optymalizację wydajności oraz efektywne zarządzanie zasobami, przyczyniając się do zapewnienia niezawodności i satysfakcji użytkowników.
+\noindent Monitorowanie aplikacji to nieodłączny element utrzymania nowoczesnych systemów informatycznych. Skuteczne monitorowanie pozwala na szybką reakcję na problemy, optymalizację wydajności oraz efektywne zarządzanie zasobami, przyczyniając się do zapewnienia niezawodności i satysfakcji użytkowników.
+\clearpage
+
 \subsection{Baza danych}
 PostgreSQL, często po prostu "Postgres", to system zarządzania obiektowo-relacyjnymi bazami danych (ORDBMS) z naciskiem na rozszerzalność i zgodność ze standardami. Jako serwer bazy danych, jego podstawową funkcją jest przechowywanie danych, bezpieczne i wspierające najlepsze praktyki, oraz późniejsze ich pobieranie, zgodnie z wymaganiami innych aplikacji, zarówno tych na tym samym komputerze, jak i tych uruchomionych na innym komputerze w sieci (w tym w Internecie). Może obsługiwać obciążenia od małych aplikacji na jednym komputerze do dużych aplikacji internetowych z wieloma jednoczesnymi użytkownikami. Najnowsze wersje zapewniają również replikację samej bazy danych w celu zapewnienia bezpieczeństwa i skalowalności.
 
 \subsubsection{Nginx}
 Nginx (wymawiane "engine-x") to potężny serwer WWW, serwer proxy odwrotny i równoważnik obciążenia. Pierwotnie stworzony przez Igora Sysoeva w 2004 roku, aby rozwiązać problem C10k (obsługi ponad 10 000 równoczesnych połączeń), Nginx zdobył powszechne uznanie ze względu na swoją wydajność, skalowalność i wszechstronność.
+\\
 
-Główne cechy Nginx obejmują:
+\noindent{\bf Główne cechy Nginx obejmują:}
 
-1. **Wysoką wydajność**: Nginx jest znany ze swojej efektywności w obsłudze równoczesnych połączeń i żądań, co czyni go odpowiednim do obsługi witryn internetowych i aplikacji o dużej liczbie odwiedzin.
+\begin{enumerate}
+\item {\bf Wysoką wydajność: }
+Nginx jest znany ze swojej efektywności w obsłudze równoczesnych połączeń i żądań, co czyni go odpowiednim do obsługi witryn internetowych i aplikacji o dużej liczbie odwiedzin.
 
-2. **Proxy odwrotny**: Nginx może działać jako proxy odwrotne, siedząc przed serwerami WWW, aby obsłużyć przychodzące żądania klientów. Może rozprowadzać te żądania do wielu serwerów backendowych na podstawie różnych kryteriów, takich jak algorytmy równoważenia obciążenia, stan serwera lub lokalizacja geograficzna.
+\item {\bf Proxy odwrotny:}
+Nginx może działać jako proxy odwrotne, siedząc przed serwerami WWW, aby obsłużyć przychodzące żądania klientów. Może rozprowadzać te żądania do wielu serwerów backendowych na podstawie różnych kryteriów, takich jak algorytmy równoważenia obciążenia, stan serwera lub lokalizacja geograficzna.
 
-3. **Równoważenie obciążenia**: Nginx obejmuje możliwości równoważenia obciążenia, pozwalając na rozprowadzenie przychodzącego ruchu na wiele serwerów w celu poprawy niezawodności, skalowalności i wydajności.
+\item {\bf Równoważenie obciążenia: }
+Nginx obejmuje możliwości równoważenia obciążenia, pozwalając na rozprowadzenie przychodzącego ruchu na wiele serwerów w celu poprawy niezawodności, skalowalności i wydajności.
 
-4. **Serwer HTTP**: Nginx efektywnie obsługuje treści statyczne i może być również skonfigurowany do obsługi treści dynamicznych za pomocą różnych modułów, w tym FastCGI, SCGI i uwsgi.
+\item {\bf Serwer HTTP:} 
+Nginx efektywnie obsługuje treści statyczne i może być również skonfigurowany do obsługi treści dynamicznych za pomocą różnych modułów, w tym FastCGI, SCGI i uwsgi.
 
-5. **Zakończenie SSL/TLS**: Nginx może obsługiwać zakończenie SSL/TLS, rozładowując proces szyfrowania i deszyfrowania z serwerów backendowych, poprawiając tym samym wydajność.
+\item {\bf Zakończenie SSL/TLS:}
+Nginx może obsługiwać zakończenie SSL/TLS, rozładowując proces szyfrowania i deszyfrowania z serwerów backendowych, poprawiając tym samym wydajność.
 
-6. **Pamięć podręczna proxy odwróconego**: Nginx może buforować treści statyczne i dynamiczne w pamięci lub na dysku, zmniejszając obciążenie serwerów backendowych i poprawiając czasy odpowiedzi dla klientów.
+\item {\bf Pamięć podręczna proxy odwróconego:}
+Nginx może buforować treści statyczne i dynamiczne w pamięci lub na dysku, zmniejszając obciążenie serwerów backendowych i poprawiając czasy odpowiedzi dla klientów.
 
-7. **Obsługa HTTP/2 i HTTP/3**: Nginx obsługuje nowoczesne protokoły HTTP, w tym HTTP/2 i HTTP/3, które oferują lepszą wydajność i bezpieczeństwo w porównaniu do starszych wersji.
+\item {\bf Obsługa HTTP/2 i HTTP/3:}
+Nginx obsługuje nowoczesne protokoły HTTP, w tym HTTP/2 i HTTP/3, które oferują lepszą wydajność i bezpieczeństwo w porównaniu do starszych wersji.
 
-8. **Bezpieczeństwo**: Nginx zawiera funkcje zapobiegające powszechnym zagrożeniom dla bezpieczeństwa sieci, takim jak ataki DDoS, wstrzykiwanie SQL i skrypty między witrynami (XSS).
+\item {\bf Bezpieczeństwo:}
+Nginx zawiera funkcje zapobiegające powszechnym zagrożeniom dla bezpieczeństwa sieci, takim jak ataki DDoS, wstrzykiwanie SQL i skrypty między witrynami (XSS).
+\end{enumerate}
 
 Nginx jest powszechnie używany przez programistów internetowych, administratorów systemów i specjalistów DevOps do budowy skalowalnych, wysoko wydajnych aplikacji internetowych i usług. Jest znany z lekkiej architektury, niskiego zużycia zasobów i łatwości konfiguracji, co czyni go popularnym wyborem dla szerokiego zakresu zastosowań, od małych witryn do rozległych rozproszonych systemów.
+\clearpage
 
 \subsection{Model C4}
+Model C4 to narzędzie służące do opisywania i komunikowania architektury aplikacji. W niniejszym rozdziale omówimy jego zastosowanie w kontekście naszej aplikacji selfimprovement.ai. Przedstawimy składniki naszej aplikacji, ich wzajemne powiązania oraz integracje z zewnętrznymi systemami.\\
+
+Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Component oraz Code. Poziom Context prezentuje kontekst, w jakim działa aplikacja oraz jej relacje z otoczeniem. Poziom Container obejmuje kontenery, w których znajdują się poszczególne komponenty aplikacji. Poziom Component opisuje komponenty aplikacji, ich interfejsy oraz wzajemne zależności. Poziom Code prezentuje implementację kodu poszczególnych komponentów. W dalszej części rozdziału przedstawimy każdy z tych poziomów abstrakcji na przykładzie naszej aplikacji.
+\\
+
+{\bf Diagram Context} - to graficzna reprezentacja całego systemu wraz z jego otoczeniem i kontekstem, w jakim działa aplikacja.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Obrazy/c4_model/context_diagram.png}
+    \caption{Context Diagram}
+    \label{fig:my_label}
+\end{figure}
+
+\clearpage
+
+{\bf Diagram Container} - przedstawia kontenery zawierające komponenty aplikacji oraz opisuje ich rolę i wzajemne zależności.
+
+[WSTAW OBRAZEK]
+\clearpage
+
+{\bf Diagram Component} - prezentuje poszczególne komponenty aplikacji, ich interfejsy oraz wzajemne powiązania.
+
+[WSTAW OBRAZEK]
+\clearpage
+
+Model C4 okazał się niezwykle przydatnym narzędziem do opisu architektury naszej aplikacji selfimprovement.ai. Przeanalizowaliśmy składniki aplikacji oraz ich zależności na poziomach Context, Container i Component, co pozwoliło nam lepiej zrozumieć strukturę systemu. Diagramy Context, Container i Component były kluczowe w ułatwieniu komunikacji w zespole oraz planowaniu architektury i implementacji. Wnioski z zastosowania Modelu C4 przyczyniły się do bardziej efektywnego projektowania, rozwijania i utrzymywania aplikacji poprzez lepsze zarządzanie złożonością systemu oraz usprawnienie komunikacji w całym zespole programistycznym.
+\clearpage
 
 \subsection{Aplikacje front-endowe}
-React MUI?
+Frontend w kontekście aplikacji webowych odgrywa kluczową rolę, stanowiąc interfejs użytkownika, który jest pierwszym punktem kontaktu z aplikacją. Jest to warstwa, którą użytkownicy widzą i z nią interakcjonują, obejmująca prezentację danych oraz funkcjonalności, które umożliwiają użytkownikom wygodne korzystanie z aplikacji. Frontend musi być zarówno estetyczny, jak i intuicyjny, aby zapewnić pozytywne wrażenia użytkownika oraz skuteczną realizację celów aplikacji.
+
+Tworzenie frontendu to proces kompleksowy, który wymaga zrozumienia potrzeb użytkowników, projektowania interfejsu użytkownika oraz implementacji odpowiednich funkcjonalności. Współczesne technologie frontendowe, takie jak TypeScript, React i Material-UI (MUI), zapewniają programistom narzędzia i biblioteki umożliwiające efektywne tworzenie nowoczesnych i interaktywnych interfejsów użytkownika.
+
+W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w aplikacji webowej, skupiając się na roli i znaczeniu użytych przez nas technologii. Przeanalizujemy, jak te narzędzia mogą być wykorzystane w praktyce do projektowania i implementacji atrakcyjnych oraz funkcjonalnych interfejsów użytkownika. Poprzez zrozumienie procesu tworzenia frontendu oraz korzyści płynących z wykorzystania zaawansowanych technologii, będziemy mogli lepiej zrozumieć rolę frontendu w kontekście aplikacji webowych oraz skuteczniej realizować cele projektowe.
 
 \subsubsection{Opis bibliotek i frameworków}
 
+\begin{enumerate}
+
+\item {\bf JavaScript} - jest dynamicznym, interpretowanym językiem programowania, który jest powszechnie używany do tworzenia interaktywnych aplikacji internetowych. Jest to język skryptowy, który działa po stronie klienta (w przeglądarce internetowej), co umożliwia tworzenie interaktywnych elementów, animacji oraz obsługę zdarzeń. JavaScript jest niezbędny do implementacji funkcjonalności frontendowych, takich jak manipulacja DOM (Document Object Model), obsługa formularzy, walidacja danych oraz komunikacja z serwerem za pomocą asynchronicznych żądań AJAX.
+
+\item {\bf TypeScript} - to nadzbiór języka JavaScript, który dodaje statyczną typizację, co znacząco zwiększa bezpieczeństwo oraz czytelność kodu. Dzięki TypeScriptowi programiści mogą definiować typy danych oraz interfejsy, co ułatwia wykrywanie błędów podczas kompilacji. Ponadto, TypeScript oferuje bogate narzędzia do refaktoryzacji kodu oraz zapewnia lepsze wsparcie dla środowisk programistycznych, co przekłada się na wyższą produktywność i jakość aplikacji. Jego elastyczność i skalowalność czynią go popularnym wyborem przy tworzeniu aplikacji webowych o większej złożoności.
+
+\item {\bf React.js} - to biblioteka JavaScript stworzona przez Facebook (Meta), służąca do budowy interfejsów użytkownika. Dzięki Reactowi możliwe jest tworzenie aplikacji, które dynamicznie reagują na zmiany danych w czasie rzeczywistym, co przekłada się na szybkość i efektywność działania aplikacji. Centralnym konceptem w React jest tworzenie komponentów, które stanowią niezależne i niezawodne elementy interfejsu użytkownika.
+
+\item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika w aplikacjach webowych.
+
+\item {\bf SCSS} - jest preprocesorem CSS, który wprowadza dodatkowe funkcje i możliwości do standardowego języka CSS. Dzięki SCSS można pisać bardziej czytelny i łatwiejszy do zarządzania kod CSS poprzez zastosowanie zmiennych, zagnieżdżania, mixinów oraz funkcji. Zmienne pozwalają na definiowanie wartości, które mogą być wielokrotnie używane w kodzie, co ułatwia utrzymanie spójności wizualnej i szybką zmianę wyglądu całej aplikacji. Zagnieżdżanie umożliwia definiowanie stylów dla zagnieżdżonych elementów HTML, co sprawia, że kod jest bardziej zorganizowany i czytelny. Mixiny pozwalają na zdefiniowanie zestawów stylów, które mogą być używane wielokrotnie, co eliminuje powtarzalność kodu i ułatwia jego utrzymanie. Dodatkowo, SCSS oferuje możliwość korzystania z zaawansowanych funkcji matematycznych oraz logiki, co czyni go bardziej elastycznym i potężnym narzędziem przy tworzeniu zaawansowanych stylów CSS. Dzięki swojej popularności i wsparciu przez wiele narzędzi deweloperskich, SCSS stał się standardem w pracy nad projektami front-endowymi, umożliwiając programistom bardziej efektywne i produktywne tworzenie stylów dla aplikacji internetowych.
+
+\end{enumerate}
+
 \subsubsection{Przykłady implementacji}
+
+\begin{lstlisting}[language=Java, caption=Typescript example]
+interface User {
+  name: string;
+  id: number;
+}
+ 
+class UserAccount {
+  name: string;
+  id: number;
+ 
+  constructor(name: string, id: number) {
+    this.name = name;
+    this.id = id;
+  }
+}
+ 
+const user: User = new UserAccount("Murphy", 1);
+\end{lstlisting}
+
+\clearpage
 
 \subsection{Aplikacje back-endowe}
 
 \subsubsection{Opis bibliotek/szkielet}
 
 \subsubsection{Przykłady implementacji}
+\clearpage
 
 \subsection{Zastosowane praktyki bezpieczeństwa}

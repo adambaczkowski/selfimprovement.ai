@@ -3,8 +3,42 @@
 \usepackage[utf8]{inputenc}
 \usepackage{polski}
 \usepackage{graphicx}
-\usepackage{listings}
 \usepackage{tocloft}
+
+% ------------------------------------------------
+%formatowanie kodu
+\usepackage{listings}
+\usepackage{xcolor}
+
+% dodanie kolorów
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% definiowanie stylu kodu
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+% ------------------------------------------------
 
 % Ustawienia akapitów
 \setlength{\parindent}{1.5cm}

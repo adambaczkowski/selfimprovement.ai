@@ -52,7 +52,7 @@
 Rozwój modeli językowych, szczególnie za sprawą zaawansowanych technologii opartych na sztucznej inteligencji, wprowadził nowe możliwości w dziedzinie przetwarzania języka naturalnego. Jednym z kluczowych obszarów wykorzystania tych modeli jest prompt engineering, czyli kształtowanie i dostosowywanie zapytań (promptów) w celu uzyskania pożądanych odpowiedzi od modeli językowych. Niniejszy rozdział skupia się na analizie konkretnych przypadków użycia modeli językowych w kontekście prompt engineeringu.
 
 Przed przystąpieniem do analizy przypadków użycia istotne jest określenie modeli językowych, które będą poddane ocenie. W ramach niniejszej pracy magisterskiej skupimy się na modelach opartych na architekturze GPT (Generative Pre-trained Transformer), a w szczególności na, GPT-3.5,GPT-4, oraz Bard. Wybór tych modeli wynika z ich doskonałej zdolności do zrozumienia kontekstu, elastyczności w generowaniu tekstów oraz szerokiej gamy zastosowań w dziedzinie języka naturalnego.
-
+ 
 Analiza przypadków użycia rozpocznie się od szczegółowego zrozumienia procesu prompt engineeringu. Proces ten obejmuje identyfikację celu zapytania, dostosowanie struktury promptu, a także optymalizację parametrów modelu w celu uzyskania precyzyjnych i zadowalających wyników. Przeanalizujemy różne strategie prompt engineeringu, w tym zmiany w sformułowaniu pytań, manipulacje długością promptu oraz eksperymenty z parametrami kontekstowymi.
 
 \subsubsection{Projektowanie promptów}
@@ -67,6 +67,7 @@ Projektowanie prompt'ów jest kluczowym aspektem w tworzeniu efektywnych interak
 Każdy prompt, musi zostac tak zaprojektowany aby spełniał wymagania techniczne aplikacji.
 Aplikacja jest podzielona na wiele etapów gdzie użytkownik otrzymuje specjalnie przygotowane odpowiedzi w zależności od opcji, które wybierze.
 \\
+
 \noindent\textbf{Wybór Słów Kluczowych}
 
 Pierwszym etapem projektowania prompt'ów jest staranne dobranie słów kluczowych. Te słowa stanowią istotny element, który kieruje modelem językowym w odpowiednim kierunku. Analiza semantyczna i kontekstualna danego zadania jest kluczowa w identyfikacji słów, które mają kluczowe znaczenie dla uzyskania precyzyjnych odpowiedzi. W tym kontekście eksperymenty z różnymi formułowaniami pytań mogą prowadzić do odkrycia najbardziej efektywnych kombinacji słów kluczowych.
@@ -78,21 +79,67 @@ Struktura promptów odgrywa istotną rolę w wydobywaniu pożądanych informacji
 
 \subsubsection{Prompt security}
 
+{\bf Czym jest bezpieczeństwo promptów?}
+
+\noindent Bezpieczeństwo promptów dotyczy ochrony przed złośliwym wykorzystaniem duzych modeli językowych (LLM) poprzez manipulowanie promptami, czyli wejściami dostarczanymi modelowi. Ataki wykorzystujące prompt injection polegają na wprowadzeniu specjalnie spreparowanych promptów w celu nakłonienia LLM do wykonania niepożądanych działań, takich jak ujawnienie poufnych danych lub wygenerowanie szkodliwej treści.
+\\
+
+\noindent {\bf Rodzaje ataków na prompt security:}
+
+\begin{enumerate}
+\item {\bf Wstrzyknięcie promptu (Prompt Injection)}
+    - Podobnie do wstrzykiwania kodu SQL w aplikacjach webowych, ataki typu prompt injection polegają na przemyceniu złośliwych poleceń w prompcie. Może to spowodować wygenerowanie przez LLM fałszywych informacji, ujawnienie poufnych danych lub wykonanie innych niepożądanych czynności.
+\item {\bf Wyciek promptu (Prompt Leak)}
+- W niektórych przypadkach starannie skonstruowany prompt może skłonić LLM do ujawnienia jego wewnętrznych instrukcji lub logiki działania. Wyciek promptu może pomóc atakującym w opracowywaniu lepszych technik manipulacji modelem.
+\end{enumerate}
+
+{\bf Znaczenie bezpieczeństwa promptów}
+
+\noindent Bezpieczeństwo promptów jest kluczowe dla zapewnienia odpowiedzialnego rozwoju i wdrażania technologii GenAI. Chroni ono przed nadużyciami, które mogą mieć poważne konsekwencje, takie jak:
+
+\begin{enumerate}
+    \item {\bf Utrata danych poufnych}
+    - Wstrzyknięcie promptu może zmusić LLM do ujawnienia poufnych informacji, takich jak dane finansowe lub dane osobowe.
+    \item {\bf Dezinformacja i propaganda}
+    - Ataki mogą być wykorzystywane do generowania fałszywych wiadomości lub propagandy, która może wpływać na opinię publiczną.
+    \item {\bf Spam i phishing}
+    - Generatywne AI mogą być wykorzystywane do tworzenia masowych wiadomości spamowych lub realistycznych wiadomości phishingowych służących wyłudzaniu informacji.
+\end{enumerate}
+
+
+{\bf Rozwiązania bezpieczeństwa promptów}
+
+\noindent Firmy zajmujące się bezpieczeństwem cybernetycznym opracowują narzędzia i techniki wykrywania i zapobiegania atakom na prompt security. Niektóre z rozwiązań obejmują:
+
+\begin{enumerate}
+    \item {\bf Analizę i monitorowanie promptów} - Wykrywanie podejrzanych wzorców w promptach wprowadzanych do LLM.
+    \item {\bf Weryfikację danych wyjściowych} - Sprawdzanie, czy wygenerowane przez LLM dane są zgodne z oczekiwaniami i nie zawierają szkodliwych informacji.
+    \item {\bf Szkolenie LLM w zakresie bezpieczeństwa} - Opracowywanie modeli odpornych na manipulacje poprzez odpowiednie ich szkolenie.
+\end{enumerate}
+
+{\bf Wnioski}
+
+\noindent Bezpieczeństwo promptów to ważny, ale często pomijany aspekt rozwoju i wdrażania generatywnej sztucznej inteligencji. Wraz z ciągłym rozwojem technologii GenAI, konieczne jest opracowanie solidnych mechanizmów bezpieczeństwa w celu ochrony przed potencjalnymi zagrożeniami. Rozwiązania te zapewnią, że GenAI będzie wykorzystywana w sposób odpowiedzialny i przyniesie korzyści społeczeństwu.
+
+
 \subsubsection{Fine-tuning}
+Jest to modyfikowanie istniejących modeli językowych w celu dostosowania ich do konkretnego zadania lub zbioru danych, odgrywa kluczową rolę w dziedzinie uczenia maszynowego i przetwarzania języka naturalnego. Proces ten polega na dalszym trenowaniu modeli na specyficznych danych lub zadaniach, co pozwala na poprawę ich wydajności i skuteczności w konkretnych zastosowaniach. Fine-tuning modeli LLM może być stosowany do różnorodnych zadań, takich jak tłumaczenie maszynowe, generowanie tekstu, analiza sentymentu czy wykrywanie fraz kluczowych. W ten sposób możliwe jest dostosowanie ogólnych modeli językowych do specyficznych potrzeb użytkowników i zastosowań, co przyczynia się do poprawy jakości rezultatów oraz dostosowania modeli do konkretnego kontekstu biznesowego lub naukowego.
 
 \subsubsection{Large Language Models}
 Duże modele językowe (LLM) to zaawansowane algorytmy sztucznej inteligencji, które wykorzystują techniki głębokiego uczenia się i obszerne zbiory danych do generowania, podsumowywania i przewidywania nowych treści w języku naturalnym. Modele te, takie jak LLM oparte na transformatorach, są zaprojektowane tak, aby rozumieć relacje między słowami i frazami, umożliwiając im równoległe przetwarzanie całych sekwencji tekstu. Modele LLM są szkolone na ogromnych ilościach danych, zazwyczaj z miliardami parametrów, co pozwala im na dostarczanie dokładnych i szybkich odpowiedzi w różnych dziedzinach. LLM mają wiele zalet dla organizacji i użytkowników, w tym rozszerzalność, zdolność adaptacji, elastyczność, wysoką wydajność, dokładność i łatwość szkolenia. Można je dostosować do konkretnych przypadków użycia, wykonywać różne zadania i generować odpowiedzi z niskim opóźnieniem. Jednak LLM wiążą się również z wyzwaniami, takimi jak wysokie koszty rozwoju i operacyjne, potencjalna stronniczość danych szkoleniowych, brak możliwości wyjaśnienia wyników, ryzyko halucynacji (dostarczanie niedokładnych odpowiedzi) oraz złożoność ze względu na dużą liczbę parametrów. Modele te mają szeroki zakres zastosowań w dziedzinach takich jak technologia, opieka zdrowotna, obsługa klienta, marketing, prawo, bankowość i wiele innych. Mogą pomagać w zadaniach takich jak copywriting, odpowiadanie na pytania z bazy wiedzy, transformacja miejsca pracy i konwersacyjna sztuczna inteligencja. LLM zmieniają sposób, w jaki technologia wchodzi w interakcję z użytkownikami i są uważane za kluczowy element nowoczesnego krajobrazu cyfrowego, rewolucjonizując i ulepszając środowisko pracy.
 
-\subsubsection{Ranking Modeli}
+\subsubsection{Ranking Modeli???}
 
 \subsubsection{Etyka}
 Etyczne wykorzystanie modeli językowych oraz sztucznej inteligencji jest kluczowe w dzisiejszym świecie technologicznym. W kontekście rozwijających się Large Language Models (LLMs) i sztucznej inteligencji, istnieje konieczność uwzględnienia kwestii etycznych, moralnych oraz odpowiedzialnego podejścia do ich zastosowań. Modeli językowych, takich jak GPT-3.5 czy inne zaawansowane systemy AI, mogą generować treści, odpowiadać na pytania, tłumaczyć języki, czy nawet projektować. Jednakże, istnieje ryzyko, że te modele mogą przekazywać błędne informacje, szerzyć dezinformację, lub być źródłem treści szkodliwych. Dlatego ważne jest, aby organizacje i twórcy tych modeli dbali o uczciwość, transparentność, oraz odpowiedzialność za generowane treści. W kontekście etyki, istotne jest również zapewnienie, że modele językowe nie promują dyskryminacji, uprzedzeń, czy szkodliwych treści. Konieczne jest monitorowanie i regulacja sposobu, w jaki te modele są używane, aby zapewnić, że służą dobrobytowi społeczeństwa i nie naruszają praw człowieka. Ważne jest również, aby modele językowe były rozwijane z poszanowaniem prywatności danych, zapewnieniem bezpieczeństwa informacji oraz zgodności z przepisami dotyczącymi ochrony danych osobowych. Odpowiedzialne podejście do tworzenia i wykorzystywania modeli językowych jest kluczowe dla budowania zaufania społecznego do sztucznej inteligencji i technologii opartych na AI.
+\clearpage
 
 \subsection{Platformy chmurowe}
 
 \subsubsection{Opis platform}
 
 \subsubsection{Wybór - Plaforma Microsoft Azure}
+\clearpage
 
 \subsection{Wymagania funkcjonalne}
 
@@ -105,9 +152,60 @@ Etyczne wykorzystanie modeli językowych oraz sztucznej inteligencji jest kluczo
 \subsubsection{Sposób przechowywania danych}
 
 \subsubsection{Diagramy}
+\clearpage
 
 \subsection{Wymagania niefunkcjonalne}
+\begin{itemize}
+    \item[*] W przypadku gdy użytkownik korzysta z komputera stacjonarnego lub urządzenia mobilnego aplikacja powinna działać na jednej z powyższych przeglądarek: Google Chrome(wersja 95 i wyżej), Opera GX. 
+    \item[*] Aplikacja powinna poprawnie działać na serwerze aplikacyjnym z następującymi parametrami: procesor 8 rdzeni, 16 gb DDR4 pamięci operacyjnej RAM, przestrzeń dyskowa 128gb (SSD) na pliki, indeksy i skany. Rekomendowanym systemem operacyjnym jest Windows Server 2012 R2 lub nowszy.
+\end{itemize}
+\clearpage
 
 \subsection{Opis prototypów}
+Prototypy opracowane na etapie planowania całej aplikacji okazały się niezwykle pomocne w ustaleniu funkcjonalności oraz ogólnego zarysu aplikacji. Jednakże, po dokładnej analizie trendów dotyczących UX/UI oraz tematyki aplikacji, konieczne było wykonanie nowego aspektu wizualnego. Zmieniono kolorystykę oraz doprecyzowano wygląd poszczególnych komponentów, aby spełnić wymagania standardów UX/UI oraz zapewnić użytkownikom maksymalny komfort podczas korzystania z aplikacji. Ważnym celem było stworzenie projektu przyjaznego i intuicyjnego, a także spełnienie wymogów dotyczących dostępności. Wszystkie te aspekty zostały uwzględnione podczas projektowania i implementacji aplikacji.
 
+\hspace{4}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/prototypy/logowanie.png}
+    \caption{Prototyp ekranu logowania}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/prototypy/personalizacja_konta.png}
+    \caption{Prototyp ekranu personalizacji konta}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/prototypy/strona_startowa.png}
+    \caption{Prototyp strony startowej}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/prototypy/panel_zadania.png}
+    \caption{Prototyp panelu zadania}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/prototypy/kalendarz.png}
+    \caption{Prototyp kalendarza}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/prototypy/profil_uzytkownika.png}
+    \caption{Prototyp profilu użytkownika}
+    \label{fig:my_label}
+\end{figure}
+
+\clearpage
