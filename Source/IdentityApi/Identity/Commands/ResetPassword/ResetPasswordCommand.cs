@@ -15,9 +15,9 @@ public class ResetPasswordCommand : IRequest
 
 public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
 {
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<Models.User> _userManager;
 
-    public ResetPasswordCommandHandler(UserManager<User> userManager)
+    public ResetPasswordCommandHandler(UserManager<Models.User> userManager)
     {
         _userManager = userManager;
     }

@@ -8,15 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Libraries\LS.Common\LS.Common.csproj" />
     <ProjectReference Include="..\Libraries\LS.Startup\LS.Startup.csproj" />
     <ProjectReference Include="..\LS.Startup\LS.Startup.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="GoalTask\" />
+    <Folder Include="Goal\Validators\" />
     <Folder Include="Identity\Queries\" />
-    <Folder Include="User\Commands\" />
-    <Folder Include="User\Dtos\" />
-    <Folder Include="User\Queries\" />
     <Folder Include="User\Validators\" />
   </ItemGroup>
 

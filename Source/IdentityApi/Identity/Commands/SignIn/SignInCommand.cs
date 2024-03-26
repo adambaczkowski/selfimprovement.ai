@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using System.Text;
 using IdentityApi.Data;
-using IdentityApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -20,12 +19,12 @@ public class SignInCommand : IRequest<SignInResponse>
 public class SignInCommandHandler : IRequestHandler<SignInCommand, SignInResponse>
 {
     private readonly IdentityDbContext _context;
-    private readonly SignInManager<User> _signInManager;
-    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<Models.User> _signInManager;
+    private readonly UserManager<Models.User> _userManager;
     private readonly Token _token;
     private const string userNotAuthenticatedMessage = "Email or password was incorrect";
 
-    public SignInCommandHandler(IdentityDbContext context, SignInManager<User> signInManager, UserManager<User> userManager, IOptions<Token> tokenOptions)
+    public SignInCommandHandler(IdentityDbContext context, SignInManager<Models.User> signInManager, UserManager<Models.User> userManager, IOptions<Token> tokenOptions)
     {
         _context = context;
         _signInManager = signInManager;
@@ -64,7 +63,7 @@ public class SignInCommandHandler : IRequestHandler<SignInCommand, SignInRespons
         };
     }
     
-    private async Task<string> GenerateJwtToken(User user)
+    private async Task<string> GenerateJwtToken(Models.User user)
     {
         var roles = (await _userManager.GetRolesAsync(user));
         string role = roles.Count != 0 ? roles[0] : null;

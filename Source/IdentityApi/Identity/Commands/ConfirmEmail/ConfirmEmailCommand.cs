@@ -14,9 +14,9 @@ public class ConfirmEmailCommand : IRequest
 
 public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand>
 {
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<Models.User> _userManager;
 
-    public ConfirmEmailCommandHandler(UserManager<User> userManager)
+    public ConfirmEmailCommandHandler(UserManager<Models.User> userManager)
     {
         _userManager = userManager;
     }

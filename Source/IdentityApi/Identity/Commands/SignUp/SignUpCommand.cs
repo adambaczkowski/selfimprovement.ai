@@ -15,10 +15,10 @@ public class SignUpCommand : IRequest<SignUpResponse>
 
 public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpResponse>
 {
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<Models.User> _userManager;
     private readonly IIdentityEmailService _identityEmailService;
 
-    public SignUpCommandHandler(UserManager<User> userManager, IIdentityEmailService identityEmailService)
+    public SignUpCommandHandler(UserManager<Models.User> userManager, IIdentityEmailService identityEmailService)
     {
         _userManager = userManager;
         _identityEmailService = identityEmailService;
@@ -26,7 +26,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpRespons
 
     public async Task<SignUpResponse> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
-        var user = new User()
+        var user = new Models.User()
         {
             UserName = request.Email,
             Email = request.Email,

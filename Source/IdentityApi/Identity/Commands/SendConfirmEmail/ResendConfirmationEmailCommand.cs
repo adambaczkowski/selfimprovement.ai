@@ -15,10 +15,10 @@ public class ResendConfirmationEmailCommand : IRequest
 
 public class ResendConfirmationEmailCommandHandler : IRequestHandler<ResendConfirmationEmailCommand>
 {
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<Models.User> _userManager;
     private readonly IIdentityEmailService _identityEmailService;
 
-    public ResendConfirmationEmailCommandHandler(UserManager<User> userManager, IIdentityEmailService identityEmailService)
+    public ResendConfirmationEmailCommandHandler(UserManager<Models.User> userManager, IIdentityEmailService identityEmailService)
     {
         _userManager = userManager;
         _identityEmailService = identityEmailService;
