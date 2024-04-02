@@ -56,15 +56,6 @@ services:
           memory: 500M
     restart: always
 
-  wiki:
-    container_name: Wiki
-    build:
-      context: /Wiki
-      dockerfile: Dockerfile
-    ports:
-      - "1313:1313"
-    restart: always
-
   open-webui:
     container_name: open-webui
     build:

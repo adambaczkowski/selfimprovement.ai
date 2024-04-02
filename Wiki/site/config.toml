@@ -1,5 +1,0 @@
-baseURL = 'http://example.org/'
-languageCode = 'en-us'
-title = 'WIKI Selfimprovement.ai'
-
-theme = "ace-documentation"
