@@ -1,14 +1,10 @@
-﻿using IdentityApi.Goal.Commands.CreateGoal;
-using IdentityApi.Goal.Dtos;
-using IdentityApi.Identity.Commands;
-using IdentityApi.Identity.Commands.RequestPasswordReset;
-using IdentityApi.Identity.Commands.SendConfirmEmail;
-using IdentityApi.User.Dtos;
+﻿using GoalApi.Goal.Commands.CreateGoal;
+using GoalApi.Goal.Dtos;
 using LS.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityApi.Controllers;
+namespace GoalApi.Controllers;
 
 
 [Route("api/Goal")]

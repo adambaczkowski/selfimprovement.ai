@@ -1,20 +1,22 @@
 ﻿using System.Linq.Expressions;
-using IdentityApi.Models;
+using GoalApi.Data;
+using GoalApi.Models;
 using LS.Common;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityApi.Data;
+namespace GoalApi.Data;
 
-public class GoalRepository : IGenericRepository<Models.Goal>
+public class GoalRepository : IGenericRepository<Goal>
 {
-    private readonly IdentityDbContext _dbContext;
+    private readonly GoalDbContext _dbContext;
 
-    public GoalRepository(IdentityDbContext dbContext)
+    public GoalRepository(GoalDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public IEnumerable<Models.Goal> GetAll()
+    public IEnumerable<Goal> GetAll()
     {
         throw new NotImplementedException();
     }

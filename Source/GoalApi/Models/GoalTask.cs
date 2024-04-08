@@ -1,6 +1,6 @@
 ﻿using LS.Common;
 
-namespace IdentityApi.Models;
+namespace GoalApi.Models;
 
 public class GoalTask : IEntity
 {

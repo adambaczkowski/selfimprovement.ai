@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using IdentityApi.Goal.Dtos;
 using LS.Common;
 using MediatR;
 
-namespace IdentityApi.Goal.Commands.CreateGoal;
+namespace GoalApi.Goal.Commands.CreateGoal;
 
 public class DeleteGoalCommand : IRequest
 {
@@ -19,11 +18,9 @@ public class DeleteGoalCommandHandler : IRequestHandler<DeleteGoalCommand>
         _goalRepository = goalRepository;
     }
 
-    public async Task<Unit> Handle(DeleteGoalCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteGoalCommand request, CancellationToken cancellationToken)
     {
         _goalRepository.Remove(request.GoalId);
         await _goalRepository.SaveAsync();
-
-        return Unit.Value;
     }
 }

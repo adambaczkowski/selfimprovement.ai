@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using IdentityApi.Goal.Dtos;
+using GoalApi.Goal.Dtos;
 using LS.Common;
 using MediatR;
 
-namespace IdentityApi.Goal.Commands.CreateGoal;
+namespace GoalApi.Goal.Commands.CreateGoal;
 
 public class CreateGoalCommand : IRequest<GoalDto>
 {

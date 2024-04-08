@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using IdentityApi.Goal.Commands.CreateGoal;
-using IdentityApi.Goal.Dtos;
+using GoalApi.Goal.Commands.CreateGoal;
+using GoalApi.Goal.Dtos;
 
-namespace IdentityApi.Goal.Mappings;
+namespace GoalApi.Goal.Mappings;
 
 public class GoalMappingProfile : Profile
 {

@@ -1,12 +1,12 @@
 ﻿using LS.Common;
 
-namespace IdentityApi.Models;
+namespace GoalApi.Models;
 
 public class Goal : IEntity
 {
     public Guid Id { get; init; }
     public string UserId { get; init; }
-    public User User { get; set; } 
+    public UserEntity User { get; set; } 
     
     public string Category { get; init; }
     public string TimeAvailability { get; init; }

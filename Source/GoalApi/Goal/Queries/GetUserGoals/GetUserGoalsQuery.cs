@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using IdentityApi.Goal.Dtos;
+using GoalApi.Goal.Dtos;
 using LS.Common;
 using MediatR;
 
-namespace IdentityApi.Goal.Queries.GetUserGoals;
+namespace GoalApi.Goal.Queries.GetUserGoals;
 
 public class GetUserGoalsQuery : IRequest<List<GoalDto>>
 {

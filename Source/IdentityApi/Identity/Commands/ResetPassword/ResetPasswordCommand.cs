@@ -22,7 +22,7 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
         _userManager = userManager;
     }
 
-    public async Task<Unit> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
@@ -37,7 +37,5 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
         {
             throw new ApiException(string.Join(Environment.NewLine, result.Errors.Select(err => $"{err.Code}: {err.Description}")), "500");
         }
-        
-        return Unit.Value;
     }
 }

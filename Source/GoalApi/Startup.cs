@@ -1,17 +1,11 @@
 ﻿using System.Reflection;
-using IdentityApi.Data;
-using IdentityApi.Identity.Services;
-using IdentityApi.Messaging.Http;
-using IdentityApi.Models;
-using IdentityApi.Services;
+using GoalApi.Data;
+using GoalApi.Models;
 using LS.Common;
 using LS.Startup;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityApi;
+namespace GoalApi;
 
 public class Startup
 {
@@ -27,22 +21,17 @@ public class Startup
         services.AddControllers();
         services.AddHealthChecks();
         services
-            .AddSwagger(_configuration, "identity")
+            .AddSwagger(_configuration, "goal")
             .AddDefaultCorsPolicy(_configuration["CorsOrigin"])
             .AddHttpContextAccessor();
-        services.AddHttpClient<IPromptClient, HttpPromptClient>();
-        services.AddIdentity<Models.User, IdentityRole>().AddEntityFrameworkStores<IdentityDbContext>();
-        services.AddDbContext<IdentityDbContext>(options =>
-        {
-            options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
-        });
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
-        services.AddScoped<IIdentityEmailService, IdentityEmailService>();
-        services.AddScoped<IGenericRepository<Models.User>, UserRepository>();
-        services.AddScoped<IGenericRepository<UserProfile>, UserProfileRepository>();
-        services.AddScoped<IEmailSender, EmailSender>();
+        services.AddScoped<IGenericRepository<Goal>, GoalRepository>();
+        services.AddDbContext<GoalDbContext>(options =>
+        {
+            options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
+        });
         services.AddAuthorization();
         services.AddAuthentication();
     }
@@ -59,12 +48,10 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
-
-        //app.ApplyMigrations();
-        // app.UseApplicationDatabase<IdentityDbContext>();
+        
         app
             .UseCors("default")
-            .UseSwagger(_configuration, "Identity");
+            .UseSwagger(_configuration, "Goal");
         app.MapHealthChecks();
     }
 }
