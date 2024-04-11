@@ -5,6 +5,8 @@ using IdentityApi.Messaging.Http;
 using IdentityApi.Models;
 using IdentityApi.Services;
 using LS.Common;
+using LS.Messaging;
+using LS.ServiceClient;
 using LS.Startup;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +45,8 @@ public class Startup
         services.AddScoped<IGenericRepository<Models.User>, UserRepository>();
         services.AddScoped<IGenericRepository<UserProfile>, UserProfileRepository>();
         services.AddScoped<IEmailSender, EmailSender>();
+        services.Register(_configuration);
+        services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
         services.AddAuthorization();
         services.AddAuthentication();
     }

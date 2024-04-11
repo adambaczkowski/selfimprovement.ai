@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoalApi.Data;
 
-public class GoalRepository : IGenericRepository<Goal>
+public class GoalRepository : IGenericRepository<Models.Goal>
 {
     private readonly GoalDbContext _dbContext;
 
@@ -16,7 +16,7 @@ public class GoalRepository : IGenericRepository<Goal>
         _dbContext = dbContext;
     }
 
-    public IEnumerable<Goal> GetAll()
+    public IEnumerable<Models.Goal> GetAll()
     {
         throw new NotImplementedException();
     }

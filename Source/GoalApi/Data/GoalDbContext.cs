@@ -13,11 +13,11 @@ public class GoalDbContext : DbContext
     {
     }
     
-    public virtual DbSet<Goal> Goals { get; set; }
+    public virtual DbSet<Models.Goal> Goals { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Goal>(entity =>
+        modelBuilder.Entity<Models.Goal>(entity =>
         {
             entity.HasKey(x => x.Id);
             entity.HasMany<GoalTask>()

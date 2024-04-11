@@ -10,7 +10,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -21,10 +20,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Libraries\LS.Common\LS.Common.csproj" />
+      <ProjectReference Include="..\Libraries\LS.Messaging\LS.Messaging.csproj" />
+      <ProjectReference Include="..\Libraries\LS.ServiceClient\LS.ServiceClient.csproj" />
       <ProjectReference Include="..\Libraries\LS.Startup\LS.Startup.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Calendar\" />
       <Folder Include="GoalTask\" />
       <Folder Include="Goal\Validators\" />
     </ItemGroup>

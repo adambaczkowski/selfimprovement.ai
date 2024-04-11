@@ -2,6 +2,8 @@
 using GoalApi.Data;
 using GoalApi.Models;
 using LS.Common;
+using LS.Messaging;
+using LS.ServiceClient;
 using LS.Startup;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,14 +26,16 @@ public class Startup
             .AddSwagger(_configuration, "goal")
             .AddDefaultCorsPolicy(_configuration["CorsOrigin"])
             .AddHttpContextAccessor();
-        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-        services.AddMediatR(cfg =>
-            cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
-        services.AddScoped<IGenericRepository<Goal>, GoalRepository>();
         services.AddDbContext<GoalDbContext>(options =>
         {
             options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
         });
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
+        services.AddScoped<IGenericRepository<Models.Goal>, GoalRepository>();
+        services.Register(_configuration);
+        services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
         services.AddAuthorization();
         services.AddAuthentication();
     }
