@@ -3,6 +3,7 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import TaskPage from "./pages/TaskPage/TaskPage";
+import ProfileCreationPage from "./pages/ProfileCreationPage/ProfileCreationPage";
 import ResendEmailConfirmationPage from "./pages/ResendEmailConfirmationPage/ResendEmailConfirmationPage";
 import { RequestPasswordResetPage } from "./pages/RequestPasswordResetPage/RequestPasswordResetPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage/ConfirmEmailPage";
@@ -39,6 +40,10 @@ const Routes = ({}: Props) => {
     {
       path: "/task",
       element: <TaskPage />,
+    },
+    {
+      path: "/profileCreation",
+      element: <ProfileCreationPage />,
     },
   ]);
 
