@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace LS.Common
 {
     public interface IGenericRepository<T> where T : class
     {
+        IQueryable<T> GetQuery();
         IEnumerable<T> GetAll();
         Task<List<T>> GetAllAsync();
         T GetById(Guid id);

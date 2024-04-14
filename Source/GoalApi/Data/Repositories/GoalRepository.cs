@@ -1,11 +1,8 @@
 ﻿using System.Linq.Expressions;
-using GoalApi.Data;
-using GoalApi.Models;
 using LS.Common;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoalApi.Data;
+namespace GoalApi.Data.Repositories;
 
 public class GoalRepository : IGenericRepository<Models.Goal>
 {
@@ -14,6 +11,11 @@ public class GoalRepository : IGenericRepository<Models.Goal>
     public GoalRepository(GoalDbContext dbContext)
     {
         _dbContext = dbContext;
+    }
+
+    public IQueryable<Models.Goal> GetQuery()
+    {
+        throw new NotImplementedException();
     }
 
     public IEnumerable<Models.Goal> GetAll()
@@ -65,7 +67,7 @@ public class GoalRepository : IGenericRepository<Models.Goal>
 
     public void Update(in Models.Goal sender)
     {
-        throw new NotImplementedException();
+        _dbContext.Update(sender).State = EntityState.Modified;
     }
 
     public int Save()

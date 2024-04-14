@@ -26,8 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Calendar\" />
-      <Folder Include="GoalTask\" />
       <Folder Include="Goal\Validators\" />
     </ItemGroup>
 

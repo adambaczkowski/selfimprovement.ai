@@ -10,5 +10,6 @@ public class GoalMappingProfile : Profile
     {
         CreateMap<CreateGoalCommand, Models.Goal>();
         CreateMap<Models.Goal, GoalDto>();
+        CreateMap<Models.Goal, GoalDetailsDto>();
     }
 }

@@ -29,7 +29,7 @@ public class CreateGoalCommandHandler : IRequestHandler<CreateGoalCommand, GoalD
     public async Task<GoalDto> Handle(CreateGoalCommand request, CancellationToken cancellationToken)
     {
         var goal = _mapper.Map<Models.Goal>(request);
-        _goalRepository.Update(goal);
+        _goalRepository.Add(goal);
         await _goalRepository.SaveAsync();
         
         return _mapper.Map<GoalDto>(goal);

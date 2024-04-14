@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using GoalApi.Data;
+using GoalApi.Data.Repositories;
 using GoalApi.Models;
 using LS.Common;
 using LS.Messaging;
@@ -34,6 +35,7 @@ public class Startup
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
         services.AddScoped<IGenericRepository<Models.Goal>, GoalRepository>();
+        services.AddScoped<IGenericRepository<Models.GoalTask>, GoalTaskRepository>();
         services.Register(_configuration);
         services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
         services.AddAuthorization();

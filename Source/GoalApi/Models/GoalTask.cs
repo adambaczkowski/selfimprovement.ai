@@ -9,5 +9,6 @@ public class GoalTask : IEntity
     public Goal Goal { get; init; }
     public string Content { get; init; }
     public DateTime EstimatedDuration { get; init; }
-    public bool IsCompleted { get; init; }
+    public bool IsCompleted { get; set; }
+    public DateTime Date { get; set; }
 }

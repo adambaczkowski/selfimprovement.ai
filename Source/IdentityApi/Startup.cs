@@ -32,7 +32,6 @@ public class Startup
             .AddSwagger(_configuration, "identity")
             .AddDefaultCorsPolicy(_configuration["CorsOrigin"])
             .AddHttpContextAccessor();
-        services.AddHttpClient<IPromptClient, HttpPromptClient>();
         services.AddIdentity<Models.User, IdentityRole>().AddEntityFrameworkStores<IdentityDbContext>();
         services.AddDbContext<IdentityDbContext>(options =>
         {

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Data.Entity;
+using AutoMapper;
 using GoalApi.Goal.Dtos;
 using LS.Common;
 using MediatR;
@@ -7,7 +8,7 @@ namespace GoalApi.Goal.Queries.GetUserGoals;
 
 public class GetUserGoalsQuery : IRequest<List<GoalDto>>
 {
-    
+    public Guid UserId { get; init; }
 }
 
 public class GetUserGoalsQueryHandler : IRequestHandler<GetUserGoalsQuery, List<GoalDto>>
@@ -23,7 +24,10 @@ public class GetUserGoalsQueryHandler : IRequestHandler<GetUserGoalsQuery, List<
 
     public async Task<List<GoalDto>> Handle(GetUserGoalsQuery request, CancellationToken cancellationToken)
     {
-        var goals = await _goalRepository.GetAllAsync();
+        var goals = await _goalRepository.GetQuery()
+            .Where(x => x.UserId == request.UserId)
+            .ToListAsync(cancellationToken);
+        
         return _mapper.Map<List<GoalDto>>(goals);
     }
 }
