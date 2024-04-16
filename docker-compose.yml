@@ -37,6 +37,8 @@ services:
       - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./Nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./Nginx/index.html:/usr/share/nginx/html/index.html
+    env_file:
+      - ./.env/dev.env
 
   identity:
     container_name: grindr-identity
