@@ -24,7 +24,7 @@ public class ResendConfirmationEmailCommandHandler : IRequestHandler<ResendConfi
         _identityEmailService = identityEmailService;
     }
 
-    public async Task<Unit> Handle(ResendConfirmationEmailCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ResendConfirmationEmailCommand request, CancellationToken cancellationToken)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
@@ -33,6 +33,5 @@ public class ResendConfirmationEmailCommandHandler : IRequestHandler<ResendConfi
         }
 
         await _identityEmailService.SendConfirmationEmail(user, WebExtensions.origin);
-        return Unit.Value;
     }
 }

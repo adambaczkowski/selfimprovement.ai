@@ -21,7 +21,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand>
         _userManager = userManager;
     }
 
-    public async Task<Unit> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
@@ -44,7 +44,5 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand>
         { 
            throw new ApiException("Something went wrong", StatusCodes.Status500InternalServerError.ToString());
         }
-        
-        return Unit.Value;
     }
 }

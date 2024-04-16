@@ -14,6 +14,11 @@ public class UserProfileRepository : IGenericRepository<UserProfile>
         _dbContext = dbContext;
     }
 
+    public IQueryable<UserProfile> GetQuery()
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<UserProfile> GetAll()
     {
         throw new NotImplementedException();

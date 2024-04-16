@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using LS.Messaging;
+using LS.ServiceClient;
 using LS.Startup;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +22,8 @@ public class Startup
             .AddSwagger(_configuration, "identity")
             .AddDefaultCorsPolicy(_configuration["CorsOrigin"])
             .AddHttpContextAccessor();
+        services.Register(_configuration);
+        services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

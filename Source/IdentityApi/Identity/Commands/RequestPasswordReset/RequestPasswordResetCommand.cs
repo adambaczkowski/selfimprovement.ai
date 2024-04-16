@@ -25,7 +25,7 @@ public class RequestPasswordResetCommandHandler : IRequestHandler<RequestPasswor
         _identityEmailService = identityEmailService;
     }
 
-    public async Task<Unit> Handle(RequestPasswordResetCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RequestPasswordResetCommand request, CancellationToken cancellationToken)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
@@ -34,6 +34,5 @@ public class RequestPasswordResetCommandHandler : IRequestHandler<RequestPasswor
         }
 
         await _identityEmailService.SendPasswordResetEmail(user, WebExtensions.origin);
-        return Unit.Value;
     }
 }

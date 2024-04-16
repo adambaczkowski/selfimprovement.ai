@@ -12,6 +12,11 @@ public class UserRepository : IGenericRepository<Models.User>
     }
 
 
+    public IQueryable<Models.User> GetQuery()
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<Models.User> GetAll()
     {
         throw new NotImplementedException();
