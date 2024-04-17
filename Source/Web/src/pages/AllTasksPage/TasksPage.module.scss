@@ -1,0 +1,62 @@
+.taskStyled {
+  position: relative;
+  padding: 2rem;
+  width: 90%;
+  background-color: rgba(245, 229, 229, 0.9); /* Assuming $colorBg2 is defined elsewhere */
+  border: 2px solid rgba(173, 89, 89, 0.9); /* Assuming $borderColor2 is defined elsewhere */
+  border-radius: 1rem;
+  height: 100%;
+  margin-left: 40px;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  .btn-rounded {
+    position: fixed;
+    top: 4.9rem;
+    right: 5.1rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+
+    background-color: yellow; /* Assuming $colorBg is defined elsewhere */
+    border: 2px solid black; /* Assuming $borderColor2 is defined elsewhere */
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+    color: grey; /* Assuming $colorGrey2 is defined elsewhere */
+    font-size: 1.4rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 768px) {
+      top: 3rem;
+      right: 3.5rem;
+    }
+  }
+
+  .tasks {
+    margin: 2rem 0;
+  }
+
+  > h1 {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 800;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 3rem;
+      height: 0.2rem;
+      background-color: rgb(128, 36, 0); /* Assuming $colorPrimaryGreen is defined elsewhere */
+      border-radius: 0.5rem;
+    }
+  }
+
+}

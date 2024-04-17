@@ -1,0 +1,59 @@
+// TaskItem.module.scss
+
+.TaskItemStyled {
+  padding: 1.2rem 1rem;
+  border-radius: 1rem;
+  background-color: rgba(221, 184, 184, 0.9);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  margin: 20px;
+
+  height: 16rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .date {
+    margin-top: auto;
+  }
+
+  > h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .task_footer {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    button {
+      border: none;
+      outline: none;
+      cursor: pointer;
+
+      i {
+        font-size: 1.4rem;
+        color: gey; // Assuming $colorGrey2 is defined elsewhere
+      }
+    }
+
+    .edit {
+      margin-left: auto;
+    }
+
+    .completed,
+    .incomplete {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      font-weight: bold;
+      background: rgba(226, 107, 107, 0.9); // Assuming $colorDanger is defined elsewhere
+      border-radius: 30px;
+      color : rgba(65, 61, 61, 0.9);
+    }
+
+    .completed {
+      background: rgba(131, 226, 107, 0.9) !important; // Assuming $colorGreenDark is defined elsewhere
+    }
+  }
+}
