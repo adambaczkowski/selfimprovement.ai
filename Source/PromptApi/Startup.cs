@@ -3,6 +3,7 @@ using LS.Messaging;
 using LS.ServiceClient;
 using LS.Startup;
 using Microsoft.EntityFrameworkCore;
+using PromptApi.Data;
 
 namespace PromptApi;
 
@@ -17,13 +18,21 @@ public class Startup
     // This method gets called by the runtime. Use this method to add serices to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddControllers();
         services.AddHealthChecks();
         services
-            .AddSwagger(_configuration, "identity")
+            .AddSwagger(_configuration, "prompt")
             .AddDefaultCorsPolicy(_configuration["CorsOrigin"])
             .AddHttpContextAccessor();
+        services.AddDbContext<PromptDbContext>(options =>
+        {
+            options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
+        });
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
         services.Register(_configuration);
-        services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
+        //services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,12 +44,11 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
-
-        //_container.UseApplicationDatabase<IdentityDbContext>();
+        
         Assembly[] assemblies = { typeof(Startup).Assembly };
         app
             .UseCors("default")
-            .UseSwagger(_configuration, "Identity");
+            .UseSwagger(_configuration, "Prompt");
         app.MapHealthChecks();
     }
 }

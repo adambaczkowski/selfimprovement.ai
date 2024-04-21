@@ -1,29 +1,29 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 as base
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8084
+EXPOSE 8085
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS identity-restore
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS goal-restore
 WORKDIR /src
-COPY IdentityApi/IdentityApi.csproj ./IdentityApi/IdentityApi.csproj
+COPY GoalApi/GoalApi.csproj ./GoalApi/GoalApi.csproj
 COPY ./Libraries/LS.Startup/*.csproj ./
 COPY ./Libraries/LS.Common/*.csproj ./
 COPY ./Libraries/LS.Messaging/*.csproj ./
 COPY ./Libraries/LS.ServiceClient/*.csproj ./
 RUN for i in *csproj; do mkdir -p Libraries/${i%.*} && mv $i ./Libraries/${i%.*}/$i; done
-RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=cache,target=/root/.local/share/NuGet/v3-cache --mount=type=cache,target=/root/.local/share/NuGet/plugins-cache --mount=type=cache,target=/tmp/NuGetScratch dotnet restore IdentityApi/IdentityApi.csproj
+RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=cache,target=/root/.local/share/NuGet/v3-cache --mount=type=cache,target=/root/.local/share/NuGet/plugins-cache --mount=type=cache,target=/tmp/NuGetScratch dotnet restore GoalApi/GoalApi.csproj
 
-FROM identity-restore AS identity-libraries
+FROM goal-restore AS goal-libraries
 COPY Libraries/ ./Libraries/
 
-FROM identity-libraries AS identity-sources
-COPY IdentityApi IdentityApi
+FROM goal-libraries AS goal-sources
+COPY GoalApi GoalApi
 
-FROM identity-sources AS identity-debug-publish
-RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=cache,target=/root/.local/share/NuGet/v3-cache --mount=type=cache,target=/root/.local/share/NuGet/plugins-cache --mount=type=cache,target=/tmp/NuGetScratch dotnet publish -c Debug -o /app --no-restore IdentityApi/IdentityApi.csproj
+FROM goal-sources AS goal-debug-publish
+RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=cache,target=/root/.local/share/NuGet/v3-cache --mount=type=cache,target=/root/.local/share/NuGet/plugins-cache --mount=type=cache,target=/tmp/NuGetScratch dotnet publish -c Debug -o /app --no-restore GoalApi/GoalApi.csproj
 
 FROM base as final
 WORKDIR /app
-COPY --from=identity-debug-publish /app .
+COPY --from=goal-debug-publish /app .
 
-ENTRYPOINT ["dotnet", "IdentityApi.dll"]
+ENTRYPOINT ["dotnet", "GoalApi.dll"]

@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=selfimprovement123$
+      - POSTGRES_PASSWORD=selfimprovement123
       - POSTGRES_DB=postgres
     ports:
       - 5432:5432
@@ -22,7 +22,7 @@ services:
     restart: always
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
-      - PGADMIN_DEFAULT_PASSWORD=selfimprovement123$
+      - PGADMIN_DEFAULT_PASSWORD=selfimprovement123
     ports:
       - "5050:80"
 
@@ -39,12 +39,12 @@ services:
       - ./Nginx/index.html:/usr/share/nginx/html/index.html
 
   identity:
-    container_name: grindr-identity
+    container_name: selfimprovement-identity
     build:
-      context: /Source
+      context: ./Source
       dockerfile: IdentityApi/Dockerfile.local
     environment:
-      - ConnectionStrings__GrindrDbContext=Server=db;Database=GrindrDb;User=test;Password=The_Password;MultipleActiveResultSets=True;TrustServerCertificate=True
+      - ConnectionStrings__SelfImprovementDbContext=Server=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
     ports:
       - "8080:8080"
@@ -56,10 +56,46 @@ services:
           memory: 500M
     restart: always
 
+  goal:
+    container_name: selfimprovement-goal
+    build:
+      context: ./Source
+      dockerfile: GoalApi/Dockerfile.local
+    environment:
+      - ConnectionStrings__SelfImprovementDbContext=Server=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
+      - CorsOrigin=http://localhost:3000
+    ports:
+      - "8084:8084"
+      - "8085:8085"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+    restart: always
+
+  prompt:
+    container_name: selfimprovement-prompt
+    build:
+      context: ./Source
+      dockerfile: PromptApi/Dockerfile.local
+    environment:
+      - ConnectionStrings__SelfImprovementDbContext=Server=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
+      - CorsOrigin=http://localhost:3000
+    ports:
+      - "8082:8082"
+      - "8083:8083"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+    restart: always
+
   open-webui:
     container_name: open-webui
     build:
-      context: /Ollama
+      context: ./Ollama
       dockerfile: Dockerfile
     ports:
       - "3001:8080"
@@ -70,7 +106,7 @@ services:
   mailhog:
     container_name: mailhog
     build:
-      context: /Mail
+      context: ./Mail
       dockerfile: Dockerfile
     ports:
       - "1025:1025"
