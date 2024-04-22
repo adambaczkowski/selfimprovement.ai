@@ -1,0 +1,70 @@
+{
+  "users": [
+    {
+      "name": "guest",
+      "password": "guest",
+      "tags": "none"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "guest",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [],
+  "policies": [
+    {
+      "vhost": "/",
+      "name": "mirrorqueues",
+      "apply-to": "queues",
+      "pattern":"^.*",
+      "definition": {
+        "ha-mode":"exactly",
+        "ha-params":2,
+        "ha-sync-mode":"automatic"
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "custom.myexchange1",
+      "vhost": "/",
+      "type": "fanout",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "custom.myqueue1",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "",
+        "x-dead-letter-routing-key": ""
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "source": "custom.myexchange1",
+      "vhost": "/",
+      "destination": "custom.myqueue1",
+      "destination_type": "queue",
+      "routing_key": "test123",
+      "arguments": {}
+    }
+  ]
+}

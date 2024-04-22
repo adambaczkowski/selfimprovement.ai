@@ -111,6 +111,15 @@ services:
     ports:
       - "9100:9100"
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.9.9-management
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # Management Plugin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -122,6 +131,7 @@ services:
         - open-webui
         - mailhog
         - grafana
+        - rabbitmq
     ports:
       - "80:80"
       #- "443:443"
@@ -133,3 +143,4 @@ services:
 
 volumes:
   open-webui:
+  rabbitmq_data:
