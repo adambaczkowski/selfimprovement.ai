@@ -37,7 +37,7 @@ public class Startup
         services.AddScoped<IGenericRepository<Models.Goal>, GoalRepository>();
         services.AddScoped<IGenericRepository<Models.GoalTask>, GoalTaskRepository>();
         services.Register(_configuration);
-        services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
+        //services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
         services.AddAuthorization();
         services.AddAuthentication();
     }
