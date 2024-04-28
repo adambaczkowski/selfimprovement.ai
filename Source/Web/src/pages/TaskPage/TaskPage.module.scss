@@ -1,21 +1,28 @@
 @import './../../styles/componentsStylingIndex.scss';
 
 .center_container {
+  justify-content: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  gap: 2rem;
+  margin-top: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.extended_go_back_button {
+  @extend .go_back_button;
+  margin-top: 0.3rem;
 }
 
 .info_heading,
 .info_subheading {
-  color: #000000;
+  color: $header-container-text;
   text-align: center;
 }
 
 .info_subheading {
   font-size: 1.2rem;
+  color: $body-container-text;
 }
 
 .glass_container {

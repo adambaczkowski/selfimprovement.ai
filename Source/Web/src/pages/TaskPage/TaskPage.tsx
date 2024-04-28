@@ -1,6 +1,6 @@
-import React, {useState, useEffect } from "react";
+import {useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { LoadingCircle, DailyTaskList } from "../../components/componentsIndex"
 import styles from './TaskPage.module.scss';
@@ -32,18 +32,20 @@ function TaskPage({}: Props) {
 
   return (
     <div className={styles.background_container}>
-        <Link className={styles.go_back_button} to='/tasks'>
-          <ArrowBackIcon />
-        </Link>
-        <Paper elevation={3} className={styles.glass_container}>
+      <Link className={styles.extended_go_back_button} to='/tasks'>
+        <ArrowBackIcon />
+      </Link>
+      <div className={styles.center_container}>
+        <div className={styles.glass_container}>
           <Typography variant="h5" className={styles.info_heading}>
             {dailyTask.weekTitle}
           </Typography>
           <Typography className={styles.info_subheading}>
             {dailyTask.date}:
           </Typography>
-        </Paper>
+        </div>
         <DailyTaskList items={dailyTask.tasks} />
+      </div>
     </div>
   );
 }

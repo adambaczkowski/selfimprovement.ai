@@ -10,16 +10,16 @@ $box-shadow:#497dad62;
 $border: #352740;
 
 // Headers
-$header-text: #000000;
-$header-container-text: #ffffff;
+$header-text: rgb(66, 66, 85);
+$header-container-text: rgb(236, 236, 255);
 
-.section_header {
-  color: $header-text;
-}
+// Body text
+$body-container-text: rgb(32, 32, 39);
 
 //Buttons
 $completed-button:rgb(229, 229, 238);
 $incompleted-button:rgb(122, 122, 146);
+$completed-button-text:rgba(65, 61, 61, 0.9);
 
 $go-back-button:rgb(170, 170, 199);
 $go-back-button-on-hover:rgb(110, 110, 129);

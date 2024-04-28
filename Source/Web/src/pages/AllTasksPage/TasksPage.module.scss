@@ -28,6 +28,7 @@
 .header {
   position: relative;
   display: inline-block; /* Ensure the line only spans the width of the text */
+  color: $header-text;
 }
 
 .header::after {

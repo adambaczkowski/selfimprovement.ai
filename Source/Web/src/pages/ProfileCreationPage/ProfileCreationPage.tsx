@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Formik } from "formik";
-import { CustomButton, FormTextInput, FormSelectInput } from "../../components/componentsIndex"
+import { FormTextInput, FormSelectInput } from "../../components/componentsIndex"
 import { ProfileCreationCommand } from "../../utils/api/identity";
 import { EducationLevel } from "../../utils/enums/educationLevel";
 import { profileCreationFormValidation } from "./profileCreationFormValidationSchema";
@@ -51,37 +51,38 @@ function ProfileCreationPage({}: Props) {
   }
 
   return (
-    <div className="">
+    <div className={styles.background_container}>
+      <div className={styles.extended_background_container}>
         <Formik
-        initialValues={creationProfileInitialValues}
-        onSubmit={(values) => {
-          handleSignUp(values);
-        }}
-        validationSchema={null /*profileCreationFormValidation*/}
-        validateOnChange={false}
-        validateOnBlur={false}
-      >
-        <div className={styles.glassContainer}>
-          <Form>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-              <h1 style={{color: "rgba(202, 105, 105, 0.9)"}}>PROFILE CREATOR</h1>
-              <FormTextInput label="Name" name="name" />
-              <FormTextInput label="Surname" name="surname" />
-              <FormTextInput label="Weight" name="weight" />
-              <FormTextInput label="Height" name="height" />
-              <FormTextInput label="Age" name="age" />
-              <FormSelectInput
-                label="Education Level"
-                name="educationLevel"
-                value={EducationLevel.Primary}
-                options={educationOptions}
-              />
-              {/* <CustomButton text="Submit" type="submit" /> */}
-              <Link to={"/profileCreation"}>Create</Link>
-            </div>
-          </Form>
-        </div>
-      </Formik>
+          initialValues={creationProfileInitialValues}
+          onSubmit={(values) => {
+            handleSignUp(values);
+          }}
+          validationSchema={null /*profileCreationFormValidation*/}
+          validateOnChange={false}
+          validateOnBlur={false}
+        >
+            <Form>
+              <div className={styles.form_items_container}>
+                <h1 className={styles.heading}>PROFILE CREATOR</h1>
+                <FormTextInput label="Name" name="name" />
+                <FormTextInput label="Surname" name="surname" />
+                <FormTextInput label="Weight" name="weight" />
+                <FormTextInput label="Height" name="height" />
+                <FormTextInput label="Age" name="age" />
+                <FormSelectInput
+                  label="Education Level"
+                  name="educationLevel"
+                  value={EducationLevel.Primary}
+                  options={educationOptions}
+                />
+                {/* <CustomButton text="Submit" type="submit" /> */}
+                <Link className={styles.create_button} to={"/profileCreation"}>Create</Link>
+              </div>
+            </Form>
+
+        </Formik>
+      </div>
     </div>
   );
 }

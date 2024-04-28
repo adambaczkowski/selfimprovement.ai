@@ -1,5 +1,4 @@
 import { OutlinedInputProps, OutlinedInput } from "@mui/material";
-import React from "react";
 import styles from "./TextInput.module.scss";
 
 interface Props extends OutlinedInputProps {

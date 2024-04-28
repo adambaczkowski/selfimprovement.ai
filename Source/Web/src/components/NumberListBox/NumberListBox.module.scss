@@ -12,14 +12,6 @@
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-.center_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70vh;
-}
-  
-
 .glass_container {
   border-radius: 1rem;
   background-color: $container-background;

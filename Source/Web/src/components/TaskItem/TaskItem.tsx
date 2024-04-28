@@ -15,42 +15,40 @@ interface Props {
 
 function TaskItem({ title, description, date, isCompleted }: Props) {
   return (
-    // <div className={styles.task_item}>
-        <Link to={`/task`} className={styles.task_item}>
-        <h1>{title}</h1>
-        <p className={styles.description}>{description}</p>
-        <p className={styles.date}>{date}</p>
-        <div className={styles.task_footer}>
-          {isCompleted ? (
-            <button
-              className={styles.complete_button}
-              onClick={() => {
-                const task = {
-                  isCompleted: !isCompleted,
-                };
+    <Link to={`/task`} className={styles.task_item}>
+      <h1>{title}</h1>
+      <p className={styles.description}>{description}</p>
+      <p className={styles.date}>{date}</p>
+      <div className={styles.task_footer}>
+        {isCompleted ? (
+          <button
+            className={styles.complete_button}
+            onClick={() => {
+              const task = {
+                isCompleted: !isCompleted,
+              };
 
-                // updateTask(task);
-              }}
-            >
-              Completed
-            </button>
-          ) : (
-            <button
-              className={styles.incomplete_button}
-              onClick={() => {
-                const task = {
-                  isCompleted: !isCompleted,
-                };
+              // updateTask(task);
+            }}
+          >
+            Completed
+          </button>
+        ) : (
+          <button
+            className={styles.incomplete_button}
+            onClick={() => {
+              const task = {
+                isCompleted: !isCompleted,
+              };
 
-                // updateTask(task);
-              }}
-            >
-              Incomplete
-            </button>
-          )}
-        </div>
+              // updateTask(task);
+            }}
+          >
+            Incomplete
+          </button>
+        )}
+      </div>
     </Link>
-      // </div>
   );
 }
 
