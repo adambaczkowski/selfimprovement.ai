@@ -29,19 +29,34 @@ function TasksPage() {
           "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
         ],
         isCompleted: false
+      },
+      {
+        weekTitle: "Week 2: January 17-21, 2024",
+        date: "January 20, 2024",
+        tasks: [
+          "Set Up Development Environment",
+          "Install Python and a Code Editor (e.g., VS Code)",
+          "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
+        ],
+        isCompleted: false
+      },
+      {
+        weekTitle: "Week 2: January 17-21, 2024",
+        date: "January 20, 2024",
+        tasks: [
+          "Set Up Development Environment",
+          "Install Python and a Code Editor (e.g., VS Code)",
+          "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
+        ],
+        isCompleted: false
       }
     ]);
   }, []);
 
   return (
-    <div className={styles.taskStyled}>
-      <h1>{"All tasks"}</h1>
-
-      {/* <button className="btn-rounded" onClick={openModal}>
-        {plus}
-      </button> */}
-
-      <div className={styles.tasks}>
+    <div className={styles.task_container}>
+      <h1 className="section_header">{"All tasks"}</h1>
+      <div className={styles.tasks_grid}>
         {dailyTasks.map((dailyTask) => (
           dailyTask.tasks.map((task) => (
             <TaskItem
@@ -53,11 +68,6 @@ function TasksPage() {
             />
           ))))
         }
-        {/* <button className="create-task" onClick={openModal}> */}
-        {/* <button className={styles.create_task}>
-          {"add"}
-          Add New Task
-        </button> */}
       </div>
     </div>
   );

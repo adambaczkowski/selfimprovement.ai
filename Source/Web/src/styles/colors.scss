@@ -1,0 +1,22 @@
+// colors.scss
+
+// Globals
+$primary-background:rgb(223, 223, 228);
+$secondary-background:rgb(245, 245, 250);
+$container-background:rgb(170, 170, 199); // filoetowy nice
+$box-shadow:#497dad62;
+
+// Borders
+$border: #352740;
+
+// Headers
+$header-text: #000000;
+$header-container-text: #ffffff;
+
+.section_header {
+  color: $header-text;
+}
+
+//Buttons
+$completed-button:rgb(229, 229, 238);
+$incompleted-button:rgb(122, 122, 146);
