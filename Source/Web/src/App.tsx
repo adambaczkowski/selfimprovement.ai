@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import Routes from "./routes";
 import axios from "axios";
 import Sidebar from "./components/Sidebar/Sidebar";
