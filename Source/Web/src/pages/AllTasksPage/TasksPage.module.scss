@@ -1,17 +1,4 @@
-@import './../../styles/colors.scss';
-
-.task_container {
-  position: relative;
-  padding: 1rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  margin-left: 3rem;
-  margin-right: 3rem;
-  margin-bottom: 2rem;
-  border-radius: 1rem;
-  background-color: $secondary-background;
-}
-
+@import './../../styles/componentsStylingIndex.scss';
 
 .tasks_grid {
   justify-content: center;
@@ -36,5 +23,21 @@
     grid-template-columns: 1fr;
 
   }
+}
 
+.header {
+  position: relative;
+  display: inline-block; /* Ensure the line only spans the width of the text */
+}
+
+.header::after {
+  content: ''; /* Add a pseudo-element for the line */
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 3rem;
+  height: 0.3rem;
+  background-color: $container-background;
+  border-radius: 0.5rem;
 }

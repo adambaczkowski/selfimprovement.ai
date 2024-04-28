@@ -25,12 +25,12 @@ function numberToString(number: number) {
 
 function DailyTaskList({ items }: ListProps) {
   return (
-    <div className={styles.centerContainer}>
-      <Paper elevation={3} className={styles.glassContainer}>
+    <div className={styles.center_container}>
+      <Paper elevation={3} className={styles.glass_container}>
         <ol className={styles.list}>
           {items.map((task, taskIndex) => (
             <li key={taskIndex} className={styles.item}>
-              <h2 className="headline">task {numberToString(taskIndex + 1)}</h2>
+              <h2 className={styles.headline}>task {numberToString(taskIndex + 1)}</h2>
               <span>
                 {task}
               </span>

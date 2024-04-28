@@ -1,0 +1,10 @@
+.go_back_button {
+  display: inline-block;
+  color: $go-back-button; /* Link color */
+  text-decoration: none;
+  position: relative;
+
+  &:hover {
+    color: $go-back-button-on-hover;
+  }
+}
