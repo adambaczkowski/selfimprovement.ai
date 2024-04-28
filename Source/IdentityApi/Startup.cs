@@ -45,7 +45,7 @@ public class Startup
         services.AddScoped<IGenericRepository<UserProfile>, UserProfileRepository>();
         services.AddScoped<IEmailSender, EmailSender>();
         services.Register(_configuration);
-        services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
+        //services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
         services.AddAuthorization();
         services.AddAuthentication();
     }
@@ -62,9 +62,7 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
-
-        //app.ApplyMigrations();
-        // app.UseApplicationDatabase<IdentityDbContext>();
+        
         app
             .UseCors("default")
             .UseSwagger(_configuration, "Identity");
