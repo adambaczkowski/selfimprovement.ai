@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import "./App.scss";
 import Routes from "./routes";
 import axios from "axios";
-import Sidebar from "./components/Sidebar/Sidebar";
+import { ErrorBoundary } from "./components/componentsIndex";
 
 function App() {
   if (localStorage.getItem("userToken") != null) {
@@ -22,7 +22,9 @@ function App() {
 
   return (
     <>
-      <Routes />
+      <ErrorBoundary>
+        <Routes />
+      </ErrorBoundary>
     </>
   );
 }
