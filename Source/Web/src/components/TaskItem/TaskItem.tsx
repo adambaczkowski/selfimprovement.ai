@@ -1,8 +1,3 @@
-import React, { useEffect, useState } from 'react';
-import { Drawer, Typography, Box, ListItemButton } from '@mui/material';
-import { ModalClose, Menu, IconButton, List } from '@mui/joy';
-import MenuIcon from '@mui/icons-material/Menu';
-import { LoadingCircle, DailyTaskList } from "../../components/componentsIndex"
 import { Link } from 'react-router-dom';
 import styles from './TaskItem.module.scss'; // Import the SCSS file
 

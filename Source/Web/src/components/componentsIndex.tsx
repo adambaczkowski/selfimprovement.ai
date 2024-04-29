@@ -1,3 +1,4 @@
+import Sidebar from "./Sidebar/Sidebar"
 import TextInput from "./TextInput/TextInput"
 import TaskItem from "./TaskItem/TaskItem"
 import LoadingCircle from "./LoadingCircle/LoadingCircle"
@@ -7,6 +8,7 @@ import FormSelectInput from "./Formik/FormSelectImput/FormSelectInput"
 import DailyTaskList from "./NumberListBox/NumberListBox"
 
 export {
+    Sidebar,
     TextInput,
     TaskItem,
     LoadingCircle,

@@ -38,3 +38,14 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem
+}
+.content-container {
+  flex: 1; /* Content will take up remaining space */
+  margin-left: 13rem; /* Set margin to accommodate the fixed sidebar */
+  overflow-y: auto;
+}
