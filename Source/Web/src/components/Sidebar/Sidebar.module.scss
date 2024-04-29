@@ -51,24 +51,45 @@
 }
 
 .nav_item {
-  display: flex;
-  justify-content: center;
-  width: 100%;
   position: relative;
-  list-style: none;
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  grid-gap: 1rem;
   align-items: center;
+  justify-items:end;
+
+  width: 100%;
+  list-style: none;
   text-decoration: none;
-  color: inherit;
+  color: $header-text;
   transition: color 0.3s ease;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 
   &:hover {
-    background-color: darken($color: $secondary-background, $amount: 5);
+    background-color: darken($color: $secondary-background, $amount: 3);
   }
 
 }
 
+.link_title {
+  justify-self:start;
+}
+
+.nav_item_activate {
+  @extend .nav_item;
+  background-color: darken($color: $secondary-background, $amount: 3);
+  position: relative;
+
+  ::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px; /* Adjust the width as needed */
+    height: 100%; /* Cover the entire height of the parent div */
+    border-radius: 30%;
+    background-color: $container-background; /* You can change the color */
+  }
+}
 
 
 

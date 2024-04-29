@@ -1,5 +1,8 @@
-export const list = <i className="fa-solid fa-list-check"></i>;
-export const check = <i className="fa-solid fa-list-check"></i>;
-export const todo = <i className="fa-solid fa-list-check"></i>;
-export const home = <i className="fa-solid fa-list-check"></i>;
-export const calendar = <i className="fa-solid fa-list-check"></i>;
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalendar, faListCheck, faList, faClipboardList, faHome } from '@fortawesome/free-solid-svg-icons'
+
+export const calendar = faCalendar
+export const check = faListCheck
+export const list = faList
+export const todo = faClipboardList
+export const home = faHome

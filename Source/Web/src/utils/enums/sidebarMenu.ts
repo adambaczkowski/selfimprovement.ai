@@ -3,7 +3,7 @@ import { list, check, todo, home, calendar } from "./icons";
 const menu = [
   {
     id: 1,
-    title: "home",
+    title: "all tasks",
     icon: home,
     link: "/tasks",
   },
