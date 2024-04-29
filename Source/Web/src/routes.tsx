@@ -4,12 +4,13 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import TaskPage from "./pages/TaskPage/TaskPage";
 import TasksPage from "./pages/AllTasksPage/TasksPage";
+import CompletedTasksPage from "./pages/CompletedTasksPage/CompletedTasksPage";
 import ProfileCreationPage from "./pages/ProfileCreationPage/ProfileCreationPage";
 import ResendEmailConfirmationPage from "./pages/ResendEmailConfirmationPage/ResendEmailConfirmationPage";
 import { RequestPasswordResetPage } from "./pages/RequestPasswordResetPage/RequestPasswordResetPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage/ConfirmEmailPage";
 import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
-import { Sidebar } from "./components/componentsIndex";
+import { Sidebar, ErrorBoundary } from "./components/componentsIndex";
 import "./App.scss";
 type Props = {};
 
@@ -59,18 +60,28 @@ const Routes = ({}: Props) => {
           element: <TaskPage />,
         },
         {
-          path: "/profileCreation",
-          element: <ProfileCreationPage />,
-        },
-        {
           path: "/tasks",
           element: <TasksPage />,
+        },
+        {
+          path: "/completed",
+          element: <CompletedTasksPage />,
+        },
+        {
+          path: "/goals",
+          element: <TasksPage />,
+        },
+        {
+          path: "/profileCreation",
+          element: <ProfileCreationPage />,
         }
       ]
     }
   ]);
 
-  return <RouterProvider router={router} />;
+  return(
+      <RouterProvider router={router} />
+  );
 };
 
 export default Routes;

@@ -1,6 +1,5 @@
-import React, {useState, useEffect } from "react";
-import { TaskItem } from "../../components/componentsIndex"
-import styles from './TasksPage.module.scss';
+import {useState, useEffect } from "react";
+import { ItemsGrid } from "../../components/componentsIndex"
 import { DailyTask } from './types/DailyTask';
 
 
@@ -53,22 +52,7 @@ function TasksPage() {
   }, []);
 
   return (
-    <div className={styles.background_container}>
-      <h1 className={styles.header}>{"All tasks"}</h1>
-      <div className={styles.tasks_grid}>
-        {dailyTasks.map((dailyTask) => (
-          dailyTask.tasks.map((task) => (
-            <TaskItem
-              // key={task.id}
-              title={task}
-              description={task}
-              date={dailyTask.date}
-              isCompleted={dailyTask.isCompleted}
-            />
-          ))))
-        }
-      </div>
-    </div>
+    <ItemsGrid title={"All tasks"} dailyTasks={dailyTasks} />
   );
 }
 

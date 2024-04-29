@@ -6,6 +6,8 @@ import CustomButton from "./CustomButton/Button";
 import FormTextInput from "./Formik/FormTextInput/FormTextInput"
 import FormSelectInput from "./Formik/FormSelectImput/FormSelectInput"
 import DailyTaskList from "./NumberListBox/NumberListBox"
+import ItemsGrid from "./ItemsGrid/ItemsGrid"
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary"
 
 export {
     Sidebar,
@@ -15,5 +17,7 @@ export {
     CustomButton,
     FormTextInput,
     FormSelectInput,
-    DailyTaskList
+    DailyTaskList,
+    ItemsGrid,
+    ErrorBoundary
 };
