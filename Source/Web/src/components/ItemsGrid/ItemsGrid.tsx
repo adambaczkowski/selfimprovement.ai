@@ -24,7 +24,7 @@ function ItemsGrid({ title, dailyTasks }: Props) {
           ))
         ))}
       </div>
-      </div>
+    </div>
   );
 }
 
