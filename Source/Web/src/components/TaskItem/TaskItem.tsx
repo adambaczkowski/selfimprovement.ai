@@ -1,10 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Drawer, Typography, Box, ListItemButton } from '@mui/material';
-import { ModalClose, Menu, IconButton, List } from '@mui/joy';
-import MenuIcon from '@mui/icons-material/Menu';
-import { LoadingCircle, DailyTaskList } from "../../components/componentsIndex"
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './TaskItem.module.scss'; // Import the SCSS file
 
 interface Props {
@@ -18,7 +12,6 @@ function TaskItem({ title, description, date, isCompleted }: Props) {
   return (
     <Link to={`/task`} className={styles.task_item}>
       <h1>{title}</h1>
-      <FontAwesomeIcon icon={'amazon'} />
       <p className={styles.description}>{description}</p>
       <p className={styles.date}>{date}</p>
       <div className={styles.task_footer}>

@@ -13,13 +13,13 @@
 }
 
 .image {
-  max-width: 100%; /* Ensure the image doesn't exceed the container width */
-  max-height: 100%; /* Ensure the image doesn't exceed the container height */
-  width: 7rem; /* Allow the image to adjust its width */
-  height: 8rem; /* Allow the image to adjust its height */
-  display: block; /* Ensure the image behaves as a block element */
-  margin: auto; /* Center the image horizontally */
-  object-fit: cover; /* Scale the image to cover the container while maintaining aspect ratio */
+  max-width: 100%; 
+  max-height: 100%;
+  width: 7rem;
+  height: 8rem;
+  display: block;
+  margin: auto;
+  object-fit: cover;
   border-radius: 30%;
 }
 
@@ -84,46 +84,9 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 5px; /* Adjust the width as needed */
-    height: 100%; /* Cover the entire height of the parent div */
+    width: 5px;
+    height: 100%;
     border-radius: 30%;
-    background-color: $container-background; /* You can change the color */
+    background-color: $container-background;
   }
 }
-
-
-
-
-// Sidebar.module.scss
-// .sidebar {
-//     margin-right: 10px;
-// }
-
-// .menuButton {
-//     border-radius: 80%;
-//     padding: 8px;
-//     background-color: rgba(255, 255, 255, 0.8);
-//     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-//     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-//   }
-
-// .drawer {
-//     width: 200px;
-//     border-radius: 20px;
-//     background: rgba(255, 255, 255, 0.8);
-//     backdrop-filter: blur(10px);
-//     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-//     margin-right: 5px; // Move 5 pixels away from the end of the screen
-//   }
-  
-//   .imageContainer {
-//     height: 50%; // Half of the drawer height
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//   }
-  
-//   .image {
-//     max-height: 100%;
-//     max-width: 100%;
-//   }
