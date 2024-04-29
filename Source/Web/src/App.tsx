@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter } from 'react-router-dom';
 import "./App.scss";
 import Routes from "./routes";
 import axios from "axios";
@@ -21,7 +22,6 @@ function App() {
 
   return (
     <>
-      <Sidebar />
       <Routes />
     </>
   );
