@@ -37,33 +37,3 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 }
 
 export default ErrorBoundary;
-
-
-
-
-
-
-// import React, { Component } from 'react';
-// import ErrorPage from '../../pages/ErrorPage/ErrorPage';
-// class ErrorBoundary extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { hasError: false };
-//   }
-
-//   componentDidCatch(error, info) {
-//     this.setState({ hasError: true });
-//     // You can also log the error to an error reporting service
-//     console.error('Error Boundary:', error, info);
-//   }
-
-//   render() {
-//     if (this.state.hasError) {
-//       // Render the error page component
-//       return <ErrorPage />;
-//     }
-//     return this.props.children;
-//   }
-// }
-
-// export default ErrorBoundary;

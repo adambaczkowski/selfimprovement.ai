@@ -22,9 +22,7 @@ function App() {
 
   return (
     <>
-      <ErrorBoundary>
-        <Routes />
-      </ErrorBoundary>
+      <Routes />
     </>
   );
 }
