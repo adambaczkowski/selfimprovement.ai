@@ -1,5 +1,5 @@
 import { TaskItem } from "../../components/componentsIndex"
-import styles from './ItemsGrid.module.scss'; // Import the SCSS file
+import styles from './ItemsGrid.module.scss';
 import { DailyTask } from './../../pages/TasksPage/types/DailyTask'; 
 
 interface Props {

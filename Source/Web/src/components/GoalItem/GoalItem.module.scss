@@ -1,0 +1,56 @@
+// TaskItem.module.scss
+@import './../../styles/componentsStylingIndex.scss';
+
+.goal_item {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: center;
+  gap: 25rem;
+  padding: 1.2rem 1rem;
+  border-radius: 1rem;
+  margin: 20px;
+  min-width: 14rem;
+  height: 8rem;
+
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: $container-background;
+  box-shadow: 0 4px 30px $box-shadow;
+  overflow: hidden;
+  transition: background-color 0.1s ease, transform 0.1s ease-in-out;
+  
+  &:hover {
+    transform: scale(1.01) translateY(-3px);
+  }
+
+  h1 {
+    font-size: 2.3rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $header-container-text;
+  }
+
+  .description {
+    overflow: hidden;
+    display: -webkit-box; /* For WebKit-based browsers */
+    -webkit-line-clamp: 3; /* Limit to 3 lines of text */
+    -webkit-box-orient: vertical; /* Ensure text is displayed vertically */
+    white-space: normal; /* Ensure that multiple lines are shown */
+    span{
+      font-weight: 600;
+    }
+
+    @media screen and (max-width: 880px) {
+      display: none;
+      visibility: hidden;
+    }
+  }
+
+  @media screen and (max-width: 1300px) {
+    gap: 5rem
+  }
+}
