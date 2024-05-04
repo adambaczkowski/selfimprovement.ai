@@ -4,6 +4,8 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import TaskPage from "./pages/TaskPage/TaskPage";
 import TasksPage from "./pages/TasksPage/TasksPage";
+import GoalsPage from "./pages/GoalsPage/GoalsPage";
+import GoalPage from "./pages/GoalPage/GoalPage";
 import CompletedTasksPage from "./pages/CompletedTasksPage/CompletedTasksPage";
 import ProfileCreationPage from "./pages/ProfileCreationPage/ProfileCreationPage";
 import ResendEmailConfirmationPage from "./pages/ResendEmailConfirmationPage/ResendEmailConfirmationPage";
@@ -69,7 +71,11 @@ const Routes = ({}: Props) => {
         },
         {
           path: "/goals",
-          element: <TasksPage />,
+          element: <GoalsPage />,
+        },
+        {
+          path: "/goal",
+          element: <GoalPage />,
         },
         {
           path: "/profileCreation",

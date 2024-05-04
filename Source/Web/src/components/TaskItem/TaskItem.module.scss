@@ -22,7 +22,7 @@
   transition: background-color 0.1s ease, transform 0.1s ease-in-out; /* Add transition effect for background color and transform */
   
   &:hover {
-    transform: scale(1.01) translateY(-3px) rotate(0.2deg)/* Combine transform properties */
+    transform: scale(1.01) translateY(-3px) rotate(0.3deg)/* Combine transform properties */
   }
 
   .date {

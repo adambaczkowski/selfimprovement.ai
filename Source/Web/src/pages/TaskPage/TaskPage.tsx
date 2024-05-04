@@ -32,7 +32,7 @@ function TaskPage({}: Props) {
 
   return (
     <div className={styles.background_container}>
-      <Link className={styles.extended_go_back_button} to='/tasks'>
+      <Link className={styles.go_back_button} to='/tasks'>
         <ArrowBackIcon />
       </Link>
       <div className={styles.center_container}>

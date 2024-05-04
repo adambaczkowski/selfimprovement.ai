@@ -9,11 +9,6 @@
   margin-bottom: 1rem;
 }
 
-.extended_go_back_button {
-  @extend .go_back_button;
-  margin-top: 0.3rem;
-}
-
 .info_heading,
 .info_subheading {
   color: $header-container-text;
