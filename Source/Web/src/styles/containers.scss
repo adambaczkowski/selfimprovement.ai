@@ -1,0 +1,9 @@
+.background_container {
+  position: relative;
+  padding: 2rem;
+  margin: 1.5rem;
+  margin-right: 2rem;
+  border-radius: 1rem;
+  background-color: $secondary-background;
+  min-height: calc(100vh - 7rem);//TODO: adjust later
+}

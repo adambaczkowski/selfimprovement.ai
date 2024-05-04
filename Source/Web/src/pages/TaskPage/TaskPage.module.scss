@@ -1,31 +1,30 @@
-.centerContainer {
-  display: flex;
+@import './../../styles/componentsStylingIndex.scss';
+
+.center_container {
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 0.8rem;
+  margin-bottom: 1rem;
 }
 
-.infoHeading {
-  margin-bottom: 10px;
-  color: #000000;
+.info_heading,
+.info_subheading {
+  color: $header-container-text;
   text-align: center;
 }
 
-.infoSubheading {
-  margin-bottom: 10px;
-  color: #000000;
+.info_subheading {
   font-size: 1.2rem;
-  text-align: center;
+  color: $body-container-text;
 }
 
-.glassContainer {
-  background: rgba(59, 59, 59, 0.48);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  background-color: rgba(238, 218, 218, 0.9);
-  backdrop-filter: blur(5.4px);
-  -webkit-backdrop-filter: blur(5.4px);
-  padding: 20px;
+.glass_container {
+  border-radius: 1rem;
+  background-color: $container-background;
+  box-shadow: 0 4px 30px $box-shadow;
+  padding: 1.2rem 1rem;
   width: fit-content;
   margin: 0 auto; /* Center the container horizontally */
 }
