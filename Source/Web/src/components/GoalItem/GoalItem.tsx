@@ -11,7 +11,7 @@ interface Props {
 
 function GoalItem({ category, timeAvailability, duration, experience, learningType }: Props) {
   return (
-    <Link to={`/task`} className={styles.goal_item}>
+    <Link to={`/goal`} className={styles.goal_item}>
       <div className={styles.goal_header}>
         <h1>{category}</h1>
         <p className={styles.description}><span>Learning type: </span>{learningType}</p>
