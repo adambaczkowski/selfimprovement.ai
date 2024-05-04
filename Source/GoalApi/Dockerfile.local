@@ -9,6 +9,7 @@ COPY GoalApi/GoalApi.csproj ./GoalApi/GoalApi.csproj
 COPY ./Libraries/LS.Startup/*.csproj ./
 COPY ./Libraries/LS.Common/*.csproj ./
 COPY ./Libraries/LS.Messaging/*.csproj ./
+COPY ./Libraries/LS.Events/*.csproj ./
 COPY ./Libraries/LS.ServiceClient/*.csproj ./
 RUN for i in *csproj; do mkdir -p Libraries/${i%.*} && mv $i ./Libraries/${i%.*}/$i; done
 RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=cache,target=/root/.local/share/NuGet/v3-cache --mount=type=cache,target=/root/.local/share/NuGet/plugins-cache --mount=type=cache,target=/tmp/NuGetScratch dotnet restore GoalApi/GoalApi.csproj

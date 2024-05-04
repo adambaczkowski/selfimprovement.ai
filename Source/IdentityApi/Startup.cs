@@ -1,14 +1,10 @@
-﻿using System.Reflection;
-using IdentityApi.Data;
+﻿using IdentityApi.Data;
 using IdentityApi.Identity.Services;
-using IdentityApi.Messaging.Http;
 using IdentityApi.Models;
 using IdentityApi.Services;
 using LS.Common;
-using LS.Messaging;
 using LS.ServiceClient;
 using LS.Startup;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +41,6 @@ public class Startup
         services.AddScoped<IGenericRepository<UserProfile>, UserProfileRepository>();
         services.AddScoped<IEmailSender, EmailSender>();
         services.Register(_configuration);
-        //services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
         services.AddAuthorization();
         services.AddAuthentication();
     }

@@ -20,6 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Libraries\LS.Common\LS.Common.csproj" />
+      <ProjectReference Include="..\Libraries\LS.Events\LS.Events.csproj" />
       <ProjectReference Include="..\Libraries\LS.Messaging\LS.Messaging.csproj" />
       <ProjectReference Include="..\Libraries\LS.ServiceClient\LS.ServiceClient.csproj" />
       <ProjectReference Include="..\Libraries\LS.Startup\LS.Startup.csproj" />

@@ -26,6 +26,15 @@ services:
     ports:
       - "5050:80"
 
+  rabbitmq:
+    image: heidiks/rabbitmq-delayed-message-exchange:3.8.9-management
+    container_name: rabbitmq
+    restart: unless-stopped
+    ports:
+      - 5672:5672
+      - 5673:5673
+      - 15672:15672
+
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -46,6 +55,7 @@ services:
     environment:
       - ConnectionStrings__SelfImprovementDbContext=Server=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
+      - RabbitMqConnectionUrl=amqp://guest:guest@localhost:5672/
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -64,6 +74,7 @@ services:
     environment:
       - ConnectionStrings__SelfImprovementDbContext=Server=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
+      - RabbitMqConnectionUrl=amqp://guest:guest@localhost:5672/
     ports:
       - "8084:8084"
       - "8085:8085"
@@ -82,6 +93,7 @@ services:
     environment:
       - ConnectionStrings__SelfImprovementDbContext=Server=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
+      - RabbitMqConnectionUrl=amqp://guest:guest@localhost:5672/
     ports:
       - "8082:8082"
       - "8083:8083"

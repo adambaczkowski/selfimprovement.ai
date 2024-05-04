@@ -1,9 +1,12 @@
 ﻿using System.Reflection;
+using LS.Events.GoalApi;
 using LS.Messaging;
+using LS.Messaging.EventBus;
 using LS.ServiceClient;
 using LS.Startup;
 using Microsoft.EntityFrameworkCore;
 using PromptApi.Data;
+using PromptApi.EventHandlers;
 
 namespace PromptApi;
 
@@ -32,7 +35,7 @@ public class Startup
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
         services.Register(_configuration);
-        //services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
+        ConfigureEventBusDependencies(services);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,5 +53,29 @@ public class Startup
             .UseCors("default")
             .UseSwagger(_configuration, "Prompt");
         app.MapHealthChecks();
+        ConfigureEventBusHandlers(app);
+    }
+    
+    private void ConfigureEventBusDependencies(IServiceCollection services)
+    {
+        var serviceName = _configuration["Service"]
+            ?.Split('.').First()
+            .Replace("http://", string.Empty)
+            .Replace("https://", string.Empty);
+        
+        services.AddRabbitMQEventBus
+        (
+            connectionUrl: _configuration["RabbitMqConnectionUrl"],
+            brokerName:  serviceName + "Broker",
+            queueName: serviceName + "Queue",
+            timeoutBeforeReconnecting: 15
+        );
+        services.AddTransient<GoalCreatedEventHandler>();
+    }
+
+    private void ConfigureEventBusHandlers(IApplicationBuilder app)
+    {
+        var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+        eventBus.Subscribe<GoalCreatedEvent, GoalCreatedEventHandler>();
     }
 }
