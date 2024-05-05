@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { FormTextInput, FormSelectInput } from "../../components/componentsIndex"
 import { ProfileCreationCommand } from "../../utils/api/identity";
-import { EducationLevel } from "../../utils/enums/educationLevel";
-import { profileCreationFormValidation } from "./profileCreationFormValidationSchema";
+import { EducationLevel, educationOptions } from "../../utils/enums/educationLevel";
+import { ProfileCreationFormValidation } from "./ProfileCreationFormValidation";
 import styles from './ProfileCreationPage.module.scss';
 
 type Props = {};
@@ -33,19 +32,6 @@ function ProfileCreationPage({}: Props) {
     // }
   };
 
-  const getEnumOptions = (enumObj: any) => {
-    const options: { label: string; value: string | number }[] = [];
-
-    for (const member in enumObj) {
-      if (typeof enumObj[member] === "number") {
-        options.push({ label: member, value: enumObj[member] });
-      }
-    }
-    return options;
-  };
-  
-  const educationOptions = getEnumOptions(EducationLevel);
-
   if (isProfileCreationSucess) {
     return <div>Yea good!</div>;
   }
@@ -58,7 +44,7 @@ function ProfileCreationPage({}: Props) {
           onSubmit={(values) => {
             handleSignUp(values);
           }}
-          validationSchema={null /*profileCreationFormValidation*/}
+          validationSchema={ProfileCreationFormValidation}
           validateOnChange={false}
           validateOnBlur={false}
         >
@@ -76,8 +62,7 @@ function ProfileCreationPage({}: Props) {
                   value={EducationLevel.Primary}
                   options={educationOptions}
                 />
-                {/* <CustomButton text="Submit" type="submit" /> */}
-                <Link className={styles.create_button} to={"/profileCreation"}>Create</Link>
+                <button className={styles.create_button}>Create</button>
               </div>
             </Form>
 
