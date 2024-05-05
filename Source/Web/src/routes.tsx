@@ -1,4 +1,3 @@
-import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import SignInPage from "./pages/SignInPage/SignInPage";
@@ -6,6 +5,7 @@ import TaskPage from "./pages/TaskPage/TaskPage";
 import TasksPage from "./pages/TasksPage/TasksPage";
 import GoalsPage from "./pages/GoalsPage/GoalsPage";
 import GoalPage from "./pages/GoalPage/GoalPage";
+import NewGoalPage from "./pages/NewGoalPage/NewGoalPage";
 import CompletedTasksPage from "./pages/CompletedTasksPage/CompletedTasksPage";
 import ProfileCreationPage from "./pages/ProfileCreationPage/ProfileCreationPage";
 import ResendEmailConfirmationPage from "./pages/ResendEmailConfirmationPage/ResendEmailConfirmationPage";
@@ -76,6 +76,10 @@ const Routes = ({}: Props) => {
         {
           path: "/goal",
           element: <GoalPage />,
+        },
+        {
+          path: "/newGoal",
+          element: <NewGoalPage />,
         },
         {
           path: "/profileCreation",
