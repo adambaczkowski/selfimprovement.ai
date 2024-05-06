@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Form, Formik } from "formik";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { FormTextInput, FormSelectInput } from "../../components/componentsIndex"
 import { ProfileCreationCommand } from "../../utils/api/identity";
 import { EducationLevel, educationOptions } from "../../utils/enums/educationLevel";
@@ -55,8 +56,15 @@ function ProfileCreationPage({}: Props) {
     pageTitle = "DEFAULT PROFILE";
   }
 
+  const goBackButton = mode !== "new" ? (
+    <Link className={styles.go_back_button} to='/tasks'>
+      <ArrowBackIcon />
+    </Link>
+  ) : null;
+
   return (
     <div className={styles.background_container}>
+      {goBackButton}
       <div className={styles.extended_background_container}>
         <Formik
           initialValues={creationProfileInitialValues}
