@@ -4,7 +4,8 @@ import {
     faList,
     faHome,
     faSquarePlus,
-    faBullseye
+    faBullseye,
+    faArrowRightFromBracket
 } from '@fortawesome/free-solid-svg-icons'
 
 export const calendar = faCalendar
@@ -13,3 +14,4 @@ export const list = faList
 export const goals = faBullseye
 export const home = faHome
 export const todo = faSquarePlus
+export const signOut = faArrowRightFromBracket
