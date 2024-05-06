@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { FormTextInput, FormSelectInput } from "../../components/componentsIndex"
 import { ProfileCreationCommand } from "../../utils/api/identity";
@@ -8,8 +9,13 @@ import styles from './ProfileCreationPage.module.scss';
 
 type Props = {};
 
+// This page has two modes: edit and create. The mode is determined by the URL parameter.
+// Edit Profile URL example: /profileCreation/edit
+// New Profile URL example: /profileCreation/new
 function ProfileCreationPage({}: Props) {
   const [isProfileCreationSucess, setIsProfileCreationSucess] = useState<boolean>(false);
+  const { mode } = useParams<{ mode: string }>();
+
   const creationProfileInitialValues: ProfileCreationCommand = {
     name: "",
     surname: "",
@@ -19,6 +25,7 @@ function ProfileCreationPage({}: Props) {
     educationLevel: EducationLevel.Primary,
     profileImage: null,
   };
+  
 
   const handleSignUp = async (values: ProfileCreationCommand) => {
     console.log(values);
@@ -35,6 +42,18 @@ function ProfileCreationPage({}: Props) {
   if (isProfileCreationSucess) {
     return <div>Yea good!</div>;
   }
+  if (mode !== "new" && mode !== "edit") {
+    return <div>Invalid URL</div>;
+  }
+
+  let pageTitle: string;
+  if (mode === "edit") {
+    pageTitle = "EDIT PROFILE";
+  } else if (mode === "new") {
+    pageTitle = "NEW PROFILE";
+  } else {
+    pageTitle = "DEFAULT PROFILE";
+  }
 
   return (
     <div className={styles.background_container}>
@@ -50,7 +69,7 @@ function ProfileCreationPage({}: Props) {
         >
             <Form>
               <div className={styles.form_items_container}>
-                <h1 className={styles.heading}>PROFILE CREATOR</h1>
+                <h1 className={styles.heading}>{pageTitle}</h1>
                 <FormTextInput label="Name" name="name" />
                 <FormTextInput label="Surname" name="surname" />
                 <FormTextInput label="Weight" name="weight" />

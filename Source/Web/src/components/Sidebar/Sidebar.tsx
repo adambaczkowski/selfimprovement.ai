@@ -1,18 +1,28 @@
-import React from 'react';
 import { Link, useLocation  } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import menu from "./../../utils/enums/sidebarMenu";
+import { menu, signOutIcon} from "./../../utils/enums/sidebarMenu";
 import styles from './Sidebar.module.scss'; // Import the SCSS file
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 function Sidebar() {
-  const [open, setOpen] = React.useState(false);
   const pathname = useLocation().pathname;
+
+  const handleSignOut = async () => {
+    try {
+      // const response = await signIn(values);
+      // localStorage.setItem("userToken", JSON.stringify(response.token));
+      // return redirect("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className={styles.sidebar_background_container}>
       <div className={styles.image_container}>
-        <img src="https://assets.vogue.com/photos/6327939f06377e01c5304296/master/w_1920,c_limit/Fc9-RcUXgAEgljY.jpeg" alt="Your Image" className={styles.image} />
+        <Link to={"/profileCreation/edit"} className={styles.image} title='Edit profile'>
+          <img src="https://assets.vogue.com/photos/6327939f06377e01c5304296/master/w_1920,c_limit/Fc9-RcUXgAEgljY.jpeg" alt="Your Image" className={styles.image} />
+        </Link>
         <h1 className={styles.sidebar_header}>Adam Kowalski</h1>
       </div>
       <div className={styles.list_container}>
@@ -25,6 +35,12 @@ function Sidebar() {
             </Link>
           )
         })}
+      </div>
+      <div>
+      <Link to={"/tasks"} className={styles.sign_out}>
+        <FontAwesomeIcon icon={signOutIcon as IconProp} />
+        Sign Out
+      </Link>
       </div>
     </div>
   );

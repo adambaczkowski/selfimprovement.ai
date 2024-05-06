@@ -82,7 +82,7 @@ const Routes = ({}: Props) => {
           element: <NewGoalPage />,
         },
         {
-          path: "/profileCreation",
+          path: "/profileCreation/:mode",
           element: <ProfileCreationPage />,
         }
       ]
