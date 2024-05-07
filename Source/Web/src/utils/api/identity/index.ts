@@ -8,6 +8,7 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { ConfirmEmailCommand } from './models/ConfirmEmailCommand';
 export type { ProfileCreationCommand } from './models/ProfileCreationCommand';
+export type { GoalCreationCommand } from './models/GoalCreationCommand';
 export type { RequestPasswordResetCommand } from './models/RequestPasswordResetCommand';
 export type { ResendConfirmationEmailCommand } from './models/ResendConfirmationEmailCommand';
 export type { ResetPasswordCommand } from './models/ResetPasswordCommand';

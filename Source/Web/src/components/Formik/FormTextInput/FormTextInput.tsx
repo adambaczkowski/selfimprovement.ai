@@ -1,8 +1,16 @@
-import React from "react";
 import TextInput from "../../TextInput/TextInput";
-import { FormControl,InputLabel } from "@mui/material";
+import { FormControl, InputLabel, ThemeProvider } from "@mui/material";
 import { useField } from "formik";
 import { CustomFormHelperText } from "../FormHelperText";
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#7e68ba', // Your desired color for the underline
+    },
+  },
+});
 
 interface Props {
   label: string;
@@ -16,11 +24,13 @@ const FormTextInput = (props: Props) => {
   const [field, meta] = useField(name);
 
   return (
-    <FormControl>
-      <InputLabel htmlFor={name}>{label}</InputLabel>
-      <TextInput id={name} datatestId={name} {...field} {...props} error={meta.touched && !!meta.error} />
-      <CustomFormHelperText errorText={meta.error} />
-    </FormControl>
+    <ThemeProvider theme={theme}>
+      <FormControl>
+        <InputLabel htmlFor={name}>{label}</InputLabel>
+        <TextInput id={name} datatestId={name} {...field} {...props} error={meta.touched && !!meta.error} />
+        <CustomFormHelperText errorText={meta.error} />
+      </FormControl>
+    </ThemeProvider>
   );
 };
 

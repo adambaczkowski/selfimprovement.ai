@@ -1,16 +1,22 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Form, Formik } from "formik";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { FormTextInput, FormSelectInput } from "../../components/componentsIndex"
 import { ProfileCreationCommand } from "../../utils/api/identity";
-import { EducationLevel } from "../../utils/enums/educationLevel";
-import { profileCreationFormValidation } from "./profileCreationFormValidationSchema";
+import { EducationLevel, educationOptions } from "../../utils/enums/educationLevel";
+import { ProfileCreationFormValidation } from "./ProfileCreationFormValidation";
 import styles from './ProfileCreationPage.module.scss';
 
 type Props = {};
 
+// This page has two modes: edit and create. The mode is determined by the URL parameter.
+// Edit Profile URL example: /profileCreation/edit
+// New Profile URL example: /profileCreation/new
 function ProfileCreationPage({}: Props) {
   const [isProfileCreationSucess, setIsProfileCreationSucess] = useState<boolean>(false);
+  const { mode } = useParams<{ mode: string }>();
+
   const creationProfileInitialValues: ProfileCreationCommand = {
     name: "",
     surname: "",
@@ -20,6 +26,7 @@ function ProfileCreationPage({}: Props) {
     educationLevel: EducationLevel.Primary,
     profileImage: null,
   };
+  
 
   const handleSignUp = async (values: ProfileCreationCommand) => {
     console.log(values);
@@ -33,38 +40,44 @@ function ProfileCreationPage({}: Props) {
     // }
   };
 
-  const getEnumOptions = (enumObj: any) => {
-    const options: { label: string; value: string | number }[] = [];
-
-    for (const member in enumObj) {
-      if (typeof enumObj[member] === "number") {
-        options.push({ label: member, value: enumObj[member] });
-      }
-    }
-    return options;
-  };
-  
-  const educationOptions = getEnumOptions(EducationLevel);
-
   if (isProfileCreationSucess) {
     return <div>Yea good!</div>;
   }
+  if (mode !== "new" && mode !== "edit") {
+    return <div>Invalid URL</div>;
+  }
+
+  let pageTitle: string;
+  if (mode === "edit") {
+    pageTitle = "EDIT PROFILE";
+  } else if (mode === "new") {
+    pageTitle = "NEW PROFILE";
+  } else {
+    pageTitle = "DEFAULT PROFILE";
+  }
+
+  const goBackButton = mode !== "new" ? (
+    <Link className={styles.go_back_button} to='/tasks'>
+      <ArrowBackIcon />
+    </Link>
+  ) : null;
 
   return (
     <div className={styles.background_container}>
+      {goBackButton}
       <div className={styles.extended_background_container}>
         <Formik
           initialValues={creationProfileInitialValues}
           onSubmit={(values) => {
             handleSignUp(values);
           }}
-          validationSchema={null /*profileCreationFormValidation*/}
+          validationSchema={ProfileCreationFormValidation}
           validateOnChange={false}
           validateOnBlur={false}
         >
             <Form>
               <div className={styles.form_items_container}>
-                <h1 className={styles.heading}>PROFILE CREATOR</h1>
+                <h1 className={styles.heading}>{pageTitle}</h1>
                 <FormTextInput label="Name" name="name" />
                 <FormTextInput label="Surname" name="surname" />
                 <FormTextInput label="Weight" name="weight" />
@@ -76,8 +89,7 @@ function ProfileCreationPage({}: Props) {
                   value={EducationLevel.Primary}
                   options={educationOptions}
                 />
-                {/* <CustomButton text="Submit" type="submit" /> */}
-                <Link className={styles.create_button} to={"/profileCreation"}>Create</Link>
+                <button className={styles.create_button}>Create</button>
               </div>
             </Form>
 

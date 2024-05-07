@@ -1,4 +1,4 @@
-import { list, check, home, calendar, todo, goals } from "./icons";
+import { signOut, check, home, calendar, todo, goals } from "./icons";
 
 const menu = [
   {
@@ -33,4 +33,5 @@ const menu = [
   },
 ];
 
-export default menu;
+export { signOut as signOutIcon }
+export { menu };
