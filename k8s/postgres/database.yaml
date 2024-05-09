@@ -1,4 +1,9 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: postgres
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres
@@ -178,3 +183,16 @@ spec:
     port: 80
     targetPort: 80
     nodePort: 30080
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgresql
+  namespace: postgres
+type: Opaque
+data:
+  POSTGRES_USER: cG9zdGdyZXNlYWRtaW4=  # Base64 encoded value of "postgresadmin"
+  POSTGRES_PASSWORD: YWRtaW4xMjM=        # Base64 encoded value of "admin123"
+  POSTGRES_DB: cG9zdGdyZXNlZGI=          # Base64 encoded value of "postgresdb"
+  REPLICATION_USER: cmVwbGljYXRpb251c2Vy  # Base64 encoded value of "replicationuser"
+  REPLICATION_PASSWORD: cmVwbGljYXRpb25QYXNzd29yZA==  # Base64 encoded value of "replicationPassword"
