@@ -1,8 +1,9 @@
-﻿using PromptApi.Models;
+﻿using PromptApi.AI;
+using PromptApi.Models;
 
 namespace PromptApi.Services;
 
 public interface IPromptBuilderService
 {
-    Task<Prompt> CreatePrompt(Guid userId, Guid goalId);
+    Task<string> CreatePrompt(Guid userId, Guid goalId);
 }

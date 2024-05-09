@@ -1,14 +1,11 @@
-﻿using LS.Common;
+﻿namespace LS.Events.PromptApi;
 
-namespace GoalApi.Models;
-
-public class GoalTask : IEntity
+public class GoalTaskResource
 {
     public Guid Id { get; init; }
     public Guid GoalId { get; init; }
-    public Goal Goal { get; init; }
     public string Content { get; init; }
     public TimeSpan EstimatedDuration { get; init; }
     public bool IsCompleted { get; set; }
-    public DateTime Date { get; init; }
+    public DateTime Date { get; set; }
 }

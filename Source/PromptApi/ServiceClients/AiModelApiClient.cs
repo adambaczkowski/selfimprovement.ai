@@ -1,10 +1,16 @@
 ﻿using System.Net;
 using LS.ServiceClient;
 using PromptApi.AI;
+using PromptApi.Models;
 
 namespace PromptApi.ServiceClients;
 
-public class AiModelApiClient : BaseRestServiceClient
+public interface IAiModelApiClient
+{
+    public Task<string> GetPromptResponse(IAiModel model, object prompt);
+}
+
+public class AiModelApiClient : BaseRestServiceClient, IAiModelApiClient
 {
     protected override string ServiceName => "aiModel";
     
@@ -12,9 +18,9 @@ public class AiModelApiClient : BaseRestServiceClient
     {
     }
 
-    public async Task<string> GetPromptResponse(AiModel model)
+    public async Task<string> GetPromptResponse(IAiModel model, object prompt)
     {
-        var response = await PostWithResponse<string>(model.Path, model.Prompt);
+        var response = await PostWithResponse<string>(model.ApiUrl, prompt);
 
         return response.Status == HttpStatusCode.OK ? response.Result! : String.Empty;
     }

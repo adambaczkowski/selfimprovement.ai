@@ -3,6 +3,7 @@ using GoalApi.Data;
 using GoalApi.Data.Repositories;
 using GoalApi.Models;
 using LS.Common;
+using LS.Events.PromptApi;
 using LS.Messaging;
 using LS.Messaging.EventBus;
 using LS.ServiceClient;
@@ -77,6 +78,7 @@ public class Startup
             queueName: serviceName + "Queue",
             timeoutBeforeReconnecting: 15
         );
+        services.AddTransient<TasksForGoalCreatedEvent>();
     }
 
     private void ConfigureEventBusHandlers(IApplicationBuilder app)
