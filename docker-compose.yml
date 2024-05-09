@@ -93,6 +93,25 @@ services:
     volumes:
       - open-webui:/app/backend/data
 
+  ollama:
+    volumes:
+      - $HOME/ollama/ollama:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+
   mailhog:
     container_name: mailhog
     restart: on-failure
