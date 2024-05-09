@@ -96,6 +96,25 @@ services:
     volumes:
       - open-webui:/app/backend/data
 
+  ollama:
+    volumes:
+      - $HOME/ollama/ollama:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+
   mailhog:
     container_name: mailhog
     restart: on-failure
@@ -136,12 +155,19 @@ services:
 
   prometheus:
     container_name: prometheus
-    image: prom/prometheus
-    restart: on-failure
+    image: prom/prometheus:v2.51.2
+    restart: unless-stopped
     ports:
       - "9090:9090"
     volumes:
+      - prometheus_data:/prometheus
       - ./Monitoring/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --web.external-url=http://localhost:80/prometheus/
 
   node-exporter:
     container_name: node-exporter
@@ -181,5 +207,6 @@ services:
     #   - .env
 
 volumes:
+  prometheus_data:
   open-webui:
   rabbitmq_data:
