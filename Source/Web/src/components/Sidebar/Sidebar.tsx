@@ -1,7 +1,7 @@
 import { Link, useLocation  } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { menu, signOutIcon} from "./../../utils/enums/sidebarMenu";
-import styles from './Sidebar.module.scss'; // Import the SCSS file
+import styles from './Sidebar.module.scss';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 function Sidebar() {

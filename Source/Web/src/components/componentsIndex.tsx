@@ -10,6 +10,7 @@ import DailyTaskList from "./NumberListBox/NumberListBox"
 import ItemsGrid from "./ItemsGrid/ItemsGrid"
 import GoalsList from "./GoalsList/GoalsList"
 import ErrorBoundary from "./ErrorBoundary/ErrorBoundary"
+import GoBackButton from "./GoBackButton/GoBackButton"
 
 export {
     Sidebar,
@@ -23,5 +24,6 @@ export {
     DailyTaskList,
     ItemsGrid,
     GoalsList,
-    ErrorBoundary
+    ErrorBoundary,
+    GoBackButton
 };

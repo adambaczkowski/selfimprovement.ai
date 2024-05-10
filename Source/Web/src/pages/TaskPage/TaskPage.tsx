@@ -1,8 +1,6 @@
 import {useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { LoadingCircle, DailyTaskList } from "../../components/componentsIndex"
+import { LoadingCircle, DailyTaskList, GoBackButton } from "../../components/componentsIndex"
 import styles from './TaskPage.module.scss';
 import { DailyTask } from './types/DailyTask';
 
@@ -32,9 +30,7 @@ function TaskPage({}: Props) {
 
   return (
     <div className={styles.background_container}>
-      <Link className={styles.go_back_button} to='/tasks'>
-        <ArrowBackIcon />
-      </Link>
+      <GoBackButton />
       <div className={styles.center_container}>
         <div className={styles.glass_container}>
           <Typography variant="h5" className={styles.info_heading}>

@@ -24,7 +24,9 @@
     "@types/react-dom": "^18.2.14",
     "axios": "^1.6.7",
     "formik": "^2.4.5",
+    "moment": "^2.30.1",
     "react": "^18.2.0",
+    "react-big-calendar": "^1.12.1",
     "react-css-modules": "^4.7.11",
     "react-dom": "^18.2.0",
     "react-router": "^6.22.0",
@@ -59,5 +61,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-big-calendar": "^1.8.9"
   }
 }

@@ -1,7 +1,5 @@
 import {useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { LoadingCircle,  } from "../../components/componentsIndex"
+import { LoadingCircle, GoBackButton  } from "../../components/componentsIndex"
 import styles from './GoalPage.module.scss';
 import { Goal, GoalTask } from '../GoalsPage/types/Goal';
 import { DailyTask } from '../TasksPage/types/DailyTask';
@@ -95,9 +93,7 @@ function GoalPage() {
 
   return (
     <div className={styles.background_container}>
-      <Link className={styles.go_back_button} to='/goals'>
-        <ArrowBackIcon />
-      </Link>
+      <GoBackButton />
       <div className={styles.goal_item}>
       <div className={styles.goal_header}>
         <h1>{goal.category}</h1>
