@@ -3,6 +3,33 @@
 
 @import './../../styles/componentsStylingIndex.scss';
 
+// move navigation items to the right
+.rbc-btn-group:nth-child(1) { 
+  order:2
+}
+
+.rbc-btn-group button{
+  border-radius: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  font-weight: bold;
+  background: $completed-button;
+  color : $completed-button-text;
+
+  &:hover {
+    transform: scale(1.02);
+    background-color: lighten($incompleted-button, 30%)
+  }
+}
+
+.rbc-toolbar-label {
+  color: $header-text;
+  font-size: 1.2rem;
+  font-weight: 1.8rem;
+}
+
 .rbc-header {
   display: flex;
   align-items: center;
