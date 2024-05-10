@@ -49,6 +49,10 @@
   padding: 0.1rem !important;
   padding-left: 0.5rem !important;
   padding-right: 0.5rem !important;
+
+  &:hover {
+    background-color: darken($container-background, 5%)
+  }
 }
 
 .rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event {
