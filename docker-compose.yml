@@ -97,11 +97,10 @@ services:
       - open-webui:/app/backend/data
 
   ollama:
-    volumes:
-      - $HOME/ollama/ollama:/root/.ollama
     container_name: ollama
-    pull_policy: always
     tty: true
+    volumes:
+      - ollama:/root/.ollama
     restart: unless-stopped
     image: ollama/ollama:latest
     ports:
@@ -207,6 +206,7 @@ services:
     #   - .env
 
 volumes:
+  ollama:
   prometheus_data:
   open-webui:
   rabbitmq_data:
