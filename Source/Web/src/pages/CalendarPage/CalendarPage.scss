@@ -1,0 +1,70 @@
+@import 'react-big-calendar/lib/sass/styles';
+@import 'react-big-calendar/lib/addons/dragAndDrop/styles';
+
+@import './../../styles/componentsStylingIndex.scss';
+
+// move navigation items to the right
+.rbc-btn-group:nth-child(1) { 
+  order:2
+}
+
+.rbc-btn-group button{
+  border-radius: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  font-weight: bold;
+  background: $completed-button;
+  color : $completed-button-text;
+
+  &:hover {
+    transform: scale(1.02);
+    background-color: lighten($incompleted-button, 30%)
+  }
+}
+
+.rbc-toolbar-label {
+  color: $header-text;
+  font-size: 1.2rem;
+  font-weight: 1.8rem;
+}
+
+.rbc-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $container-background;
+  font-size: 20px;
+  height: 36px;
+  color: #fff;
+  border-radius: 0.5rem;
+}
+
+/*Event Styles*/
+.rbc-event {
+  background-color: lighten($container-background, 10%);
+  color: white;
+  border: none;
+  padding: 0.1rem !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+
+  &:hover {
+    background-color: darken($container-background, 5%)
+  }
+}
+
+.rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event {
+  background-color: darken($container-background, 30%);
+}
+
+
+.rbc-month-view {
+  border-radius: 1rem;
+  border: none;
+}
+
+.rbc-day-bg {
+  border-radius: 1rem;
+}

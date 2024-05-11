@@ -2,41 +2,24 @@
 
 
 .goals_list {
-    justify-content: center;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    max-width: 1200px;
-    
-    margin-left: auto;
-    margin-right: auto;
+  justify-content: center;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
   
-    @media screen and (max-width: 1550px) {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  
-    @media screen and (max-width: 1200px) {
-      grid-template-columns: 1fr 1fr;
-    }
-  
-    @media screen and (max-width: 900px) {
-      grid-template-columns: 1fr;
-    }
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and (max-width: 1550px) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
-  
-  .header {
-    position: relative;
-    display: inline-block;
-    color: $header-text;
+
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
   }
-  
-  .header::after {
-    content: "";
-    position: absolute;
-    bottom: -0.5rem;
-    left: 0;
-    width: 3rem;
-    height: 0.3rem;
-    background-color: $container-background;
-    border-radius: 0.5rem;
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
   }
+}

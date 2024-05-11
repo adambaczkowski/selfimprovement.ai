@@ -10,7 +10,7 @@ interface Props {
 function GoalsList({ title, goals }: Props) {
   return (
     <div className={styles.background_container}>
-      <h1 className={styles.header}>{title}</h1>
+      <h1 className={styles.page_header}>{title}</h1>
       <div className={styles.goals_list}>
         {goals.map((goal: any) => (
             <GoalItem

@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import TaskPage from "./pages/TaskPage/TaskPage";
+import CalendarPage from "./pages/CalendarPage/CalendarPage";
 import TasksPage from "./pages/TasksPage/TasksPage";
 import GoalsPage from "./pages/GoalsPage/GoalsPage";
 import GoalPage from "./pages/GoalPage/GoalPage";
@@ -68,6 +69,10 @@ const Routes = ({}: Props) => {
         {
           path: "/completed",
           element: <CompletedTasksPage />,
+        },
+        {
+          path: "/calendar",
+          element: <CalendarPage />,
         },
         {
           path: "/goals",

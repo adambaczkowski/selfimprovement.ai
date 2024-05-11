@@ -1,9 +1,13 @@
+@import './../../styles/componentsStylingIndex.scss';
+
 .go_back_button {
+  appearance: none;
+  border: none;
+  background-color: transparent;
   display: inline-block;
   color: $go-back-button; /* Link color */
   text-decoration: none;
   position: relative;
-  // margin-top: 0.8rem;
 
   &:hover {
     color: $go-back-button-on-hover;
