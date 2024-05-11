@@ -12,90 +12,18 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IdentityApi.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20240325210039_ProfileAndGoals")]
-    partial class ProfileAndGoals
+    [Migration("20240510105453_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("IdentityApi.Models.Goal", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Duration")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Expirience")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LearningType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TimeAvailability")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Goals");
-                });
-
-            modelBuilder.Entity("IdentityApi.Models.GoalTask", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("EstimatedDuration")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("GoalId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("GoalId1")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GoalId");
-
-                    b.HasIndex("GoalId1");
-
-                    b.ToTable("GoalTask");
-                });
 
             modelBuilder.Entity("IdentityApi.Models.User", b =>
                 {
@@ -161,9 +89,6 @@ namespace IdentityApi.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.HasIndex("UserProfileId")
-                        .IsUnique();
-
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -187,20 +112,23 @@ namespace IdentityApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<byte[]>("ProfileImage")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int?>("Weight")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("UserProfiles");
                 });
@@ -337,43 +265,15 @@ namespace IdentityApi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("IdentityApi.Models.Goal", b =>
+            modelBuilder.Entity("IdentityApi.Models.UserProfile", b =>
                 {
                     b.HasOne("IdentityApi.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("UserProfile")
+                        .HasForeignKey("IdentityApi.Models.UserProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("IdentityApi.Models.User", null)
-                        .WithMany("Goals")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("IdentityApi.Models.GoalTask", b =>
-                {
-                    b.HasOne("IdentityApi.Models.Goal", "Goal")
-                        .WithMany()
-                        .HasForeignKey("GoalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IdentityApi.Models.Goal", null)
-                        .WithMany("Tasks")
-                        .HasForeignKey("GoalId1");
-
-                    b.Navigation("Goal");
-                });
-
-            modelBuilder.Entity("IdentityApi.Models.User", b =>
-                {
-                    b.HasOne("IdentityApi.Models.UserProfile", null)
-                        .WithOne("User")
-                        .HasForeignKey("IdentityApi.Models.User", "UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -427,19 +327,9 @@ namespace IdentityApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IdentityApi.Models.Goal", b =>
-                {
-                    b.Navigation("Tasks");
-                });
-
             modelBuilder.Entity("IdentityApi.Models.User", b =>
                 {
-                    b.Navigation("Goals");
-                });
-
-            modelBuilder.Entity("IdentityApi.Models.UserProfile", b =>
-                {
-                    b.Navigation("User")
+                    b.Navigation("UserProfile")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

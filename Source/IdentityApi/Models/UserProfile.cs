@@ -6,12 +6,10 @@ namespace IdentityApi.Models;
 public class UserProfile : IEntity
 {
     public Guid Id { get; init; }
-    public Guid UserId { get; init; }
+    public string UserId { get; init; }
     public User User { get; init; }
     
-    public byte[] ProfileImage { get; set; }
-    public string Name { get; init; }
-    public string Surname { get; init; }
+    public byte[]? ProfileImage { get; set; }
     // kg
     public int? Weight { get; init; }
     // cm

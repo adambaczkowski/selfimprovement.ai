@@ -97,6 +97,44 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Goal"
+        ],
+        "parameters": [
+          {
+            "name": "UserId",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalDtoListApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalDtoListApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -110,24 +148,20 @@
             "format": "uuid"
           },
           "category": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/GoalCategories"
           },
           "timeAvailability": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/TimeAvailability"
           },
           "duration": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int32"
           },
-          "expirience": {
-            "type": "string",
-            "nullable": true
+          "experience": {
+            "$ref": "#/components/schemas/Experience"
           },
           "learningType": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/LearningType"
           }
         },
         "additionalProperties": false
@@ -142,8 +176,44 @@
         },
         "additionalProperties": false
       },
+      "Experience": {
+        "enum": [
+          "Beginner",
+          "Experienced",
+          "Advanced"
+        ],
+        "type": "string"
+      },
+      "GoalCategories": {
+        "enum": [
+          "BodyWorkout"
+        ],
+        "type": "string"
+      },
       "GoalDto": {
         "type": "object",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/GoalCategories"
+          },
+          "timeAvailability": {
+            "$ref": "#/components/schemas/TimeAvailability"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "experience": {
+            "$ref": "#/components/schemas/Experience"
+          },
+          "learningType": {
+            "$ref": "#/components/schemas/LearningType"
+          }
+        },
         "additionalProperties": false
       },
       "GoalDtoApiResponse": {
@@ -162,6 +232,33 @@
         },
         "additionalProperties": false
       },
+      "GoalDtoListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GoalDto"
+            },
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LearningType": {
+        "enum": [
+          "Basic",
+          "SpedUp"
+        ],
+        "type": "string"
+      },
       "StringApiResponse": {
         "type": "object",
         "properties": {
@@ -178,6 +275,16 @@
           }
         },
         "additionalProperties": false
+      },
+      "TimeAvailability": {
+        "enum": [
+          "FifteenMinutes",
+          "ThirtyMinutes",
+          "FortyFiveMinutes",
+          "Hour",
+          "MoreThanHour"
+        ],
+        "type": "string"
       }
     }
   }

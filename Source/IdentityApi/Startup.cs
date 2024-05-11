@@ -1,4 +1,6 @@
 ﻿using IdentityApi.Data;
+using IdentityApi.Identity.Commands;
+using IdentityApi.Identity.Commands.TokenProvider;
 using IdentityApi.Identity.Services;
 using IdentityApi.Models;
 using IdentityApi.Services;
@@ -11,27 +13,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityApi;
 
-public class Startup
+public class Startup(IConfiguration configuration)
 {
-    private readonly IConfiguration _configuration;
-    public Startup(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     // This method gets called by the runtime. Use this method to add serices to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.Configure<Token>(configuration.GetSection("token"));
         services.AddControllers();
         services.AddHealthChecks();
         services
-            .AddSwagger(_configuration, "identity")
-            .AddDefaultCorsPolicy(_configuration["CorsOrigin"])
+            .AddSwagger(configuration, "identity")
+            .AddDefaultCorsPolicy(configuration["CorsOrigin"])
             .AddHttpContextAccessor();
-        services.AddIdentity<Models.User, IdentityRole>().AddEntityFrameworkStores<IdentityDbContext>();
+        services.AddIdentity<Models.User, IdentityRole>()
+            .AddDefaultTokenProviders()
+            .AddUserManager<UserManager<Models.User>>()
+            .AddSignInManager<SignInManager<Models.User>>()
+            .AddEntityFrameworkStores<IdentityDbContext>()
+            .AddTokenProvider<EmailConfirmationTokenProvider>("EmailConfirmationTokenProvider");
         services.AddDbContext<IdentityDbContext>(options =>
         {
-            options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
+            options.UseNpgsql(configuration.GetConnectionString("SelfImprovementDbContext"));
         });
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddMediatR(cfg =>
@@ -40,7 +42,7 @@ public class Startup
         services.AddScoped<IGenericRepository<Models.User>, UserRepository>();
         services.AddScoped<IGenericRepository<UserProfile>, UserProfileRepository>();
         services.AddScoped<IEmailSender, EmailSender>();
-        services.Register(_configuration);
+        services.Register(configuration);
         services.AddAuthorization();
         services.AddAuthentication();
     }
@@ -60,7 +62,7 @@ public class Startup
         
         app
             .UseCors("default")
-            .UseSwagger(_configuration, "Identity");
+            .UseSwagger(configuration, "Identity");
         app.MapHealthChecks();
     }
 }
