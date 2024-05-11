@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import React from "react";
-import { CustomButton, FormTextInput } from "../../components/componentsIndex"
+import { CustomButton, FormTextInput } from "../../components/componentsIndex";
 import { signInFormValidation } from "./signInFormValidationSchema";
 import { signIn } from "../../utils/services/identityService";
 import { SignInCommand } from "../../utils/api/identity";
@@ -18,7 +18,7 @@ const SignInPage = ({}: Props) => {
     try {
       const response = await signIn(values);
       localStorage.setItem("userToken", JSON.stringify(response.token));
-      return redirect("/");
+      return redirect("/tasks");
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +38,7 @@ const SignInPage = ({}: Props) => {
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "700px" }}>
           <h1>Sign in</h1>
           <FormTextInput label="Email" name="email" />
-          <FormTextInput label="Password" name="password" />
+          <FormTextInput label="Password" name="password" type="password" />
           <CustomButton text="Sign in" type="submit" />
           <Link to={"/signUp"}>Sign up</Link>
           <Link to={"/requestPasswordReset"}>Forgot password?</Link>

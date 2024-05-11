@@ -8,7 +8,7 @@ public class GoalTask : IEntity
     public Guid GoalId { get; init; }
     public Goal Goal { get; init; }
     public string Content { get; init; }
-    public DateTime EstimatedDuration { get; init; }
+    public TimeSpan EstimatedDuration { get; init; }
     public bool IsCompleted { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime Date { get; init; }
 }

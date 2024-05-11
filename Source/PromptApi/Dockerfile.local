@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 as base
 WORKDIR /app
 EXPOSE 8082
-EXPOSE 8083
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS prompt-restore
 WORKDIR /src
@@ -9,6 +8,7 @@ COPY PromptApi/PromptApi.csproj ./PromptApi/PromptApi.csproj
 COPY ./Libraries/LS.Startup/*.csproj ./
 COPY ./Libraries/LS.Common/*.csproj ./
 COPY ./Libraries/LS.Messaging/*.csproj ./
+COPY ./Libraries/LS.Events/*.csproj ./
 COPY ./Libraries/LS.ServiceClient/*.csproj ./
 RUN for i in *csproj; do mkdir -p Libraries/${i%.*} && mv $i ./Libraries/${i%.*}/$i; done
 RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=cache,target=/root/.local/share/NuGet/v3-cache --mount=type=cache,target=/root/.local/share/NuGet/plugins-cache --mount=type=cache,target=/tmp/NuGetScratch dotnet restore PromptApi/PromptApi.csproj

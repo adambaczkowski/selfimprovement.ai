@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Form, Formik } from "formik";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { FormTextInput, FormSelectInput } from "../../components/componentsIndex"
-import { ProfileCreationCommand } from "../../utils/api/identity";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { FormTextInput, FormSelectInput } from "../../components/componentsIndex";
 import { EducationLevel, educationOptions } from "../../utils/enums/educationLevel";
 import { ProfileCreationFormValidation } from "./ProfileCreationFormValidation";
-import styles from './ProfileCreationPage.module.scss';
+import styles from "./ProfileCreationPage.module.scss";
+import { CreateUserProfileCommand, Education } from "../../utils/api/identity";
 
 type Props = {};
 
@@ -17,18 +17,17 @@ function ProfileCreationPage({}: Props) {
   const [isProfileCreationSucess, setIsProfileCreationSucess] = useState<boolean>(false);
   const { mode } = useParams<{ mode: string }>();
 
-  const creationProfileInitialValues: ProfileCreationCommand = {
+  const creationProfileInitialValues: CreateUserProfileCommand = {
     name: "",
     surname: "",
     weight: null,
     height: null,
     age: null,
-    educationLevel: EducationLevel.Primary,
+    educationLevel: Education._0,
     profileImage: null,
   };
-  
 
-  const handleSignUp = async (values: ProfileCreationCommand) => {
+  const handleSignUp = async (values: CreateUserProfileCommand) => {
     console.log(values);
     // try {
     //   const response = await signUp(values);
@@ -56,11 +55,12 @@ function ProfileCreationPage({}: Props) {
     pageTitle = "DEFAULT PROFILE";
   }
 
-  const goBackButton = mode !== "new" ? (
-    <Link className={styles.go_back_button} to='/tasks'>
-      <ArrowBackIcon />
-    </Link>
-  ) : null;
+  const goBackButton =
+    mode !== "new" ? (
+      <Link className={styles.go_back_button} to="/tasks">
+        <ArrowBackIcon />
+      </Link>
+    ) : null;
 
   return (
     <div className={styles.background_container}>
@@ -75,24 +75,18 @@ function ProfileCreationPage({}: Props) {
           validateOnChange={false}
           validateOnBlur={false}
         >
-            <Form>
-              <div className={styles.form_items_container}>
-                <h1 className={styles.heading}>{pageTitle}</h1>
-                <FormTextInput label="Name" name="name" />
-                <FormTextInput label="Surname" name="surname" />
-                <FormTextInput label="Weight" name="weight" />
-                <FormTextInput label="Height" name="height" />
-                <FormTextInput label="Age" name="age" />
-                <FormSelectInput
-                  label="Education Level"
-                  name="educationLevel"
-                  value={EducationLevel.Primary}
-                  options={educationOptions}
-                />
-                <button className={styles.create_button}>Create</button>
-              </div>
-            </Form>
-
+          <Form>
+            <div className={styles.form_items_container}>
+              <h1 className={styles.heading}>{pageTitle}</h1>
+              <FormTextInput label="Name" name="name" />
+              <FormTextInput label="Surname" name="surname" />
+              <FormTextInput label="Weight" name="weight" />
+              <FormTextInput label="Height" name="height" />
+              <FormTextInput label="Age" name="age" />
+              <FormSelectInput label="Education Level" name="educationLevel" value={EducationLevel.Primary} options={educationOptions} />
+              <button className={styles.create_button}>Create</button>
+            </div>
+          </Form>
         </Formik>
       </div>
     </div>

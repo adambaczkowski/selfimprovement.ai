@@ -57,10 +57,10 @@ public class RestClient : IServiceClient
     public async Task<HttpResponseMessage> Post(string serviceName, string path, object request,
         params Header[] headers)
     {
-        var baseAddress = await GetBaseAddress(serviceName);
+        //var baseAddress = await GetBaseAddress(serviceName);
 
         var requestMessage = RequestMessage.Post(
-            $"{baseAddress}{path}",
+            $"{path}",
             request,
             (headers ?? Array.Empty<Header>()));
 

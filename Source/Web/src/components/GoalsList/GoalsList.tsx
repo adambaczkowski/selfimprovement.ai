@@ -1,10 +1,10 @@
-import { GoalItem } from "../componentsIndex"
-import styles from './GoalsList.module.scss';
-import { Goal } from './../../pages/GoalsPage/types/Goal'; 
+import { GoalItem } from "../componentsIndex";
+import styles from "./GoalsList.module.scss";
+import { GoalDto } from "../../utils/api/goal";
 
 interface Props {
   title: string;
-  goals: Goal[];
+  goals: GoalDto[];
 }
 
 function GoalsList({ title, goals }: Props) {
@@ -13,14 +13,14 @@ function GoalsList({ title, goals }: Props) {
       <h1 className={styles.page_header}>{title}</h1>
       <div className={styles.goals_list}>
         {goals.map((goal: any) => (
-            <GoalItem
-              // key={task.id}
-              category={goal.category}
-              timeAvailability={goal.timeAvailability}
-              duration={goal.duration}
-              experience={goal.experience}
-              learningType={goal.learningType}
-            />
+          <GoalItem
+            // key={task.id}
+            category={goal.category}
+            timeAvailability={goal.timeAvailability}
+            duration={goal.duration}
+            experience={goal.experience}
+            learningType={goal.learningType}
+          />
         ))}
       </div>
     </div>

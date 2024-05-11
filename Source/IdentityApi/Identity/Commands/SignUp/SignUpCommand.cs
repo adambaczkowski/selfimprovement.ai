@@ -13,26 +13,22 @@ public class SignUpCommand : IRequest<SignUpResponse>
     public string ConfirmPassword { get; set; }
 }
 
-public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpResponse>
+public class SignUpCommandHandler(UserManager<Models.User> userManager, IIdentityEmailService identityEmailService)
+    : IRequestHandler<SignUpCommand, SignUpResponse>
 {
-    private readonly UserManager<Models.User> _userManager;
-    private readonly IIdentityEmailService _identityEmailService;
-
-    public SignUpCommandHandler(UserManager<Models.User> userManager, IIdentityEmailService identityEmailService)
-    {
-        _userManager = userManager;
-        _identityEmailService = identityEmailService;
-    }
-
     public async Task<SignUpResponse> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
         var user = new Models.User()
         {
             UserName = request.Email,
             Email = request.Email,
+            UserProfile = new UserProfile()
+            {
+                Id = new Guid()
+            }
         };
         
-        var result = await _userManager.CreateAsync(user, request.Password);
+        var result = await userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
             return new SignUpResponse()
         {
@@ -40,7 +36,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpRespons
             IsSuccess = false
         };
         
-        await _identityEmailService.SendConfirmationEmail(user, WebExtensions.origin);
+        await identityEmailService.SendConfirmationEmail(user, WebExtensions.origin);
 
         return new SignUpResponse()
         {

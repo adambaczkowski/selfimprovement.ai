@@ -1,47 +1,46 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Form, Formik } from "formik";
-import { FormTextInput, FormSelectInput } from "../../components/componentsIndex"
-import { GoalCreationCommand } from "../../utils/api/identity";
-import { EducationLevel } from "../../utils/enums/educationLevel";
+import { FormSelectInput } from "../../components/componentsIndex";
 import { NewGoalFormValidation } from "./NewGoalFormValidationSchema";
-import styles from './NewGoalPage.module.scss';
+import styles from "./NewGoalPage.module.scss";
+import { CreateGoalCommand, Experience, GoalCategories, LearningType, TimeAvailability } from "../../utils/api/goal";
+import { enumToArrayOfOptions } from "../../utils/helpers/enumToArrayOfOptions";
+import FormNumberInput from "../../components/Formik/FormNumberInput/FormNumberInput";
+import { useMutation } from "react-query";
+import { createGoal } from "../../utils/services/goalService";
 
-type Props = {};
+interface Props {}
 
-function NewGoalPage({}: Props) {
-  const [isProfileCreationSucess, setIsProfileCreationSucess] = useState<boolean>(false);
-  const creationProfileInitialValues: GoalCreationCommand = {
-    category: "",
-    timeAvailability: "",
-    duration: null,
-    experience: "",
-    learningType: "",
+const NewGoalPage = ({}: Props) => {
+  const goalInitialValues: CreateGoalCommand = {
+    category: undefined,
+    timeAvailability: undefined,
+    duration: undefined,
+    experience: undefined,
+    learningType: undefined,
   };
 
-  const handleSignUp = async (values: GoalCreationCommand) => {
-    console.log(values);
-    // try {
-    //   const response = await signUp(values);
-    //   if (response.isSuccess) {
-    //     setIsSignUpSucess(true);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  };
+  const createGoalMutation = useMutation({
+    mutationFn: (command: CreateGoalCommand) => createGoal(command),
+    onSuccess: (response) => {
+      console.log("success");
+    },
+    onError: () => {
+      console.log("fail");
+    },
+  });
 
-  if (isProfileCreationSucess) {
-    return <div>Yea good!</div>;
-  }
+  const handleCreateGoal = async (values: CreateGoalCommand) => {
+    console.log("#values", values);
+    await createGoalMutation.mutateAsync(values);
+  };
 
   return (
     <div className={styles.background_container}>
       <div className={styles.extended_background_container}>
         <Formik
-          initialValues={creationProfileInitialValues}
+          initialValues={goalInitialValues}
           onSubmit={(values) => {
-            handleSignUp(values);
+            handleCreateGoal(values);
           }}
           validationSchema={NewGoalFormValidation}
           validateOnChange={false}
@@ -49,17 +48,17 @@ function NewGoalPage({}: Props) {
         >
           <Form className={styles.form_items_container}>
             <h1 className={styles.heading}>New Goal</h1>
-            <FormTextInput label="Category" name="category" />
-            <FormTextInput label="Time Availability" name="timeAvailability" />
-            <FormTextInput label="Duration" name="duration" />
-            <FormTextInput label="Experience" name="experience" />
-            <FormTextInput label="Learning Type" name="learningType" />
+            <FormSelectInput label="Category" name="category" options={enumToArrayOfOptions(GoalCategories)} />
+            <FormSelectInput label="Time Availability" name="timeAvailability" options={enumToArrayOfOptions(TimeAvailability)} />
+            <FormNumberInput label="Duration" name="duration" />
+            <FormSelectInput label="Experience" name="experience" options={enumToArrayOfOptions(Experience)} />
+            <FormSelectInput label="Learning Type" name="learningType" options={enumToArrayOfOptions(LearningType)} />
             <button className={styles.create_button}>Create</button>
           </Form>
         </Formik>
       </div>
     </div>
   );
-}
+};
 
 export default NewGoalPage;

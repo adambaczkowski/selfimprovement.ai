@@ -10,6 +10,10 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -20,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Libraries\LS.Common\LS.Common.csproj" />
+      <ProjectReference Include="..\Libraries\LS.Events\LS.Events.csproj" />
       <ProjectReference Include="..\Libraries\LS.Messaging\LS.Messaging.csproj" />
       <ProjectReference Include="..\Libraries\LS.ServiceClient\LS.ServiceClient.csproj" />
       <ProjectReference Include="..\Libraries\LS.Startup\LS.Startup.csproj" />
@@ -28,5 +33,7 @@
     <ItemGroup>
       <Folder Include="Goal\Validators\" />
     </ItemGroup>
-
+    <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
+        <Exec Command="dotnet tool run swagger tofile --output swagger.json $(OutputPath)$(AssemblyName).dll v1" ContinueOnError="true" EnvironmentVariables="DOTNET_ROLL_FORWARD=LatestMajor" />
+    </Target>
 </Project>

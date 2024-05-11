@@ -1,9 +1,15 @@
 ﻿using System.Reflection;
+using LS.Events.GoalApi;
 using LS.Messaging;
+using LS.Messaging.EventBus;
 using LS.ServiceClient;
 using LS.Startup;
 using Microsoft.EntityFrameworkCore;
+using PromptApi.AI;
 using PromptApi.Data;
+using PromptApi.EventHandlers;
+using PromptApi.ServiceClients;
+using PromptApi.Services;
 
 namespace PromptApi;
 
@@ -32,7 +38,13 @@ public class Startup
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
         services.Register(_configuration);
-        //services.AddMassTransitBus(_configuration, AppDomain.CurrentDomain.GetAssemblies());
+        ConfigureEventBusDependencies(services);
+        services.AddScoped<ITasksCreatorService, TasksCreatorService>();
+        services.AddScoped<IPromptBuilderService, PromptBuilderService>();
+        services.AddScoped<IGoalApiClient, GoalApiClient>();
+        services.AddScoped<IIdentityApiClient, IdentityApiClient>();
+        services.AddScoped<IAiModelApiClient, AiModelApiClient>();
+        services.AddHttpClient();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,5 +62,29 @@ public class Startup
             .UseCors("default")
             .UseSwagger(_configuration, "Prompt");
         app.MapHealthChecks();
+        ConfigureEventBusHandlers(app);
+    }
+    
+    private void ConfigureEventBusDependencies(IServiceCollection services)
+    {
+        var serviceName = _configuration["Service"]
+            ?.Split('.').First()
+            .Replace("http://", string.Empty)
+            .Replace("https://", string.Empty);
+        
+        services.AddRabbitMQEventBus
+        (
+            connectionUrl: _configuration["RabbitMqConnectionUrl"],
+            brokerName:  serviceName + "Broker",
+            queueName: serviceName + "Queue",
+            timeoutBeforeReconnecting: 15
+        );
+        services.AddTransient<GoalCreatedEventHandler>();
+    }
+
+    private void ConfigureEventBusHandlers(IApplicationBuilder app)
+    {
+        var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+        eventBus.Subscribe<GoalCreatedEvent, GoalCreatedEventHandler>();
     }
 }

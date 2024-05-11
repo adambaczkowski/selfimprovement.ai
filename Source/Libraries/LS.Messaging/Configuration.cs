@@ -1,42 +1,36 @@
 ﻿using System.Reflection;
-using MassTransit;
-using Microsoft.Extensions.Configuration;
+using LS.Messaging.EventBus;
+using LS.Messaging.Subscriptions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using RabbitMQ.Client;
 
 namespace LS.Messaging;
 
 public static class Configuration
 {
-    public static void AddMassTransitBus(this IServiceCollection container,
-        IConfiguration configuration,
-        IEnumerable<Assembly> assemblies)
+    public static void AddRabbitMQEventBus(this IServiceCollection services, string connectionUrl, string brokerName, string queueName, int timeoutBeforeReconnecting = 15)
     {
-        var serviceName = configuration["Service"].Split('.').First()
-            .Replace("http://", string.Empty)
-            .Replace("https://", string.Empty);
-
-        container.AddMassTransit(x =>
+        services.AddSingleton<IEventBusSubscriptionManager, InMemoryEventBusSubscriptionManager>();
+        services.AddSingleton<IPersistentConnection, DefaultRabbitMQPersistentConnection>(factory =>
         {
-            foreach (var assembly in assemblies)
+            var connectionFactory = new ConnectionFactory
             {
-                x.AddConsumers(assembly);
-            }
-            x.AddDelayedMessageScheduler();
-                x.UsingRabbitMq((context, cfg) =>
-                {
-                    cfg.Host("rabbitmq", "/", h =>
-                    {
-                        h.Username("guest");
-                        h.Password("guest");
-                    });
+                Uri = new Uri(connectionUrl),
+                DispatchConsumersAsync = true,
+            };
 
-                    cfg.ReceiveEndpoint(serviceName, y =>
-                    {
-                        y.Durable = true;
+            var logger = factory.GetService<ILogger<DefaultRabbitMQPersistentConnection>>();
+            return new DefaultRabbitMQPersistentConnection(connectionFactory, logger, timeoutBeforeReconnecting);
+        });
 
-                        y.ConfigureConsumers(context);
-                    });
-                });
+        services.AddSingleton<IEventBus, RabbitMqEventBus>(factory =>
+        {
+            var persistentConnection = factory.GetService<IPersistentConnection>();
+            var subscriptionManager = factory.GetService<IEventBusSubscriptionManager>();
+            var logger = factory.GetService<ILogger<RabbitMqEventBus>>();
+
+            return new RabbitMqEventBus(persistentConnection, subscriptionManager, factory, logger, brokerName, queueName);
         });
     }
 }
