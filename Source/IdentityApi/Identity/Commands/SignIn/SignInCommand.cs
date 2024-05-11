@@ -16,43 +16,38 @@ public class SignInCommand : IRequest<SignInResponse>
     public string Password { get; init; }
 }
 
-public class SignInCommandHandler : IRequestHandler<SignInCommand, SignInResponse>
+public class SignInCommandHandler(
+    IdentityDbContext context,
+    SignInManager<Models.User> signInManager,
+    UserManager<Models.User> userManager,
+    IOptions<Token> tokenOptions)
+    : IRequestHandler<SignInCommand, SignInResponse>
 {
-    private readonly IdentityDbContext _context;
-    private readonly SignInManager<Models.User> _signInManager;
-    private readonly UserManager<Models.User> _userManager;
-    private readonly Token _token;
-    private const string userNotAuthenticatedMessage = "Email or password was incorrect";
-
-    public SignInCommandHandler(IdentityDbContext context, SignInManager<Models.User> signInManager, UserManager<Models.User> userManager, IOptions<Token> tokenOptions)
-    {
-        _context = context;
-        _signInManager = signInManager;
-        _userManager = userManager;
-        _token = tokenOptions.Value;
-    }
+    private readonly IdentityDbContext _context = context;
+    private readonly Token _token = tokenOptions.Value;
+    private const string UserNotAuthenticatedMessage = "Email or password was incorrect";
 
     public async Task<SignInResponse> Handle(SignInCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        var user = await userManager.FindByEmailAsync(request.Email);
 
         if (user == null)
         {
             return new SignInResponse()
             {
                 IsSuccess = false,
-                Message = userNotAuthenticatedMessage
+                Message = UserNotAuthenticatedMessage
             };
         }
 
-        var signInResponse = await _signInManager.PasswordSignInAsync(user, request.Password, true, false);
+        var signInResponse = await signInManager.PasswordSignInAsync(user, request.Password, true, false);
 
         if (!signInResponse.Succeeded)
         {
             return new SignInResponse()
             {
                 IsSuccess = false,
-                Message = userNotAuthenticatedMessage
+                Message = UserNotAuthenticatedMessage
             };
         }
 
@@ -65,7 +60,7 @@ public class SignInCommandHandler : IRequestHandler<SignInCommand, SignInRespons
     
     private async Task<string> GenerateJwtToken(Models.User user)
     {
-        var roles = (await _userManager.GetRolesAsync(user));
+        var roles = (await userManager.GetRolesAsync(user));
         string role = roles.Count != 0 ? roles[0] : null;
         byte[] secret = Encoding.ASCII.GetBytes(_token.Secret);
 

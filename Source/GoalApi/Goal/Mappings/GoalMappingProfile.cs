@@ -8,7 +8,9 @@ public class GoalMappingProfile : Profile
 {
     public GoalMappingProfile()
     {
-        CreateMap<CreateGoalCommand, Models.Goal>();
+        CreateMap<CreateGoalCommand, Models.Goal>()
+            .ForMember(x => x.StartDate, src => src.MapFrom(x => DateTime.Now))
+            .ForMember(x => x.EndDate, src => src.MapFrom(x => DateTime.Now.AddDays(x.Duration)));
         CreateMap<Models.Goal, GoalDto>();
         CreateMap<Models.Goal, GoalDetailsDto>();
     }

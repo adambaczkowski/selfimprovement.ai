@@ -38,7 +38,7 @@ public class Startup
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
         services.Register(_configuration);
-        //ConfigureEventBusDependencies(services);
+        ConfigureEventBusDependencies(services);
         services.AddScoped<ITasksCreatorService, TasksCreatorService>();
         services.AddScoped<IPromptBuilderService, PromptBuilderService>();
         services.AddScoped<IGoalApiClient, GoalApiClient>();
@@ -62,7 +62,7 @@ public class Startup
             .UseCors("default")
             .UseSwagger(_configuration, "Prompt");
         app.MapHealthChecks();
-        //ConfigureEventBusHandlers(app);
+        ConfigureEventBusHandlers(app);
     }
     
     private void ConfigureEventBusDependencies(IServiceCollection services)

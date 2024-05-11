@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Select, MenuItem, FormControl, InputLabel, ThemeProvider } from "@mui/material";
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 import { useField } from "formik";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#7e68ba', // Your desired color for the underline
+      main: "#7e68ba", // Your desired color for the underline
     },
   },
 });
@@ -15,7 +15,7 @@ interface Props {
   label: string;
   name: string;
   options: { label: string; value: string | number }[];
-  value: number | null | '';
+  value?: number | null | "";
   onChange?: (value: number) => void;
 }
 
@@ -37,7 +37,7 @@ const FormSelectInput = (props: Props) => {
         <Select
           labelId={`${name}-label`}
           id={name}
-          value={selectedOption ?? ''}
+          value={selectedOption ?? ""}
           onChange={(e) => {
             setSelectedOption(e.target.value as number);
             helpers.setValue(e.target.value); // Set form field value
@@ -54,6 +54,5 @@ const FormSelectInput = (props: Props) => {
     </ThemeProvider>
   );
 };
-
 
 export default FormSelectInput;

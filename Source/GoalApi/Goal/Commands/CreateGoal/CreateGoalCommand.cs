@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GoalApi.Enums;
 using GoalApi.Goal.Dtos;
 using LS.Common;
 using LS.Events.GoalApi;
@@ -10,11 +11,11 @@ namespace GoalApi.Goal.Commands.CreateGoal;
 public class CreateGoalCommand : IRequest<GoalDto>
 {
     public Guid UserId { get; init; }
-    public string Category { get; init; }
-    public string TimeAvailability { get; init; }
-    public DateTime Duration { get; init; }
-    public string Expirience { get; init; }
-    public string LearningType { get; init; }
+    public GoalCategories Category { get; init; }
+    public TimeAvailability TimeAvailability { get; init; }
+    public int Duration { get; init; }
+    public Experience Experience { get; init; }
+    public LearningType LearningType { get; init; }
 }
 
 public class CreateGoalCommandHandler : IRequestHandler<CreateGoalCommand, GoalDto>

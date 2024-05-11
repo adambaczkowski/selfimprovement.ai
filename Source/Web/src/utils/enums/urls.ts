@@ -1,5 +1,6 @@
 export const appUrls = Object.freeze({
-    baseUrl: "http://localhost:8080",
-    identity: "",
-    prompt: "",
+    baseUrl: "",
+    identity: "http://localhost:8080",
+    prompt: "http://localhost:8081",
+    goal: "http://localhost:8082",
 })

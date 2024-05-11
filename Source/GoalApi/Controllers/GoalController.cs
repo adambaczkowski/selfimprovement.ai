@@ -1,5 +1,6 @@
 ﻿using GoalApi.Goal.Commands.CreateGoal;
 using GoalApi.Goal.Dtos;
+using GoalApi.Goal.Queries.GetUserGoals;
 using LS.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,15 +9,8 @@ namespace GoalApi.Controllers;
 
 
 [Route("api/Goal")]
-public class GoalController : Controller
+public class GoalController(IMediator mediator) : Controller
 {
-    private readonly IMediator _mediator;
-
-    public GoalController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [Route("/")]
     [HttpPost]
     public async Task<ApiResponse<GoalDto>> CreateGoal([FromBody] CreateGoalCommand command)
@@ -24,7 +18,7 @@ public class GoalController : Controller
         var apiResponse = new ApiResponse<GoalDto>();
         try
         {
-            var response = await _mediator.Send(command);
+            var response = await mediator.Send(command);
             apiResponse.Data = response;
             return apiResponse;
         }
@@ -39,12 +33,12 @@ public class GoalController : Controller
     
     [Route("/")]
     [HttpDelete]
-    public async Task<ApiResponse<string>> CreateGoal([FromBody] DeleteGoalCommand command)
+    public async Task<ApiResponse<string>> DeleteGoal([FromBody] DeleteGoalCommand command)
     {
         var apiResponse = new ApiResponse<string>();
         try
         {
-            await _mediator.Send(command);
+            await mediator.Send(command);
             return apiResponse;
         }
         catch (Exception ex)
@@ -56,4 +50,22 @@ public class GoalController : Controller
         return apiResponse;
     }
 
+    [Route("/")]
+    [HttpGet]
+    public async Task<ApiResponse<List<GoalDto>>> GetUserGoals([FromQuery] GetUserGoalsQuery query)
+    {
+        var apiResponse = new ApiResponse<List<GoalDto>>();
+        try
+        {
+            await mediator.Send(query);
+            return apiResponse;
+        }
+        catch (Exception ex)
+        {
+            apiResponse.Success = false;
+            apiResponse.ErrorMessage = ex.Message;
+        }
+
+        return apiResponse;
+    }
 }

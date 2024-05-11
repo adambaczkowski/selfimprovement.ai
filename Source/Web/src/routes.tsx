@@ -15,27 +15,33 @@ import ConfirmEmailPage from "./pages/ConfirmEmailPage/ConfirmEmailPage";
 import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
 import { Sidebar, ErrorBoundary } from "./components/componentsIndex";
 import "./App.scss";
+import ProtectedRoutes from "./ProtectedRoutes";
+import NoTokenRoutes from "./NoTokenRoutes";
 type Props = {};
 
 const AppLayout = () => {
-  return(
+  return (
     <div className="app-container">
       {/* {userToken && <Sidebar />} */}
       <Sidebar />
       <div className="content-container">
-        <Outlet />
+        <ProtectedRoutes />
       </div>
     </div>
-  )
+  );
 };
 
 const Routes = ({}: Props) => {
   const router = createBrowserRouter([
     {
-      element: <AppLayout />,
+      element: <NoTokenRoutes />,
       children: [
         {
           path: "/",
+          element: <SignInPage />,
+        },
+        {
+          path: "/signIn",
           element: <SignInPage />,
         },
         {
@@ -58,6 +64,11 @@ const Routes = ({}: Props) => {
           path: "/resetPassword",
           element: <PasswordResetPage />,
         },
+      ],
+    },
+    {
+      element: <AppLayout />,
+      children: [
         {
           path: "/task",
           element: <TaskPage />,
@@ -89,14 +100,12 @@ const Routes = ({}: Props) => {
         {
           path: "/profileCreation/:mode",
           element: <ProfileCreationPage />,
-        }
-      ]
-    }
+        },
+      ],
+    },
   ]);
 
-  return(
-      <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default Routes;
