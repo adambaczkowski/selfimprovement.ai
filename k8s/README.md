@@ -1,4 +1,5 @@
 # localdev
+##### https://kind.sigs.k8s.io/docs/user/quick-start/
 kind create cluster --name dev --image "kindest/node:v1.29.1"
 
 ## monitoring
