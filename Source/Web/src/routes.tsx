@@ -22,7 +22,6 @@ type Props = {};
 const AppLayout = () => {
   return (
     <div className="app-container">
-      {/* {userToken && <Sidebar />} */}
       <Sidebar />
       <div className="content-container">
         <ProtectedRoutes />
