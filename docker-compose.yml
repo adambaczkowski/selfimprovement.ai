@@ -113,6 +113,17 @@ services:
               count: 1
               capabilities: [gpu]
 
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: "azurite"
+    hostname: azurite
+    volumes:
+      - azurite_data:/data
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+    command: "azurite-blob --blobHost 0.0.0.0 -l /data"
 
   mailhog:
     container_name: mailhog
@@ -206,6 +217,7 @@ services:
     #   - .env
 
 volumes:
+  azurite_data:
   ollama:
   prometheus_data:
   open-webui:
