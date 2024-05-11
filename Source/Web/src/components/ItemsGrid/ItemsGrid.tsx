@@ -10,7 +10,7 @@ interface Props {
 function ItemsGrid({ title, dailyTasks }: Props) {
   return (
     <div className={styles.background_container}>
-      <h1 className={styles.header}>{title}</h1>
+      <h1 className={styles.page_header}>{title}</h1>
       <div className={styles.tasks_grid}>
         {dailyTasks.map((dailyTask: any) => (
           dailyTask.tasks.map((task: any) => (

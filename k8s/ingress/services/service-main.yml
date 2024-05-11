@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress-nginx
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-main
+data:
+  path-a.html: |
+    "/path-a.html" on service-b
+  path-b.html: |
+    "/path-b.html" on service-b
+  index.html: |
+    "/" on service-main
+  404.html: |
+    service-main 404 page
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-main-nginx.conf
+data:
+  nginx.conf: |
+    user  nginx;
+    worker_processes  1;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+    events {
+        worker_connections  1024;
+    }
+
+    http {
+        sendfile        on;
+        server {
+          listen       80;
+          server_name  localhost;
+
+          location / {
+              root   /usr/share/nginx/html;
+              index  index.html index.htm;
+          }
+
+          error_page 404 /404.html;
+          error_page   500 502 503 504  /50x.html;
+          location = /50x.html {
+              root   /usr/share/nginx/html;
+          }
+        }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-main
+  labels:
+    app: service-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-main
+  template:
+    metadata:
+      labels:
+        app: service-main
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25.3
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html
+          mountPath: "/usr/share/nginx/html/"
+        - name: config
+          mountPath: "/etc/nginx/"
+      volumes:
+      - name: html
+        configMap:
+          name: service-main
+      - name: config
+        configMap:
+          name: service-main-nginx.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-main
+spec:
+  selector:
+    app: service-main
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
