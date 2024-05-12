@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Azure.Storage.Blobs;
 using LS.Events.GoalApi;
 using LS.Messaging;
 using LS.Messaging.EventBus;
@@ -44,6 +45,8 @@ public class Startup
         services.AddScoped<IGoalApiClient, GoalApiClient>();
         services.AddScoped<IIdentityApiClient, IdentityApiClient>();
         services.AddScoped<IAiModelApiClient, AiModelApiClient>();
+        services.AddSingleton<IBlobStorageService, BlobStorageService>();
+        services.AddSingleton(_ => new BlobServiceClient(_configuration.GetConnectionString("BlobStorage")));
         services.AddHttpClient();
     }
 
