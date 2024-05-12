@@ -1,0 +1,40 @@
+@import './../../styles/componentsStylingIndex.scss';
+
+.login_grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+}
+
+.login_heading {
+  margin-bottom: 2rem;
+  color: lighten($header-text, 40%);
+  text-align: center;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.login_image{
+  margin: -2rem;
+  width: 100%;
+  height: calc(100vh - 3rem);
+  min-width: 30vh;
+  object-fit: cover;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.form_items_container{ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.heading {
+  margin-bottom: 2rem;
+  color: $header-text;
+  text-align: center;
+}
