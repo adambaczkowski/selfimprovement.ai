@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using GoalApi.Data;
 using GoalApi.Data.Repositories;
+using GoalApi.EventHandlers;
 using GoalApi.Models;
 using LS.Common;
 using LS.Events.PromptApi;
@@ -28,14 +29,19 @@ public class Startup(IConfiguration configuration)
             .AddSwagger(configuration, "goal")
             .AddDefaultCorsPolicy(configuration["CorsOrigin"])
             .AddHttpContextAccessor();
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        services.AddDbContext<GoalDbContext>(options =>
+        {
+            options.UseNpgsql(configuration.GetConnectionString("SelfImprovementDbContext"));
+        });
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
         services.AddScoped<IGenericRepository<Models.Goal>, GoalRepository>();
         services.AddScoped<IGenericRepository<Models.GoalTask>, GoalTaskRepository>();
         services.Register(configuration);
-        services.AddAuthorization();
-        services.AddAuthentication();
+        services.AddIdentityServices(configuration);
+        services.AddHttpClient();
         ConfigureEventBusDependencies(services);
     }
 
@@ -43,9 +49,8 @@ public class Startup(IConfiguration configuration)
     public void Configure(WebApplication app, IWebHostEnvironment env)
     {
         app.UseRouting();
-        app.UseAuthorization();
         app.UseAuthentication();
-
+        app.UseAuthorization();
 
         if (!env.IsDevelopment())
         {
@@ -53,7 +58,7 @@ public class Startup(IConfiguration configuration)
         }
         
         app
-            .UseCors("default")
+            .UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
             .UseSwagger(configuration, "Goal");
         app.MapHealthChecks();
         ConfigureEventBusHandlers(app);
@@ -73,11 +78,12 @@ public class Startup(IConfiguration configuration)
             queueName: serviceName + "Queue",
             timeoutBeforeReconnecting: 15
         );
-        services.AddTransient<TasksForGoalCreatedEvent>();
+        services.AddScoped<TasksForGoalCreatedEventHandler>();
     }
 
     private void ConfigureEventBusHandlers(IApplicationBuilder app)
     {
         var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+        eventBus.Subscribe<TasksForGoalCreatedEvent, TasksForGoalCreatedEventHandler>();
     }
 }

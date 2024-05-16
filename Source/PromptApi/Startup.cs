@@ -48,6 +48,7 @@ public class Startup
         services.AddSingleton<IBlobStorageService, BlobStorageService>();
         services.AddSingleton(_ => new BlobServiceClient(_configuration.GetConnectionString("BlobStorage")));
         services.AddHttpClient();
+        services.AddIdentityServices(_configuration);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,7 +83,7 @@ public class Startup
             queueName: serviceName + "Queue",
             timeoutBeforeReconnecting: 15
         );
-        services.AddTransient<GoalCreatedEventHandler>();
+        services.AddScoped<GoalCreatedEventHandler>();
     }
 
     private void ConfigureEventBusHandlers(IApplicationBuilder app)

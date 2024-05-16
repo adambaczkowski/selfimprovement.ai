@@ -19,9 +19,9 @@ public class TasksCreatorService(IPromptBuilderService promptBuilderService, IAi
         {
             var model = AiModelFactory.CreateModel(AiModelType.Llama2, _promptBuilderService, aiApiUrl);
             var prompt = await model.BuildPrompt();
-            var response = await _aiModelApiClient.GetPromptResponse(model, new {model = "llama3", prompt = prompt, stream=false});
+            var response = await _aiModelApiClient.GetPromptResponse(model, new {model = "llama2", prompt = prompt, stream=false, raw = true});
 
-            var taskList = await model.ProcessModelResponse(@event.GoalId);
+            var taskList = new List<GoalTaskResource>();//await model.ProcessModelResponse(@event.GoalId);
             
             return taskList;
         }

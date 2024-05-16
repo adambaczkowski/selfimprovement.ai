@@ -62,7 +62,7 @@ public class SignInCommandHandler(
     {
         var roles = (await userManager.GetRolesAsync(user));
         string role = roles.Count != 0 ? roles[0] : null;
-        byte[] secret = Encoding.ASCII.GetBytes(_token.Secret);
+        byte[] secret = Encoding.UTF8.GetBytes(_token.Secret);
 
         JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
         SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor

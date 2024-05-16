@@ -10,21 +10,13 @@ public class GetSingleGoalQuery : IRequest<GoalDetailsDto>
     public Guid Id { get; init; }
 }
 
-public class GetSingleGoalQueryHandler : IRequestHandler<GetSingleGoalQuery, GoalDetailsDto>
+public class GetSingleGoalQueryHandler(IGenericRepository<Models.Goal> goalRepository, IMapper mapper)
+    : IRequestHandler<GetSingleGoalQuery, GoalDetailsDto>
 {
-    private readonly IGenericRepository<Models.Goal> _goalRepository;
-    private readonly IMapper _mapper;
-
-    public GetSingleGoalQueryHandler(IGenericRepository<Models.Goal> goalRepository, IMapper mapper)
-    {
-        _goalRepository = goalRepository;
-        _mapper = mapper;
-    }
-
     public async Task<GoalDetailsDto> Handle(GetSingleGoalQuery request, CancellationToken cancellationToken)
     {
-        var goal = await _goalRepository.GetByIdAsync(request.Id);
+        var goal = await goalRepository.GetByIdAsync(request.Id);
 
-        return _mapper.Map<GoalDetailsDto>(goal);
+        return mapper.Map<GoalDetailsDto>(goal);
     }
 }

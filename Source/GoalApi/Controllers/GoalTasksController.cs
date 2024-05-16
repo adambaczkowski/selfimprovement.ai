@@ -1,7 +1,9 @@
-﻿using GoalApi.Goal.Commands.CreateGoal;
-using GoalApi.Goal.Dtos;
-using GoalApi.Goal.Queries.GetSingleGoal;
-using GoalApi.Goal.Queries.GetUserGoals;
+﻿using GoalApi.Goal.Queries.GetUserGoals;
+using GoalApi.GoalTask.Commads.CompleteGoalTask;
+using GoalApi.GoalTask.Dtos;
+using GoalApi.GoalTask.Queries.GetAllGoalTasks;
+using GoalApi.GoalTask.Queries.GetGoalsTasksForDay;
+using GoalApi.GoalTask.Queries.GetSingleGoalTask;
 using LS.Common;
 using LS.Startup;
 using MediatR;
@@ -10,16 +12,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GoalApi.Controllers;
 
-[Route("api/Goal/")]
-public class GoalController(IMediator mediator, ICurrentUserService currentUserService) : Controller
+[Route("api/GoalTasks/")]
+public class GoalTasksController(IMediator mediator, ICurrentUserService currentUserService) : Controller
 {
-    [Authorize]
-    [Route("/")]
-    [HttpPost]
-    public async Task<ApiResponse<GoalDto>> CreateGoal([FromBody] CreateGoalCommand command)
+    [Route("Tasks/")]
+    [HttpPut]
+    public async Task<ApiResponse<GoalTaskDetailsDto>> CompleteTask([FromBody] CompleteGoalTaskCommand command)
     {
-        command.UserId = currentUserService.UserId;
-        var apiResponse = new ApiResponse<GoalDto>();
+        var apiResponse = new ApiResponse<GoalTaskDetailsDto>();
         try
         {
             var response = await mediator.Send(command);
@@ -34,33 +34,14 @@ public class GoalController(IMediator mediator, ICurrentUserService currentUserS
 
         return apiResponse;
     }
-    
-    [Route("/")]
-    [HttpDelete]
-    public async Task<ApiResponse<string>> DeleteGoal([FromBody] DeleteGoalCommand command)
-    {
-        var apiResponse = new ApiResponse<string>();
-        try
-        {
-            await mediator.Send(command);
-            return apiResponse;
-        }
-        catch (Exception ex)
-        {
-            apiResponse.Success = false;
-            apiResponse.ErrorMessage = ex.Message;
-        }
-
-        return apiResponse;
-    }
 
     [Authorize]
-    [Route("/UserGoals")]
+    [Route("Tasks/")]
     [HttpGet]
-    public async Task<ApiResponse<List<GoalDto>>> GetUserGoals([FromQuery] GetUserGoalsQuery query)
+    public async Task<ApiResponse<List<GoalTaskDto>>> GetUserGoalTasks([FromQuery] GetAllGoalTasksQuery query)
     {
         query.UserId = currentUserService.UserId;
-        var apiResponse = new ApiResponse<List<GoalDto>>();
+        var apiResponse = new ApiResponse<List<GoalTaskDto>>();
         try
         {
             var response = await mediator.Send(query);
@@ -76,14 +57,36 @@ public class GoalController(IMediator mediator, ICurrentUserService currentUserS
         return apiResponse;
     }
     
-    [Route("/{id}/Details")]
+    [Authorize]
+    [Route("Tasks/Calendar")]
     [HttpGet]
-    public async Task<ApiResponse<GoalDetailsDto>> GetUserGoalDetails([FromRoute]Guid id)
+    public async Task<ApiResponse<List<GoalTasksForDayDto>>> GetUserGoalTasksForCalendar([FromQuery] GetGoalsTasksForDayQuery query)
     {
-        var apiResponse = new ApiResponse<GoalDetailsDto>();
+        query.UserId = currentUserService.UserId;
+        var apiResponse = new ApiResponse<List<GoalTasksForDayDto>>();
         try
         {
-            var response = await mediator.Send(new GetSingleGoalQuery()
+            var response = await mediator.Send(query);
+            apiResponse.Data = response;
+            return apiResponse;
+        }
+        catch (Exception ex)
+        {
+            apiResponse.Success = false;
+            apiResponse.ErrorMessage = ex.Message;
+        }
+
+        return apiResponse;
+    }
+    
+    [Route("Tasks/{id}/Details")]
+    [HttpGet]
+    public async Task<ApiResponse<GoalTaskDetailsDto>> GetGoalTaskDetails([FromRoute]Guid id)
+    {
+        var apiResponse = new ApiResponse<GoalTaskDetailsDto>();
+        try
+        {
+            var response = await mediator.Send(new GetSingleGoalTaskQuery()
             {
                 Id = id
             });

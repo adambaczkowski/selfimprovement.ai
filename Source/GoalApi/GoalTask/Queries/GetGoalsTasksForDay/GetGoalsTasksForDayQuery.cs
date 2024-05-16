@@ -8,26 +8,18 @@ namespace GoalApi.GoalTask.Queries.GetGoalsTasksForDay;
 
 public class GetGoalsTasksForDayQuery : IRequest<List<GoalTasksForDayDto>>
 {
-    public Guid UserId { get; init; }
-    public Guid GoalId { get; init; }
+    public string UserId { get; set; }
+    public Guid? GoalId { get; init; }
 }
 
-public class GetGoalsTasksForDayQueryHandler : IRequestHandler<GetGoalsTasksForDayQuery ,List<GoalTasksForDayDto>>
+public class GetGoalsTasksForDayQueryHandler(IGenericRepository<Models.GoalTask> goalTaskRepository, IMapper mapper)
+    : IRequestHandler<GetGoalsTasksForDayQuery, List<GoalTasksForDayDto>>
 {
-    private readonly IGenericRepository<Models.GoalTask> _goalTaskRepository;
-    private readonly IMapper _mapper;
-
-    public GetGoalsTasksForDayQueryHandler(IGenericRepository<Models.GoalTask> goalTaskRepository, IMapper mapper)
-    {
-        _goalTaskRepository = goalTaskRepository;
-        _mapper = mapper;
-    }
-
     public async Task<List<GoalTasksForDayDto>> Handle(GetGoalsTasksForDayQuery request, CancellationToken cancellationToken)
     {
-        var goalTasksGrouped = await _goalTaskRepository.GetQuery()
+        var goalTasksGrouped = await goalTaskRepository.GetQuery()
             .Include(x => x.Goal)
-            .Where(x => x.GoalId == request.GoalId)
+            .WhereIf(request.GoalId.HasValue, x => x.GoalId == request.GoalId)
             .Where(x => x.Goal.UserId == request.UserId)
             .GroupBy(x => x.Date.DayOfYear)
             .ToListAsync(cancellationToken);
@@ -39,7 +31,7 @@ public class GetGoalsTasksForDayQueryHandler : IRequestHandler<GetGoalsTasksForD
                 var goalTasksForDay = new List<GoalTaskDto>();
                 foreach (var goalTask in group)
                 {
-                    goalTasksForDay.Add(_mapper.Map<GoalTaskDto>(goalTask));
+                    goalTasksForDay.Add(mapper.Map<GoalTaskDto>(goalTask));
                 }
                 
                 goalTasksForDayDto.Add(new GoalTasksForDayDto()

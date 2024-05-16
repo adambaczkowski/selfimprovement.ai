@@ -75,7 +75,7 @@ services:
       - CorsOrigin=http://localhost:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
       - Service=http://localhost:8081
-      - Llama2=http://host.docker.internal:3001/api/generate
+      - Llama2=http://host.docker.internal:11434/api/generate
     ports:
       - "8082:8080"
     deploy:

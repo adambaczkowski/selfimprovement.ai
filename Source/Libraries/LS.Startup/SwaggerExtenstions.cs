@@ -20,7 +20,8 @@ public static class SwaggerExtensions
         return services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = serviceName, Version = "v1" });
-
+            c.IgnoreObsoleteActions();
+            c.IgnoreObsoleteProperties();
             // Including docs requires GenerateDocumentationFile option checked
             // for project which using this extension.
             if (includeDocs)

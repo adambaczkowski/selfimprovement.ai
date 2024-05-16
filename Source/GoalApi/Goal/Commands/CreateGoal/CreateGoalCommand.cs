@@ -10,7 +10,7 @@ namespace GoalApi.Goal.Commands.CreateGoal;
 
 public class CreateGoalCommand : IRequest<GoalDto>
 {
-    public Guid UserId { get; init; }
+    public string UserId { get; set; }
     public GoalCategories Category { get; init; }
     public TimeAvailability TimeAvailability { get; init; }
     public int Duration { get; init; }
@@ -18,31 +18,24 @@ public class CreateGoalCommand : IRequest<GoalDto>
     public LearningType LearningType { get; init; }
 }
 
-public class CreateGoalCommandHandler : IRequestHandler<CreateGoalCommand, GoalDto>
+public class CreateGoalCommandHandler(
+    IGenericRepository<Models.Goal> goalRepository,
+    IMapper mapper,
+    IEventBus eventBus)
+    : IRequestHandler<CreateGoalCommand, GoalDto>
 {
-    private readonly IGenericRepository<Models.Goal> _goalRepository;
-    private readonly IMapper _mapper;
-    private readonly IEventBus _eventBus;
-
-    public CreateGoalCommandHandler(IGenericRepository<Models.Goal> goalRepository, IMapper mapper, IEventBus eventBus)
-    {
-        _goalRepository = goalRepository;
-        _mapper = mapper;
-        _eventBus = eventBus;
-    }
-
     public async Task<GoalDto> Handle(CreateGoalCommand request, CancellationToken cancellationToken)
     {
-        var goal = _mapper.Map<Models.Goal>(request);
-        _goalRepository.Add(goal);
-        await _goalRepository.SaveAsync();
+        var goal = mapper.Map<Models.Goal>(request);
+        goalRepository.Add(goal);
+        await goalRepository.SaveAsync();
         
-        _eventBus.Publish(new GoalCreatedEvent
+        eventBus.Publish(new GoalCreatedEvent
         {
             GoalId = goal.Id,
             UserId = goal.UserId
         });
         
-        return _mapper.Map<GoalDto>(goal);
+        return mapper.Map<GoalDto>(goal);
     }
 }
