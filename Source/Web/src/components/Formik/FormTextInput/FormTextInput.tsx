@@ -15,6 +15,7 @@ const theme = createTheme({
 interface Props {
   label: string;
   name: string;
+  placeholderText?: string;
   type?: string;
   onChange?: (e: any) => void;
 }
@@ -27,7 +28,7 @@ const FormTextInput = (props: Props) => {
     <ThemeProvider theme={theme}>
       <FormControl>
         <InputLabel htmlFor={name}>{label}</InputLabel>
-        <TextInput id={name} datatestId={name} {...field} {...props} error={meta.touched && !!meta.error} />
+        <TextInput id={name} datatestId={name} placeholder={props.placeholderText} {...field} {...props} error={meta.touched && !!meta.error} />
         <CustomFormHelperText errorText={meta.error} />
       </FormControl>
     </ThemeProvider>
