@@ -51,8 +51,7 @@ export const RequestPasswordResetPage = ({}: Props) => {
               <h1 className={styles.heading}>Reset password</h1>
               <FormTextInput label="email" name="email" placeholderText="test@email.com" />
               <CustomButton text="Submit" type="submit" />
-              <p className={styles.or_divider}>or</p>
-              <Link to={"/signUp"} className={styles.sign_up_button}>Sign up</Link>
+              <Link to={"/signUp"} className={styles.forgot_password_button}>Sign up</Link>
               <Link to={"/"} className={styles.forgot_password_button}>Sign in</Link>
             </Form>
           </Formik>

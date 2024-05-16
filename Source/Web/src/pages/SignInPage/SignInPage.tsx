@@ -51,7 +51,7 @@ const SignInPage = ({}: Props) => {
                 name="password" 
                 type="password"
               />
-              <CustomButton text="Sign in" type="submit" />
+              <CustomButton text="Submit" type="submit" />
               <p className={styles.or_divider}>or</p>
               <Link to={"/signUp"} className={styles.sign_up_button}>Sign up</Link>
               <Link to={"/requestPasswordReset"} className={styles.forgot_password_button}>forgot password?</Link>
