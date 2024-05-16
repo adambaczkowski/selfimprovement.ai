@@ -16,7 +16,7 @@ interface Props extends OutlinedInputProps {
 const TextInput = (props: Props) => {
   return (
     <ThemeProvider theme={theme}>
-      <OutlinedInput value={props.value} data-testid={props.datatestId} placeholder="test" {...props} />
+      <OutlinedInput value={props.value} data-testid={props.datatestId} placeholder="elo" {...props} />
     </ThemeProvider>
   );
 };

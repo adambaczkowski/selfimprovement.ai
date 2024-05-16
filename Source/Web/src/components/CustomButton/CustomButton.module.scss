@@ -1,0 +1,19 @@
+@import './../../styles/componentsStylingIndex.scss';
+
+.sign_in_button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 100;
+    font-size: 1.08rem;
+    background: $sign-in-button;
+    color : $sign-in-button-text;
+
+    &:hover {
+      transform: scale(1.03);
+      background-color: lighten($sign-in-button, 5%)
+    }
+}

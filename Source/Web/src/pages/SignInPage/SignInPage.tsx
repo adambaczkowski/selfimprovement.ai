@@ -45,11 +45,16 @@ const SignInPage = ({}: Props) => {
           >
             <Form className={styles.form_items_container}>
               <h1 className={styles.heading}>Sign in</h1>
-              <FormTextInput label="Email" name="email" />
-              <FormTextInput label="Password" name="password" />
+              <FormTextInput label="Email" name="email" placeholderText="test@email.com"/>
+              <FormTextInput 
+                label="Password" 
+                name="password" 
+                type="password"
+              />
               <CustomButton text="Sign in" type="submit" />
-              <Link to={"/signUp"}>Sign up</Link>
-              <Link to={"/requestPasswordReset"}>Forgot password?</Link>
+              <p className={styles.or_divider}>or</p>
+              <Link to={"/signUp"} className={styles.sign_up_button}>Sign up</Link>
+              <Link to={"/requestPasswordReset"} className={styles.forgot_password_button}>forgot password?</Link>
             </Form>
           </Formik>
         </div>
