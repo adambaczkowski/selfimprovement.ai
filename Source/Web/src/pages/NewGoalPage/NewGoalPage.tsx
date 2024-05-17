@@ -31,7 +31,7 @@ const NewGoalPage = ({}: Props) => {
 
   const handleCreateGoal = async (values: CreateGoalCommand) => {
     console.log("#values", values);
-    await createGoalMutation.mutateAsync(values);
+    await createGoal(values);
   };
 
   return (
@@ -42,7 +42,7 @@ const NewGoalPage = ({}: Props) => {
           onSubmit={(values) => {
             handleCreateGoal(values);
           }}
-          validationSchema={NewGoalFormValidation}
+          validationSchema={null} //NewGoalFormValidation}
           validateOnChange={false}
           validateOnBlur={false}
         >

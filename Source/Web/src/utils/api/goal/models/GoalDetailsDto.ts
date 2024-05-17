@@ -7,11 +7,11 @@ import type { GoalCategories } from './GoalCategories';
 import type { LearningType } from './LearningType';
 import type { TimeAvailability } from './TimeAvailability';
 
-export type CreateGoalCommand = {
-    userId?: string | null;
+export type GoalDetailsDto = {
     category?: GoalCategories;
     timeAvailability?: TimeAvailability;
-    duration?: number;
+    startDate?: string;
+    endDate?: string;
     experience?: Experience;
     learningType?: LearningType;
 };

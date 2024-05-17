@@ -1,7 +1,7 @@
-import { appUrls } from './../../../enums/urls';
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import { appUrls } from './../../../enums/urls';
 import axios from 'axios';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import FormData from 'form-data';
@@ -101,10 +101,9 @@ const getUrl = (config: OpenAPIConfig, options: ApiRequestOptions): string => {
             return substring;
         });
 
-    // tech DEBT
-    const goalUrl = appUrls.goal;
+    const identityUrl = appUrls.goal;
 
-    const url = `${goalUrl}${path}`;
+    const url = `${identityUrl}${path}`;
     if (options.query) {
         return `${url}${getQueryString(options.query)}`;
     }
@@ -207,9 +206,9 @@ const sendRequest = async <T>(
     onCancel: OnCancel
 ): Promise<AxiosResponse<T>> => {
     const source = axios.CancelToken.source();
+
     const requestConfig: AxiosRequestConfig = {
-        baseURL:  appUrls.baseUrl,
-        url: url,
+        url,
         headers,
         data: body ?? formData,
         method: options.method,
