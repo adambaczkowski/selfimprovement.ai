@@ -74,7 +74,7 @@ services:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
-      - Service=http://localhost:8081
+      - Service=http://localhost:8082
       - Llama2=http://host.docker.internal:11434/api/generate
     ports:
       - "8082:8080"
