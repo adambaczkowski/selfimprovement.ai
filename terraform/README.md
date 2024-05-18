@@ -1,5 +1,9 @@
-# authenticate with Azure
+# Authenticate with Azure
+```plaintext
 az login
+
+az aks install-cli
+```
 
 # You will get output like this:
 ```plaintext
@@ -62,18 +66,16 @@ az group create -n $RESOURCEGROUP -l polandcentral
 # Service principal
 ```plaintext
 $SERVICE_PRINCIPAL_JSON=$(az ad sp create-for-rbac --name aks-dev-service-principal -o json)
-```
-
-```plaintext
-# Keep the appId and password for later use!
-```
-
-```plaintext
 $SERVICE_PRINCIPAL = $(echo $SERVICE_PRINCIPAL_JSON | jq -r '.appId')
 $SERVICE_PRINCIPAL_SECRET = $(echo $SERVICE_PRINCIPAL_JSON | jq -r '.password')
 ```
 
-# grant contributor role over the resource group to our service principal
+# Reset the credential if you have any sinlge or double quote on password
+```plaintext
+az ad sp credential reset --name "aks-dev-service-principal"
+```
+
+# Grant contributor role over the resource group to our service principal
 
 ```plaintext
 az role assignment create --assignee $SERVICE_PRINCIPAL `
@@ -106,8 +108,47 @@ az role assignment create --assignee $SERVICE_PRINCIPAL `
 ```powershell
 winget install --id=Hashicorp.Terraform  -e
 ```
-# In terrform direcory use:
+
+# Create ssh key
 ```powershell
-terrafrom init
+mkdir .ssh -Force
+ssh-keygen -t rsa -b 4096 -N "YourPassword123$!" -C "user@selfimprovement.ai" -q -f  .ssh/id_rsa
+$SSH_KEY = Get-Content .ssh/id_rsa.pub
 ```
 
+# In terrform direcory use:
+```powershell
+terraform init
+```
+```powershell
+terraform plan -var serviceprinciple_id=$SERVICE_PRINCIPAL `
+    -var serviceprinciple_key="$SERVICE_PRINCIPAL_SECRET" `
+    -var tenant_id=$TENTANT_ID `
+    -var subscription_id=$SUBSCRIPTION `
+    -var ssh_key="$SSH_KEY" `
+    -out=tfplan
+```
+```powershell
+terraform apply tfplan
+```
+
+# After deployment
+```powershell
+az aks get-credentials --resource-group aks-dev --name aks-dev
+kubectl get svc
+```
+# Get EXTERNAL-IP and paste it to browser
+```plaintext
+NAME                TYPE           CLUSTER-IP   EXTERNAL-IP     PORT(S)        AGE
+kubernetes          ClusterIP      10.0.0.1     <none>          443/TCP        7m46s
+terraform-example   LoadBalancer   10.0.57.67   20.215.96.241   80:30920/TCP   5m48s
+```
+
+# Destroy
+```powershell
+terraform destroy -var serviceprinciple_id=$SERVICE_PRINCIPAL `
+    -var serviceprinciple_key="$SERVICE_PRINCIPAL_SECRET" `
+    -var tenant_id=$TENTANT_ID `
+    -var subscription_id=$SUBSCRIPTION `
+    -var ssh_key="$SSH_KEY"
+```

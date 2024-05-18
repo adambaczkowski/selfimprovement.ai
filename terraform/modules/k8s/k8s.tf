@@ -1,4 +1,3 @@
-
 provider "kubernetes" {
     host                   =  var.host
     client_certificate     =  var.client_certificate

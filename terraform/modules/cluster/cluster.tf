@@ -8,12 +8,12 @@ resource "azurerm_kubernetes_cluster" "aks-dev" {
   location              = azurerm_resource_group.aks-dev.location
   resource_group_name   = azurerm_resource_group.aks-dev.name
   dns_prefix            = "aks-dev"
-  kubernetes_version    =  var.kubernetes_version
+  #kubernetes_version    =  var.kubernetes_version
 
   default_node_pool {
     name       = "default"
     node_count = 1
-    vm_size    = "Standard_E4s_v3"
+    vm_size    = "Standard_DS2_v2"
     type       = "VirtualMachineScaleSets"
     os_disk_size_gb = 250
   }
@@ -32,7 +32,7 @@ resource "azurerm_kubernetes_cluster" "aks-dev" {
 
   network_profile {
       network_plugin = "kubenet"
-      load_balancer_sku = "Standard"
+      load_balancer_sku = "standard"
   }
 
 }
