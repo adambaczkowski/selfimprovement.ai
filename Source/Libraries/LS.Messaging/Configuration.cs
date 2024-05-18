@@ -1,36 +1,35 @@
-﻿using System.Reflection;
+﻿using LS.Messaging;
 using LS.Messaging.EventBus;
-using LS.Messaging.Subscriptions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using RabbitMQ.Client;
 
-namespace LS.Messaging;
+namespace Microsoft.Extensions.Hosting;
 
-public static class Configuration
+public static class RabbitMqDependencyInjectionExtensions
 {
-    public static void AddRabbitMQEventBus(this IServiceCollection services, string connectionUrl, string brokerName, string queueName, int timeoutBeforeReconnecting = 15)
+    private const string SectionName = "EventBus";
+    
+    public static IEventBusBuilder AddRabbitMqEventBus(this IServiceCollection services, IConfiguration configuration, string connectionName)
     {
-        services.AddSingleton<IEventBusSubscriptionManager, InMemoryEventBusSubscriptionManager>();
-        services.AddSingleton<IPersistentConnection, DefaultRabbitMQPersistentConnection>(factory =>
-        {
-            var connectionFactory = new ConnectionFactory
+        services.AddOpenTelemetry()
+            .WithTracing(tracing =>
             {
-                Uri = new Uri(connectionUrl),
-                DispatchConsumersAsync = true,
-            };
+                tracing.AddSource(RabbitMqTelemetry.ActivitySourceName);
+            });
+        // Options support
+        services.Configure<EventBusOptions>(configuration.GetSection(SectionName));
 
-            var logger = factory.GetService<ILogger<DefaultRabbitMQPersistentConnection>>();
-            return new DefaultRabbitMQPersistentConnection(connectionFactory, logger, timeoutBeforeReconnecting);
-        });
+        // Abstractions on top of the core client API
+        services.AddSingleton<RabbitMqTelemetry>();
+        services.AddSingleton<IEventBus, RabbitMqEventBus>();
+        // Start consuming messages as soon as the application starts
+        services.AddSingleton<IHostedService>(sp => (RabbitMqEventBus)sp.GetRequiredService<IEventBus>());
 
-        services.AddSingleton<IEventBus, RabbitMqEventBus>(factory =>
-        {
-            var persistentConnection = factory.GetService<IPersistentConnection>();
-            var subscriptionManager = factory.GetService<IEventBusSubscriptionManager>();
-            var logger = factory.GetService<ILogger<RabbitMqEventBus>>();
+        return new EventBusBuilder(services);
+    }
 
-            return new RabbitMqEventBus(persistentConnection, subscriptionManager, factory, logger, brokerName, queueName);
-        });
+    private class EventBusBuilder(IServiceCollection services) : IEventBusBuilder
+    {
+        public IServiceCollection Services => services;
     }
 }

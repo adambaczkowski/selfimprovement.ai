@@ -1,332 +1,325 @@
-﻿using System.Net.Sockets;
-using System.Reflection;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using LS.Messaging.EventBus;
-using LS.Messaging.Subscriptions;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using Polly;
+using Polly.Retry;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
-namespace LS.Messaging
+namespace LS.Messaging;
+
+ public sealed class RabbitMqEventBus(
+    ILogger<RabbitMqEventBus> logger,
+    IServiceProvider serviceProvider,
+    IOptions<EventBusOptions> options,
+    IOptions<EventBusSubscriptionInfo> subscriptionOptions,
+    RabbitMqTelemetry rabbitMqTelemetry) : IEventBus, IDisposable, IHostedService
 {
-	public class RabbitMqEventBus : IEventBus
-	{
-		private readonly string _exchangeName;
-		private readonly string _queueName;
-		private readonly int _publishRetryCount = 5;
-		private readonly TimeSpan _subscribeRetryTime = TimeSpan.FromSeconds(5);
+    private const string ExchangeName = "selfimprovement_event_bus";
 
-		private readonly IPersistentConnection _persistentConnection;
-		private readonly IEventBusSubscriptionManager _subscriptionsManager;
-		private readonly IServiceProvider _serviceProvider;
+    private readonly ResiliencePipeline _pipeline = CreateResiliencePipeline(options.Value.RetryCount);
+    private readonly TextMapPropagator _propagator = rabbitMqTelemetry.Propagator;
+    private readonly ActivitySource _activitySource = rabbitMqTelemetry.ActivitySource;
+    private readonly string _queueName = options.Value.SubscriptionClientName;
+    private readonly EventBusSubscriptionInfo _subscriptionInfo = subscriptionOptions.Value;
+    private IConnection _rabbitMQConnection;
 
-		private readonly ILogger<RabbitMqEventBus> _logger;
+    private IModel _consumerChannel;
 
-		private IModel _consumerChannel;
+    public Task PublishAsync(Event @event)
+    {
+        var routingKey = @event.GetType().Name;
 
-		public RabbitMqEventBus(
-			IPersistentConnection persistentConnection,
-			IEventBusSubscriptionManager subscriptionsManager,
-			IServiceProvider serviceProvider,
-			ILogger<RabbitMqEventBus> logger,
-			string brokerName,
-			string queueName)
-		{
-			_persistentConnection = persistentConnection ?? throw new ArgumentNullException(nameof(persistentConnection));
-			_subscriptionsManager = subscriptionsManager ?? throw new ArgumentNullException(nameof(subscriptionsManager));
-			_serviceProvider = serviceProvider;
-			_logger = logger;
-			_exchangeName = brokerName ?? throw new ArgumentNullException(nameof(brokerName));
-			_queueName = queueName ?? throw new ArgumentNullException(nameof(queueName));
+        if (logger.IsEnabled(LogLevel.Trace))
+        {
+            logger.LogTrace("Creating RabbitMQ channel to publish event: {EventId} ({EventName})", @event.Id, routingKey);
+        }
 
-			ConfigureMessageBroker();
-		}
+        using var channel = _rabbitMQConnection?.CreateModel() ?? throw new InvalidOperationException("RabbitMQ connection is not open");
 
-		public void Publish<TEvent>(TEvent @event)
-			where TEvent : Event
-		{
-			if (!_persistentConnection.IsConnected)
-			{
-				_persistentConnection.TryConnect();
-			}
+        if (logger.IsEnabled(LogLevel.Trace))
+        {
+            logger.LogTrace("Declaring RabbitMQ exchange to publish event: {EventId}", @event.Id);
+        }
 
-			var policy = Policy
-				.Handle<BrokerUnreachableException>()
-				.Or<SocketException>()
-				.WaitAndRetry(_publishRetryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (exception, timeSpan) =>
-				{
-					_logger.LogWarning(exception, "Could not publish event #{EventId} after {Timeout} seconds: {ExceptionMessage}.", @event.Id, $"{timeSpan.TotalSeconds:n1}", exception.Message);
-				});
+        channel.ExchangeDeclare(exchange: ExchangeName, type: "direct");
 
-			var eventName = @event.GetType().Name;
+        var body = SerializeMessage(@event);
 
-			_logger.LogTrace("Creating RabbitMQ channel to publish event #{EventId} ({EventName})...", @event.Id, eventName);
+        // Start an activity with a name following the semantic convention of the OpenTelemetry messaging specification.
+        // https://github.com/open-telemetry/semantic-conventions/blob/main/docs/messaging/messaging-spans.md
+        var activityName = $"{routingKey} publish";
 
-			using (var channel = _persistentConnection.CreateModel())
-			{
-				_logger.LogTrace("Declaring RabbitMQ exchange to publish event #{EventId}...", @event.Id);
+        return _pipeline.Execute(() =>
+        {
+            using var activity = _activitySource.StartActivity(activityName, ActivityKind.Client);
 
-				channel.ExchangeDeclare(exchange: _exchangeName, type: "direct");
+            // Depending on Sampling (and whether a listener is registered or not), the activity above may not be created.
+            // If it is created, then propagate its context. If it is not created, the propagate the Current context, if any.
 
-				var message = JsonSerializer.Serialize(@event);
-				var body = Encoding.UTF8.GetBytes(message);
+            ActivityContext contextToInject = default;
 
-				policy.Execute(() =>
-				{
-					var properties = channel.CreateBasicProperties();
-					properties.DeliveryMode = (byte)DeliveryMode.Persistent;
+            if (activity != null)
+            {
+                contextToInject = activity.Context;
+            }
+            else if (Activity.Current != null)
+            {
+                contextToInject = Activity.Current.Context;
+            }
 
-					_logger.LogTrace("Publishing event to RabbitMQ with ID #{EventId}...", @event.Id);
+            var properties = channel.CreateBasicProperties();
+            // persistent
+            properties.DeliveryMode = 2;
 
-					channel.BasicPublish(
-						exchange: _exchangeName,
-						routingKey: eventName,
-						mandatory: true,
-						basicProperties: properties,
-						body: body);
+            static void InjectTraceContextIntoBasicProperties(IBasicProperties props, string key, string value)
+            {
+                props.Headers ??= new Dictionary<string, object>();
+                props.Headers[key] = value;
+            }
 
-					_logger.LogTrace("Published event with ID #{EventId}.", @event.Id);
-				});
-			}
-		}
+            _propagator.Inject(new PropagationContext(contextToInject, Baggage.Current), properties, InjectTraceContextIntoBasicProperties);
 
-		public void Subscribe<TEvent, TEventHandler>()
-			where TEvent : Event
-			where TEventHandler : IEventHandler<TEvent>
-		{
-			var eventName = _subscriptionsManager.GetEventIdentifier<TEvent>();
-			var eventHandlerName = typeof(TEventHandler).Name;
+            SetActivityContext(activity, routingKey, "publish");
 
-			AddQueueBindForEventSubscription(eventName);
+            if (logger.IsEnabled(LogLevel.Trace))
+            {
+                logger.LogTrace("Publishing event to RabbitMQ: {EventId}", @event.Id);
+            }
 
-			_logger.LogInformation("Subscribing to event {EventName} with {EventHandler}...", eventName, eventHandlerName);
+            try
+            {
+                channel.BasicPublish(
+                    exchange: ExchangeName,
+                    routingKey: routingKey,
+                    mandatory: true,
+                    basicProperties: properties,
+                    body: body);
 
-			_subscriptionsManager.AddSubscription<TEvent, TEventHandler>();
-			StartBasicConsume();
+                return Task.CompletedTask;
+            }
+            catch (Exception ex)
+            {
+                activity.SetExceptionTags(ex);
 
-			_logger.LogInformation("Subscribed to event {EventName} with {EvenHandler}.", eventName, eventHandlerName);
-		}
+                throw;
+            }
+        });
+    }
 
-		public void Unsubscribe<TEvent, TEventHandler>()
-			where TEvent : Event
-			where TEventHandler : IEventHandler<TEvent>
-		{
-			var eventName = _subscriptionsManager.GetEventIdentifier<TEvent>();
+    private static void SetActivityContext(Activity activity, string routingKey, string operation)
+    {
+        if (activity is not null)
+        {
+            // These tags are added demonstrating the semantic conventions of the OpenTelemetry messaging specification
+            // https://github.com/open-telemetry/semantic-conventions/blob/main/docs/messaging/messaging-spans.md
+            activity.SetTag("messaging.system", "rabbitmq");
+            activity.SetTag("messaging.destination_kind", "queue");
+            activity.SetTag("messaging.operation", operation);
+            activity.SetTag("messaging.destination.name", routingKey);
+            activity.SetTag("messaging.rabbitmq.routing_key", routingKey);
+        }
+    }
 
-			_logger.LogInformation("Unsubscribing from event {EventName}...", eventName);
+    public void Dispose()
+    {
+        _consumerChannel?.Dispose();
+    }
 
-			_subscriptionsManager.RemoveSubscription<TEvent, TEventHandler>();
+    private async Task OnMessageReceived(object sender, BasicDeliverEventArgs eventArgs)
+    {
+        static IEnumerable<string> ExtractTraceContextFromBasicProperties(IBasicProperties props, string key)
+        {
+            if (props.Headers.TryGetValue(key, out var value))
+            {
+                var bytes = value as byte[];
+                return [Encoding.UTF8.GetString(bytes)];
+            }
+            return [];
+        }
 
-			_logger.LogInformation("Unsubscribed from event {EventName}.", eventName);
-		}
+        // Extract the PropagationContext of the upstream parent from the message headers.
+        var parentContext = _propagator.Extract(default, eventArgs.BasicProperties, ExtractTraceContextFromBasicProperties);
+        Baggage.Current = parentContext.Baggage;
 
-		private void ConfigureMessageBroker()
-		{
-			_consumerChannel = CreateConsumerChannel();
-			_subscriptionsManager.OnEventRemoved += SubscriptionManager_OnEventRemoved;
-			_persistentConnection.OnReconnectedAfterConnectionFailure += PersistentConnection_OnReconnectedAfterConnectionFailure;
-		}
+        // Start an activity with a name following the semantic convention of the OpenTelemetry messaging specification.
+        // https://github.com/open-telemetry/semantic-conventions/blob/main/docs/messaging/messaging-spans.md
+        var activityName = $"{eventArgs.RoutingKey} receive";
 
-		private IModel CreateConsumerChannel()
-		{
-			if (!_persistentConnection.IsConnected)
-			{
-				_persistentConnection.TryConnect();
-			}
+        using var activity = _activitySource.StartActivity(activityName, ActivityKind.Client, parentContext.ActivityContext);
 
-			_logger.LogTrace("Creating RabbitMQ consumer channel...");
+        SetActivityContext(activity, eventArgs.RoutingKey, "receive");
 
-			var channel = _persistentConnection.CreateModel();
+        var eventName = eventArgs.RoutingKey;
+        var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
 
-			channel.ExchangeDeclare(exchange: _exchangeName, type: "direct");
-			channel.QueueDeclare
-			(
-				queue: _queueName,
-				durable: true,
-				exclusive: false,
-				autoDelete: false,
-				arguments: null
-			);
+        try
+        {
+            activity?.SetTag("message", message);
 
-			channel.CallbackException += (sender, ea) =>
-			{
-				_logger.LogWarning(ea.Exception, "Recreating RabbitMQ consumer channel...");
-				DoCreateConsumerChannel();
-			};
+            if (message.Contains("throw-fake-exception", StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new InvalidOperationException($"Fake exception requested: \"{message}\"");
+            }
 
-			_logger.LogTrace("Created RabbitMQ consumer channel.");
+            await ProcessEvent(eventName, message);
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Error Processing message \"{Message}\"", message);
 
+            activity.SetExceptionTags(ex);
+        }
 
-			return channel;
-		}
+        // Even on exception we take the message off the queue.
+        // in a REAL WORLD app this should be handled with a Dead Letter Exchange (DLX). 
+        // For more information see: https://www.rabbitmq.com/dlx.html
+        _consumerChannel.BasicAck(eventArgs.DeliveryTag, multiple: false);
+    }
 
-		private void StartBasicConsume()
-		{
-			_logger.LogTrace("Starting RabbitMQ basic consume...");
+    private async Task ProcessEvent(string eventName, string message)
+    {
+        if (logger.IsEnabled(LogLevel.Trace))
+        {
+            logger.LogTrace("Processing RabbitMQ event: {EventName}", eventName);
+        }
 
-			if (_consumerChannel == null)
-			{
-				_logger.LogError("Could not start basic consume because consumer channel is null.");
-				return;
-			}
+        await using var scope = serviceProvider.CreateAsyncScope();
 
-			var consumer = new AsyncEventingBasicConsumer(_consumerChannel);
-			consumer.Received += Consumer_Received;
+        if (!_subscriptionInfo.EventTypes.TryGetValue(eventName, out var eventType))
+        {
+            logger.LogWarning("Unable to resolve event type for event name {EventName}", eventName);
+            return;
+        }
 
-			_consumerChannel.BasicConsume
-			(
-				queue: _queueName,
-				autoAck: false,
-				consumer: consumer
-			);
+        // Deserialize the event
+        var integrationEvent = DeserializeMessage(message, eventType);
+        
+        // REVIEW: This could be done in parallel
 
-			_logger.LogTrace("Started RabbitMQ basic consume.");
-		}
+        // Get all the handlers using the event type as the key
+        foreach (var handler in scope.ServiceProvider.GetKeyedServices<IEventHandler>(eventType))
+        {
+            await handler.Handle(integrationEvent);
+        }
+    }
 
-		private async Task Consumer_Received(object sender, BasicDeliverEventArgs eventArgs)
-		{
-			var eventName = eventArgs.RoutingKey;
-			var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
+    [UnconditionalSuppressMessage("Trimming", "IL2026:RequiresUnreferencedCode",
+        Justification = "The 'JsonSerializer.IsReflectionEnabledByDefault' feature switch, which is set to false by default for trimmed .NET apps, ensures the JsonSerializer doesn't use Reflection.")]
+    [UnconditionalSuppressMessage("AOT", "IL3050:RequiresDynamicCode", Justification = "See above.")]
+    private Event DeserializeMessage(string message, Type eventType)
+    {
+        return JsonSerializer.Deserialize(message, eventType, _subscriptionInfo.JsonSerializerOptions) as Event;
+    }
 
-			bool isAcknowledged = false;
+    [UnconditionalSuppressMessage("Trimming", "IL2026:RequiresUnreferencedCode",
+        Justification = "The 'JsonSerializer.IsReflectionEnabledByDefault' feature switch, which is set to false by default for trimmed .NET apps, ensures the JsonSerializer doesn't use Reflection.")]
+    [UnconditionalSuppressMessage("AOT", "IL3050:RequiresDynamicCode", Justification = "See above.")]
+    private byte[] SerializeMessage(Event @event)
+    {
+        return JsonSerializer.SerializeToUtf8Bytes(@event, @event.GetType(), _subscriptionInfo.JsonSerializerOptions);
+    }
 
-			try
-			{
-				await ProcessEvent(eventName, message);
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        // Messaging is async so we don't need to wait for it to complete. On top of this
+        // the APIs are blocking, so we need to run this on a background thread.
+        _ = Task.Factory.StartNew(() =>
+        {
+            try
+            {
+                logger.LogInformation("Starting RabbitMQ connection on a background thread");
 
-				_consumerChannel.BasicAck(eventArgs.DeliveryTag, multiple: false);
-				isAcknowledged = true;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogWarning(ex, "Error processing the following message: {Message}.", message);
-			}
-			finally
-			{
-				if (!isAcknowledged)
-				{
-					await TryEnqueueMessageAgainAsync(eventArgs);
-				}
-			}
-		}
+                _rabbitMQConnection = serviceProvider.GetRequiredService<IConnection>();
+                if (!_rabbitMQConnection.IsOpen)
+                {
+                    return;
+                }
 
-		private async Task TryEnqueueMessageAgainAsync(BasicDeliverEventArgs eventArgs)
-		{
-			try
-			{
-				_logger.LogWarning("Adding message to queue again with {Time} seconds delay...", $"{_subscribeRetryTime.TotalSeconds:n1}");
+                if (logger.IsEnabled(LogLevel.Trace))
+                {
+                    logger.LogTrace("Creating RabbitMQ consumer channel");
+                }
 
-				await Task.Delay(_subscribeRetryTime);
-				_consumerChannel.BasicNack(eventArgs.DeliveryTag, false, true);
+                _consumerChannel = _rabbitMQConnection.CreateModel();
 
-				_logger.LogTrace("Message added to queue again.");
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError("Could not enqueue message again: {Error}.", ex.Message);
-			}
-		}
+                _consumerChannel.CallbackException += (sender, ea) =>
+                {
+                    logger.LogWarning(ea.Exception, "Error with RabbitMQ consumer channel");
+                };
 
-		private async Task ProcessEvent(string eventName, string message)
-		{
-			_logger.LogTrace("Processing RabbitMQ event: {EventName}...", eventName);
+                _consumerChannel.ExchangeDeclare(exchange: ExchangeName,
+                                        type: "direct");
 
-			if (!_subscriptionsManager.HasSubscriptionsForEvent(eventName))
-			{
-				_logger.LogTrace("There are no subscriptions for this event.");
-				return;
-			}
+                _consumerChannel.QueueDeclare(queue: _queueName,
+                                     durable: true,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
 
-			var subscriptions = _subscriptionsManager.GetHandlersForEvent(eventName);
-			foreach (var subscription in subscriptions)
-			{
-				var handler = _serviceProvider.GetService(subscription.HandlerType);
-				if (handler == null)
-				{
-					_logger.LogWarning("There are no handlers for the following event: {EventName}", eventName);
-					continue;
-				}
+                if (logger.IsEnabled(LogLevel.Trace))
+                {
+                    logger.LogTrace("Starting RabbitMQ basic consume");
+                }
 
-				var eventType = _subscriptionsManager.GetEventTypeByName(eventName);
+                var consumer = new AsyncEventingBasicConsumer(_consumerChannel);
 
-				var @event = JsonSerializer.Deserialize(message, eventType);
-				var eventHandlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
-				await Task.Yield();
-				await (Task)eventHandlerType.GetMethod(nameof(IEventHandler<Event>.HandleAsync)).Invoke(handler, new object[] { @event });
-			}
+                consumer.Received += OnMessageReceived;
 
-			_logger.LogTrace("Processed event {EventName}.", eventName);
-		}
+                _consumerChannel.BasicConsume(
+                    queue: _queueName,
+                    autoAck: false,
+                    consumer: consumer);
 
-		private void SubscriptionManager_OnEventRemoved(object sender, string eventName)
-		{
-			if (!_persistentConnection.IsConnected)
-			{
-				_persistentConnection.TryConnect();
-			}
+                foreach (var (eventName, _) in _subscriptionInfo.EventTypes)
+                {
+                    _consumerChannel.QueueBind(
+                        queue: _queueName,
+                        exchange: ExchangeName,
+                        routingKey: eventName);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error starting RabbitMQ connection");
+            }
+        },
+        TaskCreationOptions.LongRunning);
 
-			using (var channel = _persistentConnection.CreateModel())
-			{
-				channel.QueueUnbind(queue: _queueName, exchange: _exchangeName, routingKey: eventName);
+        return Task.CompletedTask;
+    }
 
-				if (_subscriptionsManager.IsEmpty)
-				{
-					_consumerChannel.Close();
-				}
-			}
-		}
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
 
-		private void AddQueueBindForEventSubscription(string eventName)
-		{
-			var containsKey = _subscriptionsManager.HasSubscriptionsForEvent(eventName);
-			if (containsKey)
-			{
-				return;
-			}
+    private static ResiliencePipeline CreateResiliencePipeline(int retryCount)
+    {
+        // See https://www.pollydocs.org/strategies/retry.html
+        var retryOptions = new RetryStrategyOptions
+        {
+            ShouldHandle = new PredicateBuilder().Handle<BrokerUnreachableException>().Handle<SocketException>(),
+            MaxRetryAttempts = retryCount,
+            DelayGenerator = (context) => ValueTask.FromResult(GenerateDelay(context.AttemptNumber))
+        };
 
-			if (!_persistentConnection.IsConnected)
-			{
-				_persistentConnection.TryConnect();
-			}
+        return new ResiliencePipelineBuilder()
+            .AddRetry(retryOptions)
+            .Build();
 
-			using (var channel = _persistentConnection.CreateModel())
-			{
-				channel.QueueBind(queue: _queueName, exchange: _exchangeName, routingKey: eventName);
-			}
-		}
-
-		private void PersistentConnection_OnReconnectedAfterConnectionFailure(object sender, EventArgs e)
-		{
-			DoCreateConsumerChannel();
-			RecreateSubscriptions();
-		}
-
-		private void DoCreateConsumerChannel()
-		{
-			_consumerChannel.Dispose();
-			_consumerChannel = CreateConsumerChannel();
-			StartBasicConsume();
-		}
-
-		private void RecreateSubscriptions()
-		{
-			var subscriptions = _subscriptionsManager.GetAllSubscriptions();
-			_subscriptionsManager.Clear();
-
-			Type eventBusType = this.GetType();
-			MethodInfo genericSubscribe;
-
-			foreach (var entry in subscriptions)
-			{
-				foreach (var subscription in entry.Value)
-				{
-					genericSubscribe = eventBusType.GetMethod( "Subscribe").MakeGenericMethod(subscription.EventType, subscription.HandlerType);
-					genericSubscribe.Invoke(this, null);
-				}
-			}
-		}
-	}
+        static TimeSpan? GenerateDelay(int attempt)
+        {
+            return TimeSpan.FromSeconds(Math.Pow(2, attempt));
+        }
+    }
 }

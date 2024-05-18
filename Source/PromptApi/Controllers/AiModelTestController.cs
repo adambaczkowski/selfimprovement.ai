@@ -25,7 +25,7 @@ public class PromptController(IMediator mediator, ITasksCreatorService tasksCrea
             UserId = string.Empty,
         };
         var tasks = await _tasksCreatorService.CreateTaskList(ev);
-        _eventBus.Publish(new TasksForGoalCreatedEvent()
+        await _eventBus.PublishAsync(new TasksForGoalCreatedEvent()
         {
             Tasks = tasks
         });

@@ -11,7 +11,7 @@ public class TasksForGoalCreatedEventHandler(IGenericRepository<Models.GoalTask>
     private readonly IGenericRepository<Models.GoalTask> _goalTaskRepository = goalTaskRepository;
     private readonly IMapper _mapper = mapper;
 
-    public async Task HandleAsync(TasksForGoalCreatedEvent @event)
+    public async Task Handle(TasksForGoalCreatedEvent @event)
     {
         foreach (var goalTask in @event.Tasks)
         {

@@ -1,7 +1,18 @@
-﻿namespace LS.Messaging.EventBus;
+﻿using System.Text.Json.Serialization;
 
-public abstract class Event
+namespace LS.Messaging.EventBus;
+
+public class Event
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public Event()
+    {
+        Id = Guid.NewGuid();
+        CreationDate = DateTime.UtcNow;
+    }
+
+    [JsonInclude]
+    public Guid Id { get; set; }
+
+    [JsonInclude]
+    public DateTime CreationDate { get; set; }
 }

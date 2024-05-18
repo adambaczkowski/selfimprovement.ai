@@ -8,6 +8,7 @@ using LS.Common;
 using LS.Events.PromptApi;
 using LS.Messaging;
 using LS.Messaging.EventBus;
+using LS.Messaging.Extensions;
 using LS.ServiceClient;
 using LS.Startup;
 using Microsoft.EntityFrameworkCore;
@@ -40,8 +41,9 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IGenericRepository<Models.Goal>, GoalRepository>();
         services.AddScoped<IGenericRepository<Models.GoalTask>, GoalTaskRepository>();
         services.Register(configuration);
+        services.AddRabbitMqEventBus(configuration, "eventbus")
+            .AddSubscription<TasksForGoalCreatedEvent, TasksForGoalCreatedEventHandler>();
         //services.AddIdentityServices(configuration);
-        ConfigureEventBusDependencies(services);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,33 +58,9 @@ public class Startup(IConfiguration configuration)
             app.UseDeveloperExceptionPage();
         }
         
-        ConfigureEventBusHandlers(app);
         app
             .UseCors("default")
             .UseSwagger(configuration, "Goal");
         app.MapHealthChecks();
-    }
-    
-    private void ConfigureEventBusDependencies(IServiceCollection services)
-    {
-        var serviceName = configuration["Service"]
-            ?.Split('.').First()
-            .Replace("http://", string.Empty)
-            .Replace("https://", string.Empty);
-        
-        services.AddRabbitMQEventBus
-        (
-            connectionUrl: configuration["RabbitMqConnectionUrl"],
-            brokerName:  serviceName + "Broker",
-            queueName: serviceName + "Queue",
-            timeoutBeforeReconnecting: 15
-        );
-        services.AddTransient<TasksForGoalCreatedEventHandler>();
-    }
-
-    private void ConfigureEventBusHandlers(IApplicationBuilder app)
-    {
-        var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-        eventBus.Subscribe<TasksForGoalCreatedEvent, TasksForGoalCreatedEventHandler>();
     }
 }

@@ -4,6 +4,7 @@ using LS.Events.GoalApi;
 using LS.Events.PromptApi;
 using LS.Messaging;
 using LS.Messaging.EventBus;
+using LS.Messaging.Extensions;
 using LS.ServiceClient;
 using LS.Startup;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,8 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IGoalApiClient, GoalApiClient>();
         services.AddScoped<IIdentityApiClient, IdentityApiClient>();
         services.AddScoped<IAiModelApiClient, AiModelApiClient>();
-        ConfigureEventBusDependencies(services);
+        services.AddRabbitMqEventBus(configuration, "eventbus")
+            .AddSubscription<GoalCreatedEvent, GoalCreatedEventHandler>();
         //services.AddSingleton<IBlobStorageService, BlobStorageService>();
         //services.AddSingleton(_ => new BlobServiceClient(configuration.GetConnectionString("BlobStorage")));
         //services.AddIdentityServices(configuration);
@@ -54,34 +56,9 @@ public class Startup(IConfiguration configuration)
         {
             app.UseDeveloperExceptionPage();
         }
-
-        ConfigureEventBusHandlers(app);
         app
             .UseCors("default")
             .UseSwagger(configuration, "Prompt");
         app.MapHealthChecks();
-    }
-    
-    private void ConfigureEventBusDependencies(IServiceCollection services)
-    {
-        var serviceName = configuration["Service"]
-            ?.Split('.').First()
-            .Replace("http://", string.Empty)
-            .Replace("https://", string.Empty);
-        
-        services.AddRabbitMQEventBus
-        (
-            connectionUrl: configuration["RabbitMqConnectionUrl"],
-            brokerName:  serviceName + "Broker",
-            queueName: serviceName + "Queue",
-            timeoutBeforeReconnecting: 15
-        );
-        services.AddTransient<GoalCreatedEventHandler>();
-    }
-
-    private void ConfigureEventBusHandlers(IApplicationBuilder app)
-    {
-        var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-        eventBus.Subscribe<GoalCreatedEvent, GoalCreatedEventHandler>();
     }
 }

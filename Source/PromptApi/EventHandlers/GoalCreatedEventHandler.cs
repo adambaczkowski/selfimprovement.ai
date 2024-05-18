@@ -9,15 +9,14 @@ public class GoalCreatedEventHandler(ITasksCreatorService tasksCreatorService, I
 {
     private readonly ITasksCreatorService _tasksCreatorService = tasksCreatorService;
     private readonly IEventBus _eventBus = eventBus;
-    public async Task HandleAsync(GoalCreatedEvent @event)
+    
+    public async Task Handle(GoalCreatedEvent @event)
     {
         var tasks = await _tasksCreatorService.CreateTaskList(@event);
         
-        _eventBus.Publish(new TasksForGoalCreatedEvent()
+        await _eventBus.PublishAsync(new TasksForGoalCreatedEvent()
         {
             Tasks = tasks
         });
     }
-    
-    
 }

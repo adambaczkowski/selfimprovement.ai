@@ -30,7 +30,7 @@ public class CreateGoalCommandHandler(
         goalRepository.Add(goal);
         await goalRepository.SaveAsync();
         
-        eventBus.Publish(new GoalCreatedEvent
+        await eventBus.PublishAsync(new GoalCreatedEvent
         {
             GoalId = goal.Id,
             UserId = goal.UserId
