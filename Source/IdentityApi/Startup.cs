@@ -43,17 +43,15 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IGenericRepository<UserProfile>, UserProfileRepository>();
         services.AddScoped<IEmailSender, EmailSender>();
         services.Register(configuration);
-        services.AddAuthorization();
-        services.AddAuthentication();
+        services.AddIdentityServices(configuration);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(WebApplication app, IWebHostEnvironment env)
     {
         app.UseRouting();
-        app.UseAuthorization();
         app.UseAuthentication();
-
+        app.UseAuthorization();
 
         if (!env.IsDevelopment())
         {

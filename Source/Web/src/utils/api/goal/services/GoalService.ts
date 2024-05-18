@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { CreateGoalCommand } from '../models/CreateGoalCommand';
 import type { DeleteGoalCommand } from '../models/DeleteGoalCommand';
+import type { GoalDetailsDtoApiResponse } from '../models/GoalDetailsDtoApiResponse';
 import type { GoalDtoApiResponse } from '../models/GoalDtoApiResponse';
 import type { GoalDtoListApiResponse } from '../models/GoalDtoListApiResponse';
 import type { StringApiResponse } from '../models/StringApiResponse';
@@ -51,16 +52,34 @@ requestBody?: DeleteGoalCommand,
      * @returns GoalDtoListApiResponse Success
      * @throws ApiError
      */
-    public static get({
+    public static getUserGoals({
 userId,
 }: {
 userId?: string,
 }): CancelablePromise<GoalDtoListApiResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/',
+            url: '/UserGoals',
             query: {
                 'UserId': userId,
+            },
+        });
+    }
+
+    /**
+     * @returns GoalDetailsDtoApiResponse Success
+     * @throws ApiError
+     */
+    public static getDetails({
+id,
+}: {
+id: string,
+}): CancelablePromise<GoalDetailsDtoApiResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/{id}/Details',
+            path: {
+                'id': id,
             },
         });
     }

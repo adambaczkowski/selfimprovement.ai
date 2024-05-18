@@ -11,15 +11,8 @@ namespace IdentityApi.Controllers;
 
 
 [Route("api/User")]
-public class UserController : Controller
+public class UserController(IMediator mediator) : Controller
 {
-    private readonly IMediator _mediator;
-
-    public UserController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [Route("Profile")]
     [HttpPost]
     public async Task<ApiResponse<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileCommand command)
@@ -27,7 +20,7 @@ public class UserController : Controller
         var apiResponse = new ApiResponse<UserProfileDto>();
         try
         {
-            var response = await _mediator.Send(command);
+            var response = await mediator.Send(command);
             apiResponse.Data = response;
             return apiResponse;
         }
@@ -47,7 +40,7 @@ public class UserController : Controller
         var apiResponse = new ApiResponse<UserProfileDto>();
         try
         {
-            var response = await _mediator.Send(command);
+            var response = await mediator.Send(command);
             apiResponse.Data = response;
             return apiResponse;
         }

@@ -8,7 +8,7 @@ import type { LearningType } from './LearningType';
 import type { TimeAvailability } from './TimeAvailability';
 
 export type CreateGoalCommand = {
-    userId?: string;
+    userId?: string | null;
     category?: GoalCategories;
     timeAvailability?: TimeAvailability;
     duration?: number;

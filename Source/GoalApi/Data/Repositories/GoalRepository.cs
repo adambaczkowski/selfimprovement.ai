@@ -4,56 +4,51 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoalApi.Data.Repositories;
 
-public class GoalRepository : IGenericRepository<Models.Goal>
+public class GoalRepository(GoalDbContext dbContext) : IGenericRepository<Models.Goal>
 {
-    private readonly GoalDbContext _dbContext;
-
-    public GoalRepository(GoalDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public IQueryable<Models.Goal> GetQuery()
     {
-        throw new NotImplementedException();
+        return dbContext.Goals.AsQueryable();
     }
 
     public IEnumerable<Models.Goal> GetAll()
     {
-        throw new NotImplementedException();
+        return dbContext.Goals.ToList();
     }
 
     public Task<List<Models.Goal>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return dbContext.Goals.ToListAsync();
     }
 
     public Models.Goal GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return dbContext.Goals.Find(id);
     }
 
     public Models.Goal GetByIdWithIncludes(Guid id)
     {
-        throw new NotImplementedException();
+        return dbContext.Goals.Include(x => x.Tasks)
+            .FirstOrDefault(x => x.Id == id);
     }
 
-    public Task<Models.Goal> GetByIdAsync(Guid id)
+    public async Task<Models.Goal> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await dbContext.Goals.FindAsync(id);
     }
 
     public Task<Models.Goal> GetByIdWithIncludesAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return dbContext.Goals.Include(x => x.Tasks)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public bool Remove(Guid id)
     {
-        var goal = _dbContext.Goals.Find(id);
+        var goal = dbContext.Goals.Find(id);
         if (goal is { })
         {
-            _dbContext.Goals.Remove(goal);
+            dbContext.Goals.Remove(goal);
             return true;
         }
 
@@ -62,31 +57,31 @@ public class GoalRepository : IGenericRepository<Models.Goal>
 
     public void Add(in Models.Goal sender)
     {
-        _dbContext.Add(sender).State = EntityState.Added;
+        dbContext.Goals.Add(sender).State = EntityState.Added;
     }
 
     public void Update(in Models.Goal sender)
     {
-        _dbContext.Update(sender).State = EntityState.Modified;
+        dbContext.Update(sender).State = EntityState.Modified;
     }
 
     public int Save()
     {
-        throw new NotImplementedException();
+        return dbContext.SaveChanges();
     }
 
-    public Task<int> SaveAsync()
+    public async Task<int> SaveAsync()
     {
-        throw new NotImplementedException();
+        return await dbContext.SaveChangesAsync();
     }
 
     public Models.Goal Select(Expression<Func<Models.Goal, bool>> predicate)
     {
-        throw new NotImplementedException();
+        return dbContext.Goals.Where(predicate).FirstOrDefault();
     }
 
-    public Task<Models.Goal> SelectAsync(Expression<Func<Models.Goal, bool>> predicate)
+    public async Task<Models.Goal> SelectAsync(Expression<Func<Models.Goal, bool>> predicate)
     {
-        throw new NotImplementedException();
+        return await dbContext.Goals.Where(predicate).FirstOrDefaultAsync();
     }
 }

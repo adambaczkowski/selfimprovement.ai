@@ -4,90 +4,81 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoalApi.Data.Repositories;
 
-public class GoalTaskRepository : IGenericRepository<Models.GoalTask>
+public class GoalTaskRepository(GoalDbContext dbContext) : IGenericRepository<Models.GoalTask>
 {
-    private readonly GoalDbContext _dbContext;
-
-    public GoalTaskRepository(GoalDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
 
     public IQueryable<Models.GoalTask> GetQuery()
     {
-        return _dbContext.GoalTasks.AsQueryable();
+        return dbContext.GoalTasks.AsQueryable();
     }
 
-    public IEnumerable<Models.Goal> GetAll()
+    public IEnumerable<Models.GoalTask> GetAll()
     {
-        throw new NotImplementedException();
+        return dbContext.GoalTasks.ToList();
     }
 
-    public Task<List<Models.GoalTask>> GetAllAsync()
+    public async Task<List<Models.GoalTask>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await dbContext.GoalTasks.ToListAsync();
     }
 
     public Models.GoalTask GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return dbContext.GoalTasks.Find(id);
     }
 
     public Models.GoalTask GetByIdWithIncludes(Guid id)
     {
-        throw new NotImplementedException();
+        return dbContext.GoalTasks.Include(x => x.Goal)
+            .FirstOrDefault(x => x.Id == id);
     }
 
-    public Task<Models.GoalTask> GetByIdAsync(Guid id)
+    public async Task<Models.GoalTask> GetByIdAsync(Guid id)
     {
-        return _dbContext.GoalTasks.SingleAsync(x => x.Id == id);
+        return await dbContext.GoalTasks.FindAsync(id);
     }
 
-    Task<Models.GoalTask> IGenericRepository<Models.GoalTask>.GetByIdWithIncludesAsync(Guid id)
+    public async Task<Models.GoalTask> GetByIdWithIncludesAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return dbContext.GoalTasks.Include(x => x.Goal)
+            .FirstOrDefault(x => x.Id == id);
     }
 
     public bool Remove(Guid id)
     {
-        var goalTask = _dbContext.GoalTasks.Single(x => x.Id == id);
-        var entityEntry = _dbContext.Remove(goalTask);
+        var goalTask = dbContext.GoalTasks.Single(x => x.Id == id);
+        var entityEntry = dbContext.Remove(goalTask);
 
         return entityEntry.State == EntityState.Deleted;
     }
 
-    IEnumerable<Models.GoalTask> IGenericRepository<Models.GoalTask>.GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
     public void Add(in Models.GoalTask sender)
     {
-        throw new NotImplementedException();
+        dbContext.GoalTasks.Add(sender).State = EntityState.Added;
     }
 
     public void Update(in Models.GoalTask sender)
     {
-        throw new NotImplementedException();
+        dbContext.GoalTasks.Update(sender).State = EntityState.Modified;
     }
 
     public int Save()
     {
-        throw new NotImplementedException();
+        return dbContext.SaveChanges();
     }
 
-    public Task<int> SaveAsync()
+    public async Task<int> SaveAsync()
     {
-        throw new NotImplementedException();
+        return await dbContext.SaveChangesAsync();
     }
 
     public Models.GoalTask Select(Expression<Func<Models.GoalTask, bool>> predicate)
     {
-        throw new NotImplementedException();
+        return dbContext.GoalTasks.Where(predicate).FirstOrDefault();
     }
 
-    public Task<Models.GoalTask> SelectAsync(Expression<Func<Models.GoalTask, bool>> predicate)
+    public async Task<Models.GoalTask> SelectAsync(Expression<Func<Models.GoalTask, bool>> predicate)
     {
-        throw new NotImplementedException();
+        return await dbContext.GoalTasks.Where(predicate).FirstOrDefaultAsync();
     }
 }

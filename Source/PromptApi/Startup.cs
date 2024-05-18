@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Azure.Storage.Blobs;
 using LS.Events.GoalApi;
 using LS.Messaging;
 using LS.Messaging.EventBus;
@@ -44,7 +45,10 @@ public class Startup
         services.AddScoped<IGoalApiClient, GoalApiClient>();
         services.AddScoped<IIdentityApiClient, IdentityApiClient>();
         services.AddScoped<IAiModelApiClient, AiModelApiClient>();
+        services.AddSingleton<IBlobStorageService, BlobStorageService>();
+        services.AddSingleton(_ => new BlobServiceClient(_configuration.GetConnectionString("BlobStorage")));
         services.AddHttpClient();
+        services.AddIdentityServices(_configuration);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,7 +83,7 @@ public class Startup
             queueName: serviceName + "Queue",
             timeoutBeforeReconnecting: 15
         );
-        services.AddTransient<GoalCreatedEventHandler>();
+        services.AddScoped<GoalCreatedEventHandler>();
     }
 
     private void ConfigureEventBusHandlers(IApplicationBuilder app)

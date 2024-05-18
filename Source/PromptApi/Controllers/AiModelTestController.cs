@@ -20,7 +20,7 @@ public class PromptController(IMediator mediator, ITasksCreatorService tasksCrea
         {
             Message = "",
             GoalId = new Guid(),
-            UserId = new Guid(),
+            UserId = string.Empty,
         };
         return await _tasksCreatorService.CreateTaskList(ev);
     }

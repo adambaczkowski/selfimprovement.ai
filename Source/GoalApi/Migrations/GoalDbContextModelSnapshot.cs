@@ -34,7 +34,7 @@ namespace GoalApi.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Experience")
                         .IsRequired()
@@ -47,19 +47,18 @@ namespace GoalApi.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("TimeAvailability")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Goals");
                 });
@@ -75,7 +74,7 @@ namespace GoalApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<TimeSpan>("EstimatedDuration")
                         .HasColumnType("interval");
@@ -91,28 +90,6 @@ namespace GoalApi.Migrations
                     b.HasIndex("GoalId");
 
                     b.ToTable("GoalTasks");
-                });
-
-            modelBuilder.Entity("GoalApi.Models.UserEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserEntity");
-                });
-
-            modelBuilder.Entity("GoalApi.Models.Goal", b =>
-                {
-                    b.HasOne("GoalApi.Models.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GoalApi.Models.GoalTask", b =>

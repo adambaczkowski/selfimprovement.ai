@@ -28,11 +28,11 @@ public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClie
 
     private string LoadPrompt()
     {
-        string test = "What is the capital city of %City% and height of %Age% years old boy";
+        string test = "What is the capital city of %Country%";
 
         var testPrompt = new TestPrompt()
         {
-            City = "Warsaw",
+            Country = "Poland",
             Age = "12",
         };
 

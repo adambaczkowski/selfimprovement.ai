@@ -18,7 +18,7 @@ public class RestClient : IServiceClient
         get
         {
             var client = _httpClientFactory.CreateClient(nameof(RestClient));
-            client.Timeout = TimeSpan.FromMinutes(2);
+            client.Timeout = TimeSpan.FromMinutes(5);
             return client;
         }
     }
