@@ -5,6 +5,7 @@ using GoalApi.Data.Repositories;
 using GoalApi.EventHandlers;
 using GoalApi.Models;
 using LS.Common;
+using LS.Events.GoalApi;
 using LS.Events.PromptApi;
 using LS.Messaging;
 using LS.Messaging.EventBus;
@@ -74,11 +75,11 @@ public class Startup(IConfiguration configuration)
         services.AddRabbitMQEventBus
         (
             connectionUrl: configuration["RabbitMqConnectionUrl"],
-            brokerName:  serviceName + "Broker",
-            queueName: serviceName + "Queue",
+            brokerName:  "Broker",
+            queueName: "Queue",
             timeoutBeforeReconnecting: 15
         );
-        services.AddScoped<TasksForGoalCreatedEventHandler>();
+        services.AddSingleton<TasksForGoalCreatedEventHandler>();
     }
 
     private void ConfigureEventBusHandlers(IApplicationBuilder app)
