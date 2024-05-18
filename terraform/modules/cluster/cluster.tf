@@ -9,7 +9,7 @@ resource "azurerm_kubernetes_cluster" "aks-dev" {
   resource_group_name   = azurerm_resource_group.aks-dev.name
   dns_prefix            = "aks-dev"
   kubernetes_version    =  var.kubernetes_version
-  
+
   default_node_pool {
     name       = "default"
     node_count = 1
