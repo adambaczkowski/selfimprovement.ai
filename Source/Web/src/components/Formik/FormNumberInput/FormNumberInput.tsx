@@ -25,9 +25,9 @@ const FormNumberInput = (props: Props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <FormControl>
+      <FormControl style={{ width: "16rem" }}>
         <InputLabel htmlFor={name}>{label}</InputLabel>
-        <TextInput id={name} datatestId={name} {...field} {...props} error={meta.touched && !!meta.error} type="number" />
+        <TextInput id={name} placeholderText="eg. 4" datatestId={name} {...field} {...props} error={meta.touched && !!meta.error} />
         <CustomFormHelperText errorText={meta.error} />
       </FormControl>
     </ThemeProvider>

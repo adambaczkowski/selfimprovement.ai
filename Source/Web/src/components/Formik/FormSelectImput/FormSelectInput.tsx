@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Select, MenuItem, FormControl, InputLabel, ThemeProvider } from "@mui/material";
+import { MenuItem, FormControl, InputLabel, ThemeProvider } from "@mui/material";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme } from "@mui/material/styles";
 import { useField } from "formik";
 
@@ -21,27 +22,23 @@ interface Props {
 
 const FormSelectInput = (props: Props) => {
   const { name, label, options } = props;
-  const [field, meta, helpers] = useField(name); // Destructure helpers
+  const [field, meta, helpers] = useField(name);
   const [selectedOption, setSelectedOption] = useState<number | null>(null); // Initialize state
 
-  // Set selected option when form field value changes
-  useEffect(() => {
-    setSelectedOption(field.value);
-  }, [field.value]);
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelectedOption(event.target.value as unknown as number);
+  };
 
   return (
     <ThemeProvider theme={theme}>
-      <FormControl style={{ width: "57%" }}>
+      <FormControl style={{ width: "16rem" }}>
         <InputLabel htmlFor={name}>{label}</InputLabel>
-        <br />
         <Select
           labelId={`${name}-label`}
           id={name}
-          value={selectedOption ?? ""}
-          onChange={(e) => {
-            setSelectedOption(e.target.value as number);
-            helpers.setValue(e.target.value); // Set form field value
-          }}
+          value={selectedOption?.toString()} // Convert selectedOption to a string
+          label={label}
+          onChange={handleChange}
           error={meta.touched && !!meta.error}
         >
           {options.map((option, index) => (

@@ -3,12 +3,14 @@ import { CustomButton, FormTextInput } from "../../components/componentsIndex";
 import { signInFormValidation } from "./signInFormValidationSchema";
 import { signIn } from "../../utils/services/identityService";
 import { SignInCommand } from "../../utils/api/identity";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from './SignInPage.module.scss';
 
 interface Props {}
 
 const SignInPage = ({}: Props) => {
+  const navigate = useNavigate();
+
   const signInInitialValues: SignInCommand = {
     email: "",
     password: "",
@@ -18,7 +20,7 @@ const SignInPage = ({}: Props) => {
     try {
       const response = await signIn(values);
       localStorage.setItem("userToken", JSON.stringify(response.token));
-      return redirect("/tasks");
+      navigate("/tasks");
     } catch (err) {
       console.log(err);
     }

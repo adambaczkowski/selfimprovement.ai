@@ -36,10 +36,10 @@
   
   .goal_description {
     display: flex;
-    flex-direction: column; /* Ensures the items are stacked vertically */
-    justify-content: center; /* Centers items horizontally */
-    align-items: center; /* Centers items vertically */
-    height: 100%; /* Ensure it takes the full height of the parent container */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 
   .description {

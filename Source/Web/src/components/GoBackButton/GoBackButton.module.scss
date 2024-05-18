@@ -8,6 +8,7 @@
   color: $go-back-button; /* Link color */
   text-decoration: none;
   position: relative;
+  cursor: pointer;
 
   &:hover {
     color: $go-back-button-on-hover;

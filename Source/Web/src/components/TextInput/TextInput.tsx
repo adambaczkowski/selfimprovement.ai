@@ -11,12 +11,13 @@ const theme = createTheme({
 
 interface Props extends OutlinedInputProps {
   datatestId: string;
+  placeholderText?: string | "";
 }
 
 const TextInput = (props: Props) => {
   return (
     <ThemeProvider theme={theme}>
-      <OutlinedInput value={props.value} data-testid={props.datatestId} placeholder="elo" {...props} />
+      <OutlinedInput value={props.value} data-testid={props.datatestId} placeholder={props.placeholderText} {...props} />
     </ThemeProvider>
   );
 };

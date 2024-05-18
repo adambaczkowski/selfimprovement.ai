@@ -2,7 +2,6 @@ import {useState, useEffect } from "react";
 import { ItemsGrid } from "../../components/componentsIndex"
 import { DailyTask } from './types/DailyTask';
 
-
 function CompletedTasksPage() {
   const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
 
@@ -22,7 +21,9 @@ function CompletedTasksPage() {
   }, []);
 
   return (
-    <ItemsGrid title={"Completed tasks"} dailyTasks={dailyTasks} />
+    <div className="background_container">
+      <ItemsGrid title={"Completed tasks"} dailyTasks={dailyTasks} />
+    </div>
   );
 }
 

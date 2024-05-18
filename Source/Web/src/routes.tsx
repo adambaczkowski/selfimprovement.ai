@@ -89,7 +89,7 @@ const Routes = ({}: Props) => {
           element: <GoalsPage />,
         },
         {
-          path: "/goal",
+          path: "/goal/:id",
           element: <GoalPage />,
         },
         {

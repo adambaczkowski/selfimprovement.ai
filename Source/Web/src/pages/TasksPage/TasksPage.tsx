@@ -1,7 +1,7 @@
 import {useState, useEffect } from "react";
 import { ItemsGrid } from "../../components/componentsIndex"
 import { DailyTask } from './types/DailyTask';
-
+import styles from './TasksPage.module.scss';
 
 function TasksPage() {
   const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
@@ -52,7 +52,9 @@ function TasksPage() {
   }, []);
 
   return (
-    <ItemsGrid title={"All tasks"} dailyTasks={dailyTasks} />
+    <div className={styles.background_container}>
+      <ItemsGrid title={"All tasks"} dailyTasks={dailyTasks} />
+    </div>
   );
 }
 

@@ -2,11 +2,13 @@ import {useState, useEffect } from "react";
 import { LoadingCircle, GoBackButton  } from "../../components/componentsIndex"
 import styles from './GoalPage.module.scss';
 import { GoalDetailsDto } from "../../utils/api/goal";
-import { Goal, GoalTask } from '../GoalsPage/types/Goal';
+import { GoalTask } from '../GoalsPage/types/Goal';
 import { DailyTask } from '../TasksPage/types/DailyTask';
 import { ItemsGrid } from "../../components/componentsIndex"
-import { fetchGoals } from "../../utils/services/goalService";
+import { fetchGoal } from "../../utils/services/goalService";
+import dayjs from 'dayjs';
 import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 
 const exampleTasks: GoalTask[] = [
   {
@@ -28,16 +30,6 @@ const exampleTasks: GoalTask[] = [
       date: new Date(2024, 3, 22),
   },
 ];
-
-const exampleGoal: Goal = 
-  {
-    category: "Coding",
-    timeAvailability: "1 hour - per week",
-    duration: new Date(2024, 3, 20),
-    experience: "Amatour",
-    learningType: "Fast",
-    tasks: exampleTasks,
-  };
 
 const exampleDailyTasks: DailyTask[] = [
   {
@@ -62,18 +54,17 @@ const exampleDailyTasks: DailyTask[] = [
   },
 ];
 
-
 function GoalPage() {
+  const { id } = useParams();
   const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
-
   const [goal, setGoal] = useState<GoalDetailsDto>();
 
   useQuery({
-    queryKey: ["getGoals"],
+    queryKey: ["getGoal"],
     queryFn: async () => {
-      const response = await fetchGoals();
-      const goals = response.data;
-      if (goals != null) {
+      const response = await fetchGoal(id || "");
+      const goal = response.data;
+      if (goal != null) {
         setGoal(goal);
       }
       return response.data;
@@ -113,8 +104,8 @@ function GoalPage() {
       </div>
       <div className={styles.goal_description}>
         <p className={styles.description}><span>Time Availability: </span>{goal.timeAvailability}</p>
-        <p className={styles.description}><span>Duration: </span>{goal.startDate}</p>
-        <p className={styles.description}><span>Duration: </span>{goal.endDate}</p>
+        <p className={styles.description}><span>Start date: </span>{dayjs(goal.startDate).format("MM-DD-YYYY")}</p>
+        <p className={styles.description}><span>End date: </span>{dayjs(goal.endDate).format("MM-DD-YYYY")}</p>
         <p className={styles.description}><span>Experience: </span>{goal.experience}</p>
       </div>
     </div>
