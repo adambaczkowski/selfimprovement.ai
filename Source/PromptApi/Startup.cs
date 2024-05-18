@@ -76,7 +76,7 @@ public class Startup(IConfiguration configuration)
             queueName: serviceName + "Queue",
             timeoutBeforeReconnecting: 15
         );
-        services.AddScoped<GoalCreatedEventHandler>();
+        services.AddTransient<GoalCreatedEventHandler>();
     }
 
     private void ConfigureEventBusHandlers(IApplicationBuilder app)

@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.Json;
 using LS.Messaging.EventBus;
 using LS.Messaging.Subscriptions;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polly;
 using RabbitMQ.Client;
@@ -244,22 +243,19 @@ namespace LS.Messaging
 			var subscriptions = _subscriptionsManager.GetHandlersForEvent(eventName);
 			foreach (var subscription in subscriptions)
 			{
-				using (var scope = _serviceProvider.CreateScope())
+				var handler = _serviceProvider.GetService(subscription.HandlerType);
+				if (handler == null)
 				{
-					var handler = scope.ServiceProvider.GetRequiredService(subscription.HandlerType);
-					if (handler == null)
-					{
-						_logger.LogWarning("There are no handlers for the following event: {EventName}", eventName);
-						continue;
-					}
-
-					var eventType = _subscriptionsManager.GetEventTypeByName(eventName);
-
-					var @event = JsonSerializer.Deserialize(message, eventType);
-					var eventHandlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
-					await Task.Yield();
-					await (Task)eventHandlerType.GetMethod(nameof(IEventHandler<Event>.HandleAsync)).Invoke(handler, new object[] { @event });
+					_logger.LogWarning("There are no handlers for the following event: {EventName}", eventName);
+					continue;
 				}
+
+				var eventType = _subscriptionsManager.GetEventTypeByName(eventName);
+
+				var @event = JsonSerializer.Deserialize(message, eventType);
+				var eventHandlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
+				await Task.Yield();
+				await (Task)eventHandlerType.GetMethod(nameof(IEventHandler<Event>.HandleAsync)).Invoke(handler, new object[] { @event });
 			}
 
 			_logger.LogTrace("Processed event {EventName}.", eventName);
