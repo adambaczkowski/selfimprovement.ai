@@ -4,12 +4,13 @@ import styles from './GoalItem.module.scss';
 interface Props {
   category: string;
   timeAvailability: string;
-  duration: Date;
+  startDate: String;
+  endDate: String;
   experience: string;
   learningType: string;
 }
 
-function GoalItem({ category, timeAvailability, duration, experience, learningType }: Props) {
+function GoalItem({ category, timeAvailability, startDate, endDate, experience, learningType }: Props) {
   return (
     <Link to={`/goal`} className={styles.goal_item}>
       <div className={styles.goal_header}>
@@ -18,7 +19,8 @@ function GoalItem({ category, timeAvailability, duration, experience, learningTy
       </div>
       <div className={styles.goal_description}>
         <p className={styles.description}><span>Time Availability: </span>{timeAvailability}</p>
-        <p className={styles.description}><span>Duration: </span>{duration.toDateString()}</p>
+        <p className={styles.description}><span>Start date: </span>{startDate}</p>
+        <p className={styles.description}><span>End date: </span>{endDate}</p>
         <p className={styles.description}><span>Experience: </span>{experience}</p>
       </div>
     </Link>

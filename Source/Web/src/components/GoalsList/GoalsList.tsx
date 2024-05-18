@@ -17,7 +17,8 @@ function GoalsList({ title, goals }: Props) {
             // key={task.id}
             category={goal.category}
             timeAvailability={goal.timeAvailability}
-            duration={goal.duration}
+            startDate={goal.startDate}
+            endDate={goal.endDate}
             experience={goal.experience}
             learningType={goal.learningType}
           />

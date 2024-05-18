@@ -33,13 +33,24 @@
     text-overflow: ellipsis;
     color: $header-container-text;
   }
+  
+  .goal_description {
+    display: flex;
+    flex-direction: column; /* Ensures the items are stacked vertically */
+    justify-content: center; /* Centers items horizontally */
+    align-items: center; /* Centers items vertically */
+    height: 100%; /* Ensure it takes the full height of the parent container */
+  }
 
   .description {
-    overflow: hidden;
+    // overflow: hidden;
     display: -webkit-box; /* For WebKit-based browsers */
     -webkit-line-clamp: 3; /* Limit to 3 lines of text */
     -webkit-box-orient: vertical; /* Ensure text is displayed vertically */
     white-space: normal; /* Ensure that multiple lines are shown */
+    padding: 0.3rem;
+    margin: 0.1rem;
+
     span{
       font-weight: 600;
     }

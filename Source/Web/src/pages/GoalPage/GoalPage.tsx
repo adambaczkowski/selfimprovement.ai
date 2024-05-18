@@ -1,9 +1,12 @@
 import {useState, useEffect } from "react";
 import { LoadingCircle, GoBackButton  } from "../../components/componentsIndex"
 import styles from './GoalPage.module.scss';
+import { GoalDetailsDto } from "../../utils/api/goal";
 import { Goal, GoalTask } from '../GoalsPage/types/Goal';
 import { DailyTask } from '../TasksPage/types/DailyTask';
 import { ItemsGrid } from "../../components/componentsIndex"
+import { fetchGoals } from "../../utils/services/goalService";
+import { useQuery } from "react-query";
 
 const exampleTasks: GoalTask[] = [
   {
@@ -59,15 +62,24 @@ const exampleDailyTasks: DailyTask[] = [
   },
 ];
 
+
 function GoalPage() {
-  const [goal, setGoal] = useState<Goal>();
   const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
 
-  useEffect(() => {
-    return setGoal(
-      exampleGoal
-    );
-  }, []);
+  const [goal, setGoal] = useState<GoalDetailsDto>();
+
+  useQuery({
+    queryKey: ["getGoals"],
+    queryFn: async () => {
+      const response = await fetchGoals();
+      const goals = response.data;
+      if (goals != null) {
+        setGoal(goal);
+      }
+      return response.data;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     return setDailyTasks(
@@ -101,7 +113,8 @@ function GoalPage() {
       </div>
       <div className={styles.goal_description}>
         <p className={styles.description}><span>Time Availability: </span>{goal.timeAvailability}</p>
-        <p className={styles.description}><span>Duration: </span>{goal.duration.toDateString()}</p>
+        <p className={styles.description}><span>Duration: </span>{goal.startDate}</p>
+        <p className={styles.description}><span>Duration: </span>{goal.endDate}</p>
         <p className={styles.description}><span>Experience: </span>{goal.experience}</p>
       </div>
     </div>
