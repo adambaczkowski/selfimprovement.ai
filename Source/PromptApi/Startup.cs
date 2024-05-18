@@ -79,11 +79,11 @@ public class Startup
         services.AddRabbitMQEventBus
         (
             connectionUrl: _configuration["RabbitMqConnectionUrl"],
-            brokerName:  serviceName + "Broker",
-            queueName: serviceName + "Queue",
+            brokerName:  "Broker",
+            queueName: "Queue",
             timeoutBeforeReconnecting: 15
         );
-        services.AddScoped<GoalCreatedEventHandler>();
+        services.AddSingleton<GoalCreatedEventHandler>();
     }
 
     private void ConfigureEventBusHandlers(IApplicationBuilder app)
