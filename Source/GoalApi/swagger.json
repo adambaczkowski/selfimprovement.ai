@@ -454,6 +454,10 @@
       "GoalDetailsDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
@@ -496,6 +500,10 @@
       "GoalDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
