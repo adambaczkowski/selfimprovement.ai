@@ -40,8 +40,7 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IGenericRepository<Models.Goal>, GoalRepository>();
         services.AddScoped<IGenericRepository<Models.GoalTask>, GoalTaskRepository>();
         services.Register(configuration);
-        services.AddIdentityServices(configuration);
-        services.AddHttpClient();
+        //services.AddIdentityServices(configuration);
         ConfigureEventBusDependencies(services);
     }
 
@@ -57,11 +56,11 @@ public class Startup(IConfiguration configuration)
             app.UseDeveloperExceptionPage();
         }
         
+        ConfigureEventBusHandlers(app);
         app
-            .UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
+            .UseCors("default")
             .UseSwagger(configuration, "Goal");
         app.MapHealthChecks();
-        ConfigureEventBusHandlers(app);
     }
     
     private void ConfigureEventBusDependencies(IServiceCollection services)

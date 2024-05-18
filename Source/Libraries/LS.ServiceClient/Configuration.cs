@@ -10,5 +10,6 @@ public static class Configuration
     {
         container.AddSingleton<IAccessTokenProvider, AccessTokenProvider>();
         container.AddScoped<IServiceClient, RestClient>();
+        container.AddHttpClient();
     }
 }
