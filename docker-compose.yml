@@ -11,6 +11,8 @@ services:
       - POSTGRES_DB=SelfImprovementDb
     ports:
       - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
     logging:
       options:
         max-size: 10m
@@ -218,6 +220,7 @@ services:
 
 volumes:
   azurite_data:
+  postgres:
   ollama:
   prometheus_data:
   open-webui:
