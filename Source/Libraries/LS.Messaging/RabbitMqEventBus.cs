@@ -46,7 +46,7 @@ namespace LS.Messaging
 			ConfigureMessageBroker();
 		}
 
-		public void Publish<TEvent>(TEvent @event)
+		public async void Publish<TEvent>(TEvent @event)
 			where TEvent : Event
 		{
 			if (!_persistentConnection.IsConnected)

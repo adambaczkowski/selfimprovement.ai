@@ -6,7 +6,7 @@ using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
 namespace LS.Messaging;
-public class DefaultRabbitMQPersistentConnection : IPersistentConnection
+public class DefaultRabbitMqPersistentConnection : IPersistentConnection
 {
 	private readonly IConnectionFactory _connectionFactory;
 	private readonly TimeSpan _timeoutBeforeReconnecting;
@@ -16,14 +16,14 @@ public class DefaultRabbitMQPersistentConnection : IPersistentConnection
 
 	private readonly object _locker = new object();
 
-	private readonly ILogger<DefaultRabbitMQPersistentConnection> _logger;
+	private readonly ILogger<DefaultRabbitMqPersistentConnection> _logger;
 
 	private bool _connectionFailed = false;
 
-	public DefaultRabbitMQPersistentConnection
+	public DefaultRabbitMqPersistentConnection
 	(
 		IConnectionFactory connectionFactory,
-		ILogger<DefaultRabbitMQPersistentConnection> logger,
+		ILogger<DefaultRabbitMqPersistentConnection> logger,
 		int timeoutBeforeReconnecting = 15
 	)
 	{

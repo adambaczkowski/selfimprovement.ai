@@ -76,14 +76,14 @@ public class Startup
             .Replace("http://", string.Empty)
             .Replace("https://", string.Empty);
         
-        services.AddRabbitMQEventBus
+        services.AddRabbitMqEventBus
         (
             connectionUrl: _configuration["RabbitMqConnectionUrl"],
-            brokerName:  "Broker",
-            queueName: "Queue",
-            timeoutBeforeReconnecting: 15
+            brokerName: "eventBusBroker",
+            queueName: "eventBusQueue",
+            timeoutBeforeReconnecting: 45
         );
-        services.AddSingleton<GoalCreatedEventHandler>();
+        services.AddScoped<GoalCreatedEventHandler>();
     }
 
     private void ConfigureEventBusHandlers(IApplicationBuilder app)

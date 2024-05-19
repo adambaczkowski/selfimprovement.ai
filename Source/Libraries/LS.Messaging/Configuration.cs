@@ -9,10 +9,10 @@ namespace LS.Messaging;
 
 public static class Configuration
 {
-    public static void AddRabbitMQEventBus(this IServiceCollection services, string connectionUrl, string brokerName, string queueName, int timeoutBeforeReconnecting = 15)
+    public static void AddRabbitMqEventBus(this IServiceCollection services, string connectionUrl, string brokerName, string queueName, int timeoutBeforeReconnecting = 15)
     {
         services.AddSingleton<IEventBusSubscriptionManager, InMemoryEventBusSubscriptionManager>();
-        services.AddSingleton<IPersistentConnection, DefaultRabbitMQPersistentConnection>(factory =>
+        services.AddSingleton<IPersistentConnection, DefaultRabbitMqPersistentConnection>(factory =>
         {
             var connectionFactory = new ConnectionFactory
             {
@@ -20,8 +20,8 @@ public static class Configuration
                 DispatchConsumersAsync = true,
             };
 
-            var logger = factory.GetService<ILogger<DefaultRabbitMQPersistentConnection>>();
-            return new DefaultRabbitMQPersistentConnection(connectionFactory, logger, timeoutBeforeReconnecting);
+            var logger = factory.GetService<ILogger<DefaultRabbitMqPersistentConnection>>();
+            return new DefaultRabbitMqPersistentConnection(connectionFactory, logger, timeoutBeforeReconnecting);
         });
 
         services.AddSingleton<IEventBus, RabbitMqEventBus>(factory =>
