@@ -1,12 +1,9 @@
-
 az login
-
-az account show
 
 $SubscriptionId = az account list --query "[?isDefault].id" --output tsv
 az account set --subscription $SubscriptionId
 
-$spJson = az ad sp create-for-rbac --name "dev-sp" --role "Contributor" --scopes "/subscriptions/$SubscriptionId" --output json
+$spJson = az ad sp create-for-rbac --name "dev-sp" --skip-assignment --output json
 $sp = $spJson | ConvertFrom-Json
 
 $ClientId = $sp.appId
@@ -34,8 +31,6 @@ terraform init
 terraform fmt
 
 terraform validate
-
-terraform init -upgrade
 
 terraform plan -out main.tfplan
 
