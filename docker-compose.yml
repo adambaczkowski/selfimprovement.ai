@@ -30,6 +30,15 @@ services:
     volumes:
       - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
 
+  frontend:
+    container_name: selfimprovement-frontend
+    build:
+      context: ./Source/Web/
+      dockerfile: Dockerfile.local
+    ports:
+      - "3000:3000"
+    restart: always
+
   identity:
     container_name: selfimprovement-identity
     restart: on-failure
@@ -85,7 +94,6 @@ services:
         limits:
           cpus: '0.5'
           memory: 500M
-    restart: always
 
   open-webui:
     container_name: open-webui
