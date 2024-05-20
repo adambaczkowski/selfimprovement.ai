@@ -1,34 +1,36 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "=3.103.1"
+resource "azurerm_resource_group" "aks-dev" {
+  location = var.resource_group_location
+  name     = "aks-dev"
+}
+
+resource "azurerm_kubernetes_cluster" "aks-dev" {
+  location            = azurerm_resource_group.aks-dev.location
+  name                = "aks-dev-cluster"
+  resource_group_name = azurerm_resource_group.aks-dev.name
+  dns_prefix          = "aks-dev-dns"
+
+  service_principal {
+    client_id     = var.arm_client_id
+    client_secret = var.arm_client_secret
+  }
+
+  default_node_pool {
+    name            = "agentpool"
+    vm_size         = "Standard_D2_v2"
+    node_count      = var.node_count
+    type            = "VirtualMachineScaleSets"
+    os_disk_size_gb = 250
+  }
+
+  linux_profile {
+    admin_username = var.username
+
+    ssh_key {
+      key_data = var.arm_ssh_key
     }
   }
-}
-
-provider "azurerm" {
-  subscription_id = var.subscription_id
-  client_id       = var.serviceprinciple_id
-  client_secret   = var.serviceprinciple_key
-  tenant_id       = var.tenant_id
-
-  features {}
-}
-
-module "cluster" {
-  source                = "./modules/cluster/"
-  serviceprinciple_id   = var.serviceprinciple_id
-  serviceprinciple_key  = var.serviceprinciple_key
-  ssh_key               = var.ssh_key
-  location              = var.location
-  kubernetes_version    = var.kubernetes_version
-}
-
-module "k8s" {
-  source                = "./modules/k8s/"
-  host                  = "${module.cluster.host}"
-  client_certificate    = "${base64decode(module.cluster.client_certificate)}"
-  client_key            = "${base64decode(module.cluster.client_key)}"
-  cluster_ca_certificate= "${base64decode(module.cluster.cluster_ca_certificate)}"
+  network_profile {
+    network_plugin    = "kubenet"
+    load_balancer_sku = "standard"
+  }
 }
