@@ -29,6 +29,8 @@ arm_ssh_key         = "$sshKey"
 
 # Apply a Terraform execution plan
 
+terraform init
+
 terraform fmt
 
 terraform validate

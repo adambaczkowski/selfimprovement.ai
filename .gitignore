@@ -118,7 +118,9 @@ crash.log
 
 # Ignore .terraform
 .terraform
+.terraform/
 tfplan
 
 # ignore ssh
 .ssh
+.ssh/
