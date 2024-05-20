@@ -91,12 +91,24 @@
   }
 }
 
+.sign_out_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .sign_out {
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  text-decoration: none;
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
+  
   gap: 1rem;
-  text-decoration: none;
   font-size: 0.9rem;
   color: darken($container-background, 15%);
   transition: color 0.3s ease;

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress, Typography } from '@mui/material';
-
+import styles from "./LoadingCircle.module.scss";
 interface Props {
   timeout: number;
+  heading?: string;
   errorMessage: string;
 }
 
-const LoadingWithError: React.FC<Props> = ({ timeout, errorMessage }) => {
+const LoadingWithError: React.FC<Props> = ({ timeout, heading, errorMessage }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -30,15 +31,16 @@ const LoadingWithError: React.FC<Props> = ({ timeout, errorMessage }) => {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div className={styles.loading_container}>
         <CircularProgress color={"secondary"} />
+        <p className={styles.loading_heading}>{heading}</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div className={styles.loading_container}>
         <Typography>{errorMessage}</Typography>
       </div>
     );

@@ -1,58 +1,46 @@
-import {useState, useEffect } from "react";
+import {useState } from "react";
 import { ItemsGrid } from "../../components/componentsIndex"
-import { DailyTask } from './types/DailyTask';
-
+import { fetchTasks } from "../../utils/services/goalTaskService";
+import { GoalTaskDto } from "../../utils/api/goal";
+import { useQuery } from "react-query";
+import styles from './TasksPage.module.scss';
 
 function TasksPage() {
-  const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
+  const [tasks, setTasks] = useState<GoalTaskDto[]>([]);
+  // const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
 
-  useEffect(() => {
-    setDailyTasks([
-      {
-        weekTitle: "Week 1: January 17-21, 2024",
-        date: "January 17, 2024",
-        tasks: [
-          "Set Up Development Environment",
-          "Install Python and a Code Editor (e.g., VS Code)",
-          "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-        ],
-        isCompleted: true
-      },
-      {
-        weekTitle: "Week 2: January 17-21, 2024",
-        date: "January 20, 2024",
-        tasks: [
-          "Set Up Development Environment",
-          "Install Python and a Code Editor (e.g., VS Code)",
-          "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-        ],
-        isCompleted: false
-      },
-      {
-        weekTitle: "Week 2: January 17-21, 2024",
-        date: "January 20, 2024",
-        tasks: [
-          "Set Up Development Environment",
-          "Install Python and a Code Editor (e.g., VS Code)",
-          "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-        ],
-        isCompleted: false
-      },
-      {
-        weekTitle: "Week 2: January 17-21, 2024",
-        date: "January 20, 2024",
-        tasks: [
-          "Set Up Development Environment",
-          "Install Python and a Code Editor (e.g., VS Code)",
-          "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-        ],
-        isCompleted: false
+  // useEffect(() => {
+  //   setDailyTasks([
+  //     {
+  //       weekTitle: "Week 1: January 17-21, 2024",
+  //       date: "January 17, 2024",
+  //       tasks: [
+  //         "Set Up Development Environment",
+  //         "Install Python and a Code Editor (e.g., VS Code)",
+  //         "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
+  //       ],
+  //       isCompleted: true
+  //     },
+  //   ]);
+  // }, []);
+
+  useQuery({
+    queryKey: ["getTasks"],
+    queryFn: async () => {
+      const response = await fetchTasks();
+      const tasks = response.data;
+      if (tasks != null) {
+        setTasks(tasks);
       }
-    ]);
-  }, []);
+      return response.data;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
-    <ItemsGrid title={"All tasks"} dailyTasks={dailyTasks} />
+    <div className={styles.background_container}>
+      <ItemsGrid title={"All tasks"} tasks={tasks} />
+    </div>
   );
 }
 

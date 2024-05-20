@@ -1,4 +1,4 @@
-import { Link, useLocation  } from 'react-router-dom';
+import { Link, useLocation, useNavigate  } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { menu, signOutIcon} from "./../../utils/enums/sidebarMenu";
 import styles from './Sidebar.module.scss';
@@ -6,12 +6,12 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 function Sidebar() {
   const pathname = useLocation().pathname;
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     try {
-      // const response = await signIn(values);
-      // localStorage.setItem("userToken", JSON.stringify(response.token));
-      // return redirect("/");
+      localStorage.removeItem('userToken');
+      return navigate("/signIn");
     } catch (err) {
       console.log(err);
     }
@@ -36,11 +36,11 @@ function Sidebar() {
           )
         })}
       </div>
-      <div>
-      <Link to={"/tasks"} className={styles.sign_out}>
-        <FontAwesomeIcon icon={signOutIcon as IconProp} />
-        Sign Out
-      </Link>
+      <div className={styles.sign_out_container}>
+        <button className={styles.sign_out} onClick={handleSignOut}>
+          <FontAwesomeIcon icon={signOutIcon as IconProp} />
+          <span>Sign Out</span>
+        </button>
       </div>
     </div>
   );

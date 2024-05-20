@@ -11,7 +11,7 @@ COPY ./Libraries/LS.Messaging/*.csproj ./
 COPY ./Libraries/LS.Events/*.csproj ./
 COPY ./Libraries/LS.ServiceClient/*.csproj ./
 RUN for i in *csproj; do mkdir -p Libraries/${i%.*} && mv $i ./Libraries/${i%.*}/$i; done
-RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=cache,target=/root/.local/share/NuGet/v3-cache --mount=type=cache,target=/root/.local/share/NuGet/plugins-cache --mount=type=cache,target=/tmp/NuGetScratch dotnet restore GoalApi/GoalApi.csproj
+RUN dotnet restore GoalApi/GoalApi.csproj
 
 FROM goal-restore AS goal-libraries
 COPY Libraries/ ./Libraries/
@@ -20,7 +20,7 @@ FROM goal-libraries AS goal-sources
 COPY GoalApi GoalApi
 
 FROM goal-sources AS goal-debug-publish
-RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=cache,target=/root/.local/share/NuGet/v3-cache --mount=type=cache,target=/root/.local/share/NuGet/plugins-cache --mount=type=cache,target=/tmp/NuGetScratch dotnet publish -c Debug -o /app --no-restore GoalApi/GoalApi.csproj
+RUN dotnet publish -c Debug -o /app --no-restore GoalApi/GoalApi.csproj
 
 FROM base as final
 WORKDIR /app

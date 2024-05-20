@@ -69,7 +69,7 @@ const Routes = ({}: Props) => {
       element: <AppLayout />,
       children: [
         {
-          path: "/task",
+          path: "/task/:id",
           element: <TaskPage />,
         },
         {
@@ -89,7 +89,7 @@ const Routes = ({}: Props) => {
           element: <GoalsPage />,
         },
         {
-          path: "/goal",
+          path: "/goal/:id",
           element: <GoalPage />,
         },
         {

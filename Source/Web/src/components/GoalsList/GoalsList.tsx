@@ -14,10 +14,12 @@ function GoalsList({ title, goals }: Props) {
       <div className={styles.goals_list}>
         {goals.map((goal: any) => (
           <GoalItem
-            // key={task.id}
+            key={goal.id}
+            id={goal.id}
             category={goal.category}
             timeAvailability={goal.timeAvailability}
-            duration={goal.duration}
+            startDate={goal.startDate}
+            endDate={goal.endDate}
             experience={goal.experience}
             learningType={goal.learningType}
           />

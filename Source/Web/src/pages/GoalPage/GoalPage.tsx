@@ -1,79 +1,73 @@
-import {useState, useEffect } from "react";
+import {useState } from "react";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import { LoadingCircle, GoBackButton  } from "../../components/componentsIndex"
 import styles from './GoalPage.module.scss';
-import { Goal, GoalTask } from '../GoalsPage/types/Goal';
-import { DailyTask } from '../TasksPage/types/DailyTask';
+import { GoalDetailsDto, GoalTaskDto } from "../../utils/api/goal";
 import { ItemsGrid } from "../../components/componentsIndex"
+import { fetchGoal } from "../../utils/services/goalService";
+import { fetchGoalTasks } from "../../utils/services/goalTaskService";
+import dayjs from 'dayjs';
 
-const exampleTasks: GoalTask[] = [
-  {
-      content: "Set Up Development Environment",
-      estimatedDuration: new Date(2024, 3, 20, 1, 30),
-      isCompleted: false,
-      date: new Date(2024, 3, 20),
-  },
-  {
-      content: "Install Python and a Code Editor (e.g., VS Code)",
-      estimatedDuration: new Date(2024, 3, 21),
-      isCompleted: false,
-      date: new Date(2024, 3, 21),
-  },
-  {
-      content: "Explore basic features of the chosen code editor",
-      estimatedDuration: new Date(2024, 3, 22),
-      isCompleted: false,
-      date: new Date(2024, 3, 22),
-  },
-];
+// const exampleTasks: GoalTask[] = [
+//   {
+//       content: "Set Up Development Environment",
+//       estimatedDuration: new Date(2024, 3, 20, 1, 30),
+//       isCompleted: false,
+//       date: new Date(2024, 3, 20),
+//   },
+// ];
 
-const exampleGoal: Goal = 
-  {
-    category: "Coding",
-    timeAvailability: "1 hour - per week",
-    duration: new Date(2024, 3, 20),
-    experience: "Amatour",
-    learningType: "Fast",
-    tasks: exampleTasks,
-  };
-
-const exampleDailyTasks: DailyTask[] = [
-  {
-    weekTitle: "Week 1: January 17-21, 2024",
-    date: "January 17, 2024",
-    tasks: [
-      "Set Up Development Environment",
-      "Install Python and a Code Editor (e.g., VS Code)",
-      "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-    ],
-    isCompleted: true
-  },
-  {
-    weekTitle: "Week 2: January 17-21, 2024",
-    date: "January 20, 2024",
-    tasks: [
-      "Set Up Development Environment",
-      "Install Python and a Code Editor (e.g., VS Code)",
-      "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-    ],
-    isCompleted: false
-  },
-];
+// const exampleDailyTasks: DailyTask[] = [
+//   {
+//     weekTitle: "Week 1: January 17-21, 2024",
+//     date: "January 17, 2024",
+//     tasks: [
+//       "Set Up Development Environment",
+//       "Install Python and a Code Editor (e.g., VS Code)",
+//       "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
+//     ],
+//     isCompleted: true
+//   },
+// ];
 
 function GoalPage() {
-  const [goal, setGoal] = useState<Goal>();
-  const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
+  const { id } = useParams();
+  // const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
+  const [tasks, setTasks] = useState<GoalTaskDto[]>([]);
+  const [goal, setGoal] = useState<GoalDetailsDto>();
 
-  useEffect(() => {
-    return setGoal(
-      exampleGoal
-    );
-  }, []);
+  useQuery({
+    queryKey: ["getGoal"],
+    queryFn: async () => {
+      const response = await fetchGoal(id || "");
+      const goal = response.data;
+      if (goal != null) {
+        setGoal(goal);
+      }
+      return response.data;
+    },
+    refetchOnWindowFocus: false,
+  });
 
-  useEffect(() => {
-    return setDailyTasks(
-      exampleDailyTasks
-    );
-  }, []);
+  useQuery({
+    queryKey: ["getTasks"],
+    queryFn: async () => {
+      const response = await fetchGoalTasks(id ?? "");
+      const tasks = response.data;
+      if (tasks != null) {
+        setTasks(tasks);
+      }
+      return response.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  // useEffect(() => {
+  //   return setDailyTasks(
+  //     exampleDailyTasks
+  //   );
+  // }, []);
 
   if (!goal) {
     return (
@@ -83,7 +77,7 @@ function GoalPage() {
     );
   }
 
-  if (!dailyTasks) {
+  if (!tasks) {
     return (
       <div className={styles.background_container}>
         <LoadingCircle timeout={10000} errorMessage="Something went wrong" />
@@ -101,11 +95,12 @@ function GoalPage() {
       </div>
       <div className={styles.goal_description}>
         <p className={styles.description}><span>Time Availability: </span>{goal.timeAvailability}</p>
-        <p className={styles.description}><span>Duration: </span>{goal.duration.toDateString()}</p>
+        <p className={styles.description}><span>Start date: </span>{dayjs(goal.startDate).format("MM-DD-YYYY")}</p>
+        <p className={styles.description}><span>End date: </span>{dayjs(goal.endDate).format("MM-DD-YYYY")}</p>
         <p className={styles.description}><span>Experience: </span>{goal.experience}</p>
       </div>
     </div>
-      <ItemsGrid title={"Goal Tasks"} dailyTasks={exampleDailyTasks} />
+      <ItemsGrid title={"Goal Tasks"} tasks={tasks} />
     </div>
   );
 }
