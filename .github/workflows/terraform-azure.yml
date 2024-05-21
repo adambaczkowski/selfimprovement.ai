@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       SSH_USER: ${{ secrets.SSH_USER }}
 
@@ -39,6 +39,9 @@ jobs:
           ssh-keygen -t rsa -b 4096 -N "$SSH_PASSWORD" -C "$SSH_USER" -q -f .ssh/id_rsa
           sshKey=$(cat .ssh/id_rsa.pub)
           echo "arm_ssh_key=\"$sshKey\"" >> terraform.tfvars
+          
+      - name: Change to Terraform directory
+        run: terraform/
 
       - name: Generate .tfvars file
         run: |
@@ -46,9 +49,6 @@ jobs:
           echo "arm_tenant_id       = \"$ARM_TENANT_ID\""       >> terraform.tfvars
           echo "arm_client_id       = \"$ARM_CLIENT_ID\""       >> terraform.tfvars
           echo "arm_client_secret   = \"$ARM_CLIENT_SECRET\""   >> terraform.tfvars
-
-      - name: Change to Terraform directory
-        run: terraform/
 
       - name: Terraform Init
         run: terraform init
