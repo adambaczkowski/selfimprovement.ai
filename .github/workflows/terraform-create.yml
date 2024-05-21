@@ -12,22 +12,29 @@ jobs:
 
     env:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       SSH_USER: ${{ secrets.SSH_USER }}
+      LOCATION: ${{ secrets.LOCATION }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Create Service Principal
+        id: create_sp
+        run: |
+          sp=$(az ad sp create-for-rbac --name "dev-service-principal" --role contributor --scopes /subscriptions/${{ env.ARM_SUBSCRIPTION_ID }}/resourceGroups/dev-rg --query "{client_id: appId, client_secret: password, tenant_id: tenant}" -o json)
+          echo "ARM_CLIENT_ID=$(echo $sp | jq -r .client_id)" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=$(echo $sp | jq -r .client_secret)" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=$(echo $sp | jq -r .tenant_id)" >> $GITHUB_ENV
+          
+      - name: Create Resource Group
+        run: |
+          az group create --name dev-rg --location ${{ env.LOCATION }}
+
+      - name: Create Azure Storage Account
+        run: |
+          az storage account create --name devstorageaccount --resource-group dev-rg --location ${{ env.LOCATION }} --sku Standard_LRS
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
@@ -40,17 +47,22 @@ jobs:
           ssh-keygen -t rsa -b 4096 -N "$SSH_PASSWORD" -C "$SSH_USER" -q -f .ssh/id_rsa
           sshKey=$(cat .ssh/id_rsa.pub)
           echo "arm_ssh_key=\"$sshKey\"" > ./terraform/terraform.tfvars
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_USER: ${{ secrets.SSH_USER }}
 
       - name: Generate .tfvars file
         run: |
-          echo "arm_subscription_id = \"$ARM_SUBSCRIPTION_ID\"" >> ./terraform/terraform.tfvars
-          echo "arm_tenant_id       = \"$ARM_TENANT_ID\""       >> ./terraform/terraform.tfvars
-          echo "arm_client_id       = \"$ARM_CLIENT_ID\""       >> ./terraform/terraform.tfvars
-          echo "arm_client_secret   = \"$ARM_CLIENT_SECRET\""   >> ./terraform/terraform.tfvars
+          echo "arm_subscription_id = \"${{ env.ARM_SUBSCRIPTION_ID }}\"" >> ./terraform/terraform.tfvars
+          echo "arm_tenant_id       = \"${{ env.ARM_TENANT_ID }}\""       >> ./terraform/terraform.tfvars
+          echo "arm_client_id       = \"${{ env.ARM_CLIENT_ID }}\""       >> ./terraform/terraform.tfvars
+          echo "arm_client_secret   = \"${{ env.ARM_CLIENT_SECRET }}\""   >> ./terraform/terraform.tfvars
           cat ./terraform/terraform.tfvars
 
-      - name: Terraform Init
-        run: terraform init
+      - name: Configure Terraform Backend
+        run: |
+          storage_key=$(az storage account keys list --resource-group dev-rg --account-name devstorageaccount --query '[0].value' --output tsv)
+          terraform init -backend-config="storage_account_name=devstorageaccount" -backend-config="container_name=terraform-state" -backend-config="key=terraform.tfstate" -backend-config="resource_group_name=dev-rg" -backend-config="access_key=$storage_key"
         working-directory: ./terraform
 
       - name: Terraform Format
