@@ -25,6 +25,9 @@ jobs:
         with:
           terraform_version: latest
 
+      - name: Change to Terraform directory
+        run: cd selfimprovement.ai/terraform/
+
       - name: Generate SSH Key
         run: |
           mkdir -p .ssh
