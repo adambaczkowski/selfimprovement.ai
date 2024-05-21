@@ -19,7 +19,7 @@ jobs:
       SSH_USER: ${{ secrets.SSH_USER }}
       LOCATION: ${{ secrets.LOCATION }}
       RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
-      STORAGE-ACCOUNT_NAME: ${{ secrets.STORAGE-ACCOUNT_NAME }}
+      STORAGE-ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
     steps:
       - name: Checkout repository
@@ -38,7 +38,7 @@ jobs:
 
       - name: Create Azure Storage Account
         run: |
-          az storage account create --name ${{ secrets.STORAGE-ACCOUNT_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.LOCATION }} --sku Standard_LRS
+          az storage account create --name ${{ secrets.STORAGE_ACCOUNT_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.LOCATION }} --sku Standard_LRS
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
@@ -65,8 +65,8 @@ jobs:
 
       - name: Configure Terraform Backend
         run: |
-          storage_key=$(az storage account keys list --resource-group ${{ env.RESOURCE_GROUP_NAME }} --account-name ${{ secrets.STORAGE-ACCOUNT_NAME }} --query '[0].value' --output tsv)
-          terraform init -backend-config="storage_account_name=${{ secrets.STORAGE-ACCOUNT_NAME }}" -backend-config="container_name=terraform-state" -backend-config="key=terraform.tfstate" -backend-config="resource_group_name=${{ env.RESOURCE_GROUP_NAME }}" -backend-config="access_key=$storage_key"
+          storage_key=$(az storage account keys list --resource-group ${{ env.RESOURCE_GROUP_NAME }} --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --query '[0].value' --output tsv)
+          terraform init -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=terraform-state" -backend-config="key=terraform.tfstate" -backend-config="resource_group_name=${{ env.RESOURCE_GROUP_NAME }}" -backend-config="access_key=$storage_key"
         working-directory: ./terraform
 
       - name: Terraform Format
