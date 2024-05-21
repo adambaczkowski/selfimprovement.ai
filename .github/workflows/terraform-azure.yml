@@ -28,24 +28,30 @@ jobs:
       - name: Generate SSH Key
         run: |
           mkdir -p .ssh
-          mkdir -p .ssh
           sshPassword="${{ secrets.SSH_PASSWORD }}"
           sshUser="${{ secrets.SSH_USER }}"
           ssh-keygen -t rsa -b 4096 -N "$sshPassword" -C "$sshUser" -q -f .ssh/id_rsa
           sshKey=$(cat .ssh/id_rsa.pub)
           echo "arm_ssh_key=\"$sshKey\"" >> terraform.tfvars
 
-      - name: Terraform Init
+      - name: Generate .tfvars file
         run: |
-          cd terraform
-          terraform init
+          echo "arm_subscription_id = '${{ secrets.ARM_SUBSCRIPTION_ID }}'" > terraform.tfvars
+          echo "arm_tenant_id       = '${{ secrets.ARM_TENANT_ID }}'"       >> terraform.tfvars
+          echo "arm_client_id       = '${{ secrets.ARM_CLIENT_ID }}'"       >> terraform.tfvars
+          echo "arm_client_secret   = '${{ secrets.ARM_CLIENT_SECRET }}'"   >> terraform.tfvars
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format
+        run: terraform fmt
+
+      - name: Terraform Validate
+        run: terraform validate
 
       - name: Terraform Plan
-        run: |
-          cd terraform
-          terraform plan -out=tfplan
+        run: terraform plan -out=main.tfplan
 
       - name: Terraform Apply
-        run: |
-          cd terraform
-          terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve main.tfplan
