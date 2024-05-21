@@ -36,10 +36,10 @@ jobs:
 
       - name: Generate .tfvars file
         run: |
-          echo "arm_subscription_id = '${{ secrets.ARM_SUBSCRIPTION_ID }}'" > terraform.tfvars
-          echo "arm_tenant_id       = '${{ secrets.ARM_TENANT_ID }}'"       >> terraform.tfvars
-          echo "arm_client_id       = '${{ secrets.ARM_CLIENT_ID }}'"       >> terraform.tfvars
-          echo "arm_client_secret   = '${{ secrets.ARM_CLIENT_SECRET }}'"   >> terraform.tfvars
+          echo "arm_subscription_id = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"" > terraform.tfvars
+          echo "arm_tenant_id       = \"${{ secrets.ARM_TENANT_ID }}\""       >> terraform.tfvars
+          echo "arm_client_id       = \"${{ secrets.ARM_CLIENT_ID }}\""       >> terraform.tfvars
+          echo "arm_client_secret   = \"${{ secrets.ARM_CLIENT_SECRET }}\""   >> terraform.tfvars
 
       - name: Terraform Init
         run: terraform init
