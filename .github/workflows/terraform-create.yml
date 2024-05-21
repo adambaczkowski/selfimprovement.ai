@@ -30,14 +30,6 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Create Service Principal
-        id: create_sp
-        run: |
-          sp=$(az ad sp create-for-rbac --name "dev-service-principal" --role contributor --scopes /subscriptions/${{ env.ARM_SUBSCRIPTION_ID }}/resourceGroups/${{ env.RESOURCE_GROUP_NAME }} --query "{client_id: appId, client_secret: password, tenant_id: tenant}" -o json)
-          echo "ARM_CLIENT_ID=$(echo $sp | jq -r .client_id)" >> $GITHUB_ENV
-          echo "ARM_CLIENT_SECRET=$(echo $sp | jq -r .client_secret)" >> $GITHUB_ENV
-          echo "ARM_TENANT_ID=$(echo $sp | jq -r .tenant_id)" >> $GITHUB_ENV
-
       - name: Create Resource Group
         run: |
           az group create --name ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.LOCATION }}
