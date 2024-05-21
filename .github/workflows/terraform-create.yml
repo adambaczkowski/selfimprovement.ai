@@ -36,10 +36,6 @@ jobs:
         run: |
           az group create --name ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.LOCATION }}
 
-      - name: Create Azure Storage Account
-        run: |
-          az storage account create --name ${{ secrets.STORAGE_ACCOUNT_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.LOCATION }} --sku Standard_LRS
-
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
