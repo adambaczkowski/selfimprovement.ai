@@ -19,6 +19,13 @@ terraform {
       version = "0.11.1"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name  = "dev-rg"
+    storage_account_name = "dev-storage"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
@@ -28,5 +35,4 @@ provider "azurerm" {
   tenant_id       = var.arm_tenant_id
   client_id       = var.arm_client_id
   client_secret   = var.arm_client_secret
-
 }

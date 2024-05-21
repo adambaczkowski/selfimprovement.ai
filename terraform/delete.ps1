@@ -1,3 +1,5 @@
+terraform init
+
 terraform destroy
 
 # delete service principal
