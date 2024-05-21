@@ -35,6 +35,7 @@ jobs:
 
       - name: Generate SSH Key
         run: |
+          pwd
           mkdir -p .ssh
           ssh-keygen -t rsa -b 4096 -N "$SSH_PASSWORD" -C "$SSH_USER" -q -f .ssh/id_rsa
           sshKey=$(cat .ssh/id_rsa.pub)
@@ -46,6 +47,7 @@ jobs:
           echo "arm_tenant_id       = \"$ARM_TENANT_ID\""       >> terraform.tfvars
           echo "arm_client_id       = \"$ARM_CLIENT_ID\""       >> terraform.tfvars
           echo "arm_client_secret   = \"$ARM_CLIENT_SECRET\""   >> terraform.tfvars
+          cat terraform.tfvars
 
       - name: Terraform Init
         run: terraform init
