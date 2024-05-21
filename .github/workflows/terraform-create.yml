@@ -18,6 +18,7 @@ jobs:
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       SSH_USER: ${{ secrets.SSH_USER }}
       LOCATION: ${{ secrets.LOCATION }}
+      RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
 
     steps:
       - name: Checkout repository
