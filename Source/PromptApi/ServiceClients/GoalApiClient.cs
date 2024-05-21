@@ -1,4 +1,5 @@
-﻿using LS.ServiceClient;
+﻿using GoalApi.Enums;
+using LS.ServiceClient;
 
 namespace PromptApi.ServiceClients;
 
@@ -14,6 +15,17 @@ public class GetSingleGoalQuery
 
 public class GoalResource
 {
+    public Guid Id { get; init; }
+    public GoalCategories Category { get; init; }
+    public UserAdvancement UserAdvancement { get; init; }
+    public TimeAvailabilityPerDay TimeAvailabilityPerDay { get; init; }
+    public TimeAvailabilityPerWeek TimeAvailabilityPerWeek { get; init; }
+    public DateTime StartDate { get; init; }
+    public DateTime EndDate { get; init; }
+    public Experience Experience { get; init; }
+    
+    public LearningType LearningType { get; init; }
+    public string UserInput { get; init; }
 }
 
 public class GoalApiClient : BaseRestServiceClient, IGoalApiClient

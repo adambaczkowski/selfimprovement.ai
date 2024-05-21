@@ -2,5 +2,7 @@
 
 public enum GoalCategories
 {
-    BodyWorkout,
+    Sport,
+    Craft,
+    Mind,
 }

@@ -1,5 +1,5 @@
-﻿using IdentityApi.User.Enums;
-using LS.Common;
+﻿using LS.Common;
+using LS.Common.Enums.Identity;
 
 namespace IdentityApi.Models;
 
@@ -9,10 +9,9 @@ public class UserProfile : IEntity
     public string UserId { get; init; }
     public User User { get; init; }
     
-    public byte[]? ProfileImage { get; set; }
-    // kg
+    public string ProfileImageId { get; set; }
+    public Sex? Sex { get; init; }
     public int? Weight { get; init; }
-    // cm
     public int? Height { get; init; }
     public int? Age { get; init; }
     public Education? EducationLevel { get; init; }

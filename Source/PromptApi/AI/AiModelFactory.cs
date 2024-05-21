@@ -7,20 +7,20 @@ using PromptApi.Services;
 
 namespace PromptApi.AI;
 
-public class AiModelFactory
+public static class AiModelFactory
 {
     public static IAiModel CreateModel(AiModelType type, IPromptBuilderService promptBuilderService, string apiUrl)
     {
         switch (type)
         {
             case AiModelType.Gpt35:
-                return new Gpt35Model();
+                return new Gpt35Model("gpt35", apiUrl);
             case AiModelType.Llama2:
-                return new Llama2Model(promptBuilderService, apiUrl);
+                return new Llama2Model("llama2", apiUrl, promptBuilderService);
             case AiModelType.Llama3:
-                return new Llama3Model();
+                return new Llama3Model("llama3", apiUrl, promptBuilderService);
             case AiModelType.Zephyr:
-                return new ZephyrModel(promptBuilderService, apiUrl);
+                return new ZephyrModel("zephyr", apiUrl, promptBuilderService);
             default:
                 return null;
         }

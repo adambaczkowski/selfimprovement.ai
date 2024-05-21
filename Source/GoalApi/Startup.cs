@@ -67,11 +67,6 @@ public class Startup(IConfiguration configuration)
     
     private void ConfigureEventBusDependencies(IServiceCollection services)
     {
-        var serviceName = configuration["Service"]
-            ?.Split('.').First()
-            .Replace("http://", string.Empty)
-            .Replace("https://", string.Empty);
-        
         services.AddRabbitMqEventBus
         (
             connectionUrl: configuration["RabbitMqConnectionUrl"],
