@@ -6,8 +6,9 @@ namespace PromptApi.AI;
 
 public interface IAiModel
 {
+    public string Name { get; set; }
     public string ApiUrl { get; set; }
 
     public Task<string> BuildPrompt();
-    public Task<List<GoalTaskResource>> ProcessModelResponse(Guid goalId);
+    public List<GoalTaskResource> ProcessModelResponse(AiResponseModel responseModel);
 }

@@ -12,7 +12,9 @@ public class CreateGoalCommand : IRequest<GoalDto>
 {
     public string UserId { get; set; }
     public GoalCategories Category { get; init; }
-    public TimeAvailability TimeAvailability { get; init; }
+    public UserAdvancement UserAdvancement { get; init; }
+    public TimeAvailabilityPerDay TimeAvailabilityPerDay { get; init; }
+    public TimeAvailabilityPerWeek TimeAvailabilityPerWeek { get; init; }
     public int Duration { get; init; }
     public Experience Experience { get; init; }
     public LearningType LearningType { get; init; }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using IdentityApi.Models;
 using IdentityApi.User.Dtos;
-using IdentityApi.User.Enums;
 using LS.Common;
+using LS.Common.Enums.Identity;
 using LS.Startup;
 using MediatR;
 
@@ -33,10 +33,10 @@ public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfile
     public async Task<UserProfileDto> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
     {
         var userProfile = _mapper.Map<UserProfile>(request);
-        if (request.ProfileImage is not null)
-        {
-            userProfile.ProfileImage = await request.ProfileImage.GetBytes();
-        }
+        // if (request.ProfileImage is not null)
+        // {
+        //     userProfile.ProfileImage = await request.ProfileImage.GetBytes();
+        // }
         _userProfileRepository.Add(userProfile);
         await _userProfileRepository.SaveAsync();
         

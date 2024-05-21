@@ -8,26 +8,19 @@ namespace PromptApi.Services;
 
 public class TasksCreatorService(IPromptBuilderService promptBuilderService, IAiModelApiClient aiModelApiClient, IConfiguration configuration) : ITasksCreatorService
 {
-    private readonly IPromptBuilderService _promptBuilderService = promptBuilderService;
-    private readonly IAiModelApiClient _aiModelApiClient = aiModelApiClient;
-    private readonly IConfiguration _configuration = configuration;
-
     public async Task<List<GoalTaskResource>> CreateTaskList(GoalCreatedEvent @event, AiModelType aiModelType = AiModelType.Llama2)
     {
-        var aiApiUrl = _configuration[aiModelType.ToString()];
+        var aiApiUrl = configuration[aiModelType.ToString()];
         if (aiApiUrl != null)
         {
-            var model = AiModelFactory.CreateModel(AiModelType.Llama2, _promptBuilderService, aiApiUrl);
+            var model = AiModelFactory.CreateModel(AiModelType.Llama2, promptBuilderService, aiApiUrl);
             var prompt = await model.BuildPrompt();
-            //var response = await _aiModelApiClient.GetPromptResponse(model, new {model = "llama2", prompt = prompt, stream=false, raw = true});
-
-            var taskList = await model.ProcessModelResponse(@event.GoalId);
+            var response = await aiModelApiClient.GetPromptResponse(model, new {model = model.Name, prompt = prompt, stream=false, raw = true});
+            var taskList = model.ProcessModelResponse(response);
             
             return taskList;
         }
 
         return null;
     }
-    
-    
 }

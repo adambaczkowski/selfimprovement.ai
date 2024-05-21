@@ -1,4 +1,5 @@
-﻿using LS.ServiceClient;
+﻿using LS.Common.Enums.Identity;
+using LS.ServiceClient;
 
 namespace PromptApi.ServiceClients;
 
@@ -14,6 +15,11 @@ public class GetUserDetailsQuery
 
 public class UserResource
 {
+    public Sex? Sex { get; init; }
+    public int? Weight { get; init; }
+    public int? Height { get; init; }
+    public int? Age { get; init; }
+    public Education? EducationLevel { get; init; }
 }
 
 public class IdentityApiClient : BaseRestServiceClient, IIdentityApiClient

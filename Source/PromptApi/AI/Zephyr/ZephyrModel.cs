@@ -6,20 +6,20 @@ using PromptApi.Services;
 namespace PromptApi.AI.Zephyr;
 
 public class ZephyrModel(
-    IPromptBuilderService promptBuilderService,
-    string apiUrl)
+    string name,
+    string apiUrl,
+    IPromptBuilderService promptBuilderService)
     : IAiModel
 {
-    private readonly IPromptBuilderService _promptBuilderService = promptBuilderService;
-
+    public string Name { get; set; } = name;
     public string ApiUrl { get; set; } = apiUrl;
 
     public async Task<string> BuildPrompt()
     {
-        return await _promptBuilderService.CreatePrompt(new Guid(), new Guid());
+        return await promptBuilderService.CreatePrompt(new Guid(), new Guid());
     }
 
-    public Task<List<GoalTaskResource>> ProcessModelResponse(Guid goalId)
+    public List<GoalTaskResource> ProcessModelResponse(AiResponseModel responseModel)
     {
         throw new NotImplementedException();
     }
