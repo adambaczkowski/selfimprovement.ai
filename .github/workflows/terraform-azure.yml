@@ -27,10 +27,13 @@ jobs:
 
       - name: Generate SSH Key
         run: |
-          mkdir .ssh -Force
-          ssh-keygen -t rsa -b 4096 -N "YourPassword123$!" -C "user@selfimprovement.ai" -q -f .ssh/id_rsa
-          $sshKey = Get-Content .ssh/id_rsa.pub
-          echo "arm_ssh_key = \"$sshKey\"" >> terraform.tfvars
+          mkdir -p .ssh
+          mkdir -p .ssh
+          sshPassword="${{ secrets.SSH_PASSWORD }}"
+          sshUser="${{ secrets.SSH_USER }}"
+          ssh-keygen -t rsa -b 4096 -N "$sshPassword" -C "$sshUser" -q -f .ssh/id_rsa
+          sshKey=$(cat .ssh/id_rsa.pub)
+          echo "arm_ssh_key=\"$sshKey\"" >> terraform.tfvars
 
       - name: Terraform Init
         run: |
