@@ -48,7 +48,7 @@ jobs:
           echo "arm_client_secret   = \"$ARM_CLIENT_SECRET\""   >> terraform.tfvars
 
       - name: Change to Terraform directory
-        run: cd selfimprovement.ai/terraform/
+        run: terraform/
 
       - name: Terraform Init
         run: terraform init
