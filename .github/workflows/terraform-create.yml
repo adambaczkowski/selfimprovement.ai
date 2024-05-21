@@ -19,7 +19,7 @@ jobs:
       SSH_USER: ${{ secrets.SSH_USER }}
       LOCATION: ${{ secrets.LOCATION }}
       RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
-      STORAGE-ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+      STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
     steps:
       - name: Checkout repository
