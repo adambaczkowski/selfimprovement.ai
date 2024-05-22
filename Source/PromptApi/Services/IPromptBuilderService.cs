@@ -5,5 +5,5 @@ namespace PromptApi.Services;
 
 public interface IPromptBuilderService
 {
-    Task<string> CreatePrompt(Guid userId, Guid goalId);
+    Task<string> CreatePrompt(string userId,  Guid goalId);
 }

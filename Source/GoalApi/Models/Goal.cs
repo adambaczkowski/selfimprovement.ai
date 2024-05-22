@@ -1,5 +1,6 @@
 ﻿using GoalApi.Enums;
 using LS.Common;
+using LS.Common.Enums.Goal;
 
 namespace GoalApi.Models;
 

@@ -14,9 +14,9 @@ public class ZephyrModel(
     public string Name { get; set; } = name;
     public string ApiUrl { get; set; } = apiUrl;
 
-    public async Task<string> BuildPrompt()
+    public async Task<string> BuildPrompt(string userId,Guid goalId)
     {
-        return await promptBuilderService.CreatePrompt(new Guid(), new Guid());
+        return await promptBuilderService.CreatePrompt(userId, goalId);
     }
 
     public List<GoalTaskResource> ProcessModelResponse(AiResponseModel responseModel)

@@ -1,4 +1,5 @@
 ﻿using GoalApi.Enums;
+using LS.Common.Enums.Goal;
 using LS.ServiceClient;
 
 namespace PromptApi.ServiceClients;

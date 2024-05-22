@@ -14,7 +14,7 @@ public class TasksCreatorService(IPromptBuilderService promptBuilderService, IAi
         if (aiApiUrl != null)
         {
             var model = AiModelFactory.CreateModel(AiModelType.Llama2, promptBuilderService, aiApiUrl);
-            var prompt = await model.BuildPrompt();
+            var prompt = await model.BuildPrompt(@event.UserId, @event.GoalId);
             var response = await aiModelApiClient.GetPromptResponse(model, new {model = model.Name, prompt = prompt, stream=false, raw = true});
             var taskList = model.ProcessModelResponse(response);
             

@@ -7,7 +7,7 @@ public class Gpt35Model(string name, string apiUrl) : IAiModel
     public string Name { get; set; } = name;
     public string ApiUrl { get; set; } = apiUrl;
 
-    public Task<string> BuildPrompt()
+    public Task<string> BuildPrompt(string userId, Guid goalId)
     {
         throw new NotImplementedException();
     }

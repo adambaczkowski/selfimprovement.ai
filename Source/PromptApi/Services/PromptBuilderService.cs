@@ -18,7 +18,7 @@ public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClie
     private const string CraftPromptFileName = "craftPrompt";
     private const string FormatPromptFileName = "formatPrompt";
     private const string AdditionalInfoPromptFileName = "additionalInfoPrompt";
-    public async Task<string> CreatePrompt(Guid userId, Guid goalId)
+    public async Task<string> CreatePrompt(string userId, Guid goalId)
     {
         var goal = await goalApiClient.GetSingleGoal(new GetSingleGoalQuery()
         {
@@ -32,7 +32,7 @@ public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClie
 
         var basicPromptValuesObject = new BasicPrompt()
         {
-            UserAdvancement = "",
+            UserAdvancement = goal.UserAdvancement.ToString().ToLower(),
             ReachGoalInThisManyDays = goal.EndDate.Subtract(goal.StartDate).Days,
             FreeDaysEachWeek = (int)goal.TimeAvailabilityPerWeek,
             FreeMinutesEachDay = (int)goal.TimeAvailabilityPerDay,
