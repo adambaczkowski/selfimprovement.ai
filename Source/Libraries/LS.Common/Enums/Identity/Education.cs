@@ -1,4 +1,4 @@
-﻿namespace IdentityApi.User.Enums;
+﻿namespace LS.Common.Enums.Identity;
 
 public enum Education
 {

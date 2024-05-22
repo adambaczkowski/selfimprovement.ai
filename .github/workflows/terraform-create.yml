@@ -1,0 +1,82 @@
+name: Deploy Infrastructure with Terraform to Azure
+on: 
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      LOCATION: ${{ secrets.LOCATION }}
+      RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
+      STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Create Resource Group
+        run: |
+          az group create --name ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.LOCATION }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: latest
+
+      - name: Generate SSH Key
+        run: |
+          mkdir -p .ssh
+          ssh-keygen -t rsa -b 4096 -N "$SSH_PASSWORD" -C "$SSH_USER" -q -f .ssh/id_rsa
+          sshKey=$(cat .ssh/id_rsa.pub)
+          echo "arm_ssh_key=\"$sshKey\"" > ./terraform/terraform.tfvars
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+
+      - name: Generate .tfvars file
+        run: |
+          echo "arm_subscription_id = \"${{ env.ARM_SUBSCRIPTION_ID }}\"" >> ./terraform/terraform.tfvars
+          echo "arm_tenant_id       = \"${{ env.ARM_TENANT_ID }}\""       >> ./terraform/terraform.tfvars
+          echo "arm_client_id       = \"${{ env.ARM_CLIENT_ID }}\""       >> ./terraform/terraform.tfvars
+          echo "arm_client_secret   = \"${{ env.ARM_CLIENT_SECRET }}\""   >> ./terraform/terraform.tfvars
+          cat ./terraform/terraform.tfvars
+
+      - name: Configure Terraform Backend
+        run: |
+          storage_key=$(az storage account keys list --resource-group ${{ env.RESOURCE_GROUP_NAME }} --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --query '[0].value' --output tsv)
+          terraform init -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" -backend-config="container_name=terraform-state" -backend-config="key=terraform.tfstate" -backend-config="resource_group_name=${{ env.RESOURCE_GROUP_NAME }}" -backend-config="access_key=$storage_key"
+        working-directory: ./terraform
+
+      - name: Terraform Format
+        run: terraform fmt
+        working-directory: ./terraform
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ./terraform
+
+      - name: Terraform Plan
+        run: terraform plan -out=main.tfplan
+        working-directory: ./terraform
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve main.tfplan
+        working-directory: ./terraform

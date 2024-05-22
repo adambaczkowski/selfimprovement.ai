@@ -28,7 +28,10 @@ public class GoalDbContext : DbContext
             entity.Property(x => x.Category)
                 .HasConversion<string>()
                 .HasMaxLength(20);
-            entity.Property(x => x.TimeAvailability)
+            entity.Property(x => x.TimeAvailabilityPerWeek)
+                .HasConversion<string>()
+                .HasMaxLength(20);
+            entity.Property(x => x.TimeAvailabilityPerDay)
                 .HasConversion<string>()
                 .HasMaxLength(20);
             entity.Property(x => x.Experience)

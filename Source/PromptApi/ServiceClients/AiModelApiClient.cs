@@ -7,7 +7,7 @@ namespace PromptApi.ServiceClients;
 
 public interface IAiModelApiClient
 {
-    public Task<object> GetPromptResponse(IAiModel model, object prompt);
+    public Task<AiResponseModel> GetPromptResponse(IAiModel model, object prompt);
 }
 
 public class AiModelApiClient : BaseRestServiceClient, IAiModelApiClient
@@ -18,9 +18,9 @@ public class AiModelApiClient : BaseRestServiceClient, IAiModelApiClient
     {
     }
 
-    public async Task<object> GetPromptResponse(IAiModel model, object prompt)
+    public async Task<AiResponseModel> GetPromptResponse(IAiModel model, object prompt)
     {
-        var response = await PostWithResponse<object>(model.ApiUrl, prompt);
+        var response = await PostWithResponse<AiResponseModel>(model.ApiUrl, prompt);
 
         return response.Status == HttpStatusCode.OK ? response.Result! : null;
     }

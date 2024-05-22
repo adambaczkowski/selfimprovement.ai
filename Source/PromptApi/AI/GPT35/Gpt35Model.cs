@@ -2,16 +2,17 @@
 
 namespace PromptApi.AI.GPT35;
 
-public class Gpt35Model : IAiModel
+public class Gpt35Model(string name, string apiUrl) : IAiModel
 {
-    public string ApiUrl { get; set; }
-    public string Prompt { get; set; }
+    public string Name { get; set; } = name;
+    public string ApiUrl { get; set; } = apiUrl;
+
     public Task<string> BuildPrompt()
     {
         throw new NotImplementedException();
     }
 
-    public Task<List<GoalTaskResource>> ProcessModelResponse(Guid goalId)
+    public List<GoalTaskResource> ProcessModelResponse(AiResponseModel responseModel)
     {
         throw new NotImplementedException();
     }
