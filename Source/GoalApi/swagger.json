@@ -411,8 +411,14 @@
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
-          "timeAvailability": {
-            "$ref": "#/components/schemas/TimeAvailability"
+          "userAdvancement": {
+            "$ref": "#/components/schemas/UserAdvancement"
+          },
+          "timeAvailabilityPerDay": {
+            "$ref": "#/components/schemas/TimeAvailabilityPerDay"
+          },
+          "timeAvailabilityPerWeek": {
+            "$ref": "#/components/schemas/TimeAvailabilityPerWeek"
           },
           "duration": {
             "type": "integer",
@@ -447,7 +453,9 @@
       },
       "GoalCategories": {
         "enum": [
-          "BodyWorkout"
+          "Sport",
+          "Craft",
+          "Mind"
         ],
         "type": "string"
       },
@@ -461,8 +469,14 @@
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
-          "timeAvailability": {
-            "$ref": "#/components/schemas/TimeAvailability"
+          "userAdvancement": {
+            "$ref": "#/components/schemas/UserAdvancement"
+          },
+          "timeAvailabilityPerDay": {
+            "$ref": "#/components/schemas/TimeAvailabilityPerDay"
+          },
+          "timeAvailabilityPerWeek": {
+            "$ref": "#/components/schemas/TimeAvailabilityPerWeek"
           },
           "startDate": {
             "type": "string",
@@ -507,8 +521,14 @@
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
-          "timeAvailability": {
-            "$ref": "#/components/schemas/TimeAvailability"
+          "userAdvancement": {
+            "$ref": "#/components/schemas/UserAdvancement"
+          },
+          "timeAvailabilityPerDay": {
+            "$ref": "#/components/schemas/TimeAvailabilityPerDay"
+          },
+          "timeAvailabilityPerWeek": {
+            "$ref": "#/components/schemas/TimeAvailabilityPerWeek"
           },
           "startDate": {
             "type": "string",
@@ -523,6 +543,10 @@
           },
           "learningType": {
             "$ref": "#/components/schemas/LearningType"
+          },
+          "userInput": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -716,13 +740,25 @@
         },
         "additionalProperties": false
       },
-      "TimeAvailability": {
+      "TimeAvailabilityPerDay": {
         "enum": [
           "FifteenMinutes",
           "ThirtyMinutes",
           "FortyFiveMinutes",
           "Hour",
-          "MoreThanHour"
+          "TwoHours"
+        ],
+        "type": "string"
+      },
+      "TimeAvailabilityPerWeek": {
+        "enum": [
+          "OneDay",
+          "TwoDays",
+          "ThreeDays",
+          "FourDays",
+          "FiveDays",
+          "SixDays",
+          "SevenDays"
         ],
         "type": "string"
       },
@@ -805,6 +841,14 @@
           }
         },
         "additionalProperties": false
+      },
+      "UserAdvancement": {
+        "enum": [
+          "Basic",
+          "Advanced",
+          "Expert"
+        ],
+        "type": "string"
       }
     }
   }
