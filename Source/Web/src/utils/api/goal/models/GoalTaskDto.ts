@@ -6,6 +6,7 @@ import type { TimeSpan } from './TimeSpan';
 export type GoalTaskDto = {
     id?: string;
     goalId?: string;
+    title?: string | null;
     content?: string | null;
     estimatedDuration?: TimeSpan;
     isCompleted?: boolean;

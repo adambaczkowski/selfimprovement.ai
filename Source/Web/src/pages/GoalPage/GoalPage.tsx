@@ -94,7 +94,8 @@ function GoalPage() {
         <p className={styles.description}><span>Learning type: </span>{goal.learningType}</p>
       </div>
       <div className={styles.goal_description}>
-        <p className={styles.description}><span>Time Availability: </span>{goal.timeAvailability}</p>
+        <p className={styles.description}><span>Time Availability Per Day: </span>{goal.timeAvailabilityPerDay}</p>
+        <p className={styles.description}><span>Time Availability Per Week: </span>{goal.timeAvailabilityPerWeek}</p>
         <p className={styles.description}><span>Start date: </span>{dayjs(goal.startDate).format("MM-DD-YYYY")}</p>
         <p className={styles.description}><span>End date: </span>{dayjs(goal.endDate).format("MM-DD-YYYY")}</p>
         <p className={styles.description}><span>Experience: </span>{goal.experience}</p>

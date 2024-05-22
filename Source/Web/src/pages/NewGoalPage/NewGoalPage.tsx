@@ -3,9 +3,10 @@ import { Form, Formik } from "formik";
 import { FormSelectInput, LoadingCircle } from "../../components/componentsIndex";
 import { NewGoalFormValidation } from "./NewGoalFormValidationSchema";
 import styles from "./NewGoalPage.module.scss";
-import { CreateGoalCommand, Experience, GoalCategories, LearningType, TimeAvailability } from "../../utils/api/goal";
+import { CreateGoalCommand, Experience, GoalCategories, LearningType, TimeAvailabilityPerDay, TimeAvailabilityPerWeek } from "../../utils/api/goal";
 import { enumToArrayOfOptions } from "../../utils/helpers/enumToArrayOfOptions";
 import FormNumberInput from "../../components/Formik/FormNumberInput/FormNumberInput";
+import FormTextInput from "../../components/Formik/FormTextInput/FormTextInput";
 import { useMutation } from "react-query";
 import { createGoal } from "../../utils/services/goalService";
 import { useState } from 'react';
@@ -18,10 +19,12 @@ const NewGoalPage = ({}: Props) => {
   
   const goalInitialValues: CreateGoalCommand = {
     category: undefined,
-    timeAvailability: undefined,
+    name: undefined,
+    timeAvailabilityPerDay: undefined,
+    timeAvailabilityPerWeek: undefined,
     duration: undefined,
     experience: undefined,
-    learningType: undefined,
+    learningType: undefined
   };
 
   const createGoalMutation = useMutation({
@@ -65,8 +68,10 @@ const NewGoalPage = ({}: Props) => {
           >
             <Form className={styles.form_items_container}>
               <h1 className={styles.heading}>New Goal</h1>
+              <FormTextInput label="Goal name" name="name" placeholderText="Marathon"/>
               <FormSelectInput label="Category" name="category" options={enumToArrayOfOptions(GoalCategories)} />
-              <FormSelectInput label="Time Availability" name="timeAvailability" options={enumToArrayOfOptions(TimeAvailability)} />
+              <FormSelectInput label="Time TimeAvailabilityPerDay" name="timeAvailabilityPerDay" options={enumToArrayOfOptions(TimeAvailabilityPerDay)} />
+              <FormSelectInput label="Time TimeAvailabilityPerWeek" name="timeAvailabilityPerWeek" options={enumToArrayOfOptions(TimeAvailabilityPerWeek)} />
               <FormNumberInput label="Duration" name="duration" />
               <FormSelectInput label="Experience" name="experience" options={enumToArrayOfOptions(Experience)} />
               <FormSelectInput label="Learning Type" name="learningType" options={enumToArrayOfOptions(LearningType)} />

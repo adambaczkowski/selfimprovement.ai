@@ -6,6 +6,7 @@ namespace GoalApi.Goal.Dtos;
 public class GoalDetailsDto
 {
     public Guid Id { get; init; }
+    public string Name { get; init; }
     public GoalCategories Category { get; init; }
     public UserAdvancement UserAdvancement { get; init; }
     public TimeAvailabilityPerDay TimeAvailabilityPerDay { get; init; }

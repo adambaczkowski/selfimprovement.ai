@@ -65,7 +65,7 @@ export class GoalService {
      * @returns GoalDetailsDtoApiResponse Success
      * @throws ApiError
      */
-    public static getGoalDetails({
+    public static getDetails({
         id,
     }: {
         id: string,

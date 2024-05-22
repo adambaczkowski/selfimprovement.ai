@@ -408,6 +408,10 @@
             "type": "string",
             "nullable": true
           },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
@@ -466,6 +470,10 @@
             "type": "string",
             "format": "uuid"
           },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
@@ -517,6 +525,10 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           },
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
@@ -598,6 +610,10 @@
             "type": "string",
             "format": "uuid"
           },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
           "content": {
             "type": "string",
             "nullable": true
@@ -641,6 +657,10 @@
           "goalId": {
             "type": "string",
             "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
           },
           "content": {
             "type": "string",

@@ -10,5 +10,5 @@ export const fetchGoals = async () => {
 }
 
 export const fetchGoal = async (id: string) => {
-    return await GoalService.getGoalDetails({id: id})
+    return await GoalService.getDetails({id: id})
 }

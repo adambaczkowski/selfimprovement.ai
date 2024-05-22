@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export enum TimeAvailability {
+export enum TimeAvailabilityPerDay {
     FIFTEEN_MINUTES = 'FifteenMinutes',
     THIRTY_MINUTES = 'ThirtyMinutes',
     FORTY_FIVE_MINUTES = 'FortyFiveMinutes',
     HOUR = 'Hour',
-    MORE_THAN_HOUR = 'MoreThanHour',
+    TWO_HOURS = 'TwoHours',
 }
