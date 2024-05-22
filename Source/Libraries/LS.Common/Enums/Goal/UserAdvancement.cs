@@ -1,4 +1,4 @@
-﻿namespace GoalApi.Enums;
+﻿namespace LS.Common.Enums.Goal;
 
 public enum UserAdvancement
 {

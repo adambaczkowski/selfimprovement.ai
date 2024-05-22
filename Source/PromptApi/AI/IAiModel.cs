@@ -9,6 +9,6 @@ public interface IAiModel
     public string Name { get; set; }
     public string ApiUrl { get; set; }
 
-    public Task<string> BuildPrompt();
+    public Task<string> BuildPrompt(string userId, Guid goalId);
     public List<GoalTaskResource> ProcessModelResponse(AiResponseModel responseModel);
 }

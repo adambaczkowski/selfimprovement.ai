@@ -9,7 +9,7 @@ public class Llama3Model(string name,string apiUrl, IPromptBuilderService prompt
     public string Name { get; set; } = name;
     public string ApiUrl { get; set; } = apiUrl;
 
-    public Task<string> BuildPrompt()
+    public Task<string> BuildPrompt(string userId, Guid goalId)
     {
         throw new NotImplementedException();
     }

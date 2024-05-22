@@ -1,5 +1,5 @@
 ﻿using PromptApi.AI.GPT35;
-using PromptApi.AI.LLama;
+using PromptApi.AI.LLama2;
 using PromptApi.AI.Llama3;
 using PromptApi.AI.Zephyr;
 using PromptApi.ServiceClients;

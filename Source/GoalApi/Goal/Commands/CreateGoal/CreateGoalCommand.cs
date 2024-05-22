@@ -2,6 +2,7 @@
 using GoalApi.Enums;
 using GoalApi.Goal.Dtos;
 using LS.Common;
+using LS.Common.Enums.Goal;
 using LS.Events.GoalApi;
 using LS.Messaging.EventBus;
 using MediatR;

@@ -10,7 +10,7 @@ public interface IIdentityApiClient
 
 public class GetUserDetailsQuery
 {
-    public Guid UserId { get; init; }
+    public string UserId { get; init; }
 }
 
 public class UserResource
