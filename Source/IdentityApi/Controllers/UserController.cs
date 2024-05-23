@@ -3,6 +3,7 @@ using IdentityApi.Identity.Commands.RequestPasswordReset;
 using IdentityApi.Identity.Commands.SendConfirmEmail;
 using IdentityApi.User.Commands.CreateUserProfile;
 using IdentityApi.User.Dtos;
+using IdentityApi.User.Queries;
 using LS.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,29 @@ public class UserController(IMediator mediator) : Controller
         try
         {
             var response = await mediator.Send(command);
+            apiResponse.Data = response;
+            return apiResponse;
+        }
+        catch (Exception ex)
+        {
+            apiResponse.Success = false;
+            apiResponse.ErrorMessage = ex.Message;
+        }
+
+        return apiResponse;
+    }
+    
+    [Route("Profile/{id}")]
+    [HttpGet]
+    public async Task<ApiResponse<UserProfileDto>> UserProfileDetails([FromRoute]Guid id)
+    {
+        var apiResponse = new ApiResponse<UserProfileDto>();
+        try
+        {
+            var response = await mediator.Send(new GetSingleUserProfileQuery()
+            {
+                Id = id
+            });
             apiResponse.Data = response;
             return apiResponse;
         }

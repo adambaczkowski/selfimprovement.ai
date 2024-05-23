@@ -11,20 +11,12 @@ public class GetSingleUserProfileQuery : IRequest<UserProfileDto>
     public Guid Id { get; init; }
 }
 
-public class GetSingleUserProfileHandler : IRequestHandler<GetSingleUserProfileQuery, UserProfileDto>
+public class GetSingleUserProfileHandler(IGenericRepository<UserProfile> userProfileRepository, IMapper mapper)
+    : IRequestHandler<GetSingleUserProfileQuery, UserProfileDto>
 {
-    private readonly IGenericRepository<UserProfile> _userProfileRepository;
-    private readonly IMapper _mapper;
-
-    public GetSingleUserProfileHandler(IGenericRepository<UserProfile> userProfileRepository, IMapper mapper)
-    {
-        _userProfileRepository = userProfileRepository;
-        _mapper = mapper;
-    }
-
     public async Task<UserProfileDto> Handle(GetSingleUserProfileQuery request, CancellationToken cancellationToken)
     {
-        var userProfile = await _userProfileRepository.GetByIdAsync(request.Id);
-        return _mapper.Map<UserProfileDto>(userProfile);
+        var userProfile = await userProfileRepository.GetByIdAsync(request.Id);
+        return mapper.Map<UserProfileDto>(userProfile);
     }
 }

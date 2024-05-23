@@ -1,0 +1,7 @@
+Output a JSON object structured like:
+{
+"title": title of the task,
+"content": content of the task,
+"estimatedDuration": estimated duration of the task,
+"date": date of the task,
+}
