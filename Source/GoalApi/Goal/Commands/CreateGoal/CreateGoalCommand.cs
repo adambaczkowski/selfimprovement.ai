@@ -12,6 +12,7 @@ namespace GoalApi.Goal.Commands.CreateGoal;
 public class CreateGoalCommand : IRequest<GoalDto>
 {
     public string UserId { get; set; }
+    public string Name { get; init; }
     public GoalCategories Category { get; init; }
     public UserAdvancement UserAdvancement { get; init; }
     public TimeAvailabilityPerDay TimeAvailabilityPerDay { get; init; }

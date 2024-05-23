@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type TimeSpan = {
     ticks?: number;
     readonly days?: number;
@@ -19,3 +19,4 @@ export type TimeSpan = {
     readonly totalMinutes?: number;
     readonly totalSeconds?: number;
 };
+

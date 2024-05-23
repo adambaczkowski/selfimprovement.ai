@@ -25,8 +25,10 @@ export type { GoalTasksForDayDto } from './models/GoalTasksForDayDto';
 export type { GoalTasksForDayDtoListApiResponse } from './models/GoalTasksForDayDtoListApiResponse';
 export { LearningType } from './models/LearningType';
 export type { StringApiResponse } from './models/StringApiResponse';
-export { TimeAvailability } from './models/TimeAvailability';
+export { TimeAvailabilityPerDay } from './models/TimeAvailabilityPerDay';
+export { TimeAvailabilityPerWeek } from './models/TimeAvailabilityPerWeek';
 export type { TimeSpan } from './models/TimeSpan';
+export { UserAdvancement } from './models/UserAdvancement';
 
 export { GoalService } from './services/GoalService';
 export { GoalTasksService } from './services/GoalTasksService';
