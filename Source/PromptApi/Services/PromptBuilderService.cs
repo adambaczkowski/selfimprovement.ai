@@ -20,22 +20,18 @@ public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClie
     private const string AdditionalInfoPromptFileName = "additionalInfoPrompt";
     public async Task<string> CreatePrompt(string userId, Guid goalId)
     {
-        var goal = await goalApiClient.GetSingleGoal(new GetSingleGoalQuery()
-        {
-            GoalId = goalId
-        });
-        
-        var user = await identityApiClient.GetUserDetails(new GetUserDetailsQuery()
-        {
-            UserId = userId
-        });
+        var goal = await goalApiClient.GetSingleGoal(goalId);
+
+        var user = await identityApiClient.GetUserDetails(userId);
 
         var basicPromptValuesObject = new BasicPrompt()
         {
+            Goal = goal.GoalFriendlyName.ToFriendlyString(),
             UserAdvancement = goal.UserAdvancement.ToString().ToLower(),
             ReachGoalInThisManyDays = goal.EndDate.Subtract(goal.StartDate).Days,
             FreeDaysEachWeek = (int)goal.TimeAvailabilityPerWeek,
             FreeMinutesEachDay = (int)goal.TimeAvailabilityPerDay,
+            TodaysDate = DateTime.Today.ToShortDateString()
         };
         
         var basicPrompt = await LoadSinglePrompt(BasicPromptFileName, basicPromptValuesObject);

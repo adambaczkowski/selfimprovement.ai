@@ -6,7 +6,7 @@ namespace PromptApi.ServiceClients;
 
 public interface IGoalApiClient
 {
-    Task<GoalResource> GetSingleGoal(GetSingleGoalQuery query);
+    Task<GoalResource> GetSingleGoal(Guid goalId);
 }
 
 public class GetSingleGoalQuery
@@ -17,6 +17,9 @@ public class GetSingleGoalQuery
 public class GoalResource
 {
     public Guid Id { get; init; }
+    public string UserId { get; init; }
+    public string Name { get; init; }
+    public Goals GoalFriendlyName { get; init; }
     public GoalCategories Category { get; init; }
     public UserAdvancement UserAdvancement { get; init; }
     public TimeAvailabilityPerDay TimeAvailabilityPerDay { get; init; }
@@ -35,11 +38,22 @@ public class GoalApiClient : BaseRestServiceClient, IGoalApiClient
     {
     }
 
-    protected override string ServiceName => "goal";
+    protected override string ServiceUrl => "host.docker.internal:8081";
     
-    public async Task<GoalResource> GetSingleGoal(GetSingleGoalQuery query)
+    public async Task<GoalResource> GetSingleGoal(Guid goalId)
     {
-        return await SingleGet<GoalResource>($"api/Goal", query);
+        var url = $"{goalId}/Details";
+        try
+        {
+            var result = await SingleGet<GoalResource>(url);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            var e = ex;
+        }
+
+        return default;
     }
     
     

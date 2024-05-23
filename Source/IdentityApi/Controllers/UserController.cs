@@ -14,7 +14,7 @@ namespace IdentityApi.Controllers;
 [Route("api/User")]
 public class UserController(IMediator mediator) : Controller
 {
-    [Route("Profile")]
+    [Route("/Profile")]
     [HttpPost]
     public async Task<ApiResponse<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileCommand command)
     {
@@ -34,7 +34,7 @@ public class UserController(IMediator mediator) : Controller
         return apiResponse;
     }
 
-    [Route("Profile")]
+    [Route("/Profile")]
     [HttpPut]
     public async Task<ApiResponse<UserProfileDto>> EditUserProfile([FromBody] EditUserProfileCommand command)
     {
@@ -54,16 +54,16 @@ public class UserController(IMediator mediator) : Controller
         return apiResponse;
     }
     
-    [Route("Profile/{id}")]
+    [Route("/{id}/Profile")]
     [HttpGet]
-    public async Task<ApiResponse<UserProfileDto>> UserProfileDetails([FromRoute]Guid id)
+    public async Task<ApiResponse<UserProfileDto>> UserProfileDetails([FromRoute]string id)
     {
         var apiResponse = new ApiResponse<UserProfileDto>();
         try
         {
             var response = await mediator.Send(new GetSingleUserProfileQuery()
             {
-                Id = id
+                UserId = id
             });
             apiResponse.Data = response;
             return apiResponse;

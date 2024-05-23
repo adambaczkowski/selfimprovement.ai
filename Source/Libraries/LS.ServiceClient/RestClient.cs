@@ -41,7 +41,7 @@ public class RestClient : IServiceClient
     public async Task<HttpResponseMessage> Get(string serviceName, string path, object request = null,
         params Header[] headers)
     {
-        var baseAddress = await GetBaseAddress(serviceName);
+        var baseAddress = GetBaseAddress(serviceName);
         var queryString = request != null
             ? await ToQueryString(request)
             : string.Empty;
@@ -72,7 +72,7 @@ public class RestClient : IServiceClient
     public async Task<HttpResponseMessage> Delete(string serviceName, string path, object request,
         params Header[] headers)
     {
-        var baseAddress = await GetBaseAddress(serviceName);
+        var baseAddress = GetBaseAddress(serviceName);
 
         var requestMessage = RequestMessage.Delete(
             $"{baseAddress}{path}",
@@ -87,7 +87,7 @@ public class RestClient : IServiceClient
     public async Task<HttpResponseMessage> Put(string serviceName, string path, object request,
         params Header[] headers)
     {
-        var baseAddress = await GetBaseAddress(serviceName);
+        var baseAddress = GetBaseAddress(serviceName);
 
         var requestMessage = RequestMessage.Put(
             $"{baseAddress}{path}",
@@ -98,16 +98,12 @@ public class RestClient : IServiceClient
         return await _retryOnServerError.ExecuteAsync(() => Client.SendAsync(requestMessage));
     }
 
-    private async Task<Uri> GetBaseAddress(string service)
+    private string GetBaseAddress(string service)
     {
-        if (!Uri.TryCreate(service, UriKind.Absolute, out Uri uri))
-        {
-            var resolvedUrl = $"http://{service}";
-            resolvedUrl = resolvedUrl.TrimEnd('/') + "/";
-            uri = new Uri(resolvedUrl);
-        }
-
-        return await Task.FromResult(uri);
+        var resolvedUrl = $"http://{service}";
+        resolvedUrl = resolvedUrl.TrimEnd('/') + "/";
+            
+        return resolvedUrl;
     }
 
     private async Task AddAuthorizationBearerToken(HttpRequestMessage httpRequest)

@@ -2,7 +2,7 @@
 
 public enum UserAdvancement
 {
-    Basic = 0,
-    Advanced = 1,
-    Expert = 2,
+    Beginner = 0,
+    Medium = 1,
+    Advanced = 2,
 }

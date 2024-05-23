@@ -466,6 +466,17 @@
             "type": "string",
             "format": "uuid"
           },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "goalFriendlyName": {
+            "$ref": "#/components/schemas/Goals"
+          },
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
@@ -491,6 +502,10 @@
           },
           "learningType": {
             "$ref": "#/components/schemas/LearningType"
+          },
+          "userInput": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -716,6 +731,13 @@
         },
         "additionalProperties": false
       },
+      "Goals": {
+        "enum": [
+          "BodyWorkout",
+          "Programming"
+        ],
+        "type": "string"
+      },
       "LearningType": {
         "enum": [
           "Basic",
@@ -844,9 +866,9 @@
       },
       "UserAdvancement": {
         "enum": [
-          "Basic",
-          "Advanced",
-          "Expert"
+          "Beginner",
+          "Medium",
+          "Advanced"
         ],
         "type": "string"
       }

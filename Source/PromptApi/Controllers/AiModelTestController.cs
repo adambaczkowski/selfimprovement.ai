@@ -14,15 +14,15 @@ public class PromptController(IMediator mediator, ITasksCreatorService tasksCrea
 {
     private readonly ITasksCreatorService _tasksCreatorService = tasksCreatorService;
     private readonly IEventBus _eventBus = eventBus;
-    [Route("Test")]
+    [Route("Test/{goalId}/{userId}")]
     [HttpPost]
-    public async Task<List<GoalTaskResource>> TestPrompt()
+    public async Task<List<GoalTaskResource>> TestPrompt([FromRoute]Guid goalId, [FromRoute]string userId)
     {
         var ev = new GoalCreatedEvent()
         {
             Message = "",
-            GoalId = new Guid(),
-            UserId = string.Empty,
+            GoalId = goalId,
+            UserId = userId,
         };
         var tasks = await _tasksCreatorService.CreateTaskList(ev);
 

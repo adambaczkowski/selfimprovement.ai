@@ -12,7 +12,7 @@ public interface IAiModelApiClient
 
 public class AiModelApiClient : BaseRestServiceClient, IAiModelApiClient
 {
-    protected override string ServiceName => "aiModel";
+    protected override string ServiceUrl => "aiModel";
     
     public AiModelApiClient(IAccessTokenProvider accessTokenProvider, IHttpClientFactory httpClientFactory) : base(accessTokenProvider, httpClientFactory)
     {

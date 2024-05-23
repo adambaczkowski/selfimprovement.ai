@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GoalApi.Controllers;
 
-[Route("api/Goal/")]
+[Route("api/Goal")]
 public class GoalController(IMediator mediator, ICurrentUserService currentUserService) : Controller
 {
     [Authorize]

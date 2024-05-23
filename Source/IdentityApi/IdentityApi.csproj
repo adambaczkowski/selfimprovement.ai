@@ -15,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Identity\Queries\" />
     <Folder Include="Migrations\" />
-    <Folder Include="User\Validators\" />
   </ItemGroup>
 
   <ItemGroup>

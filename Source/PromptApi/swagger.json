@@ -5,10 +5,29 @@
     "version": "v1"
   },
   "paths": {
-    "/api/Prompt/Test": {
+    "/api/Prompt/Test/{goalId}/{userId}": {
       "post": {
         "tags": [
           "Prompt"
+        ],
+        "parameters": [
+          {
+            "name": "goalId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {

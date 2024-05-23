@@ -48,7 +48,7 @@ services:
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
-      - Service=http://localhost:8080
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
     ports:
       - "8080:8080"
     deploy:
@@ -66,7 +66,6 @@ services:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
-      - Service=http://localhost:8081
     ports:
       - "8081:8080"
     deploy:
@@ -85,7 +84,7 @@ services:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
-      - Service=http://localhost:8082
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
       - Llama2=http://host.docker.internal:11434/api/generate
     ports:
       - "8082:8080"

@@ -36,10 +36,8 @@ namespace GoalApi.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Experience")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                    b.Property<int>("GoalFriendlyName")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LearningType")
                         .IsRequired()
@@ -63,8 +61,10 @@ namespace GoalApi.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("UserAdvancement")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserAdvancement")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -76,7 +76,7 @@ namespace GoalApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Goals");
+                    b.ToTable("Goals", (string)null);
                 });
 
             modelBuilder.Entity("GoalApi.Models.GoalTask", b =>
@@ -109,7 +109,7 @@ namespace GoalApi.Migrations
 
                     b.HasIndex("GoalId");
 
-                    b.ToTable("GoalTasks");
+                    b.ToTable("GoalTasks", (string)null);
                 });
 
             modelBuilder.Entity("GoalApi.Models.GoalTask", b =>
