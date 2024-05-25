@@ -1,4 +1,3 @@
-/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -14,12 +13,12 @@ export { Education } from './models/Education';
 export type { RequestPasswordResetCommand } from './models/RequestPasswordResetCommand';
 export type { ResendConfirmationEmailCommand } from './models/ResendConfirmationEmailCommand';
 export type { ResetPasswordCommand } from './models/ResetPasswordCommand';
+export { Sex } from './models/Sex';
 export type { SignInCommand } from './models/SignInCommand';
 export type { SignInResponse } from './models/SignInResponse';
 export type { SignUpCommand } from './models/SignUpCommand';
 export type { SignUpResponse } from './models/SignUpResponse';
 export type { UserProfileDto } from './models/UserProfileDto';
-export type { UserProfileDtoApiResponse } from './models/UserProfileDtoApiResponse';
 
 export { IdentityService } from './services/IdentityService';
 export { UserService } from './services/UserService';

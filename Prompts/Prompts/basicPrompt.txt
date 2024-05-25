@@ -1,4 +1,3 @@
-Imagine that you want to get better at %Goal%. Your advancement level in that field in scale of beginner, medium,advanced is %User_Advancement%. 
-You want to spend %ReachGoalInThisManyDays% days at this goal. You have %FreeDaysEachWeek% free days during week. Create a plan with task for each free day, 
-tasks should not take longer than %FreeMinutesEachDay%. For your information today is %TodaysDate%.
+Imagine that you want to get better at %Goal%. Your advancement level in that field in scale of beginner, medium,advanced is %UserAdvancement%. 
+You want to spend %ReachGoalInThisManyWeeks% weeks %FreeDaysEachWeek% days (from monday to friday) in each week at this goal.Create a plan with task for those days, tasks should not take longer than %FreeMinutesEachDay% minutes.Describe all the tasks very precisely. For your information today is %TodaysDate%.
  

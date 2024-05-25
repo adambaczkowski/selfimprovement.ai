@@ -12,6 +12,7 @@ public class GoalTaskMappingProfile : Profile
     {
         CreateMap<Models.GoalTask, GoalTaskDto>();
         CreateMap<Models.GoalTask, GoalTaskDetailsDto>();
-        CreateMap<GoalTaskResource, Models.GoalTask>();
+        CreateMap<GoalTaskResource, Models.GoalTask>()
+            .ForMember(x => x.EstimatedDuration, src => src.MapFrom(x => TimeSpan.FromMinutes(x.EstimatedDuration)));
     }
 }

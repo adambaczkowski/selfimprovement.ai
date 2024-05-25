@@ -12,12 +12,12 @@ namespace PromptApi.Services;
 
 public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClient identityApiClient, IBlobStorageService blobStorageService) : IPromptBuilderService
 {
-    private const string BasicPromptFileName = "basicPrompt";
-    private const string MindPromptFileName = "mindPrompt";
-    private const string SportPromptFileName = "sportPrompt";
-    private const string CraftPromptFileName = "craftPrompt";
-    private const string FormatPromptFileName = "formatPrompt";
-    private const string AdditionalInfoPromptFileName = "additionalInfoPrompt";
+    private const string BasicPromptFileName = "basicPrompt.txt";
+    private const string MindPromptFileName = "mindPrompt.txt";
+    private const string SportPromptFileName = "sportPrompt.txt";
+    private const string CraftPromptFileName = "craftPrompt.txt";
+    private const string FormatPromptFileName = "formatPrompt.txt";
+    private const string AdditionalInfoPromptFileName = "additionalInfoPrompt.txt";
     public async Task<string> CreatePrompt(string userId, Guid goalId)
     {
         var goal = await goalApiClient.GetSingleGoal(goalId);
@@ -28,7 +28,7 @@ public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClie
         {
             Goal = goal.GoalFriendlyName.ToFriendlyString(),
             UserAdvancement = goal.UserAdvancement.ToString().ToLower(),
-            ReachGoalInThisManyDays = goal.EndDate.Subtract(goal.StartDate).Days,
+            ReachGoalInThisManyWeeks = CountWeeksBetweenTwoDates(goal.StartDate, goal.EndDate),
             FreeDaysEachWeek = (int)goal.TimeAvailabilityPerWeek,
             FreeMinutesEachDay = (int)goal.TimeAvailabilityPerDay,
             TodaysDate = DateTime.Today.ToShortDateString()
@@ -73,19 +73,33 @@ public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClie
                     categoryPrompt = await LoadSinglePrompt(CraftPromptFileName, craftPromptValuesObject);
                     break;
             }
-
-        var additionalInfoPromptValuesObject = new AdditionalInfoPrompt()
-        {
-            Input = goal.UserInput
-        };
-        var additionalInfoPrompt = await LoadSinglePrompt(AdditionalInfoPromptFileName, additionalInfoPromptValuesObject);
         
-        var formatPrompt = await LoadSinglePrompt(FormatPromptFileName);
+        var additionalInfoPrompt = String.Empty;
+        if (!String.IsNullOrWhiteSpace(goal.UserInput))
+        {
+            var additionalInfoPromptValuesObject = new AdditionalInfoPrompt()
+            {
+                Input = goal.UserInput
+            };
+            additionalInfoPrompt =
+                await LoadSinglePrompt(AdditionalInfoPromptFileName, additionalInfoPromptValuesObject);
+        }
+
+        var formatPromptValuesObject = new FormatPrompt()
+        {
+            GoalId = goal.Id,
+        };
+        var formatPrompt = await LoadSinglePrompt(FormatPromptFileName, formatPromptValuesObject);
 
         var prompt = ConstructFinalPrompt(basicPrompt: basicPrompt, categoryPrompt: categoryPrompt,
             additionalInfoPrompt: additionalInfoPrompt, formatPrompt: formatPrompt);
         
         return prompt;
+    }
+
+    private int CountWeeksBetweenTwoDates(DateTime startDate, DateTime endDate)
+    {
+        return (int)((endDate - startDate).TotalDays / 7);
     }
 
     private async Task<string> LoadSinglePrompt(string promptFileName, IPromptValues? promptValuesObject = null)
@@ -105,6 +119,7 @@ public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClie
     private string ConstructFinalPrompt(string basicPrompt, string categoryPrompt, string additionalInfoPrompt, string formatPrompt)
     {
         var sb = new StringBuilder();
+        
         return sb.Append(categoryPrompt)
             .Append(basicPrompt)
             .Append(additionalInfoPrompt)

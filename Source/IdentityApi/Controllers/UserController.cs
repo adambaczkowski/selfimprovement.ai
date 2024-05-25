@@ -16,64 +16,19 @@ public class UserController(IMediator mediator) : Controller
 {
     [Route("/Profile")]
     [HttpPost]
-    public async Task<ApiResponse<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileCommand command)
-    {
-        var apiResponse = new ApiResponse<UserProfileDto>();
-        try
-        {
-            var response = await mediator.Send(command);
-            apiResponse.Data = response;
-            return apiResponse;
-        }
-        catch (Exception ex)
-        {
-            apiResponse.Success = false;
-            apiResponse.ErrorMessage = ex.Message;
-        }
-
-        return apiResponse;
-    }
+    public Task<UserProfileDto> CreateUserProfile([FromBody] CreateUserProfileCommand command) => mediator.Send(command);
 
     [Route("/Profile")]
     [HttpPut]
-    public async Task<ApiResponse<UserProfileDto>> EditUserProfile([FromBody] EditUserProfileCommand command)
-    {
-        var apiResponse = new ApiResponse<UserProfileDto>();
-        try
-        {
-            var response = await mediator.Send(command);
-            apiResponse.Data = response;
-            return apiResponse;
-        }
-        catch (Exception ex)
-        {
-            apiResponse.Success = false;
-            apiResponse.ErrorMessage = ex.Message;
-        }
-
-        return apiResponse;
-    }
+    public Task<UserProfileDto> EditUserProfile([FromBody] EditUserProfileCommand command) => mediator.Send(command);
     
     [Route("/{id}/Profile")]
     [HttpGet]
-    public async Task<ApiResponse<UserProfileDto>> UserProfileDetails([FromRoute]string id)
+    public Task<UserProfileDto> UserProfileDetails([FromRoute]string id)
     {
-        var apiResponse = new ApiResponse<UserProfileDto>();
-        try
+        return mediator.Send(new GetSingleUserProfileQuery()
         {
-            var response = await mediator.Send(new GetSingleUserProfileQuery()
-            {
-                UserId = id
-            });
-            apiResponse.Data = response;
-            return apiResponse;
-        }
-        catch (Exception ex)
-        {
-            apiResponse.Success = false;
-            apiResponse.ErrorMessage = ex.Message;
-        }
-
-        return apiResponse;
+            UserId = id
+        });
     }
 }

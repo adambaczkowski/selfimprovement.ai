@@ -225,7 +225,7 @@
         }
       }
     },
-    "/api/User/Profile": {
+    "/Profile": {
       "post": {
         "tags": [
           "User"
@@ -255,17 +255,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserProfileDtoApiResponse"
+                  "$ref": "#/components/schemas/UserProfileDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserProfileDtoApiResponse"
+                  "$ref": "#/components/schemas/UserProfileDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserProfileDtoApiResponse"
+                  "$ref": "#/components/schemas/UserProfileDto"
                 }
               }
             }
@@ -301,17 +301,56 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserProfileDtoApiResponse"
+                  "$ref": "#/components/schemas/UserProfileDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserProfileDtoApiResponse"
+                  "$ref": "#/components/schemas/UserProfileDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserProfileDtoApiResponse"
+                  "$ref": "#/components/schemas/UserProfileDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{id}/Profile": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileDto"
                 }
               }
             }
@@ -465,6 +504,14 @@
         },
         "additionalProperties": false
       },
+      "Sex": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "SignInCommand": {
         "type": "object",
         "properties": {
@@ -529,20 +576,27 @@
       },
       "UserProfileDto": {
         "type": "object",
-        "additionalProperties": false
-      },
-      "UserProfileDtoApiResponse": {
-        "type": "object",
         "properties": {
-          "success": {
-            "type": "boolean"
+          "sex": {
+            "$ref": "#/components/schemas/Sex"
           },
-          "data": {
-            "$ref": "#/components/schemas/UserProfileDto"
-          },
-          "errorMessage": {
-            "type": "string",
+          "weight": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "educationLevel": {
+            "$ref": "#/components/schemas/Education"
           }
         },
         "additionalProperties": false

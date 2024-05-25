@@ -1,26 +1,26 @@
-/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CreateGoalCommand } from '../models/CreateGoalCommand';
 import type { DeleteGoalCommand } from '../models/DeleteGoalCommand';
-import type { GoalDetailsDtoApiResponse } from '../models/GoalDetailsDtoApiResponse';
-import type { GoalDtoApiResponse } from '../models/GoalDtoApiResponse';
-import type { GoalDtoListApiResponse } from '../models/GoalDtoListApiResponse';
-import type { StringApiResponse } from '../models/StringApiResponse';
+import type { GoalDetailsDto } from '../models/GoalDetailsDto';
+import type { GoalDto } from '../models/GoalDto';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+
 export class GoalService {
+
     /**
-     * @returns GoalDtoApiResponse Success
+     * @returns GoalDto Success
      * @throws ApiError
      */
     public static post({
-        requestBody,
-    }: {
-        requestBody?: CreateGoalCommand,
-    }): CancelablePromise<GoalDtoApiResponse> {
+requestBody,
+}: {
+requestBody?: CreateGoalCommand,
+}): CancelablePromise<GoalDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/',
@@ -28,15 +28,16 @@ export class GoalService {
             mediaType: 'application/json',
         });
     }
+
     /**
-     * @returns StringApiResponse Success
+     * @returns any Success
      * @throws ApiError
      */
     public static delete({
-        requestBody,
-    }: {
-        requestBody?: DeleteGoalCommand,
-    }): CancelablePromise<StringApiResponse> {
+requestBody,
+}: {
+requestBody?: DeleteGoalCommand,
+}): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/',
@@ -44,15 +45,16 @@ export class GoalService {
             mediaType: 'application/json',
         });
     }
+
     /**
-     * @returns GoalDtoListApiResponse Success
+     * @returns GoalDto Success
      * @throws ApiError
      */
     public static getUserGoals({
-        userId,
-    }: {
-        userId?: string,
-    }): CancelablePromise<GoalDtoListApiResponse> {
+userId,
+}: {
+userId?: string,
+}): CancelablePromise<Array<GoalDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/UserGoals',
@@ -61,15 +63,16 @@ export class GoalService {
             },
         });
     }
+
     /**
-     * @returns GoalDetailsDtoApiResponse Success
+     * @returns GoalDetailsDto Success
      * @throws ApiError
      */
     public static getDetails({
-        id,
-    }: {
-        id: string,
-    }): CancelablePromise<GoalDetailsDtoApiResponse> {
+id,
+}: {
+id: string,
+}): CancelablePromise<GoalDetailsDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/{id}/Details',
@@ -78,4 +81,5 @@ export class GoalService {
             },
         });
     }
+
 }

@@ -1,8 +1,9 @@
-/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+
 import type { Education } from './Education';
+
 export type CreateUserProfileCommand = {
     userId?: string;
     profileImage?: Blob | null;
@@ -13,4 +14,3 @@ export type CreateUserProfileCommand = {
     age?: number | null;
     educationLevel?: Education;
 };
-

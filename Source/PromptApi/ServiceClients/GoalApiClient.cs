@@ -26,7 +26,6 @@ public class GoalResource
     public TimeAvailabilityPerWeek TimeAvailabilityPerWeek { get; init; }
     public DateTime StartDate { get; init; }
     public DateTime EndDate { get; init; }
-    public Experience Experience { get; init; }
     
     public LearningType LearningType { get; init; }
     public string UserInput { get; init; }
@@ -43,17 +42,7 @@ public class GoalApiClient : BaseRestServiceClient, IGoalApiClient
     public async Task<GoalResource> GetSingleGoal(Guid goalId)
     {
         var url = $"{goalId}/Details";
-        try
-        {
-            var result = await SingleGet<GoalResource>(url);
-            return result;
-        }
-        catch (Exception ex)
-        {
-            var e = ex;
-        }
-
-        return default;
+        return await SingleGet<GoalResource>(url);
     }
     
     

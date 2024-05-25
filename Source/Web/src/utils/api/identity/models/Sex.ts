@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export enum Education {
+export enum Sex {
     '_0' = 0,
     '_1' = 1,
-    '_2' = 2,
 }

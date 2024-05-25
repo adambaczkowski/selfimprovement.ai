@@ -35,17 +35,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalDto"
                 }
               }
             }
@@ -77,24 +77,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
@@ -120,17 +103,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalDto"
+                  }
                 }
               }
             }
@@ -161,17 +153,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalDetailsDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalDetailsDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalDetailsDto"
                 }
               }
             }
@@ -209,17 +201,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalTaskDetailsDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalTaskDetailsDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalTaskDetailsDto"
                 }
               }
             }
@@ -281,17 +273,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalTaskDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalTaskDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalTaskDto"
+                  }
                 }
               }
             }
@@ -329,17 +330,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTasksForDayDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalTasksForDayDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTasksForDayDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalTasksForDayDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTasksForDayDtoListApiResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalTasksForDayDto"
+                  }
                 }
               }
             }
@@ -370,17 +380,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalTaskDetailsDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalTaskDetailsDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoalTaskDetailsDtoApiResponse"
+                  "$ref": "#/components/schemas/GoalTaskDetailsDto"
                 }
               }
             }
@@ -408,6 +418,13 @@
             "type": "string",
             "nullable": true
           },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "goalFriendlyName": {
+            "$ref": "#/components/schemas/Goals"
+          },
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
           },
@@ -424,11 +441,12 @@
             "type": "integer",
             "format": "int32"
           },
-          "experience": {
-            "$ref": "#/components/schemas/Experience"
-          },
           "learningType": {
             "$ref": "#/components/schemas/LearningType"
+          },
+          "userInput": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -497,29 +515,10 @@
             "type": "string",
             "format": "date-time"
           },
-          "experience": {
-            "$ref": "#/components/schemas/Experience"
-          },
           "learningType": {
             "$ref": "#/components/schemas/LearningType"
           },
           "userInput": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GoalDetailsDtoApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/GoalDetailsDto"
-          },
-          "errorMessage": {
             "type": "string",
             "nullable": true
           }
@@ -532,6 +531,10 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           },
           "category": {
             "$ref": "#/components/schemas/GoalCategories"
@@ -566,42 +569,6 @@
         },
         "additionalProperties": false
       },
-      "GoalDtoApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/GoalDto"
-          },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GoalDtoListApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GoalDto"
-            },
-            "nullable": true
-          },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "GoalTaskDetailsDto": {
         "type": "object",
         "properties": {
@@ -612,6 +579,10 @@
           "goalId": {
             "type": "string",
             "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
           },
           "content": {
             "type": "string",
@@ -626,22 +597,6 @@
           "date": {
             "type": "string",
             "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GoalTaskDetailsDtoApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/GoalTaskDetailsDto"
-          },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -657,6 +612,10 @@
             "type": "string",
             "format": "uuid"
           },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
           "content": {
             "type": "string",
             "nullable": true
@@ -670,26 +629,6 @@
           "date": {
             "type": "string",
             "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GoalTaskDtoListApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GoalTaskDto"
-            },
-            "nullable": true
-          },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -711,26 +650,6 @@
         },
         "additionalProperties": false
       },
-      "GoalTasksForDayDtoListApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GoalTasksForDayDto"
-            },
-            "nullable": true
-          },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "Goals": {
         "enum": [
           "BodyWorkout",
@@ -744,23 +663,6 @@
           "SpedUp"
         ],
         "type": "string"
-      },
-      "StringApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "string",
-            "nullable": true
-          },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       },
       "TimeAvailabilityPerDay": {
         "enum": [
@@ -778,9 +680,7 @@
           "TwoDays",
           "ThreeDays",
           "FourDays",
-          "FiveDays",
-          "SixDays",
-          "SevenDays"
+          "FiveDays"
         ],
         "type": "string"
       },

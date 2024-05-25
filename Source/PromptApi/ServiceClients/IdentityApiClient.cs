@@ -17,12 +17,9 @@ public class UserResource
     public Education? EducationLevel { get; init; }
 }
 
-public class IdentityApiClient : BaseRestServiceClient, IIdentityApiClient
+public class IdentityApiClient(IAccessTokenProvider accessTokenProvider, IHttpClientFactory httpClientFactory)
+    : BaseRestServiceClient(accessTokenProvider, httpClientFactory), IIdentityApiClient
 {
-    public IdentityApiClient(IAccessTokenProvider accessTokenProvider, IHttpClientFactory httpClientFactory) : base(accessTokenProvider, httpClientFactory)
-    {
-    }
-
     protected override string ServiceUrl => "host.docker.internal:8080";
     
     public async Task<UserResource> GetUserDetails(string userId)

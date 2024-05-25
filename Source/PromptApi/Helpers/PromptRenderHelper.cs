@@ -15,6 +15,6 @@ public class PromptRenderHelper
     {
         return promptValues.GetType()
             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-            .ToDictionary(prop => prop.Name, prop => (string)prop.GetValue(promptValues, null));
+            .ToDictionary(prop => prop.Name, prop => prop.GetValue(promptValues, null).ToString());
     }
 }

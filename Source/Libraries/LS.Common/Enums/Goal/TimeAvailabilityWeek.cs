@@ -7,6 +7,4 @@ public enum TimeAvailabilityPerWeek
     ThreeDays = 3,
     FourDays = 4,
     FiveDays = 5,
-    SixDays = 6,
-    SevenDays = 7,
 }

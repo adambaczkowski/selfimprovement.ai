@@ -25,6 +25,12 @@ public class GoalDbContext : DbContext
             entity.HasMany<Models.GoalTask>()
                 .WithOne(x => x.Goal)
                 .HasForeignKey(x => x.GoalId);
+            entity.Property(x => x.GoalFriendlyName)
+                .HasConversion<string>()
+                .HasMaxLength(20);
+            entity.Property(x => x.UserAdvancement)
+                .HasConversion<string>()
+                .HasMaxLength(20);
             entity.Property(x => x.Category)
                 .HasConversion<string>()
                 .HasMaxLength(20);
@@ -32,9 +38,6 @@ public class GoalDbContext : DbContext
                 .HasConversion<string>()
                 .HasMaxLength(20);
             entity.Property(x => x.TimeAvailabilityPerDay)
-                .HasConversion<string>()
-                .HasMaxLength(20);
-            entity.Property(x => x.Experience)
                 .HasConversion<string>()
                 .HasMaxLength(20);
             entity.Property(x => x.LearningType)

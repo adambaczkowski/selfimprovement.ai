@@ -16,8 +16,6 @@ public class Goal : IEntity
     public TimeAvailabilityPerWeek TimeAvailabilityPerWeek { get; init; }
     public DateTime StartDate { get; init; }
     public DateTime EndDate { get; init; }
-    public Experience Experience { get; init; }
-    
     public LearningType LearningType { get; init; }
     public string UserInput { get; init; }
     public ICollection<GoalTask> Tasks { get; init; } = new List<GoalTask>();

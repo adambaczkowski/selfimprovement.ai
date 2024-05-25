@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using LS.Common;
+﻿using LS.Common;
 using MediatR;
 
-namespace GoalApi.Goal.Commands.CreateGoal;
+namespace GoalApi.Goal.Commands.DeleteGoal;
 
 public class DeleteGoalCommand : IRequest
 {
