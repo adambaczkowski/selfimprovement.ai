@@ -1,9 +1,9 @@
 Always answer in the following json format:
-[{"id": id of the task as new guid,
-"goalId": always %GoalId%,
-"title": title of the task,
-"content": content of the task,
-"estimatedDuration": estimated duration of the task,
-"date": date of the task,
-"isCompleted": always false}] or []
+[{"Id": id of the task as new guid,
+"GoalId": %GoalId%,
+"Title": title of the task,
+"Content": content of the task,
+"EstimatedDuration": estimated duration of the task,
+"Date": date of the task,
+"IsCompleted": false}] or []
 ONLY JSON IS ALLOWED as an answer. No explanation or other text is allowed.
