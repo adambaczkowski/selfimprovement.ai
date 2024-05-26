@@ -1,0 +1,11 @@
+@import './../../styles/componentsStylingIndex.scss';
+
+.home_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+}
+
+.overview {
+  @extend .container;
+}

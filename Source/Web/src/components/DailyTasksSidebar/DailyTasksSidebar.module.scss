@@ -1,0 +1,83 @@
+@import './../../styles/componentsStylingIndex.scss';
+
+.todays_challanges {
+  @extend .container;
+
+  justify-self: end;
+  height: calc(100vh - 10rem);
+
+  .emoji {
+    font-size: 4rem;
+    position: absolute;
+    animation: emojiAnimation 20s infinite linear;
+  }
+
+  @keyframes emojiAnimation {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    1% {
+      filter: brightness(110%);
+      transform: rotate(180deg) scale(1.3);
+    }
+    2% {
+      transform: rotate(360deg) scale(1);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+}
+  
+.header_container {
+  background-color: lighten($container-background, 8%);
+  border-radius: 1rem;
+  margin-left: 2rem;
+  margin-right: 0.6rem;
+  margin-bottom: 4rem;
+
+  .todays_challanges_header {
+    margin-left: 2.5rem;
+    padding: 0.3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: $header-text;
+  }
+}
+
+.task_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 1rem;
+  min-width: 18rem;
+  
+  background-color: lighten($container-background, 8%);
+  border-radius: 1rem;
+  text-decoration: none;
+  appearance: none;
+  border: none;
+  transition: background-color 0.1s ease, transform 0.1s ease-in-out; /* Add transition effect for background color and transform */
+
+  .task_item_header {
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    color: $header-text;
+    font-size: 1.2rem;
+  }
+
+  .task_item_checkbox {
+    color: $header-text;
+    font-size: 2rem;
+    margin-left: auto;
+    margin-top: -1.2rem;
+    margin-bottom: -1.2rem;
+  }
+
+  &:hover {
+    background-color: lighten($container-background, 15%);
+    transform: scale(1.01) translateY(-3px)
+  }
+}
