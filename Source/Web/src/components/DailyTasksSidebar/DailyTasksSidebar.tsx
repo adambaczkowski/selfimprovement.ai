@@ -21,36 +21,36 @@ function DailyTasksSidebar() {
         <p className={styles.task_item_header}>
           {shortenString("Create first python project", 30).toLowerCase()}
         </p>
-        <p className={styles.task_item_checkbox}>
+        <div className={styles.task_item_checkbox}>
           { x ? 
             <FontAwesomeIcon icon={squareCheckSolidIcon as IconProp} style={{ color: "#32ff54"}} /> :
-            <FontAwesomeIcon icon={squareCheckRegularIcon as IconProp} style={{ color: "#6b6b6b" }}/>
+            <FontAwesomeIcon icon={squareCheckRegularIcon as IconProp} style={{ color: "#6b6b6b"}}/>
           }
-        </p>
+        </div>
       </Link>
 
       <Link to={`/tasks`} className={styles.task_item}>
         <p className={styles.task_item_header}>
           {shortenString("Do a 5km run", 30).toLowerCase()}
         </p>
-        <p className={styles.task_item_checkbox}>
+        <div className={styles.task_item_checkbox}>
           { !x ? 
             <FontAwesomeIcon icon={squareCheckSolidIcon as IconProp} style={{ color: "#32ff54"}} /> :
-            <FontAwesomeIcon icon={squareCheckRegularIcon as IconProp} style={{ color: "#6b6b6b" }}/>
+            <FontAwesomeIcon icon={squareCheckRegularIcon as IconProp} style={{ color: "#6b6b6b"}}/>
           }
-        </p>
+        </div>
       </Link>
 
       <Link to={`/tasks`} className={styles.task_item}>
         <p className={styles.task_item_header}>
           {shortenString("Make a first carbonara", 30).toLowerCase()}
         </p>
-        <p className={styles.task_item_checkbox}>
+        <div className={styles.task_item_checkbox}>
           { x ? 
             <FontAwesomeIcon icon={squareCheckSolidIcon as IconProp} style={{ color: "#32ff54"}} /> :
-            <FontAwesomeIcon icon={squareCheckRegularIcon as IconProp} style={{ color: "#6b6b6b" }}/>
+            <FontAwesomeIcon icon={squareCheckRegularIcon as IconProp} style={{ color: "#6b6b6b"}}/>
           }
-        </p>
+        </div>
       </Link>
     </div> 
   );

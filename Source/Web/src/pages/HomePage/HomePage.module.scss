@@ -2,10 +2,18 @@
 
 .home_grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.3fr 0.7fr;
   grid-gap: 2rem;
+  margin-left: 2.2rem;
+  margin-right: 2.2rem;
 }
 
 .overview {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.achievements {
   @extend .container;
 }

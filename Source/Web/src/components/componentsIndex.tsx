@@ -12,6 +12,8 @@ import GoalsList from "./GoalsList/GoalsList"
 import ErrorBoundary from "./ErrorBoundary/ErrorBoundary"
 import GoBackButton from "./GoBackButton/GoBackButton"
 import DailyTasksSidebar from "./DailyTasksSidebar/DailyTasksSidebar"
+import SmallGoalsList from "./SmallGoalsList/SmallGoalsList"
+import AchievementsComponent from "./AchievementsComponent/AchievementsComponent"
 
 export {
     Sidebar,
@@ -27,5 +29,7 @@ export {
     GoalsList,
     ErrorBoundary,
     GoBackButton,
-    DailyTasksSidebar
+    DailyTasksSidebar,
+    SmallGoalsList,
+    AchievementsComponent
 };

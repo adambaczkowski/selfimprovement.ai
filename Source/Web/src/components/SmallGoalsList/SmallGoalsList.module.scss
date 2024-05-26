@@ -1,0 +1,97 @@
+@import './../../styles/componentsStylingIndex.scss';
+
+.goals {
+  @extend .container;
+  height: 12.5rem;
+}
+
+.emoji {
+  margin-top: -0.5rem;
+  font-size: 4rem;
+  position: absolute;
+}
+
+.header_container {
+  background-color: lighten($container-background, 8%);
+  border-radius: 1rem;
+  margin-left: 2rem;
+  margin-right: 0.6rem;
+  margin-bottom: 1.2rem;
+
+  .goal_header {
+    margin-left: 2.5rem;
+    padding: 0.3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: $header-text;
+    font-size: 1.8rem;
+  }
+}
+
+.goal_items_container{
+  padding: 0.5rem;
+  max-height: 5.7rem; /* Set a maximum height for the container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding-right: 1rem;
+
+  /* Customize scrollbar */
+  &::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+    border-radius: 5px;
+    background: lighten($container-background, 8%);
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #9c9c9c; /* Color of the handle */
+    border-radius: 5px; /* Border radius of the handle */
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #868686; /* Color of the handle on hover */
+  }
+}
+
+.goal_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 0.7rem;
+  min-width: 18rem;
+  
+  background-color: lighten($container-background, 8%);
+  border-radius: 1rem;
+  text-decoration: none;
+  appearance: none;
+  border: none;
+  transition: background-color 0.1s ease, transform 0.1s ease-in-out; /* Add transition effect for background color and transform */
+
+  .goal_header {
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+    color: $header-text;
+    font-size: 1rem;
+  }
+
+  .goal_counter {
+    color: $header-text;
+    font-size: 1rem;
+    margin-left: auto;
+    margin-top: -1.2rem;
+    margin-bottom: -1.2rem;
+    margin-right: 1rem;
+  }
+
+  &:hover {
+    background-color: lighten($container-background, 15%);
+    transform: scale(1.01) translateY(-3px)
+  }
+}
+
+.goal_item_checkbox {
+  color: $header-text;
+  font-size: 1.6rem;
+}

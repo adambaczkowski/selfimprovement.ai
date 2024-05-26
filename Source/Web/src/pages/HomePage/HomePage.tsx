@@ -1,7 +1,7 @@
 import {useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from 'react-router-dom';
-import { LoadingCircle, DailyTasksSidebar } from "../../components/componentsIndex"
+import { LoadingCircle, DailyTasksSidebar, SmallGoalsList, AchievementsComponent } from "../../components/componentsIndex"
 import { GoalTaskDto } from "../../utils/api/goal";
 import { fetchTasks } from "../../utils/services/goalTaskService";
 import styles from './HomePage.module.scss';
@@ -39,7 +39,8 @@ function HomePage({}: Props) {
     <div className={styles.background_container}>
       <div className={styles.home_grid}>
         <div className={styles.overview}>
-          <h1>overview</h1>
+          <AchievementsComponent />
+          <SmallGoalsList />
         </div>
         <DailyTasksSidebar />
       </div>
