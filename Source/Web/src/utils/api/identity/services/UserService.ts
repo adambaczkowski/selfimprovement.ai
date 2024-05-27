@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CreateUserProfileCommand } from '../models/CreateUserProfileCommand';
-import type { EditUserProfileCommand } from '../models/EditUserProfileCommand';
+import type { Education } from '../models/Education';
+import type { Sex } from '../models/Sex';
 import type { UserProfileDto } from '../models/UserProfileDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -16,15 +16,25 @@ export class UserService {
      * @throws ApiError
      */
     public static postProfile({
-requestBody,
+formData,
 }: {
-requestBody?: CreateUserProfileCommand,
+formData?: {
+UserId?: string;
+ProfileImage?: Blob;
+Name?: string;
+Surname?: string;
+Sex?: Sex;
+Weight?: number;
+Height?: number;
+Age?: number;
+EducationLevel?: Education;
+},
 }): CancelablePromise<UserProfileDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/Profile',
-            body: requestBody,
-            mediaType: 'application/json',
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
     }
 
@@ -33,15 +43,25 @@ requestBody?: CreateUserProfileCommand,
      * @throws ApiError
      */
     public static putProfile({
-requestBody,
+formData,
 }: {
-requestBody?: EditUserProfileCommand,
+formData?: {
+UserId?: string;
+ProfileImage?: Blob;
+Name?: string;
+Surname?: string;
+Sex?: Sex;
+Weight?: number;
+Height?: number;
+Age?: number;
+EducationLevel?: Education;
+},
 }): CancelablePromise<UserProfileDto> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/Profile',
-            body: requestBody,
-            mediaType: 'application/json',
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
     }
 
@@ -49,16 +69,27 @@ requestBody?: EditUserProfileCommand,
      * @returns UserProfileDto Success
      * @throws ApiError
      */
-    public static getProfile({
-id,
+    public static getProfile(): CancelablePromise<UserProfileDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/Profile',
+        });
+    }
+
+    /**
+     * @returns UserProfileDto Success
+     * @throws ApiError
+     */
+    public static getApiUserProfile({
+userId,
 }: {
-id: string,
+userId: string,
 }): CancelablePromise<UserProfileDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/{id}/Profile',
+            url: '/api/User/{userId}/Profile',
             path: {
-                'id': id,
+                'userId': userId,
             },
         });
     }

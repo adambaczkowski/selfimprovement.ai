@@ -9,7 +9,10 @@ public class UserProfileMapper : Profile
 {
     public UserProfileMapper()
     {
-        CreateMap<CreateUserProfileCommand, UserProfile>();
+        CreateMap<CreateUserProfileCommand, UserProfile>()
+            .ForMember(x => x.ProfileImageId, opt => opt.Ignore());
+        CreateMap<EditUserProfileCommand, UserProfile>()
+            .ForMember(x => x.ProfileImageId, opt => opt.Ignore());
         CreateMap<UserProfile, UserProfileDto>();
     }
 }

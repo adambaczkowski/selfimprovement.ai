@@ -7,7 +7,7 @@ namespace LS.Common;
 internal sealed class BlobStorageService(BlobServiceClient blobServiceClient) : IBlobStorageService
 {
     private const string PromptContainerName = "prompts";
-    private const string ProfileImagesContainerName = "profileImages";
+    private const string ProfileImagesContainerName = "profileimages";
     public async Task<string> DownloadPromptFileAsync(string fileName, CancellationToken cancellationToken = default)
     {
         BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(PromptContainerName);

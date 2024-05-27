@@ -4,6 +4,8 @@ namespace IdentityApi.User.Dtos;
 
 public class UserProfileDto
 {
+    public Guid Id { get; init; }
+    public byte[] ProfileImageData { get; set; }
     public Sex? Sex { get; init; }
     public int? Weight { get; init; }
     public int? Height { get; init; }

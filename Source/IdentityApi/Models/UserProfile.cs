@@ -5,11 +5,11 @@ namespace IdentityApi.Models;
 
 public class UserProfile : IEntity
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
     public string? UserId { get; init; }
     public User User { get; init; }
     
-    public string? ProfileImageId { get; set; }
+    public Guid? ProfileImageId { get; set; }
     public Sex? Sex { get; init; }
     public int? Weight { get; init; }
     public int? Height { get; init; }

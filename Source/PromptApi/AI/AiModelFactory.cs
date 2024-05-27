@@ -9,18 +9,22 @@ namespace PromptApi.AI;
 
 public static class AiModelFactory
 {
-    public static IAiModel CreateModel(AiModelType type, IPromptBuilderService promptBuilderService, string apiUrl)
+    private const string Llama2ApiPath = "api/generate";
+    private const string Llama3ApiPath = "";
+    private const string ZephyrApiPath = "";
+    private const string GPT35ApiPath = "";
+    public static IAiModel CreateModel(AiModelName name, IPromptBuilderService promptBuilderService)
     {
-        switch (type)
+        switch (name)
         {
-            case AiModelType.Gpt35:
-                return new Gpt35Model("gpt35", apiUrl);
-            case AiModelType.Llama2:
-                return new Llama2Model("llama2", apiUrl, promptBuilderService);
-            case AiModelType.Llama3:
-                return new Llama3Model("llama3", apiUrl, promptBuilderService);
-            case AiModelType.Zephyr:
-                return new ZephyrModel("zephyr", apiUrl, promptBuilderService);
+            case AiModelName.Gpt35:
+                return new Gpt35Model("gpt35", GPT35ApiPath);
+            case AiModelName.Llama2:
+                return new Llama2Model("llama2", Llama2ApiPath, promptBuilderService);
+            case AiModelName.Llama3:
+                return new Llama3Model("llama3", Llama3ApiPath, promptBuilderService);
+            case AiModelName.Zephyr:
+                return new ZephyrModel("zephyr", ZephyrApiPath, promptBuilderService);
             default:
                 return null;
         }

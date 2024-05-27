@@ -3,18 +3,13 @@ using Newtonsoft.Json;
 
 namespace LS.ServiceClient;
 
-public abstract class BaseRestServiceClient
+public abstract class BaseRestServiceClient(
+    IAccessTokenProvider accessTokenProvider,
+    IHttpClientFactory httpClientFactory)
 {
-    private readonly IServiceClient _client;
+    private readonly IServiceClient _client = new RestClient(httpClientFactory, accessTokenProvider);
 
-    protected abstract string ServiceUrl { get; }
-
-    protected BaseRestServiceClient(
-        IAccessTokenProvider accessTokenProvider,
-        IHttpClientFactory httpClientFactory)
-    {
-        _client = new RestClient(httpClientFactory, accessTokenProvider);
-    }
+    protected abstract string ServiceUrl { get; set; }
 
     protected async Task<T[]?> Get<T>(string path, object? request = null, params Header[] headers)
     {

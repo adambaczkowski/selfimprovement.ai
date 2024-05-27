@@ -232,19 +232,71 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserProfileCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateUserProfileCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateUserProfileCommand"
+                "type": "object",
+                "properties": {
+                  "UserId": {
+                    "type": "string"
+                  },
+                  "ProfileImage": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Surname": {
+                    "type": "string"
+                  },
+                  "Sex": {
+                    "$ref": "#/components/schemas/Sex"
+                  },
+                  "Weight": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Height": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Age": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "EducationLevel": {
+                    "$ref": "#/components/schemas/Education"
+                  }
+                }
+              },
+              "encoding": {
+                "UserId": {
+                  "style": "form"
+                },
+                "ProfileImage": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "Surname": {
+                  "style": "form"
+                },
+                "Sex": {
+                  "style": "form"
+                },
+                "Weight": {
+                  "style": "form"
+                },
+                "Height": {
+                  "style": "form"
+                },
+                "Age": {
+                  "style": "form"
+                },
+                "EducationLevel": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -278,19 +330,71 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/EditUserProfileCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditUserProfileCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditUserProfileCommand"
+                "type": "object",
+                "properties": {
+                  "UserId": {
+                    "type": "string"
+                  },
+                  "ProfileImage": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Surname": {
+                    "type": "string"
+                  },
+                  "Sex": {
+                    "$ref": "#/components/schemas/Sex"
+                  },
+                  "Weight": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Height": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Age": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "EducationLevel": {
+                    "$ref": "#/components/schemas/Education"
+                  }
+                }
+              },
+              "encoding": {
+                "UserId": {
+                  "style": "form"
+                },
+                "ProfileImage": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "Surname": {
+                  "style": "form"
+                },
+                "Sex": {
+                  "style": "form"
+                },
+                "Weight": {
+                  "style": "form"
+                },
+                "Height": {
+                  "style": "form"
+                },
+                "Age": {
+                  "style": "form"
+                },
+                "EducationLevel": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -317,16 +421,43 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileDto"
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/{id}/Profile": {
+    "/api/User/{userId}/Profile": {
       "get": {
         "tags": [
           "User"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -371,88 +502,6 @@
           "code": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateUserProfileCommand": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "profileImage": {
-            "type": "string",
-            "format": "binary",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "surname": {
-            "type": "string",
-            "nullable": true
-          },
-          "weight": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "height": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "age": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "educationLevel": {
-            "$ref": "#/components/schemas/Education"
-          }
-        },
-        "additionalProperties": false
-      },
-      "EditUserProfileCommand": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "profileImage": {
-            "type": "string",
-            "format": "binary",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "surname": {
-            "type": "string",
-            "nullable": true
-          },
-          "weight": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "height": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "age": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "educationLevel": {
-            "$ref": "#/components/schemas/Education"
           }
         },
         "additionalProperties": false
@@ -577,6 +626,15 @@
       "UserProfileDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "profileImageData": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
           "sex": {
             "$ref": "#/components/schemas/Sex"
           },

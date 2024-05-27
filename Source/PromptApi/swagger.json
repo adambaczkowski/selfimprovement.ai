@@ -5,56 +5,47 @@
     "version": "v1"
   },
   "paths": {
-    "/api/Prompt/Test/{goalId}/{userId}": {
+    "/api/Prompt/Resume": {
       "post": {
         "tags": [
           "Prompt"
         ],
-        "parameters": [
-          {
-            "name": "goalId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResumePromptForGoalRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResumePromptForGoalRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResumePromptForGoalRequest"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GoalTaskResource"
-                  }
+                  "type": "string"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GoalTaskResource"
-                  }
+                  "type": "string"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GoalTaskResource"
-                  }
+                  "type": "string"
                 }
               }
             }
@@ -65,31 +56,16 @@
   },
   "components": {
     "schemas": {
-      "GoalTaskResource": {
+      "ResumePromptForGoalRequest": {
         "type": "object",
         "properties": {
-          "id": {
+          "userId": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           },
           "goalId": {
             "type": "string",
             "format": "uuid"
-          },
-          "content": {
-            "type": "string",
-            "nullable": true
-          },
-          "estimatedDuration": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isCompleted": {
-            "type": "boolean"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false

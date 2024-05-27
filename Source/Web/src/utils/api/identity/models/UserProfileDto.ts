@@ -6,6 +6,8 @@ import type { Education } from './Education';
 import type { Sex } from './Sex';
 
 export type UserProfileDto = {
+    id?: string;
+    profileImageData?: string | null;
     sex?: Sex;
     weight?: number | null;
     height?: number | null;

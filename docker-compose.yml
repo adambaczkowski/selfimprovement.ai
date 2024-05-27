@@ -85,7 +85,10 @@ services:
       - CorsOrigin=http://localhost:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
-      - Llama2=http://host.docker.internal:11434/api/generate
+      - Llama2=host.docker.internal:11434
+      - GoalApiServiceUrl=host.docker.internal:8081
+      - IdentityApiServiceUrl=host.docker.internal:8080
+
     ports:
       - "8082:8080"
     deploy:

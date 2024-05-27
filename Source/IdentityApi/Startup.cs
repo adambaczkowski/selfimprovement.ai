@@ -33,7 +33,7 @@ public class Startup(IConfiguration configuration)
             .AddTokenProvider<EmailConfirmationTokenProvider>("EmailConfirmationTokenProvider");
         services.AddDbContext<IdentityDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("SelfImprovementDbContext"));
+            options.UseNpgsql(configuration["SelfImprovementDbContext"]);
         });
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddMediatR(cfg =>
@@ -44,6 +44,7 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IEmailSender, EmailSender>();
         services.Register(configuration);
         services.AddIdentityServices(configuration);
+        services.AddBlobStorage(configuration);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

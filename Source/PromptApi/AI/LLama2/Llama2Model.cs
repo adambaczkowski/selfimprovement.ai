@@ -6,8 +6,9 @@ namespace PromptApi.AI.LLama2;
 
 public class Llama2Model(string name,string apiUrl, IPromptBuilderService promptBuilderService) : IAiModel
 {
-    public string Name { get; set; } = name;
-    public string ApiUrl { get; set; } = apiUrl;
+    public string Name { get; init; } = name;
+    public string ApiUrl { get; init; } = apiUrl;
+    public AiModelName AiModelName { get; } = AiModelName.Llama2;
 
     public async Task<string> BuildPrompt(string userId, Guid goalId)
     {

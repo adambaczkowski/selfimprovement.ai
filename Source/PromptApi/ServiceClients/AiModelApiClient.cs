@@ -10,19 +10,25 @@ public interface IAiModelApiClient
     public Task<AiResponseModel> GetPromptResponse(IAiModel model, object prompt);
 }
 
-public class AiModelApiClient : BaseRestServiceClient, IAiModelApiClient
+public class AiModelApiClient(
+    IAccessTokenProvider accessTokenProvider,
+    IHttpClientFactory httpClientFactory,
+    IConfiguration configuration)
+    : BaseRestServiceClient(accessTokenProvider, httpClientFactory), IAiModelApiClient
 {
-    protected override string ServiceUrl => "aiModel";
-    
-    public AiModelApiClient(IAccessTokenProvider accessTokenProvider, IHttpClientFactory httpClientFactory) : base(accessTokenProvider, httpClientFactory)
-    {
-    }
+    protected override string ServiceUrl { get; set; } = String.Empty;
 
     public async Task<AiResponseModel> GetPromptResponse(IAiModel model, object prompt)
     {
-        var response = await PostWithResponse<AiResponseModel>(model.ApiUrl, prompt);
+        ServiceUrl = configuration[model.AiModelName.ToString()];
+        if (!String.IsNullOrEmpty(ServiceUrl))
+        {
+            var response = await PostWithResponse<AiResponseModel>(model.ApiUrl, prompt);
 
-        return response.Status == HttpStatusCode.OK ? response.Result! : null;
+            return response.Status == HttpStatusCode.OK ? response.Result : null;
+        }
+
+        return null;
     }
     
 }

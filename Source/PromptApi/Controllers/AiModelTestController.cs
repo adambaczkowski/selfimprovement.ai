@@ -4,6 +4,7 @@ using LS.Messaging.EventBus;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PromptApi.Models;
+using PromptApi.Queries;
 using PromptApi.Services;
 
 namespace PromptApi.Controllers;
@@ -34,13 +35,14 @@ public class PromptController(IMediator mediator, ITasksCreatorService tasksCrea
     //     return [];
     // }
 
-    [Route("Resume/{goalId}/{userId}")]
-    public async Task<string> ResumePromptForGoal([FromRoute]Guid goalId, [FromRoute]string userId)
+    [Route("Resume")]
+    [HttpPost]
+    public async Task<string> ResumePromptForGoal([FromBody]ResumePromptForGoalRequest request)
     {
         var ev = new GoalCreatedEvent()
         {
-            GoalId = goalId,
-            UserId = userId,
+            GoalId = request.GoalId,
+            UserId = request.UserId,
         };
         try
         {

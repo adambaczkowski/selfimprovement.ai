@@ -104,8 +104,8 @@ namespace IdentityApi.Migrations
                     b.Property<int?>("Height")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ProfileImageId")
-                        .HasColumnType("text");
+                    b.Property<Guid?>("ProfileImageId")
+                        .HasColumnType("uuid");
 
                     b.Property<int?>("Sex")
                         .HasColumnType("integer");

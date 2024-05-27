@@ -31,13 +31,13 @@ public class GoalResource
     public string UserInput { get; init; }
 }
 
-public class GoalApiClient : BaseRestServiceClient, IGoalApiClient
+public class GoalApiClient(
+    IAccessTokenProvider accessTokenProvider,
+    IHttpClientFactory httpClientFactory,
+    IConfiguration configuration)
+    : BaseRestServiceClient(accessTokenProvider, httpClientFactory), IGoalApiClient
 {
-    public GoalApiClient(IAccessTokenProvider accessTokenProvider, IHttpClientFactory httpClientFactory) : base(accessTokenProvider, httpClientFactory)
-    {
-    }
-
-    protected override string ServiceUrl => "host.docker.internal:8081";
+    protected override string ServiceUrl { get; set; } = configuration["GoalApiServiceUrl"]; //"host.docker.internal:8081";
     
     public async Task<GoalResource> GetSingleGoal(Guid goalId)
     {
