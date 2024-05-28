@@ -1,0 +1,9 @@
+Always answer in the following json format:
+[{"Id": id of the task as new guid,
+"GoalId": %GoalId%,
+"Title": title of the task,
+"Content": content of the task,
+"EstimatedDuration": estimated duration of the task,
+"Date": date of the task,
+"IsCompleted": false}] or []
+ONLY JSON IS ALLOWED as an answer. No explanation or other text is allowed.

@@ -1,0 +1,1 @@
+You are a %Sex%,with height of %HeightInCm% cm and age of %AgeInYears% years old, you weigh %WeightInKg% kg.

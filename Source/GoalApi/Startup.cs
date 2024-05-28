@@ -33,7 +33,7 @@ public class Startup(IConfiguration configuration)
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         services.AddDbContext<GoalDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("SelfImprovementDbContext"));
+            options.UseNpgsql(configuration["SelfImprovementDbContext"]);
         });
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddMediatR(cfg =>

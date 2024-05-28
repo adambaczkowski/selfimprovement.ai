@@ -15,31 +15,25 @@ using PromptApi.Services;
 
 namespace PromptApi;
 
-public class Startup
+public class Startup(IConfiguration configuration)
 {
-    private readonly IConfiguration _configuration;
-    public Startup(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     // This method gets called by the runtime. Use this method to add serices to the container.
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
         services.AddHealthChecks();
         services
-            .AddSwagger(_configuration, "prompt")
-            .AddDefaultCorsPolicy(_configuration["CorsOrigin"])
+            .AddSwagger(configuration, "prompt")
+            .AddDefaultCorsPolicy(configuration["CorsOrigin"])
             .AddHttpContextAccessor();
         services.AddDbContext<PromptDbContext>(options =>
         {
-            options.UseNpgsql(_configuration.GetConnectionString("SelfImprovementDbContext"));
+            options.UseNpgsql(configuration["SelfImprovementDbContext"]);
         });
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
-        services.Register(_configuration);
+        services.Register(configuration);
         ConfigureEventBusDependencies(services);
         services.AddScoped<ITasksCreatorService, TasksCreatorService>();
         services.AddScoped<IPromptBuilderService, PromptBuilderService>();
@@ -47,8 +41,8 @@ public class Startup
         services.AddScoped<IIdentityApiClient, IdentityApiClient>();
         services.AddScoped<IAiModelApiClient, AiModelApiClient>();
         services.AddHttpClient();
-        services.AddIdentityServices(_configuration);
-        services.AddBlobStorage(_configuration);
+        services.AddIdentityServices(configuration);
+        services.AddBlobStorage(configuration);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +58,7 @@ public class Startup
         Assembly[] assemblies = { typeof(Startup).Assembly };
         app
             .UseCors("default")
-            .UseSwagger(_configuration, "Prompt");
+            .UseSwagger(configuration, "Prompt");
         app.MapHealthChecks();
         ConfigureEventBusHandlers(app);
     }
@@ -73,7 +67,7 @@ public class Startup
     {
         services.AddRabbitMqEventBus
         (
-            connectionUrl: _configuration["RabbitMqConnectionUrl"],
+            connectionUrl: configuration["RabbitMqConnectionUrl"],
             brokerName: "eventBusBroker",
             queueName: "eventBusQueue",
             timeoutBeforeReconnecting: 45

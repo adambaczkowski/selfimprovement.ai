@@ -17,88 +17,34 @@ public class GoalTasksController(IMediator mediator, ICurrentUserService current
 {
     [Route("Tasks/")]
     [HttpPut]
-    public async Task<ApiResponse<GoalTaskDetailsDto>> CompleteTask([FromBody] CompleteGoalTaskCommand command)
-    {
-        var apiResponse = new ApiResponse<GoalTaskDetailsDto>();
-        try
-        {
-            var response = await mediator.Send(command);
-            apiResponse.Data = response;
-            return apiResponse;
-        }
-        catch (Exception ex)
-        {
-            apiResponse.Success = false;
-            apiResponse.ErrorMessage = ex.Message;
-        }
-
-        return apiResponse;
-    }
+    public Task<GoalTaskDetailsDto> CompleteTask([FromBody] CompleteGoalTaskCommand command) => mediator.Send(command);
+    
 
     [Authorize]
     [Route("Tasks/")]
     [HttpGet]
-    public async Task<ApiResponse<List<GoalTaskDto>>> GetUserGoalTasks([FromQuery] GetAllGoalTasksQuery query)
+    public Task<List<GoalTaskDto>> GetUserGoalTasks([FromQuery] GetAllGoalTasksQuery query)
     {
         query.UserId = currentUserService.UserId;
-        var apiResponse = new ApiResponse<List<GoalTaskDto>>();
-        try
-        {
-            var response = await mediator.Send(query);
-            apiResponse.Data = response;
-            return apiResponse;
-        }
-        catch (Exception ex)
-        {
-            apiResponse.Success = false;
-            apiResponse.ErrorMessage = ex.Message;
-        }
-
-        return apiResponse;
+        return mediator.Send(query);
     }
     
     [Authorize]
     [Route("Tasks/Calendar")]
     [HttpGet]
-    public async Task<ApiResponse<List<GoalTasksForDayDto>>> GetUserGoalTasksForCalendar([FromQuery] GetGoalsTasksForDayQuery query)
+    public Task<List<GoalTasksForDayDto>> GetUserGoalTasksForCalendar([FromQuery] GetGoalsTasksForDayQuery query)
     {
         query.UserId = currentUserService.UserId;
-        var apiResponse = new ApiResponse<List<GoalTasksForDayDto>>();
-        try
-        {
-            var response = await mediator.Send(query);
-            apiResponse.Data = response;
-            return apiResponse;
-        }
-        catch (Exception ex)
-        {
-            apiResponse.Success = false;
-            apiResponse.ErrorMessage = ex.Message;
-        }
-
-        return apiResponse;
+        return mediator.Send(query);
     }
     
     [Route("Tasks/{id}/Details")]
     [HttpGet]
-    public async Task<ApiResponse<GoalTaskDetailsDto>> GetGoalTaskDetails([FromRoute]Guid id)
+    public Task<GoalTaskDetailsDto> GetGoalTaskDetails([FromRoute]Guid id)
     {
-        var apiResponse = new ApiResponse<GoalTaskDetailsDto>();
-        try
+        return mediator.Send(new GetSingleGoalTaskQuery()
         {
-            var response = await mediator.Send(new GetSingleGoalTaskQuery()
-            {
-                Id = id
-            });
-            apiResponse.Data = response;
-            return apiResponse;
-        }
-        catch (Exception ex)
-        {
-            apiResponse.Success = false;
-            apiResponse.ErrorMessage = ex.Message;
-        }
-
-        return apiResponse;
+            Id = id
+        });
     }
 }

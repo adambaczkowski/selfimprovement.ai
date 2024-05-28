@@ -13,13 +13,14 @@ public class CreateGoalCommand : IRequest<GoalDto>
 {
     public string UserId { get; set; }
     public string Name { get; init; }
+    public Goals GoalFriendlyName { get; init; }
     public GoalCategories Category { get; init; }
     public UserAdvancement UserAdvancement { get; init; }
     public TimeAvailabilityPerDay TimeAvailabilityPerDay { get; init; }
     public TimeAvailabilityPerWeek TimeAvailabilityPerWeek { get; init; }
     public int Duration { get; init; }
-    public Experience Experience { get; init; }
     public LearningType LearningType { get; init; }
+    public string UserInput { get; init; }
 }
 
 public class CreateGoalCommandHandler(

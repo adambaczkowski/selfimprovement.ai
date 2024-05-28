@@ -12,34 +12,25 @@ public class IdentityController(IMediator mediator) : Controller
 {
     [Route("SignIn")]
     [HttpPost]
-    public async Task<SignInResponse> SignIn([FromBody] SignInCommand command)
-    {
-        var response = await mediator.Send(command);
-        return response;
-    }
+    public Task<SignInResponse> SignIn([FromBody] SignInCommand command) => mediator.Send(command);
 
     [Route("SignUp")]
     [HttpPost]
-    public async Task<SignUpResponse> SignUp([FromBody] SignUpCommand command)
-    {
-        var response = await mediator.Send(command);
-
-        return response;
-    }
+    public Task<SignUpResponse> SignUp([FromBody] SignUpCommand command) => mediator.Send(command);
 
     [Route("Email/Confirm")]
     [HttpPost]
-    public async Task ConfirmEmail([FromBody] ConfirmEmailCommand command) => await mediator.Send(command);
+    public Task ConfirmEmail([FromBody] ConfirmEmailCommand command) => mediator.Send(command);
     
     [Route("Email/ResendConfirmation")]
     [HttpPost]
-    public async Task ResendConfirmationEmail([FromBody] ResendConfirmationEmailCommand command) => await mediator.Send(command);
+    public Task ResendConfirmationEmail([FromBody] ResendConfirmationEmailCommand command) => mediator.Send(command);
     
     [Route("Password/RequestReset")]
     [HttpPost]
-    public async Task RequestPasswordReset([FromBody] RequestPasswordResetCommand command) => await mediator.Send(command);
+    public Task RequestPasswordReset([FromBody] RequestPasswordResetCommand command) => mediator.Send(command);
     
     [Route("Password/Reset")]
     [HttpPost]
-    public async Task ResetPassword([FromBody] ResetPasswordCommand command) => await mediator.Send(command);
+    public Task ResetPassword([FromBody] ResetPasswordCommand command) => mediator.Send(command);
 }

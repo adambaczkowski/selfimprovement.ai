@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IdentityApi.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20240522173911_addedNullableProfileImageId")]
-    partial class addedNullableProfileImageId
+    [Migration("20240526132202_UserProfileImage")]
+    partial class UserProfileImage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,8 +107,8 @@ namespace IdentityApi.Migrations
                     b.Property<int?>("Height")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ProfileImageId")
-                        .HasColumnType("text");
+                    b.Property<Guid?>("ProfileImageId")
+                        .HasColumnType("uuid");
 
                     b.Property<int?>("Sex")
                         .HasColumnType("integer");

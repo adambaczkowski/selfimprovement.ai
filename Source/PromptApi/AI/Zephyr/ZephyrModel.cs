@@ -11,8 +11,9 @@ public class ZephyrModel(
     IPromptBuilderService promptBuilderService)
     : IAiModel
 {
-    public string Name { get; set; } = name;
-    public string ApiUrl { get; set; } = apiUrl;
+    public string Name { get; init; } = name;
+    public string ApiUrl { get; init; } = apiUrl;
+    public AiModelName AiModelName { get; } = AiModelName.Zephyr;
 
     public async Task<string> BuildPrompt(string userId,Guid goalId)
     {

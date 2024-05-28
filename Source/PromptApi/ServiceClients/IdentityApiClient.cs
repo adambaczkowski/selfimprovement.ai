@@ -5,12 +5,7 @@ namespace PromptApi.ServiceClients;
 
 public interface IIdentityApiClient
 {
-    Task<UserResource> GetUserDetails(GetUserDetailsQuery query);
-}
-
-public class GetUserDetailsQuery
-{
-    public string UserId { get; init; }
+    Task<UserResource> GetUserDetails(string userId);
 }
 
 public class UserResource
@@ -22,17 +17,15 @@ public class UserResource
     public Education? EducationLevel { get; init; }
 }
 
-public class IdentityApiClient : BaseRestServiceClient, IIdentityApiClient
+public class IdentityApiClient(IAccessTokenProvider accessTokenProvider, IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    : BaseRestServiceClient(accessTokenProvider, httpClientFactory), IIdentityApiClient
 {
-    public IdentityApiClient(IAccessTokenProvider accessTokenProvider, IHttpClientFactory httpClientFactory) : base(accessTokenProvider, httpClientFactory)
-    {
-    }
-
-    protected override string ServiceName => "identity";
+    protected override string ServiceUrl { get; set; } = configuration["IdentityApiServiceUrl"]; //"host.docker.internal:8080";
     
-    public async Task<UserResource> GetUserDetails(GetUserDetailsQuery query)
+    public async Task<UserResource> GetUserDetails(string userId)
     {
-        return await SingleGet<UserResource>($"api/Identity", query);
+        var url = $"api/User/{userId}/Profile";
+        return await SingleGet<UserResource>(url);
     }
     
     

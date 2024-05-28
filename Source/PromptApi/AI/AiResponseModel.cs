@@ -2,5 +2,5 @@
 
 public class AiResponseModel
 {
-    public string ResponseJson { get; set; }
+    public string response { get; set; }
 }

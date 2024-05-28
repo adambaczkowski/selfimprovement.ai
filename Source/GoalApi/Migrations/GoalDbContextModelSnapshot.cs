@@ -36,7 +36,7 @@ namespace GoalApi.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Experience")
+                    b.Property<string>("GoalFriendlyName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
@@ -63,8 +63,10 @@ namespace GoalApi.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("UserAdvancement")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserAdvancement")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("UserId")
                         .IsRequired()

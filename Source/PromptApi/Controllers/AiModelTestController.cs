@@ -4,6 +4,7 @@ using LS.Messaging.EventBus;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PromptApi.Models;
+using PromptApi.Queries;
 using PromptApi.Services;
 
 namespace PromptApi.Controllers;
@@ -14,23 +15,48 @@ public class PromptController(IMediator mediator, ITasksCreatorService tasksCrea
 {
     private readonly ITasksCreatorService _tasksCreatorService = tasksCreatorService;
     private readonly IEventBus _eventBus = eventBus;
-    [Route("Test")]
+    // [Route("Test/{goalId}/{userId}")]
+    // [HttpPost]
+    // public async Task<List<GoalTaskResource>> TestPrompt([FromRoute]Guid goalId, [FromRoute]string userId)
+    // {
+    //     var ev = new GoalCreatedEvent()
+    //     {
+    //         Message = "",
+    //         GoalId = goalId,
+    //         UserId = userId,
+    //     };
+    //     var tasks = await _tasksCreatorService.CreateTaskList(ev);
+    //
+    //     _eventBus.Publish(new TasksForGoalCreatedEvent()
+    //     {
+    //         Tasks = tasks
+    //     });
+    //     
+    //     return [];
+    // }
+
+    [Route("Resume")]
     [HttpPost]
-    public async Task<List<GoalTaskResource>> TestPrompt()
+    public async Task<string> ResumePromptForGoal([FromBody]ResumePromptForGoalRequest request)
     {
         var ev = new GoalCreatedEvent()
         {
-            Message = "",
-            GoalId = new Guid(),
-            UserId = string.Empty,
+            GoalId = request.GoalId,
+            UserId = request.UserId,
         };
-        var tasks = await _tasksCreatorService.CreateTaskList(ev);
-
-        _eventBus.Publish(new TasksForGoalCreatedEvent()
+        try
         {
-            Tasks = tasks
-        });
+            var tasks = await _tasksCreatorService.CreateTaskList(ev);
+            _eventBus.Publish(new TasksForGoalCreatedEvent()
+            {
+                Tasks = tasks
+            });
+        }
+        catch(Exception exception)
+        {
+            return $"Very bad thing happened: {exception.Message}";
+        }
         
-        return [];
+        return "I think it went well now wait for the tasks";
     }
 }

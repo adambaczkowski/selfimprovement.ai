@@ -1,6 +1,6 @@
 ﻿namespace PromptApi.AI;
 
-public enum AiModelType
+public enum AiModelName
 {
     Gpt35,
     Llama2,

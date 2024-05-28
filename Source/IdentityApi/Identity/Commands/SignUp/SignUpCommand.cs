@@ -18,14 +18,16 @@ public class SignUpCommandHandler(UserManager<Models.User> userManager, IIdentit
 {
     public async Task<SignUpResponse> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
+        var userProfileId = Guid.NewGuid();
         var user = new Models.User()
         {
             UserName = request.Email,
             Email = request.Email,
             UserProfile = new UserProfile()
             {
-                Id = new Guid()
-            }
+                Id = userProfileId
+            },
+            UserProfileId = userProfileId,
         };
         
         var result = await userManager.CreateAsync(user, request.Password);

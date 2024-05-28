@@ -1,17 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace IdentityApi.Migrations
 {
     /// <inheritdoc />
-    public partial class addedNullableProfileImageId : Migration
+    public partial class UserProfileImage : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_UserProfiles_AspNetUsers_UserId",
+                table: "UserProfiles");
+
+            migrationBuilder.DropColumn(
+                name: "ProfileImage",
                 table: "UserProfiles");
 
             migrationBuilder.AlterColumn<string>(
@@ -22,13 +27,17 @@ namespace IdentityApi.Migrations
                 oldClrType: typeof(string),
                 oldType: "text");
 
-            migrationBuilder.AlterColumn<string>(
+            migrationBuilder.AddColumn<Guid>(
                 name: "ProfileImageId",
                 table: "UserProfiles",
-                type: "text",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "text");
+                type: "uuid",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "Sex",
+                table: "UserProfiles",
+                type: "integer",
+                nullable: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_UserProfiles_AspNetUsers_UserId",
@@ -45,6 +54,14 @@ namespace IdentityApi.Migrations
                 name: "FK_UserProfiles_AspNetUsers_UserId",
                 table: "UserProfiles");
 
+            migrationBuilder.DropColumn(
+                name: "ProfileImageId",
+                table: "UserProfiles");
+
+            migrationBuilder.DropColumn(
+                name: "Sex",
+                table: "UserProfiles");
+
             migrationBuilder.AlterColumn<string>(
                 name: "UserId",
                 table: "UserProfiles",
@@ -55,15 +72,11 @@ namespace IdentityApi.Migrations
                 oldType: "text",
                 oldNullable: true);
 
-            migrationBuilder.AlterColumn<string>(
-                name: "ProfileImageId",
+            migrationBuilder.AddColumn<byte[]>(
+                name: "ProfileImage",
                 table: "UserProfiles",
-                type: "text",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "text",
-                oldNullable: true);
+                type: "bytea",
+                nullable: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_UserProfiles_AspNetUsers_UserId",

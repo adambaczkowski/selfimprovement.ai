@@ -5,41 +5,49 @@ using LS.Common;
 using LS.Common.Enums.Identity;
 using LS.Startup;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
+using PromptApi.Services;
 
 namespace IdentityApi.User.Commands.CreateUserProfile;
 
 public class CreateUserProfileCommand : IRequest<UserProfileDto>
 {
-    public Guid UserId { get; init; }
+    public string UserId { get; set; }
     public IFormFile? ProfileImage { get; init; }
     public string Name { get; init; }
     public string Surname { get; init; }
+    public Sex? Sex { get; init; }
     public int? Weight { get; init; }
     public int? Height { get; init; }
     public int? Age { get; init; }
     public Education? EducationLevel { get; init; }
 }
 
-public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfileCommand, UserProfileDto>
+public class CreateUserProfileCommandHandler(IGenericRepository<UserProfile> userProfileRepository, IMapper mapper, IBlobStorageService blobStorageService, UserManager<Models.User> userManager)
+    : IRequestHandler<CreateUserProfileCommand, UserProfileDto>
 {
-    private readonly IGenericRepository<UserProfile> _userProfileRepository;
-    private readonly IMapper _mapper;
-
-    public CreateUserProfileCommandHandler(IGenericRepository<UserProfile> userProfileRepository)
-    {
-        _userProfileRepository = userProfileRepository;
-    }
-
     public async Task<UserProfileDto> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
     {
-        var userProfile = _mapper.Map<UserProfile>(request);
-        // if (request.ProfileImage is not null)
-        // {
-        //     userProfile.ProfileImage = await request.ProfileImage.GetBytes();
-        // }
-        _userProfileRepository.Add(userProfile);
-        await _userProfileRepository.SaveAsync();
+        var user = await userManager.FindByIdAsync(request.UserId);
+        var userProfile = mapper.Map<UserProfile>(request);
+        userProfile.Id = user.UserProfileId;
+        if (request.ProfileImage is not null)
+        {
+            using var ms = new MemoryStream();
+            await request.ProfileImage.CopyToAsync(ms, cancellationToken);
+            ms.Seek(0, SeekOrigin.Begin);
+            var addedProfileImageId = await blobStorageService.UploadProfileImage(ms, "image/jpeg", cancellationToken);
+            userProfile.ProfileImageId = addedProfileImageId;
+        }
+        userProfileRepository.Update(userProfile);
+        await userProfileRepository.SaveAsync();
         
-        return _mapper.Map<UserProfileDto>(userProfile);
+        var userProfileDto = mapper.Map<UserProfileDto>(userProfile);
+        if (userProfile.ProfileImageId is not null)
+        {
+            userProfileDto.ProfileImageData = await blobStorageService.GetProfileImage(userProfile.ProfileImageId.Value, cancellationToken);
+        }
+
+        return userProfileDto;
     }
 }
