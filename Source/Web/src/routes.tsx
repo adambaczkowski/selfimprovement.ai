@@ -4,6 +4,7 @@ import SignInPage from "./pages/SignInPage/SignInPage";
 import TaskPage from "./pages/TaskPage/TaskPage";
 import CalendarPage from "./pages/CalendarPage/CalendarPage";
 import TasksPage from "./pages/TasksPage/TasksPage";
+import HomePage from "./pages/HomePage/HomePage";
 import GoalsPage from "./pages/GoalsPage/GoalsPage";
 import GoalPage from "./pages/GoalPage/GoalPage";
 import NewGoalPage from "./pages/NewGoalPage/NewGoalPage";
@@ -36,10 +37,6 @@ const Routes = ({}: Props) => {
       element: <NoTokenRoutes />,
       children: [
         {
-          path: "/",
-          element: <SignInPage />,
-        },
-        {
           path: "/signIn",
           element: <SignInPage />,
         },
@@ -68,6 +65,10 @@ const Routes = ({}: Props) => {
     {
       element: <AppLayout />,
       children: [
+        {
+          path: "/",
+          element: <HomePage />,
+        },
         {
           path: "/task/:id",
           element: <TaskPage />,
