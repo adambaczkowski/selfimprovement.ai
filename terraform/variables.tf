@@ -1,3 +1,21 @@
+variable "location" {
+  type        = string
+  default     = "polandcentral"
+  description = "The Azure Region in which all resources groups should be created."
+}
+
+variable "rg-name" {
+  type        = string
+  default     = "dev-rg"
+  description = "The name of the resource group"
+}
+
+variable "storage_account_name" {
+  type        = string
+  default     = "selfimprovementstorage"
+  description = "The name of the storage account"
+}
+
 variable "arm_subscription_id" {
   description = "Azure subscription ID"
 }

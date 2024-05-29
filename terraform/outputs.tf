@@ -1,5 +1,5 @@
 output "resource_group_name" {
-  value = azurerm_resource_group.aks-dev.name
+  value = azurerm_resource_group.resource_group.name
 }
 
 output "kubernetes_cluster_name" {
@@ -39,4 +39,12 @@ output "host" {
 output "kube_config" {
   value     = azurerm_kubernetes_cluster.aks-dev.kube_config_raw
   sensitive = true
+}
+
+output "storage_account_name" {
+  value = azurerm_storage_account.storage_account.name
+}
+
+output "container_name" {
+  value = azurerm_storage_container.tfstate_storage.name
 }
