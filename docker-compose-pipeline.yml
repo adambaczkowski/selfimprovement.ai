@@ -6,7 +6,7 @@ services:
     build:
       context: ./Source/Web/
       dockerfile: Dockerfile.local
-    image: ${ACR_NAME}.azurecr.io/selfimprovement-frontend:${{ github.sha }}
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-frontend:${IMAGE_TAG}"
     ports:
       - "3000:3000"
     restart: always
@@ -16,7 +16,7 @@ services:
     build:
       context: ./Source
       dockerfile: IdentityApi/Dockerfile.local
-    image: ${ACR_NAME}.azurecr.io/selfimprovement-identity:${{ github.sha }}
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
@@ -30,7 +30,7 @@ services:
     build:
       context: ./Source
       dockerfile: GoalApi/Dockerfile.local
-    image: ${ACR_NAME}.azurecr.io/selfimprovement-goal:${{ github.sha }}
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
@@ -44,7 +44,7 @@ services:
     build:
       context: ./Source
       dockerfile: PromptApi/Dockerfile.local
-    image: ${ACR_NAME}.azurecr.io/selfimprovement-prompt:${{ github.sha }}
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
       - CorsOrigin=http://localhost:3000
