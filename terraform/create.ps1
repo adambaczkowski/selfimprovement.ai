@@ -1,5 +1,6 @@
 $Location = "polandcentral"
 $RgName = "dev-rg"
+$SpName = "dev-sp"
 $StorageAccountName = "selfimprovementstorage"
 $ContainerName = "tfstate"
 
@@ -7,7 +8,12 @@ $SubscriptionId = az account list --query "[?isDefault].id" --output tsv
 az account set --subscription $SubscriptionId
 
 # service principal
-$spJson = az ad sp create-for-rbac --name $RgName --role Contributor --scopes /subscriptions/$SubscriptionId --output json
+$spJson = az ad sp create-for-rbac --name $SpName --role Contributor --scopes /subscriptions/$SubscriptionId --output json
+$sp = $spJson | ConvertFrom-Json
+
+$ClientId = $sp.appId
+$ClientSecret = $sp.password
+$TenantId = $sp.tenant
 
 # resource group
 az group create --name $RgName --location $Location
@@ -19,12 +25,6 @@ $AccountKey=$(az storage account keys list --account-name $StorageAccountName --
 
 # create the container
 az storage container create --name $ContainerName --account-name $StorageAccountName --account-key $AccountKey
-
-$sp = $spJson | ConvertFrom-Json
-
-$ClientId = $sp.appId
-$ClientSecret = $sp.password
-$TenantId = $sp.tenant
 
 # ssh
 mkdir .ssh -Force
