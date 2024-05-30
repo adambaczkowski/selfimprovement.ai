@@ -1,7 +1,24 @@
+$Location = "polandcentral"
+$RgName = "dev-rg"
+$StorageAccountName = "selfimprovementstorage"
+$ContainerName = "tfstate"
+
 $SubscriptionId = az account list --query "[?isDefault].id" --output tsv
 az account set --subscription $SubscriptionId
-az ad sp create-for-rbac --name "dev-sp" --skip-assignment
-$spJson = az ad sp create-for-rbac --name "dev-sp" --role Contributor --scopes /subscriptions/$SubscriptionId --output json
+
+# service principal
+$spJson = az ad sp create-for-rbac --name $RgName --role Contributor --scopes /subscriptions/$SubscriptionId --output json
+
+# resource group
+az group create --name $RgName --location $Location
+
+# storage account
+az storage account create --name $StorageAccountName --resource-group $RgName --location $Location --sku Standard_LRS --kind StorageV2
+
+$AccountKey=$(az storage account keys list --account-name $StorageAccountName --resource-group $RgName --query '[0].value' -o tsv)
+
+# create the container
+az storage container create --name $ContainerName --account-name $StorageAccountName --account-key $AccountKey
 
 $sp = $spJson | ConvertFrom-Json
 
@@ -23,17 +40,15 @@ arm_subscription_id         = "$SubscriptionId"
 arm_ssh_key                 = "$sshKey"
 "@ | Out-File -FilePath "terraform.tfvars" -Encoding utf8
 
-# Apply a Terraform execution plan
+terraform init
 
 terraform fmt
 
 terraform validate
 
-terraform init
+terraform plan
 
-terraform plan -out main.tfplan
-
-terraform apply main.tfplan
+terraform apply
 
 # Verify the results
 

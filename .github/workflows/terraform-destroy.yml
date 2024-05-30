@@ -31,7 +31,6 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: latest
-          
       - name: Generate SSH Key
         run: |
           mkdir -p .ssh

@@ -1,5 +1,5 @@
 output "resource_group_name" {
-  value = azurerm_resource_group.resource_group.name
+  value = var.rg-name
 }
 
 output "kubernetes_cluster_name" {
@@ -42,9 +42,9 @@ output "kube_config" {
 }
 
 output "storage_account_name" {
-  value = azurerm_storage_account.storage_account.name
+  value = var.storage_account_name
 }
 
 output "container_name" {
-  value = azurerm_storage_container.tfstate_storage.name
+  value = var.container_name
 }

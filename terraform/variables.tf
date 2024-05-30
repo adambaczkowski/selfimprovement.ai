@@ -10,6 +10,12 @@ variable "rg-name" {
   description = "The name of the resource group"
 }
 
+variable "container_name" {
+  type        = string
+  default     = "tfstate"
+  description = "The name of the container name"
+}
+
 variable "storage_account_name" {
   type        = string
   default     = "selfimprovementstorage"
