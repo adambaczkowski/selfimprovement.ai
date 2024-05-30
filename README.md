@@ -10,4 +10,4 @@ Adam Bączkowski (DevOps)
 Mateusz Młodochowski (Backend)  
 Grzegorz Święcicki (Frontend)  
 # Tech Stack
-C# , Powershell, Docker, LLAMA2
+C# , Powershell, Docker, LLAMA2, Kubernetes, Terraform
