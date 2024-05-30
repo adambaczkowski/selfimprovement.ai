@@ -1,4 +1,4 @@
-name: Destroy Infrastructure with Terraform on Azure
+name: 💣 Destroy Infrastructure with Terraform on Azure
 on:
   workflow_dispatch:
 
