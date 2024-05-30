@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  frontend:
+    container_name: selfimprovement-frontend
+    build:
+      context: ./Source/Web/
+      dockerfile: Dockerfile.local
+    image: ${ACR_NAME}.azurecr.io/selfimprovement-frontend:${{ github.sha }}
+    ports:
+      - "3000:3000"
+    restart: always
+
+  identity:
+    container_name: selfimprovement-identity
+    build:
+      context: ./Source
+      dockerfile: IdentityApi/Dockerfile.local
+    image: ${ACR_NAME}.azurecr.io/selfimprovement-identity:${{ github.sha }}
+    environment:
+      - production-specific-environment-settings
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+  goal:
+    container_name: selfimprovement-goal
+    build:
+      context: ./Source
+      dockerfile: GoalApi/Dockerfile.local
+    image: ${ACR_NAME}.azurecr.io/selfimprovement-goal:${{ github.sha }}
+    environment:
+      - production-specific-environment-settings
+    ports:
+      - "8081:8080"
+    restart: always
+
+  prompt:
+    container_name: selfimprovement-prompt
+    build:
+      context: ./Source
+      dockerfile: PromptApi/Dockerfile.local
+    image: ${ACR_NAME}.azurecr.io/selfimprovement-prompt:${{ github.sha }}
+    environment:
+      - production-specific-environment-settings
+    ports:
+      - "8082:8080"
+    restart: always
