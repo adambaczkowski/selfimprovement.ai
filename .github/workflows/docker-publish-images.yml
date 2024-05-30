@@ -25,7 +25,7 @@ jobs:
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ secrets.ACR_NAME }}
 
-      - name: Set up Docker Buildx
+      - name: Set up Docker Build
         uses: docker/setup-buildx-action@v1
 
       - name: Build and push Docker images
@@ -38,6 +38,6 @@ jobs:
           docker-compose --env-file .env -f docker-compose-pipeline.yml build
           docker-compose --env-file .env -f docker-compose-pipeline.yml push
 
-      - name: Logout of Azure Container Registry
+      - name: Docker logout
         if: always()
-        run: az acr logout --name ${{ secrets.ACR_NAME }}
+        run: docker logout ${{ secrets.ACR_NAME }}.azurecr.io
