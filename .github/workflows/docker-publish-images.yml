@@ -1,28 +1,11 @@
 name: Build and Push Docker Images to Azure Container Registry
 
-on:
+on: 
   workflow_dispatch:
-
-permissions:
-  id-token: write
-  contents: read
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
-    env:
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-      SSH_USER: ${{ secrets.SSH_USER }}
-      LOCATION: ${{ secrets.LOCATION }}
-      RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
-      STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
-      CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -37,10 +20,18 @@ jobs:
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ secrets.ACR_NAME }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Build and push Docker images
+        env:
+          ACR_NAME: ${{ secrets.ACR_NAME }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker-compose -f docker-compose-pipeline.yml build
-          docker-compose -f docker-compose-pipeline.yml push
+          echo "ACR_NAME=${ACR_NAME}" > .env
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> .env
+          docker-compose --env-file .env -f docker-compose-pipeline.yml build
+          docker-compose --env-file .env -f docker-compose-pipeline.yml push
 
       - name: Logout of Azure Container Registry
         if: always()
