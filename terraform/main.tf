@@ -98,7 +98,7 @@ resource "azurerm_key_vault_access_policy" "aks_sp_access" {
   ]
 }
 
-resource "azurerm_key_vault_secret_pg_admin" "key_vault" {
+resource "azurerm_key_vault_secret" "key_vault" {
   name         = "pg_admin_secret"
   value        = var.pg_admin_secret
   key_vault_id = azurerm_key_vault.key_vault.id
