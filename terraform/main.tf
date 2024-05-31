@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_container_registry" "acr-dev" {
   name                = "acrselfimprovement"
   resource_group_name = var.rg-name
@@ -47,57 +49,24 @@ resource "azurerm_key_vault" "key_vault" {
   soft_delete_retention_days = 7
   purge_protection_enabled   = false
 
-  network_acls {
-    default_action = "Allow"
-    bypass         = "AzureServices"
+   access_policy {
+    tenant_id = var.arm_tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    key_permissions = [
+      "Create",
+      "Get",
+    ]
+
+    secret_permissions = [
+      "Set",
+      "Get",
+      "Delete",
+      "Purge",
+      "Recover"
+    ]
   }
 }
-
-resource "azurerm_key_vault_access_policy" "aks_sp_access" {
-  key_vault_id = azurerm_key_vault.key_vault.id
-  tenant_id    = var.arm_tenant_id
-  object_id    = var.arm_client_id
-
-  key_permissions = [
-    "Get",
-    "Create",
-    "Delete",
-    "List",
-    "Update",
-    "Import",
-    "Backup",
-    "Restore",
-    "Recover",
-    "Purge"
-  ]
-
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-    "Purge"
-  ]
-
-  certificate_permissions = [
-    "Get",
-    "List",
-    "Create",
-    "Delete",
-    "ManageContacts",
-    "GetIssuers",
-    "ListIssuers",
-    "SetIssuers",
-    "DeleteIssuers",
-    "ManageIssuers",
-    "Recover",
-    "Purge"
-  ]
-}
-
 resource "azurerm_key_vault_secret" "key_vault" {
   name         = "pgAdminSecret"
   value        = var.pg_admin_secret
