@@ -1,5 +1,5 @@
 name: 🔨 Deploy Infrastructure with Terraform to Azure
-on: 
+on:
   workflow_dispatch:
 
 permissions:
@@ -67,7 +67,11 @@ jobs:
           echo "arm_tenant_id       = \"${{ env.ARM_TENANT_ID }}\""       >> ./terraform/terraform.tfvars
           echo "arm_client_id       = \"${{ env.ARM_CLIENT_ID }}\""       >> ./terraform/terraform.tfvars
           echo "arm_client_secret   = \"${{ env.ARM_CLIENT_SECRET }}\""   >> ./terraform/terraform.tfvars
-          cat ./terraform/terraform.tfvars
+
+      - name: Generate pg admin secret
+        run: |
+          pg_admin_secret=$(openssl rand -hex 24)
+          echo "pg_admin_secret=\"${pg_admin_secret}\"" >> ./terraform/terraform.tfvars
 
       - name: Configure Terraform Backend
         run: |
