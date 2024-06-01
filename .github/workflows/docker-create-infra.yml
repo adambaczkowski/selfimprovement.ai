@@ -23,7 +23,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Log in to Azure Container Registry
-              run: az acr login --name ${{ secrets.ACR_NAME }}
+        run: az acr login --name ${{ secrets.ACR_NAME }}
 
       - name: Retrieve postgresUser from Azure Key Vault
         run: |
