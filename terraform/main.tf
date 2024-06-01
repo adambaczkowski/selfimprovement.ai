@@ -8,37 +8,37 @@ resource "azurerm_container_registry" "acr-dev" {
   admin_enabled       = true
 }
 
-resource "azurerm_kubernetes_cluster" "aks-dev" {
-  location            = var.location
-  name                = "aks-dev-cluster"
-  resource_group_name = var.rg-name
-  dns_prefix          = "aks-dev-dns"
+# resource "azurerm_kubernetes_cluster" "aks-dev" {
+#   location            = var.location
+#   name                = "aks-dev-cluster"
+#   resource_group_name = var.rg-name
+#   dns_prefix          = "aks-dev-dns"
 
-  service_principal {
-    client_id     = var.arm_client_id
-    client_secret = var.arm_client_secret
-  }
+#   service_principal {
+#     client_id     = var.arm_client_id
+#     client_secret = var.arm_client_secret
+#   }
 
-  default_node_pool {
-    name            = "agentpool"
-    vm_size         = "Standard_D2_v2"
-    node_count      = var.node_count
-    type            = "VirtualMachineScaleSets"
-    os_disk_size_gb = 250
-  }
+#   default_node_pool {
+#     name            = "agentpool"
+#     vm_size         = "Standard_D2_v2"
+#     node_count      = var.node_count
+#     type            = "VirtualMachineScaleSets"
+#     os_disk_size_gb = 250
+#   }
 
-  linux_profile {
-    admin_username = var.username
+#   linux_profile {
+#     admin_username = var.username
 
-    ssh_key {
-      key_data = var.arm_ssh_key
-    }
-  }
-  network_profile {
-    network_plugin    = "kubenet"
-    load_balancer_sku = "standard"
-  }
-}
+#     ssh_key {
+#       key_data = var.arm_ssh_key
+#     }
+#   }
+#   network_profile {
+#     network_plugin    = "kubenet"
+#     load_balancer_sku = "standard"
+#   }
+# }
 
 resource "azurerm_key_vault" "key_vault" {
   name                       = "selfimprovementKeyVault"

@@ -1,6 +1,6 @@
 name: 🐋 Build and Push Docker Images to Azure Container Registry
 
-on:
+on: 
   workflow_dispatch:
 
 permissions:
@@ -31,15 +31,12 @@ jobs:
       - name: Build and push Docker images
         env:
           ACR_NAME: ${{ secrets.ACR_NAME }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          TIMESTAMP=$(date +%Y%m%d%H%M%S)
-          SHORT_SHA=$(echo ${{ github.sha }} | cut -c 1-7)
           echo "ACR_NAME=${ACR_NAME}" > .env
-          echo "IMAGE_TAG=$TIMESTAMP" >> .env
-          docker build -t $ACR_NAME.azurecr.io/myapp:$TIMESTAMP -t $ACR_NAME.azurecr.io/myapp:latest -t $ACR_NAME.azurecr.io/myapp:$SHORT_SHA -f Dockerfile .
-          docker push $ACR_NAME.azurecr.io/myapp:$TIMESTAMP
-          docker push $ACR_NAME.azurecr.io/myapp:latest
-          docker push $ACR_NAME.azurecr.io/myapp:$SHORT_SHA
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> .env
+          docker-compose --env-file .env -f docker-compose-acr.yml build
+          docker-compose --env-file .env -f docker-compose-acr.yml push
 
       - name: Docker logout
         if: always()
