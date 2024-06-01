@@ -5,11 +5,13 @@
 kind create cluster --name dev --image "kindest/node:v1.29.1"
 ```
 
+kubectl apply -f ./k8s/namespaces/app.yml
+
 ## monitoring
 ```plaintext
-kubectl apply -f ./k8s/namespaces/monitoring.yml
-kubectl create -f ./k8s/monitoring/manifests/setup/
-kubectl create -f ./k8s/monitoring/manifests/
+kubectl apply -f ./k8s/namespaces/monitoring.yml -n monitoring
+kubectl create -f ./k8s/monitoring/manifests/setup/ -n monitoring
+kubectl create -f ./k8s/monitoring/manifests/ -n monitoring
 ```
 ## ingress nginx
 ```plaintext
@@ -22,17 +24,17 @@ kubectl -n ingress-nginx apply -f ./k8s/ingress/features/
 
 ## postgres
 ```plaintext
+kubectl apply -f ./k8s/namespaces/postgres.yml
+kubectl -n postgres apply -f ./k8s/postgres/
+```
+
+```plaintext
 kubectl -n postgres create secret generic postgresql `
   --from-literal POSTGRES_USER="postgresadmin" `
   --from-literal POSTGRES_PASSWORD='admin123' `
   --from-literal POSTGRES_DB="postgresdb" `
   --from-literal REPLICATION_USER="replicationuser" `
   --from-literal REPLICATION_PASSWORD='replicationPassword'
-```
-
-```plaintext
-kubectl apply -f ./k8s/namespaces/postgres.yml
-kubectl -n postgres apply -f ./k8s/postgres/
 ```
 
 ### to login to pgadmin get IP of postgres instance from this command -> " kubectl get pod postgres-0 -o wide -n postgres " and provide credentials from above secret

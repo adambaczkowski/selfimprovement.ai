@@ -52,6 +52,9 @@ terraform apply
 
 # Verify the results
 
-#az aks get-credentials -n aks-dev-cluster -g aks-dev
+az aks get-credentials -n aks-dev-cluster -g dev-rg
 
-#kubectl get svc
+kubectl get svc
+
+
+$TOKEN=$(kubectl get secrets --namespace aks-dev-cluster $(kubectl get serviceaccount dev-sp-pipeline --namespace aks-dev-cluster -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' | base64 --decode)

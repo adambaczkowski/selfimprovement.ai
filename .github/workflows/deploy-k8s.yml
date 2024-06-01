@@ -1,0 +1,60 @@
+name: ☸️ Deploy Kubernetes Configurations
+
+on: 
+  workflow_dispatch:
+    paths:
+      - 'k8s/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Kubeconfig
+      uses: azure/setup-k8s@v1
+      with:
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+
+    - name: Deploy Application Namespace
+      run: kubectl apply -f ./k8s/namespaces/app.yml
+
+    - name: Deploy Monitoring Stack
+      run: |
+        kubectl apply -f ./k8s/namespaces/monitoring.yml -n monitoring
+        kubectl create -f ./k8s/monitoring/manifests/setup/ -n monitoring
+        kubectl create -f ./k8s/monitoring/manifests/ -n monitoring
+
+    - name: Deploy Ingress NGINX
+      run: |
+        kubectl apply -f ./k8s/namespaces/ingress-nginx.yml
+        kubectl -n ingress-nginx apply -f ./k8s/ingress/manifests/
+        kubectl -n ingress-nginx apply -f ./k8s/ingress/services/
+        kubectl -n ingress-nginx apply -f ./k8s/ingress/features/
+      continue-on-error: true
+
+    - name: Handle Ingress NGINX Failures
+      if: failure()
+      run: kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+
+    - name: Deploy PostgreSQL
+      run: |
+        kubectl apply -f ./k8s/namespaces/postgres.yml
+        kubectl -n postgres apply -f ./k8s/postgres/
+        kubectl -n postgres create secret generic postgresql \
+          --from-literal=POSTGRES_USER="postgresadmin" \
+          --from-literal=POSTGRES_PASSWORD='admin123' \
+          --from-literal=POSTGRES_DB="postgresdb" \
+          --from-literal=REPLICATION_USER="replicationuser" \
+          --from-literal=REPLICATION_PASSWORD='replicationPassword'
+
+    - name: Deploy RabbitMQ
+      run: |
+        kubectl apply -f ./k8s/namespaces/rabbitmq.yml
+        kubectl -n rabbitmq apply -f ./k8s/rabbitmq/
+
+    - name: Deploy Ollama Application
+      run: |
+        kubectl apply -f ./k8s/namespaces/ollama.yml
+        kubectl -n ollama apply -f ./k8s/ollama/
