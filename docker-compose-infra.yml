@@ -1,151 +1,226 @@
 version: '3.7'
 
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    build:
+      context: ./Rabbitmq
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/rabbitmq:latest"
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # Management Plugin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
   postgres:
-    image: postgres:16
+    container_name: postgres
+    build:
+      context: ./Database/postgres
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/postgres:latest"
     restart: on-failure
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
     ports:
       - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - "5050:80"
+      - postgres:/var/lib/postgresql/data
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
 
   frontend:
+    container_name: selfimprovement-frontend
     build:
       context: ./Source/Web/
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-frontend:latest"
     ports:
       - "3000:3000"
     restart: always
 
   identity:
+    container_name: selfimprovement-identity
     build:
       context: ./Source
       dockerfile: IdentityApi/Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:latest"
     environment:
-      SelfImprovementDbContext: "Host=postgres;Port=5432;Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true"
-      CorsOrigin: "http://localhost:3000"
-      BlobStorageConnectionUrl: "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=${BLOB_STORAGE_CONNECTION_URL}"
+      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
+      - CorsOrigin=http://0.0.0.0:3000
+      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
     ports:
       - "8080:8080"
+    restart: on-failure
 
   goal:
+    container_name: selfimprovement-goal
     build:
       context: ./Source
       dockerfile: GoalApi/Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:latest"
     environment:
-      SelfImprovementDbContext: "Host=postgres;Port=5432;Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true"
-      CorsOrigin: "http://localhost:3000"
+      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
+      - CorsOrigin=http://0.0.0.0:3000
+      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
     ports:
-      - "8081:8080"
+      - "8080:8080"
     restart: always
 
   prompt:
+    container_name: selfimprovement-prompt
     build:
       context: ./Source
       dockerfile: PromptApi/Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:latest"
     environment:
-      SelfImprovementDbContext: "Host=postgres;Port=5432;Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true"
-      CorsOrigin: "http://localhost:3000"
+      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
+      - CorsOrigin=http://0.0.0.0:3000
+      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
+      - Llama2=host.docker.internal:11434
+      - GoalApiServiceUrl=host.docker.internal:8080
+      - IdentityApiServiceUrl=host.docker.internal:8080
     ports:
-      - "8082:8080"
+      - "8080:8080"
+    restart: always
 
-  open-webui:
+  pgadmin:
+    container_name: pgadmin
     build:
-      context: ./Ollama
-      dockerfile: Dockerfile
-    ports:
-      - "3001:8080"
-    volumes:
-      - open_webui_data:/app/backend/data
-
-  ollama:
-    tty: true
-    image: ollama/ollama:latest
-    ports:
-      - 11434:11434
+      context: ./Database/pgadmin
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/pgadmin:latest"
     restart: unless-stopped
-    volumes:
-      - ollama_data:/root/.ollama
-
-  mailhog:
-    build:
-      context: ./Mail
-      dockerfile: Dockerfile
-    ports:
-      - "1025:1025"
-      - "8025:8025"
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3002:3000"
-    volumes:
-      - grafana_data:/var/lib/grafana
-
-  loki:
-    image: grafana/loki:latest
-    ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/loki-config.yml
-    volumes:
-      - loki_data:/etc/loki
-
-  promtail:
-    image: grafana/promtail:latest
-    command: -config.expand-env=true -config.file=/etc/promtail/promtail-config.yml
-    volumes:
-      - promtail_data:/etc/promtail
-
-  prometheus:
-    image: prom/prometheus:v2.51.2
-    ports:
-      - "9090:9090"
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-    volumes:
-      - prometheus_data:/prometheus
-
-  node-exporter:
-    image: prom/node-exporter
-    ports:
-      - "9100:9100"
-
-  rabbitmq:
-    image: rabbitmq:3.9.9-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-
-  nginx:
-    image: nginx:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "80:80"
     volumes:
+      - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
+
+  open-webui:
+    container_name: open-webui
+    restart: on-failure
+    build:
+      context: ./Ollama/webui
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/open-webui:latest"
+    ports:
+      - "8080:8080"
+    volumes:
+      - open-webui:/app/backend/data
+
+  ollama:
+    container_name: ollama
+    build:
+      context: ./Ollama
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/ollama:latest"
+    tty: true
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+    ports:
+      - 11434:11434
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  grafana:
+    container_name: grafana
+    build:
+      context: ./Monitoring/Grafana
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/grafana:latest"
+    restart: on-failure
+    user: "1000"
+    volumes:
+      - ./Monitoring/Grafana/lib:/var/lib/grafana
+    ports:
+      - "3000:3000"
+
+  loki:
+    container_name: loki
+    build:
+      context: ./Monitoring/Loki
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/loki:latest"
+    restart: on-failure
+    volumes:
+      - ./Monitoring/Loki:/etc/loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/loki-config.yml
+
+  promtail:
+    container_name: promtail
+    build:
+      context: ./Monitoring/Promtail
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/promtail:latest"
+    restart: on-failure
+    volumes:
+      - ./Monitoring/Promtail:/etc/promtail
+    command: -config.expand-env=true -config.file=/etc/promtail/promtail-config.yml
+
+  prometheus:
+    container_name: prometheus
+    build:
+      context: ./Monitoring/Prometheus
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/prometheus:latest"
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus_data:/prometheus
+      - ./Monitoring/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --web.external-url=http://0.0.0.0:80/prometheus/
+
+  node-exporter:
+    container_name: node-exporter
+    build:
+      context: ./Monitoring/NodeExporter
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/node-exporter:latest"
+    restart: on-failure
+    ports:
+      - "9100:9100"
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./Nginx
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/nginx:latest"
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      #- "443:443"
+    volumes:
       - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./Nginx/index.html:/usr/share/nginx/html/index.html
+      #- ./Nginx/index.html:/usr/share/nginx/html/index.html
+    # env_file:
+    #   - .env
 
 volumes:
-  postgres_data:
-  ollama_data:
-  open_webui_data:
-  rabbitmq_data:
-  grafana_data:
+  postgres:
+  ollama:
   prometheus_data:
-  loki_data:
-  promtail_data:
+  open-webui:
+  rabbitmq_data:
