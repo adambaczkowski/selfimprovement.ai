@@ -56,10 +56,11 @@ jobs:
 
       - name: Deploy RabbitMQ to ACI
         run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository rabbitmq --orderby time_desc --query '[0]' -o tsv)
           az container create \
             --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
             --name rabbitmq \
-            --image ${{ secrets.ACR_NAME }}.azurecr.io/rabbitmq:latest \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/rabbitmq:${latest_tag} \
             --cpu 1 \
             --memory 1.5 \
             --ports 5672 15672 \
