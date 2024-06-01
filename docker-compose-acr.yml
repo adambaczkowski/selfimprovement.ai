@@ -1,6 +1,38 @@
 version: '3.7'
 
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    build:
+      context: ./Rabbitmq
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/rabbitmq:${IMAGE_TAG}"
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # Management Plugin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  postgres:
+    container_name: postgres
+    build:
+      context: ./Database/postgres
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/postgres:${IMAGE_TAG}"
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
   frontend:
     container_name: selfimprovement-frontend
     build:
@@ -18,7 +50,7 @@ services:
       dockerfile: IdentityApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
+      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
       - CorsOrigin=http://0.0.0.0:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
     ports:
@@ -32,7 +64,7 @@ services:
       dockerfile: GoalApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
+      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
       - CorsOrigin=http://0.0.0.0:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
     ports:
@@ -46,47 +78,29 @@ services:
       dockerfile: PromptApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
+      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
       - CorsOrigin=http://0.0.0.0:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
       - Llama2=host.docker.internal:11434
-      - GoalApiServiceUrl=host.docker.internal:8081
+      - GoalApiServiceUrl=host.docker.internal:8080
       - IdentityApiServiceUrl=host.docker.internal:8080
     ports:
       - "8080:8080"
     restart: always
-
-  postgres:
-    container_name: postgres
-    build:
-      context: ./Database/postgres
-      dockerfile: Dockerfile.local
-    restart: on-failure
-    environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=selfimprovement123
-      - POSTGRES_DB=SelfImprovementDb
-    ports:
-      - 5432:5432
-    volumes:
-      - postgres:/var/lib/postgresql/data
-    logging:
-      options:
-        max-size: 10m
-        max-file: "3"
 
   pgadmin:
     container_name: pgadmin
     build:
       context: ./Database/pgadmin
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/pgadmin:${IMAGE_TAG}"
     restart: unless-stopped
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
       - PGADMIN_DEFAULT_PASSWORD=selfimprovement123
     ports:
-      - "5050:80"
+      - "80:80"
     volumes:
       - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
 
@@ -96,6 +110,7 @@ services:
     build:
       context: ./Ollama/webui
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/open-webui:${IMAGE_TAG}"
     ports:
       - "8080:8080"
     volumes:
@@ -106,6 +121,7 @@ services:
     build:
       context: ./Ollama
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/ollama:${IMAGE_TAG}"
     tty: true
     volumes:
       - ollama:/root/.ollama
@@ -125,6 +141,7 @@ services:
     build:
       context: ./Monitoring/Grafana
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/grafana:${IMAGE_TAG}"
     restart: on-failure
     user: "1000"
     volumes:
@@ -137,6 +154,7 @@ services:
     build:
       context: ./Monitoring/Loki
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/loki:${IMAGE_TAG}"
     restart: on-failure
     volumes:
       - ./Monitoring/Loki:/etc/loki
@@ -149,6 +167,7 @@ services:
     build:
       context: ./Monitoring/Promtail
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/promtail:${IMAGE_TAG}"
     restart: on-failure
     volumes:
       - ./Monitoring/Promtail:/etc/promtail
@@ -159,6 +178,7 @@ services:
     build:
       context: ./Monitoring/Prometheus
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/prometheus:${IMAGE_TAG}"
     restart: unless-stopped
     ports:
       - "9090:9090"
@@ -177,26 +197,17 @@ services:
     build:
       context: ./Monitoring/NodeExporter
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/node-exporter:${IMAGE_TAG}"
     restart: on-failure
     ports:
       - "9100:9100"
-
-  rabbitmq:
-    container_name: rabbitmq
-    build:
-      context: ./Rabbitmq
-      dockerfile: Dockerfile.local
-    ports:
-      - "5672:5672" # AMQP
-      - "15672:15672" # Management Plugin
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
 
   nginx:
     container_name: nginx
     build:
       context: ./Nginx
       dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/nginx:${IMAGE_TAG}"
     restart: unless-stopped
     ports:
       - "80:80"

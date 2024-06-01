@@ -60,6 +60,8 @@ jobs:
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
           SSH_USER: ${{ secrets.SSH_USER }}
+          POSTGRES_PASSWORD: ${{ github.sha }}
+          PGADMIN_PASSWORD: ${{ github.sha }}
 
       - name: Generate .tfvars file
         run: |
@@ -67,6 +69,8 @@ jobs:
           echo "arm_tenant_id       = \"${{ env.ARM_TENANT_ID }}\""       >> ./terraform/terraform.tfvars
           echo "arm_client_id       = \"${{ env.ARM_CLIENT_ID }}\""       >> ./terraform/terraform.tfvars
           echo "arm_client_secret   = \"${{ env.ARM_CLIENT_SECRET }}\""   >> ./terraform/terraform.tfvars
+          echo "postgres_password   = \"${{ env.POSTGRES_USER}}\""        >> ./terraform/terraform.tfvars
+          echo "pgadmin_password"   = \"${{ env.PGADMIN_PASSWORD}}\""     >> ./terraform/terraform.tfvars
 
       - name: Generate pg admin secret
         run: |

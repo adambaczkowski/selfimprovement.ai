@@ -67,8 +67,33 @@ resource "azurerm_key_vault" "key_vault" {
     ]
   }
 }
+
 resource "azurerm_key_vault_secret" "key_vault" {
-  name         = "pgAdminSecret"
-  value        = var.pg_admin_secret
+  name         = "postgresUser"
+  value        = var.postgres_user
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "key_vault" {
+  name         = "postgresPassword"
+  value        = var.postgres_password
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "key_vault" {
+  name         = "postgresDbName"
+  value        = var.postgres_db_name
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "key_vault" {
+  name         = "pgAdminEmail"
+  value        = var.pgadmin_email
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "key_vault" {
+  name         = "pgAdminPassword"
+  value        = var.pgadmin_password
   key_vault_id = azurerm_key_vault.key_vault.id
 }
