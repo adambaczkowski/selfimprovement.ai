@@ -85,6 +85,8 @@ variable "postgres_password" {
 }
 
 variable "postgres_db_name" {
+  type        = string
+  default     = "SelfImprovementDb"
   description = "Key Vault secret for postgres database name"
 }
 
