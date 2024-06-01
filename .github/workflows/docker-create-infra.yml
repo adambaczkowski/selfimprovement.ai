@@ -26,7 +26,7 @@ jobs:
         run: az acr login --name ${{ secrets.ACR_NAME }}
 
       - name: test
-        run: az acr credential show -n acrselfimprovement
+        run: az acr repository show-tags --name acrselfimprovement --repository rabbitmq
 
       # - name: Retrieve postgresUser from Azure Key Vault
       #   run: |
