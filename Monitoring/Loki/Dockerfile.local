@@ -1,0 +1,7 @@
+FROM grafana/loki:latest
+
+COPY loki-config.yml /etc/loki/config.yml
+
+EXPOSE 3100
+
+CMD ["-config.file=/etc/loki/config.yml"]

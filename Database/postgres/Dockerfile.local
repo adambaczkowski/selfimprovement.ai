@@ -1,0 +1,5 @@
+FROM postgres:16
+ENV POSTGRES_USER=admin
+ENV POSTGRES_PASSWORD=selfimprovement123
+ENV POSTGRES_DB=SelfImprovementDb
+EXPOSE 5432

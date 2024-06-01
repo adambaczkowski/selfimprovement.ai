@@ -1,0 +1,5 @@
+FROM dpage/pgadmin4:latest
+ENV PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
+ENV PGADMIN_DEFAULT_PASSWORD=selfimprovement123
+#COPY config.py /pgadmin4/web/config_local.py
+EXPOSE 80

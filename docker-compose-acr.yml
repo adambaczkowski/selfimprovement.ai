@@ -59,7 +59,9 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres:16
+    build:
+      context: ./Database/postgres
+      dockerfile: Dockerfile.local
     restart: on-failure
     environment:
       - POSTGRES_USER=admin
@@ -76,7 +78,9 @@ services:
 
   pgadmin:
     container_name: pgadmin
-    image: dpage/pgadmin4
+    build:
+      context: ./Database/pgadmin
+      dockerfile: Dockerfile.local
     restart: unless-stopped
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
@@ -90,8 +94,8 @@ services:
     container_name: open-webui
     restart: on-failure
     build:
-      context: ./Ollama
-      dockerfile: Dockerfile
+      context: ./Ollama/webui
+      dockerfile: Dockerfile.local
     ports:
       - "8080:8080"
     volumes:
@@ -99,11 +103,13 @@ services:
 
   ollama:
     container_name: ollama
+    build:
+      context: ./Ollama
+      dockerfile: Dockerfile.local
     tty: true
     volumes:
       - ollama:/root/.ollama
     restart: unless-stopped
-    image: ollama/ollama:latest
     ports:
       - 11434:11434
     # deploy:
@@ -116,7 +122,9 @@ services:
 
   grafana:
     container_name: grafana
-    image: grafana/grafana:latest
+    build:
+      context: ./Monitoring/Grafana
+      dockerfile: Dockerfile.local
     restart: on-failure
     user: "1000"
     volumes:
@@ -126,7 +134,9 @@ services:
 
   loki:
     container_name: loki
-    image: grafana/loki:latest
+    build:
+      context: ./Monitoring/Loki
+      dockerfile: Dockerfile.local
     restart: on-failure
     volumes:
       - ./Monitoring/Loki:/etc/loki
@@ -136,7 +146,9 @@ services:
 
   promtail:
     container_name: promtail
-    image: grafana/promtail:latest
+    build:
+      context: ./Monitoring/Promtail
+      dockerfile: Dockerfile.local
     restart: on-failure
     volumes:
       - ./Monitoring/Promtail:/etc/promtail
@@ -144,7 +156,9 @@ services:
 
   prometheus:
     container_name: prometheus
-    image: prom/prometheus:v2.51.2
+    build:
+      context: ./Monitoring/Prometheus
+      dockerfile: Dockerfile.local
     restart: unless-stopped
     ports:
       - "9090:9090"
@@ -160,14 +174,18 @@ services:
 
   node-exporter:
     container_name: node-exporter
-    image: prom/node-exporter
+    build:
+      context: ./Monitoring/NodeExporter
+      dockerfile: Dockerfile.local
     restart: on-failure
     ports:
       - "9100:9100"
 
   rabbitmq:
     container_name: rabbitmq
-    image: rabbitmq:3.9.9-management
+    build:
+      context: ./Rabbitmq
+      dockerfile: Dockerfile.local
     ports:
       - "5672:5672" # AMQP
       - "15672:15672" # Management Plugin
@@ -176,14 +194,16 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx:latest
+    build:
+      context: ./Nginx
+      dockerfile: Dockerfile.local
     restart: unless-stopped
     ports:
       - "80:80"
       #- "443:443"
     volumes:
       - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./Nginx/index.html:/usr/share/nginx/html/index.html
+      #- ./Nginx/index.html:/usr/share/nginx/html/index.html
     # env_file:
     #   - .env
 

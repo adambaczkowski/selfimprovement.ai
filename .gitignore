@@ -124,3 +124,5 @@ tfplan
 # ignore ssh
 .ssh
 .ssh/
+
+__azurite_db_table__.json

@@ -1,0 +1,4 @@
+FROM grafana/promtail:latest
+COPY promtail-config.yml /etc/promtail/config.yml
+EXPOSE 9080
+CMD ["-config.file=/etc/promtail/config.yml"]
