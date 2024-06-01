@@ -97,8 +97,8 @@ services:
     image: "${ACR_NAME}.azurecr.io/pgadmin:${IMAGE_TAG}"
     restart: unless-stopped
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
-      - PGADMIN_DEFAULT_PASSWORD=selfimprovement123
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "80:80"
     volumes:

@@ -28,12 +28,37 @@ jobs:
       - name: Set up Docker Build
         uses: docker/setup-buildx-action@v1
 
+      - name: Retrieve postgresUser from Azure Key Vault
+        run: |
+          postgresUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresUser --query value -o tsv)
+          echo "POSTGRES_USER=\"${postgresUser}\"" > .env
+
+      - name: Retrieve postgresPassword from Azure Key Vault
+        run: |
+          postgresPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresPassword --query value -o tsv)
+          echo "POSTGRES_PASSWORD=\"${postgresPassword}\"" >> .env
+
+      - name: Retrieve postgresDbName from Azure Key Vault
+        run: |
+          postgresDbName=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresDbName --query value -o tsv)
+          echo "POSTGRES_DB_NAME=\"${postgresDbName}\"" >> .env
+
+      - name: Retrieve pgAdminEmail from Azure Key Vault
+        run: |
+          pgAdminEmail=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminEmail --query value -o tsv)
+          echo "PGADMIN_DEFAULT_EMAIL=\"${pgAdminEmail}\"" >> .env
+
+      - name: Retrieve pgAdminPassword from Azure Key Vault
+        run: |
+          pgAdminPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminPassword --query value -o tsv)
+          echo "PGADMIN_DEFAULT_PASSWORD=\"${pgAdminPassword}\"" >> .env
+
       - name: Build and push Docker images
         env:
           ACR_NAME: ${{ secrets.ACR_NAME }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo "ACR_NAME=${ACR_NAME}" > .env
+          echo "ACR_NAME=${ACR_NAME}" >> .env
           echo "IMAGE_TAG=${IMAGE_TAG}" >> .env
           docker-compose --env-file .env -f docker-compose-acr.yml build
           docker-compose --env-file .env -f docker-compose-acr.yml push
