@@ -76,7 +76,7 @@ variable "username" {
 
 variable "postgres_user" {
   type        = string
-  default     = "admin"
+  default     = "selfimproveAdmin"
   description = "Key Vault secret for postgres username"
 }
 
