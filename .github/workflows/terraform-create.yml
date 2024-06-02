@@ -70,7 +70,7 @@ jobs:
 
       - name: Generate postgres password
         run: |
-          postgres_secret=$(openssl rand -hex 24)
+          postgres_secret=$(openssl rand -hex 16 | awk '{ for(i=1; i<=length($0); i++) printf "%s", (rand() > 0.5 ? toupper(substr($0, i, 1)) : tolower(substr($0, i, 1))); print "" }')
           echo "postgres_password=\"${postgres_secret}\"" >> ./terraform/terraform.tfvars
 
       - name: Generate pg admin password
