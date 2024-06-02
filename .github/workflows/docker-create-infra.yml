@@ -60,11 +60,6 @@ jobs:
           rabbitmqPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name rabbitmqPassword --query value -o tsv)
           echo "RABBITMQ_PASSWORD=\"${rabbitmqPassword}\"" >> .env
 
-      - name: Create storage key
-        run: |
-          storage_key=$(az storage account keys list --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --query '[0].value' --output tsv)
-          echo "STORAGE_KEY=\"${storage_key}\"" >> .env
-
       - name: Create File Shares for RabbitMq
         run: |
           az storage share create --name rabbitmq --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
@@ -87,7 +82,7 @@ jobs:
             --location ${{ secrets.LOCATION }} \
             --azure-file-volume-share-name rabbitmq \
             --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
-            --azure-file-volume-account-key ${{ env.STORAGE_KEY }} \
+            --azure-file-volume-account-key ${{ secrets.STORAGE_KEY }} \
             --azure-file-volume-mount-path /var/lib/rabbitmq/mnesia \
             --environment-variables \
                 RABBITMQ_DEFAULT_USER=${{ env.RABBITMQ_USER }} \
@@ -119,7 +114,7 @@ jobs:
             --dns-name-label postgres-static-dns \
             --location ${{ secrets.LOCATION }} \
             --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}\
-            --azure-file-volume-account-key ${{ env.STORAGE_KEY }} \
+            --azure-file-volume-account-key ${{ secrets.STORAGE_KEY }} \
             --azure-file-volume-share-name postgres \
             --azure-file-volume-mount-path /var/lib/postgresql/data \
             --environment-variables \
