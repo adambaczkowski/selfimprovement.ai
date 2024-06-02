@@ -68,10 +68,10 @@ jobs:
           echo "arm_client_id       = \"${{ env.ARM_CLIENT_ID }}\""       >> ./terraform/terraform.tfvars
           echo "arm_client_secret   = \"${{ env.ARM_CLIENT_SECRET }}\""   >> ./terraform/terraform.tfvars
 
-      - name: Generate postgres password
-        run: |
-          postgres_secret=$(openssl rand -hex 24)
-          echo "postgres_password=\"${postgres_secret}\"" >> ./terraform/terraform.tfvars
+      # - name: Generate postgres password
+      #   run: |
+      #     postgres_secret=$(openssl rand -hex 24)
+      #     echo "postgres_password=\"${postgres_secret}\"" >> ./terraform/terraform.tfvars
 
       - name: Generate pg admin password
         run: |

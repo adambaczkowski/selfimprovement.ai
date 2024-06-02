@@ -13,25 +13,25 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/mnesia/
 
-  postgres:
-    container_name: postgres
-    build:
-      context: ./Database/postgres
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/postgres:${IMAGE_TAG}"
-    restart: on-failure
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB_NAME}
-    ports:
-      - 5432:5432
-    volumes:
-      - postgres:/var/lib/postgresql/data
-    logging:
-      options:
-        max-size: 10m
-        max-file: "3"
+  # postgres:
+  #   container_name: postgres
+  #   build:
+  #     context: ./Database/postgres
+  #     dockerfile: Dockerfile.local
+  #   image: "${ACR_NAME}.azurecr.io/postgres:${IMAGE_TAG}"
+  #   restart: on-failure
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRES_DB=${POSTGRES_DB_NAME}
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - postgres:/var/lib/postgresql/data
+  #   logging:
+  #     options:
+  #       max-size: 10m
+  #       max-file: "3"
 
   frontend:
     container_name: selfimprovement-frontend
@@ -219,7 +219,7 @@ services:
     #   - .env
 
 volumes:
-  postgres:
+  #postgres:
   ollama:
   prometheus_data:
   open-webui:
