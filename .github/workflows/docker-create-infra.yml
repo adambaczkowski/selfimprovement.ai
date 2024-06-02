@@ -173,7 +173,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label pgadmin-${{ github.sha }} \
-            --location germanywestcentral
+            --location polandcentral
 
       - name: Deploy Open WebUI to ACI
         run: |
@@ -189,7 +189,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label open-webui-${{ github.sha }} \
-            --location germanywestcentral
+            --location polandcentral
 
       - name: Deploy Ollama to ACI
         run: |
@@ -221,7 +221,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label grafana-${{ github.sha }} \
-            --location germanywestcentral
+            --location polandcentral
 
       - name: Deploy Loki to ACI
         run: |
@@ -237,7 +237,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label loki-${{ github.sha }} \
-            --location germanywestcentral
+            --location polandcentral
 
       - name: Deploy Promtail to ACI
         run: |
@@ -253,7 +253,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label promtail-${{ github.sha }} \
-            --location germanywestcentral
+            --location polandcentral
 
       - name: Deploy Prometheus to ACI
         run: |
@@ -285,7 +285,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label node-exporter-${{ github.sha }} \
-            --location germanywestcentral
+            --location polandcentral
 
       - name: Deploy Nginx to ACI
         run: |
