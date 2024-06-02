@@ -43,7 +43,7 @@ resource "azurerm_container_registry" "acr-dev" {
 
 resource "azurerm_postgresql_server" "example" {
   name                = "psql-server"
-  location            = var.location
+  location            = "germanywestcentral"
   resource_group_name = var.rg-name
   sku_name            = "B_Gen5_1"
   storage_mb          = 5120
