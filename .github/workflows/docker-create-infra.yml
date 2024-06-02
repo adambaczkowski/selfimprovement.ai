@@ -124,8 +124,8 @@ jobs:
 
 
       - name: Create File Shares for Ollama
-              run: |
-                az storage share create --name ollama --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+        run: |
+          az storage share create --name ollama --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
       - name: Deploy Ollama to ACI
         continue-on-error: true
