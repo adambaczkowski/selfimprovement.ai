@@ -86,7 +86,7 @@ jobs:
             --azure-file-volume-account-key ${rabbitmq_storage_key} \
             --azure-file-volume-mount-path /var/lib/rabbitmq/mnesia \
             --environment-variables \
-                RABBITMQ_DEFAULT_USER=${{ env.RABBITMQ_USER }}\
+                RABBITMQ_DEFAULT_USER=${{ env.RABBITMQ_USER }} \
                 RABBITMQ_DEFAULT_PASS=${{ env.RABBITMQ_PASSWORD }} \
                 RABBITMQ_NODENAME=rabbit@localhost \
                 RABBITMQ_USE_LONGNAME=true
