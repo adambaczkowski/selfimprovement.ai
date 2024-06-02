@@ -63,7 +63,7 @@ resource "azurerm_postgresql_database" "example" {
   resource_group_name = var.rg-name
   server_name         = azurerm_postgresql_server.example.name
   charset             = "UTF8"
-  collation           = "pl_PL.UTF-8"
+  collation           = "en_US.utf8"
 }
 
 resource "azurerm_key_vault" "key_vault" {
