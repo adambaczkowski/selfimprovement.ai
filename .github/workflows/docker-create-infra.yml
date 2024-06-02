@@ -134,28 +134,28 @@ jobs:
             --location polandcentral
 
       - name: Deploy Prompt to ACI
-  run: |
-    latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-prompt --orderby time_desc --query '[0]' -o tsv)
-    echo "Latest tag: ${latest_tag}"
-    az container create \
-      --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      --name prompt \
-      --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-prompt:${latest_tag} \
-      --cpu 1 \
-      --memory 1.5 \
-      --ports 8080 \
-      --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" \
-      CorsOrigin=http://0.0.0.0:3000 \
-      RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
-      BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite \
-      Llama2=host.docker.internal:11434 \
-      GoalApiServiceUrl=host.docker.internal:8080 \
-      IdentityApiServiceUrl=host.docker.internal:8080 \
-      --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      --registry-username ${{ secrets.ACR_USERNAME }} \
-      --registry-password ${{ secrets.ACR_PASSWORD }} \
-      --dns-name-label prompt-${{ github.sha }} \
-      --location polandcentral
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-prompt --orderby time_desc --query '[0]' -o tsv)
+          echo "Latest tag: ${latest_tag}"
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name prompt \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-prompt:${latest_tag} \
+            --cpu 1 \
+            --memory 1.5 \
+            --ports 8080 \
+            --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" \
+            CorsOrigin=http://0.0.0.0:3000 \
+            RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
+            BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite \
+            Llama2=host.docker.internal:11434 \
+            GoalApiServiceUrl=host.docker.internal:8080 \
+            IdentityApiServiceUrl=host.docker.internal:8080 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label prompt-${{ github.sha }} \
+            --location polandcentral
 
       - name: Deploy PGAdmin to ACI
         run: |
