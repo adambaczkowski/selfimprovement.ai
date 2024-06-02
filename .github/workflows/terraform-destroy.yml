@@ -31,20 +31,21 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: latest
-      - name: Generate SSH Key
-        run: |
-          mkdir -p .ssh
-          ssh-keygen -t rsa -b 4096 -N "$SSH_PASSWORD" -C "$SSH_USER" -q -f .ssh/id_rsa
-          sshKey=$(cat .ssh/id_rsa.pub)
-          echo "arm_ssh_key=\"$sshKey\"" > ./terraform/terraform.tfvars
 
-      - name: Generate .tfvars file
-        run: |
-          echo "arm_subscription_id = \"$ARM_SUBSCRIPTION_ID\"" >> ./terraform/terraform.tfvars
-          echo "arm_tenant_id       = \"$ARM_TENANT_ID\""       >> ./terraform/terraform.tfvars
-          echo "arm_client_id       = \"$ARM_CLIENT_ID\""       >> ./terraform/terraform.tfvars
-          echo "arm_client_secret   = \"$ARM_CLIENT_SECRET\""   >> ./terraform/terraform.tfvars
-          cat ./terraform/terraform.tfvars
+      # - name: Generate SSH Key
+      #   run: |
+      #     mkdir -p .ssh
+      #     ssh-keygen -t rsa -b 4096 -N "$SSH_PASSWORD" -C "$SSH_USER" -q -f .ssh/id_rsa
+      #     sshKey=$(cat .ssh/id_rsa.pub)
+      #     echo "arm_ssh_key=\"$sshKey\"" > ./terraform/terraform.tfvars
+
+      # - name: Generate .tfvars file
+      #   run: |
+      #     echo "arm_subscription_id = \"$ARM_SUBSCRIPTION_ID\"" >> ./terraform/terraform.tfvars
+      #     echo "arm_tenant_id       = \"$ARM_TENANT_ID\""       >> ./terraform/terraform.tfvars
+      #     echo "arm_client_id       = \"$ARM_CLIENT_ID\""       >> ./terraform/terraform.tfvars
+      #     echo "arm_client_secret   = \"$ARM_CLIENT_SECRET\""   >> ./terraform/terraform.tfvars
+      #     cat ./terraform/terraform.tfvars
 
       - name: Terraform Init
         run: terraform init

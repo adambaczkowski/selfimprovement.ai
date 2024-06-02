@@ -1,6 +1,6 @@
 name: 🐳🚀 Create Docker Infrastructure
 
-on: 
+on:
   workflow_dispatch:
 
 permissions:
@@ -25,20 +25,20 @@ jobs:
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ secrets.ACR_NAME }}
 
-      # - name: Retrieve postgresUser from Azure Key Vault
-      #   run: |
-      #     postgresUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresUser --query value -o tsv)
-      #     echo "POSTGRES_USER=\"${postgresUser}\"" > .env
+      - name: Retrieve postgresUser from Azure Key Vault
+        run: |
+          postgresUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresUser --query value -o tsv)
+          echo "POSTGRES_USER=\"${postgresUser}\"" > .env
 
-      # - name: Retrieve postgresPassword from Azure Key Vault
-      #   run: |
-      #     postgresPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresPassword --query value -o tsv)
-      #     echo "POSTGRES_PASSWORD=\"${postgresPassword}\"" >> .env
+      - name: Retrieve postgresPassword from Azure Key Vault
+        run: |
+          postgresPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresPassword --query value -o tsv)
+          echo "POSTGRES_PASSWORD=\"${postgresPassword}\"" >> .env
 
-      # - name: Retrieve postgresDbName from Azure Key Vault
-      #   run: |
-      #     postgresDbName=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresDbName --query value -o tsv)
-      #     echo "POSTGRES_DB_NAME=\"${postgresDbName}\"" >> .env
+      - name: Retrieve postgresDbName from Azure Key Vault
+        run: |
+          postgresDbName=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresDbName --query value -o tsv)
+          echo "POSTGRES_DB_NAME=\"${postgresDbName}\"" >> .env
 
       - name: Retrieve pgAdminEmail from Azure Key Vault
         run: |
@@ -50,103 +50,103 @@ jobs:
           pgAdminPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminPassword --query value -o tsv)
           echo "PGADMIN_DEFAULT_PASSWORD=\"${pgAdminPassword}\"" >> .env
 
-      # - name: Retrieve rabbitmqUser from Azure Key Vault
-      #   run: |
-      #     rabbitmqUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name rabbitmqUser --query value -o tsv)
-      #     echo "RABBITMQ_USER=\"${rabbitmqUser}\"" >> .env
+      - name: Retrieve rabbitmqUser from Azure Key Vault
+        run: |
+          rabbitmqUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name rabbitmqUser --query value -o tsv)
+          echo "RABBITMQ_USER=\"${rabbitmqUser}\"" >> .env
 
-      # - name: Retrieve rabbitmqPassword from Azure Key Vault
-      #   run: |
-      #     rabbitmqPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name rabbitmqPassword --query value -o tsv)
-      #     echo "RABBITMQ_PASSWORD=\"${rabbitmqPassword}\"" >> .env
+      - name: Retrieve rabbitmqPassword from Azure Key Vault
+        run: |
+          rabbitmqPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name rabbitmqPassword --query value -o tsv)
+          echo "RABBITMQ_PASSWORD=\"${rabbitmqPassword}\"" >> .env
 
-      # - name: Create File Shares for RabbitMq
-      #   run: |
-      #     az storage share create --name rabbitmq --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+      - name: Create File Shares for RabbitMq
+        run: |
+          az storage share create --name rabbitmq --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
-      # - name: Deploy RabbitMQ to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository rabbitmq --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name rabbitmq \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/rabbitmq:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1.5 \
-      #       --ports 5672 15672 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label rabbitmq-static-dns \
-      #       --location ${{ secrets.LOCATION }} \
-      #       --azure-file-volume-share-name rabbitmq \
-      #       --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
-      #       --azure-file-volume-account-key ${{ secrets.STORAGE_KEY }} \
-      #       --azure-file-volume-mount-path /var/lib/rabbitmq/mnesia \
-      #       --environment-variables \
-      #           RABBITMQ_DEFAULT_USER=${{ env.RABBITMQ_USER }} \
-      #           RABBITMQ_DEFAULT_PASS=${{ env.RABBITMQ_PASSWORD }} \
-      #           RABBITMQ_NODENAME=rabbit@localhost \
-      #           RABBITMQ_USE_LONGNAME=true
-
-
-      # - name: Create File Shares for Postgres
-      #   run: |
-      #     az storage share create --name postgres --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
-
-      # - name: Deploy Postgres to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository postgres --orderby time_desc --query '[0]' -o tsv)
-      #     postgres_storage_key=$(az storage account keys list --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --query '[0].value' --output tsv)
-
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name postgres \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/postgres:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 2 \
-      #       --ports 5432 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label postgres-static-dns \
-      #       --location ${{ secrets.LOCATION }} \
-      #       --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}\
-      #       --azure-file-volume-account-key ${{ secrets.STORAGE_KEY }} \
-      #       --azure-file-volume-share-name postgres \
-      #       --azure-file-volume-mount-path /var/lib/postgresql/data \
-      #       --environment-variables \
-      #           POSTGRES_USER=${{ env.POSTGRES_USER }} \
-      #           POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} \
-      #           POSTGRES_DB=${{ env.POSTGRES_DB_NAME }}
+      - name: Deploy RabbitMQ to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository rabbitmq --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name rabbitmq \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/rabbitmq:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 5672 15672 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label rabbitmq-static-dns \
+            --location ${{ secrets.LOCATION }} \
+            --azure-file-volume-share-name rabbitmq \
+            --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
+            --azure-file-volume-account-key ${{ secrets.STORAGE_KEY }} \
+            --azure-file-volume-mount-path /var/lib/rabbitmq/mnesia \
+            --environment-variables \
+                RABBITMQ_DEFAULT_USER=${{ env.RABBITMQ_USER }} \
+                RABBITMQ_DEFAULT_PASS=${{ env.RABBITMQ_PASSWORD }} \
+                RABBITMQ_NODENAME=rabbit@localhost \
+                RABBITMQ_USE_LONGNAME=true
 
 
-      # - name: Create File Shares for Ollama
-      #   run: |
-      #     az storage share create --name ollama --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+      - name: Create File Shares for Postgres
+        run: |
+          az storage share create --name postgres --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
-      # - name: Deploy Ollama to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository ollama --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name ollama \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/ollama:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 2 \
-      #       --ports 11434 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label ollama-static-dns \
-      #       --location ${{ secrets.LOCATION }} \
-      #       --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
-      #       --azure-file-volume-account-key ${{ secrets.STORAGE_KEY }} \
-      #       --azure-file-volume-share-name ollama \
-      #       --azure-file-volume-mount-path /root/.ollama
+      - name: Deploy Postgres to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository postgres --orderby time_desc --query '[0]' -o tsv)
+          postgres_storage_key=$(az storage account keys list --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --query '[0].value' --output tsv)
+
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name postgres \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/postgres:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 5432 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label postgres-static-dns \
+            --location ${{ secrets.LOCATION }} \
+            --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}\
+            --azure-file-volume-account-key ${{ secrets.STORAGE_KEY }} \
+            --azure-file-volume-share-name postgres \
+            --azure-file-volume-mount-path /var/lib/postgresql/data \
+            --environment-variables \
+                POSTGRES_USER=${{ env.POSTGRES_USER }} \
+                POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} \
+                POSTGRES_DB=${{ env.POSTGRES_DB_NAME }}
+
+
+      - name: Create File Shares for Ollama
+        run: |
+          az storage share create --name ollama --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Deploy Ollama to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository ollama --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name ollama \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/ollama:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 11434 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label ollama-static-dns \
+            --location ${{ secrets.LOCATION }} \
+            --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
+            --azure-file-volume-account-key ${{ secrets.STORAGE_KEY }} \
+            --azure-file-volume-share-name ollama \
+            --azure-file-volume-mount-path /root/.ollama
 
       - name: Deploy Frontend to ACI
         continue-on-error: true
@@ -157,7 +157,7 @@ jobs:
             --name frontend \
             --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-frontend:${latest_tag} \
             --cpu 1 \
-            --memory 1 \
+            --memory 2 \
             --ports 3000 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
@@ -174,7 +174,7 @@ jobs:
             --name identity \
             --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-identity:${latest_tag} \
             --cpu 1 \
-            --memory 1.5 \
+            --memory 2 \
             --ports 8080 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
@@ -201,7 +201,7 @@ jobs:
             --name goal \
             --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-goal:${latest_tag} \
             --cpu 1 \
-            --memory 1.5 \
+            --memory 2 \
             --ports 8080 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
@@ -232,7 +232,7 @@ jobs:
             --name prompt \
             --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-prompt:${latest_tag} \
             --cpu 1 \
-            --memory 1.5 \
+            --memory 2 \
             --ports 8080 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
@@ -254,144 +254,144 @@ jobs:
                 GoalApiServiceUrl="goal-static-dns.polandcentral.azurecontainer.io:8080" \
                 IdentityApiServiceUrl="identity-static-dns.polandcentral.azurecontainer.io:8080"
 
-      # - name: Deploy PGAdmin to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository pgadmin --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name pgadmin \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/pgadmin:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1 \
-      #       --ports 80 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label pgadmin-static-dns \
-      #       --location ${{ secrets.LOCATION }} \
-      #       --environment-variables \
-      #           PGADMIN_DEFAULT_EMAIL=${{ env.PGADMIN_DEFAULT_EMAIL }} \
-      #           PGADMIN_DEFAULT_PASSWORD=${{ env.PGADMIN_DEFAULT_PASSWORD }}
+      - name: Deploy PGAdmin to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository pgadmin --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name pgadmin \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/pgadmin:${latest_tag} \
+            --cpu 1 \
+            --memory 1 \
+            --ports 80 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label pgadmin-static-dns \
+            --location ${{ secrets.LOCATION }} \
+            --environment-variables \
+                PGADMIN_DEFAULT_EMAIL=${{ env.PGADMIN_DEFAULT_EMAIL }} \
+                PGADMIN_DEFAULT_PASSWORD=${{ env.PGADMIN_DEFAULT_PASSWORD }}
 
-      # - name: Deploy Open WebUI to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository open-webui --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name open-webui \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/open-webui:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1.5 \
-      #       --ports 8080 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label open-webui-static-dns \
-      #       --location ${{ secrets.LOCATION }}
+      - name: Deploy Open WebUI to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository open-webui --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name open-webui \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/open-webui:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 8080 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label open-webui-static-dns \
+            --location ${{ secrets.LOCATION }}
 
-      # - name: Deploy Grafana to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository grafana --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name grafana \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/grafana:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1 \
-      #       --ports 3000 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label grafana-static-dns \
-      #       --location ${{ secrets.LOCATION }}
+      - name: Deploy Grafana to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository grafana --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name grafana \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/grafana:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 3000 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label grafana-static-dns \
+            --location ${{ secrets.LOCATION }}
 
-      # - name: Deploy Loki to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository loki --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name loki \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/loki:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1 \
-      #       --ports 3100 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label loki-static-dns \
-      #       --location ${{ secrets.LOCATION }}
+      - name: Deploy Loki to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository loki --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name loki \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/loki:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 3100 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label loki-static-dns \
+            --location ${{ secrets.LOCATION }}
 
-      # - name: Deploy Promtail to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository promtail --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name promtail \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/promtail:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1 \
-      #       --ports 9080 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label promtail-static-dns \
-      #       --location ${{ secrets.LOCATION }}
+      - name: Deploy Promtail to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository promtail --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name promtail \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/promtail:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 9080 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label promtail-static-dns \
+            --location ${{ secrets.LOCATION }}
 
-      # - name: Deploy Prometheus to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository prometheus --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name prometheus \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/prometheus:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 2 \
-      #       --ports 9090 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label prometheus-static-dns \
-      #       --location ${{ secrets.LOCATION }}
+      - name: Deploy Prometheus to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository prometheus --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name prometheus \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/prometheus:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 9090 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label prometheus-static-dns \
+            --location ${{ secrets.LOCATION }}
 
-      # - name: Deploy Node Exporter to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository node-exporter --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name node-exporter \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/node-exporter:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1 \
-      #       --ports 9100 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label node-exporter-static-dns \
-      #       --location ${{ secrets.LOCATION }}
+      - name: Deploy Node Exporter to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository node-exporter --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name node-exporter \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/node-exporter:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 9100 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label node-exporter-static-dns \
+            --location ${{ secrets.LOCATION }}
 
-      # - name: Deploy Nginx to ACI
-      #   continue-on-error: true
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository nginx --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name nginx \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/nginx:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1 \
-      #       --ports 80 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label nginx-static-dns \
-      #       --location ${{ secrets.LOCATION }}
+      - name: Deploy Nginx to ACI
+        continue-on-error: true
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository nginx --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name nginx \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/nginx:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 80 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label nginx-static-dns \
+            --location ${{ secrets.LOCATION }}
 
       - name: Docker logout
         if: always()

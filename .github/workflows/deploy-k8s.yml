@@ -1,6 +1,6 @@
 name: ☸️ Deploy Kubernetes Configurations
 
-on: 
+on:
   workflow_dispatch:
     paths:
       - 'k8s/**'

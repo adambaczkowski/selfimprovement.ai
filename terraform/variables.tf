@@ -74,21 +74,21 @@ variable "username" {
 
 #### key vault secrets
 
-# variable "postgres_user" {
-#   type        = string
-#   default     = "admin"
-#   description = "Key Vault secret for postgres username"
-# }
+variable "postgres_user" {
+  type        = string
+  default     = "admin"
+  description = "Key Vault secret for postgres username"
+}
 
-# variable "postgres_password" {
-#   description = "Key Vault secret for postgres password"
-# }
+variable "postgres_password" {
+  description = "Key Vault secret for postgres password"
+}
 
-# variable "postgres_db_name" {
-#   type        = string
-#   default     = "SelfImprovementDb"
-#   description = "Key Vault secret for postgres database name"
-# }
+variable "postgres_db_name" {
+  type        = string
+  default     = "SelfImprovementDb"
+  description = "Key Vault secret for postgres database name"
+}
 
 variable "pgadmin_email" {
   type        = string
