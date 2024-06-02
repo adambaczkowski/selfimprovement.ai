@@ -72,7 +72,7 @@ public class SignInCommandHandler(
             Subject = new ClaimsIdentity(new Claim[]
             {
                 new Claim("UserId", user.Id),
-                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Email),
             }),
             Expires = DateTime.UtcNow.AddMinutes(_token.Expiry),

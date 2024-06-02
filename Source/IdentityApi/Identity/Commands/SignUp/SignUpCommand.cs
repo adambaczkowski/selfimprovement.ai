@@ -8,9 +8,10 @@ namespace IdentityApi.Identity.Commands;
 
 public class SignUpCommand : IRequest<SignUpResponse>
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public string ConfirmPassword { get; set; }
+    public string Email { get; init; }
+    public string Name { get; init; }
+    public string Password { get; init; }
+    public string ConfirmPassword { get; init; }
 }
 
 public class SignUpCommandHandler(UserManager<Models.User> userManager, IIdentityEmailService identityEmailService)
@@ -21,7 +22,7 @@ public class SignUpCommandHandler(UserManager<Models.User> userManager, IIdentit
         var userProfileId = Guid.NewGuid();
         var user = new Models.User()
         {
-            UserName = request.Email,
+            UserName = request.Name,
             Email = request.Email,
             UserProfile = new UserProfile()
             {
