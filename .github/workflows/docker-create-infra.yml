@@ -50,51 +50,51 @@ jobs:
           pgAdminPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminPassword --query value -o tsv)
           echo "PGADMIN_DEFAULT_PASSWORD=\"${pgAdminPassword}\"" >> .env
 
-      - name: Deploy RabbitMQ to ACI
-        run: |
-          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository rabbitmq --orderby time_desc --query '[0]' -o tsv)
-          az container create \
-            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-            --name rabbitmq \
-            --image ${{ secrets.ACR_NAME }}.azurecr.io/rabbitmq:${latest_tag} \
-            --cpu 1 \
-            --memory 1.5 \
-            --ports 5672 15672 \
-            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label rabbitmq-${{ github.sha }}
+      # - name: Deploy RabbitMQ to ACI
+      #   run: |
+      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository rabbitmq --orderby time_desc --query '[0]' -o tsv)
+      #     az container create \
+      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+      #       --name rabbitmq \
+      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/rabbitmq:${latest_tag} \
+      #       --cpu 1 \
+      #       --memory 1.5 \
+      #       --ports 5672 15672 \
+      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+      #       --registry-username ${{ secrets.ACR_USERNAME }} \
+      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
+      #       --dns-name-label rabbitmq-${{ github.sha }}
 
-      - name: Deploy Postgres to ACI
-        run: |
-          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository postgres --orderby time_desc --query '[0]' -o tsv)
-          az container create \
-            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-            --name postgres \
-            --image ${{ secrets.ACR_NAME }}.azurecr.io/postgres:${latest_tag} \
-            --cpu 1 \
-            --memory 2 \
-            --ports 5432 \
-            --environment-variables POSTGRES_USER=${{ secrets.POSTGRES_USER }} POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} POSTGRES_DB=${{ secrets.POSTGRES_DB_NAME }} \
-            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label postgres-${{ github.sha }}
+      # - name: Deploy Postgres to ACI
+      #   run: |
+      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository postgres --orderby time_desc --query '[0]' -o tsv)
+      #     az container create \
+      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+      #       --name postgres \
+      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/postgres:${latest_tag} \
+      #       --cpu 1 \
+      #       --memory 2 \
+      #       --ports 5432 \
+      #       --environment-variables POSTGRES_USER=${{ secrets.POSTGRES_USER }} POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} POSTGRES_DB=${{ secrets.POSTGRES_DB_NAME }} \
+      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+      #       --registry-username ${{ secrets.ACR_USERNAME }} \
+      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
+      #       --dns-name-label postgres-${{ github.sha }}
 
-      - name: Deploy Frontend to ACI
-        run: |
-          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-frontend --orderby time_desc --query '[0]' -o tsv)
-          az container create \
-            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-            --name frontend \
-            --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-frontend:${latest_tag} \
-            --cpu 1 \
-            --memory 1 \
-            --ports 3000 \
-            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label frontend-${{ github.sha }}
+      # - name: Deploy Frontend to ACI
+      #   run: |
+      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-frontend --orderby time_desc --query '[0]' -o tsv)
+      #     az container create \
+      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+      #       --name frontend \
+      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-frontend:${latest_tag} \
+      #       --cpu 1 \
+      #       --memory 1 \
+      #       --ports 3000 \
+      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+      #       --registry-username ${{ secrets.ACR_USERNAME }} \
+      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
+      #       --dns-name-label frontend-${{ github.sha }}
 
       - name: Deploy Identity to ACI
         run: |
