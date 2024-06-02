@@ -54,7 +54,7 @@ resource "azurerm_postgresql_server" "example" {
   administrator_login          = var.postgres_user
   administrator_login_password = var.postgres_password
 
-  version = "16"
+  version = "11"
   ssl_enforcement_enabled = true
 }
 
