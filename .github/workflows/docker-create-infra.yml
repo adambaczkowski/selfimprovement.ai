@@ -63,7 +63,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label rabbitmq-${{ github.sha }}
+            --dns-name-label rabbitmq-${{ github.sha }} \
             --location polandcentral
 
       - name: Deploy Postgres to ACI
@@ -80,7 +80,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label postgres-${{ github.sha }}
+            --dns-name-label postgres-${{ github.sha }} \
             --location polandcentral
 
       - name: Deploy Frontend to ACI
@@ -96,7 +96,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label frontend-${{ github.sha }}
+            --dns-name-label frontend-${{ github.sha }} \
             --location polandcentral
 
       - name: Deploy Identity to ACI
@@ -113,7 +113,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label identity-${{ github.sha }}
+            --dns-name-label identity-${{ github.sha }} \
             --location polandcentral
 
       - name: Deploy Goal to ACI
@@ -130,7 +130,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label goal-${{ github.sha }}
+            --dns-name-label goal-${{ github.sha }} \
             --location polandcentral
 
       - name: Deploy Prompt to ACI
@@ -147,7 +147,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label prompt-${{ github.sha }}
+            --dns-name-label prompt-${{ github.sha }} \
             --location polandcentral
 
       - name: Deploy PGAdmin to ACI
@@ -164,7 +164,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label pgadmin-${{ github.sha }}
+            --dns-name-label pgadmin-${{ github.sha }} \
             --location germanywestcentral
 
       - name: Deploy Open WebUI to ACI
@@ -180,7 +180,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label open-webui-${{ github.sha }}
+            --dns-name-label open-webui-${{ github.sha }} \
             --location germanywestcentral
 
       - name: Deploy Ollama to ACI
@@ -196,7 +196,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label ollama-${{ github.sha }}
+            --dns-name-label ollama-${{ github.sha }} \
             --location polandcentral
 
       - name: Deploy Grafana to ACI
@@ -212,7 +212,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label grafana-${{ github.sha }}
+            --dns-name-label grafana-${{ github.sha }} \
             --location germanywestcentral
 
       - name: Deploy Loki to ACI
@@ -228,7 +228,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label loki-${{ github.sha }}
+            --dns-name-label loki-${{ github.sha }} \
             --location germanywestcentral
 
       - name: Deploy Promtail to ACI
@@ -244,7 +244,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label promtail-${{ github.sha }}
+            --dns-name-label promtail-${{ github.sha }} \
             --location germanywestcentral
 
       - name: Deploy Prometheus to ACI
@@ -260,7 +260,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label prometheus-${{ github.sha }}
+            --dns-name-label prometheus-${{ github.sha }} \
             --location polandcentral
 
       - name: Deploy Node Exporter to ACI
@@ -276,7 +276,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label node-exporter-${{ github.sha }}
+            --dns-name-label node-exporter-${{ github.sha }} \
             --location germanywestcentral
 
       - name: Deploy Nginx to ACI
@@ -292,7 +292,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label nginx-${{ github.sha }}
+            --dns-name-label nginx-${{ github.sha }} \
             --location polandcentral
 
       - name: Docker logout
