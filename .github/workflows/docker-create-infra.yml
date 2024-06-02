@@ -50,99 +50,105 @@ jobs:
           pgAdminPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminPassword --query value -o tsv)
           echo "PGADMIN_DEFAULT_PASSWORD=\"${pgAdminPassword}\"" >> .env
 
-      # - name: Deploy RabbitMQ to ACI
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository rabbitmq --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name rabbitmq \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/rabbitmq:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1.5 \
-      #       --ports 5672 15672 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label rabbitmq-${{ github.sha }}
+      - name: Deploy RabbitMQ to ACI
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository rabbitmq --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name rabbitmq \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/rabbitmq:${latest_tag} \
+            --cpu 1 \
+            --memory 1.5 \
+            --ports 5672 15672 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label rabbitmq-${{ github.sha }}
+            --location polandcentral
 
-      # - name: Deploy Postgres to ACI
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository postgres --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name postgres \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/postgres:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 2 \
-      #       --ports 5432 \
-      #       --environment-variables POSTGRES_USER=${{ secrets.POSTGRES_USER }} POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} POSTGRES_DB=${{ secrets.POSTGRES_DB_NAME }} \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label postgres-${{ github.sha }}
+      - name: Deploy Postgres to ACI
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository postgres --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name postgres \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/postgres:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 5432 \
+            --environment-variables POSTGRES_USER=${{ secrets.POSTGRES_USER }} POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} POSTGRES_DB=${{ secrets.POSTGRES_DB_NAME }} \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label postgres-${{ github.sha }}
+            --location polandcentral
 
-      # - name: Deploy Frontend to ACI
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-frontend --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name frontend \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-frontend:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1 \
-      #       --ports 3000 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label frontend-${{ github.sha }}
+      - name: Deploy Frontend to ACI
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-frontend --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name frontend \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-frontend:${latest_tag} \
+            --cpu 1 \
+            --memory 1 \
+            --ports 3000 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label frontend-${{ github.sha }}
+            --location polandcentral
 
-      # - name: Deploy Identity to ACI
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-identity --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name identity \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-identity:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1.5 \
-      #       --ports 8080 \
-      #       --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label identity-${{ github.sha }}
+      - name: Deploy Identity to ACI
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-identity --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name identity \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-identity:${latest_tag} \
+            --cpu 1 \
+            --memory 1.5 \
+            --ports 8080 \
+            --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label identity-${{ github.sha }}
+            --location polandcentral
 
-      # - name: Deploy Goal to ACI
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-goal --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name goal \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-goal:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1.5 \
-      #       --ports 8080 \
-      #       --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label goal-${{ github.sha }}
+      - name: Deploy Goal to ACI
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-goal --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name goal \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-goal:${latest_tag} \
+            --cpu 1 \
+            --memory 1.5 \
+            --ports 8080 \
+            --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label goal-${{ github.sha }}
+            --location polandcentral
 
-      # - name: Deploy Prompt to ACI
-      #   run: |
-      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-prompt --orderby time_desc --query '[0]' -o tsv)
-      #     az container create \
-      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-      #       --name prompt \
-      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-prompt:${latest_tag} \
-      #       --cpu 1 \
-      #       --memory 1.5 \
-      #       --ports 8080 \
-      #       --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite Llama2=host.docker.internal:11434 GoalApiServiceUrl=host.docker.internal:8080 IdentityApiServiceUrl=host.docker.internal:8080 \
-      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-      #       --registry-username ${{ secrets.ACR_USERNAME }} \
-      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
-      #       --dns-name-label prompt-${{ github.sha }}
+      - name: Deploy Prompt to ACI
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-prompt --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name prompt \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-prompt:${latest_tag} \
+            --cpu 1 \
+            --memory 1.5 \
+            --ports 8080 \
+            --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite Llama2=host.docker.internal:11434 GoalApiServiceUrl=host.docker.internal:8080 IdentityApiServiceUrl=host.docker.internal:8080 \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label prompt-${{ github.sha }}
+            --location polandcentral
 
       - name: Deploy PGAdmin to ACI
         run: |
@@ -159,6 +165,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label pgadmin-${{ github.sha }}
+            --location germanywestcentral
 
       - name: Deploy Open WebUI to ACI
         run: |
@@ -174,6 +181,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label open-webui-${{ github.sha }}
+            --location germanywestcentral
 
       - name: Deploy Ollama to ACI
         run: |
@@ -189,6 +197,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label ollama-${{ github.sha }}
+            --location polandcentral
 
       - name: Deploy Grafana to ACI
         run: |
@@ -204,6 +213,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label grafana-${{ github.sha }}
+            --location germanywestcentral
 
       - name: Deploy Loki to ACI
         run: |
@@ -219,6 +229,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label loki-${{ github.sha }}
+            --location germanywestcentral
 
       - name: Deploy Promtail to ACI
         run: |
@@ -234,6 +245,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label promtail-${{ github.sha }}
+            --location germanywestcentral
 
       - name: Deploy Prometheus to ACI
         run: |
@@ -249,6 +261,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label prometheus-${{ github.sha }}
+            --location polandcentral
 
       - name: Deploy Node Exporter to ACI
         run: |
@@ -264,6 +277,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label node-exporter-${{ github.sha }}
+            --location germanywestcentral
 
       - name: Deploy Nginx to ACI
         run: |
@@ -279,6 +293,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label nginx-${{ github.sha }}
+            --location polandcentral
 
       - name: Docker logout
         if: always()
