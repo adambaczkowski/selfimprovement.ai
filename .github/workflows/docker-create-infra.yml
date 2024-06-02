@@ -84,7 +84,7 @@ jobs:
             --azure-file-volume-share-name rabbitmq \
             --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
             --azure-file-volume-account-key ${rabbitmq_storage_key} \
-            --azure-file-volume-mount-path /var/lib/rabbitmq \
+            --azure-file-volume-mount-path /var/lib/rabbitmq/mnesia \
             --environment-variables \
                 RABBITMQ_DEFAULT_USER=${{ env.RABBITMQ_USER }}\
                 RABBITMQ_DEFAULT_PASS=${{ env.RABBITMQ_PASSWORD }} \

@@ -1,5 +1,4 @@
 FROM rabbitmq:3.9.9-management
-
 RUN touch /var/lib/rabbitmq/.erlang.cookie && \
     chmod 600 /var/lib/rabbitmq/.erlang.cookie && \
     chown rabbitmq:rabbitmq /var/lib/rabbitmq/.erlang.cookie
@@ -8,4 +7,4 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 EXPOSE 5672 15672
-VOLUME /var/lib/rabbitmq
+VOLUME /var/lib/rabbitmq/mnesia

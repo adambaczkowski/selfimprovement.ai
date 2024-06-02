@@ -11,7 +11,7 @@ services:
       - "5672:5672" # AMQP
       - "15672:15672" # Management Plugin
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia/
 
   postgres:
     container_name: postgres
