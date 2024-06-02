@@ -99,3 +99,11 @@ variable "pgadmin_email" {
 variable "pgadmin_password" {
   description = "Key Vault secret for pgadmin password"
 }
+
+variable "rabbitmq_user" {
+  description = "Key Vault secret for rabbitmq user"
+}
+
+variable "rabbitmq_password" {
+  description = "Key Vault secret for rabbitmq password"
+}

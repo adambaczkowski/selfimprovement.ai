@@ -1,4 +1,3 @@
-
 FROM rabbitmq:3.9.9-management
 EXPOSE 5672 15672
 VOLUME /var/lib/rabbitmq

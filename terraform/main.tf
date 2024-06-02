@@ -97,3 +97,15 @@ resource "azurerm_key_vault_secret" "pgadmin_password_secret" {
   value        = var.pgadmin_password
   key_vault_id = azurerm_key_vault.key_vault.id
 }
+
+resource "azurerm_key_vault_secret" "rabbitmq_user_secret" {
+  name         = "rabbitmqUser"
+  value        = var.rabbitmq_user
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "rabbitmq_password_secret" {
+  name         = "rabbitmqPassword"
+  value        = var.rabbitmq_password
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
