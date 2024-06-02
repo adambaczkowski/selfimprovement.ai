@@ -81,11 +81,15 @@ jobs:
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label rabbitmq-static-dns \
             --location ${{ secrets.LOCATION }} \
-            --environment-variables RABBITMQ_DEFAULT_USER=${{ env.RABBITMQ_USER }} RABBITMQ_DEFAULT_PASS=${{ env.RABBITMQ_PASSWORD }} \
             --azure-file-volume-share-name rabbitmq \
             --azure-file-volume-account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
             --azure-file-volume-account-key ${rabbitmq_storage_key} \
-            --azure-file-volume-mount-path /var/lib/rabbitmq
+            --azure-file-volume-mount-path /var/lib/rabbitmq \
+            --environment-variables \
+                RABBITMQ_DEFAULT_USER=${{ env.RABBITMQ_USER }}\
+                RABBITMQ_DEFAULT_PASS=${{ env.RABBITMQ_PASSWORD }} \
+                RABBITMQ_NODENAME=rabbit@localhost \
+                RABBITMQ_USE_LONGNAME=true
 
       # - name: Deploy Postgres to ACI
       #   continue-on-error: true
