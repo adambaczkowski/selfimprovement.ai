@@ -51,6 +51,7 @@ jobs:
           echo "PGADMIN_DEFAULT_PASSWORD=\"${pgAdminPassword}\"" >> .env
 
       - name: Deploy RabbitMQ to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository rabbitmq --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -67,6 +68,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Postgres to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository postgres --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -84,6 +86,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Frontend to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-frontend --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -100,6 +103,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Identity to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-identity --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -117,6 +121,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Goal to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-goal --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -134,6 +139,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Prompt to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository selfimprovement-prompt --orderby time_desc --query '[0]' -o tsv)
           echo "Latest tag: ${latest_tag}"
@@ -159,6 +165,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy PGAdmin to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository pgadmin --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -176,6 +183,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Open WebUI to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository open-webui --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -192,6 +200,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Ollama to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository ollama --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -208,6 +217,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Grafana to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository grafana --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -224,6 +234,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Loki to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository loki --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -240,6 +251,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Promtail to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository promtail --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -256,6 +268,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Prometheus to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository prometheus --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -272,6 +285,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Node Exporter to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository node-exporter --orderby time_desc --query '[0]' -o tsv)
           az container create \
@@ -288,6 +302,7 @@ jobs:
             --location polandcentral
 
       - name: Deploy Nginx to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository nginx --orderby time_desc --query '[0]' -o tsv)
           az container create \
