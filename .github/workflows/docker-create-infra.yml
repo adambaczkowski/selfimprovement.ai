@@ -63,7 +63,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label rabbitmq-dns \
+            --dns-name-label rabbitmq-static-dns \
             --location polandcentral
 
       - name: Deploy Postgres to ACI
@@ -80,7 +80,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label postgres-dns \
+            --dns-name-label postgres-static-dns \
             --location polandcentral
 
       - name: Deploy Frontend to ACI
@@ -96,7 +96,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label frontend-dns \
+            --dns-name-label frontend-static-dns \
             --location polandcentral
 
       - name: Deploy Identity to ACI
@@ -113,7 +113,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label identity-dns \
+            --dns-name-label identity-static-dns \
             --location polandcentral
 
       - name: Deploy Goal to ACI
@@ -130,7 +130,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label goal-dns \
+            --dns-name-label goal-static-dns \
             --location polandcentral
 
       - name: Deploy Prompt to ACI
@@ -155,7 +155,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label prompt-dns \
+            --dns-name-label prompt-static-dns \
             --location polandcentral
 
       - name: Deploy PGAdmin to ACI
@@ -172,7 +172,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label pgadmin-dns \
+            --dns-name-label pgadmin-static-dns\
             --location polandcentral
 
       - name: Deploy Open WebUI to ACI
@@ -188,7 +188,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label open-webui-dns \
+            --dns-name-label open-webui-static-dns \
             --location polandcentral
 
       - name: Deploy Ollama to ACI
@@ -204,7 +204,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label ollama-dns \
+            --dns-name-label ollama-static-dns \
             --location polandcentral
 
       - name: Deploy Grafana to ACI
@@ -220,7 +220,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label grafana-dns \
+            --dns-name-label grafana-static-dns \
             --location polandcentral
 
       - name: Deploy Loki to ACI
@@ -236,7 +236,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label loki-dns \
+            --dns-name-label loki-static-dns \
             --location polandcentral
 
       - name: Deploy Promtail to ACI
@@ -252,7 +252,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label promtail-dns \
+            --dns-name-label promtail-static-dns \
             --location polandcentral
 
       - name: Deploy Prometheus to ACI
@@ -268,7 +268,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label prometheus-dns \
+            --dns-name-label prometheus-static-dns \
             --location polandcentral
 
       - name: Deploy Node Exporter to ACI
@@ -284,7 +284,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label node-exporter-dns \
+            --dns-name-label node-exporter-static-dns \
             --location polandcentral
 
       - name: Deploy Nginx to ACI
@@ -300,7 +300,7 @@ jobs:
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label nginx-dns \
+            --dns-name-label nginx-static-dns \
             --location polandcentral
 
       - name: Docker logout
