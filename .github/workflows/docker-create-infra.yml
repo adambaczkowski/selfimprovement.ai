@@ -65,7 +65,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label rabbitmq-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Postgres to ACI
         continue-on-error: true
@@ -83,7 +83,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label postgres-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Frontend to ACI
         continue-on-error: true
@@ -100,7 +100,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label frontend-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Identity to ACI
         continue-on-error: true
@@ -118,7 +118,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label identity-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Goal to ACI
         continue-on-error: true
@@ -136,7 +136,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label goal-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Prompt to ACI
         continue-on-error: true
@@ -162,7 +162,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label prompt-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy PGAdmin to ACI
         continue-on-error: true
@@ -180,7 +180,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label pgadmin-static-dns\
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Open WebUI to ACI
         continue-on-error: true
@@ -197,7 +197,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label open-webui-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Ollama to ACI
         continue-on-error: true
@@ -214,7 +214,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label ollama-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Grafana to ACI
         continue-on-error: true
@@ -231,7 +231,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label grafana-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Loki to ACI
         continue-on-error: true
@@ -248,7 +248,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label loki-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Promtail to ACI
         continue-on-error: true
@@ -265,7 +265,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label promtail-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Prometheus to ACI
         continue-on-error: true
@@ -282,7 +282,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label prometheus-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Node Exporter to ACI
         continue-on-error: true
@@ -299,7 +299,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label node-exporter-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy Nginx to ACI
         continue-on-error: true
@@ -316,7 +316,7 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label nginx-static-dns \
-            --location polandcentral
+            --location ${{ secrets.LOCATION }}
 
       - name: Docker logout
         if: always()
