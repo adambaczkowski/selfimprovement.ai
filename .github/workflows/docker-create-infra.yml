@@ -78,7 +78,7 @@ jobs:
             --cpu 1 \
             --memory 2 \
             --ports 5432 \
-            --environment-variables POSTGRES_USER=${{ secrets.POSTGRES_USER }} POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} POSTGRES_DB=${{ secrets.POSTGRES_DB_NAME }} \
+            --environment-variables POSTGRES_USER=${{ env.POSTGRES_USER }} POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} POSTGRES_DB=${{ env.POSTGRES_DB_NAME }} \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
@@ -113,7 +113,7 @@ jobs:
             --cpu 1 \
             --memory 1.5 \
             --ports 8080 \
-            --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
+            --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ env.POSTGRES_DB_NAME }};User ID=${{ env.POSTGRES_USER }};Password=${{ env.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
@@ -131,7 +131,7 @@ jobs:
             --cpu 1 \
             --memory 1.5 \
             --ports 8080 \
-            --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
+            --environment-variables SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ env.POSTGRES_DB_NAME }};User ID=${{ env.POSTGRES_USER }};Password=${{ env.POSTGRES_PASSWORD }};Include Error Detail=true" CorsOrigin=http://0.0.0.0:3000 RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/ \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
@@ -151,7 +151,7 @@ jobs:
             --memory 1.5 \
             --ports 8080 \
             --environment-variables \
-              SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB_NAME }};User ID=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }};Include Error Detail=true" \
+              SelfImprovementDbContext="Host=postgres;Port=5432;Database=${{ env.POSTGRES_DB_NAME }};User ID=${{ env.POSTGRES_USER }};Password=${{ env.POSTGRES_PASSWORD }};Include Error Detail=true" \
               CorsOrigin="http://0.0.0.0:3000" \
               RabbitMqConnectionUrl="amqp://guest:guest@host.docker.internal:5672/" \
               BlobStorageConnectionUrl="UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite" \
@@ -175,7 +175,7 @@ jobs:
             --cpu 1 \
             --memory 1 \
             --ports 80 \
-            --environment-variables PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }} PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }} \
+            --environment-variables PGADMIN_DEFAULT_EMAIL=${{ env.PGADMIN_DEFAULT_EMAIL }} PGADMIN_DEFAULT_PASSWORD=${{ env.PGADMIN_DEFAULT_PASSWORD }} \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
@@ -260,7 +260,7 @@ jobs:
             --image ${{ secrets.ACR_NAME }}.azurecr.io/promtail:${latest_tag} \
             --cpu 1 \
             --memory 1 \
-            --ports 3101 \
+            --ports 9080 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
