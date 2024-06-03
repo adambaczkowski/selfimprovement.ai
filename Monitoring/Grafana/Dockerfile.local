@@ -9,9 +9,7 @@ RUN grafana-cli plugins install grafana-piechart-panel && \
 COPY grafana.ini /etc/grafana/grafana.ini
 
 RUN chown -R grafana:grafana /etc/grafana/grafana.ini
-
 USER grafana
-
 EXPOSE 3000
 
 CMD ["grafana-server", "--homepath=/usr/share/grafana", "--config=/etc/grafana/grafana.ini"]
