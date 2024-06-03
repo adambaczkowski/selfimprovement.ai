@@ -1,6 +1,6 @@
 name: 🐋 Build and Push Docker Images to Azure Container Registry
 
-on: 
+on:
   workflow_dispatch:
 
 permissions:

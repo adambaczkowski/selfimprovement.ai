@@ -11,27 +11,27 @@ services:
       - "5672:5672" # AMQP
       - "15672:15672" # Management Plugin
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia/
 
-  postgres:
-    container_name: postgres
-    build:
-      context: ./Database/postgres
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/postgres:${IMAGE_TAG}"
-    restart: on-failure
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB_NAME}
-    ports:
-      - 5432:5432
-    volumes:
-      - postgres:/var/lib/postgresql/data
-    logging:
-      options:
-        max-size: 10m
-        max-file: "3"
+  # postgres:
+  #   container_name: postgres
+  #   build:
+  #     context: ./Database/postgres
+  #     dockerfile: Dockerfile.local
+  #   image: "${ACR_NAME}.azurecr.io/postgres:${IMAGE_TAG}"
+  #   restart: on-failure
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRES_DB=${POSTGRES_DB_NAME}
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - postgres:/var/lib/postgresql/data
+  #   logging:
+  #     options:
+  #       max-size: 10m
+  #       max-file: "3"
 
   frontend:
     container_name: selfimprovement-frontend
@@ -51,8 +51,8 @@ services:
     image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://0.0.0.0:3000
-      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
       - "8080:8080"
     restart: on-failure
@@ -65,8 +65,8 @@ services:
     image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://0.0.0.0:3000
-      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
       - "8080:8080"
     restart: always
@@ -79,12 +79,12 @@ services:
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://0.0.0.0:3000
-      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
-      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
-      - Llama2=host.docker.internal:11434
-      - GoalApiServiceUrl=host.docker.internal:8080
-      - IdentityApiServiceUrl=host.docker.internal:8080
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.file.core.windows.net/prompt
+      - Llama2=ollama-static-dns.polandcentral.azurecontainer.io:11434
+      - GoalApiServiceUrl=goal-static-dns.polandcentral.azurecontainer.io:8080
+      - IdentityApiServiceUrl=identity-static-dns.polandcentral.azurecontainer.io:8080
     ports:
       - "8080:8080"
     restart: always
@@ -219,7 +219,7 @@ services:
     #   - .env
 
 volumes:
-  postgres:
+  #postgres:
   ollama:
   prometheus_data:
   open-webui:

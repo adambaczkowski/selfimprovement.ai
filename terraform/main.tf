@@ -40,6 +40,32 @@ resource "azurerm_container_registry" "acr-dev" {
 #   }
 # }
 
+
+resource "azurerm_postgresql_server" "example" {
+  name                = "selfimprovementai-psql-server"
+  location            = "germanywestcentral"
+  resource_group_name = var.rg-name
+  sku_name            = "B_Gen5_1"
+  storage_mb          = 5120
+  backup_retention_days = 7
+  geo_redundant_backup_enabled = false
+  auto_grow_enabled   = false
+
+  administrator_login          = var.postgres_user
+  administrator_login_password = var.postgres_password
+
+  version = "11"
+  ssl_enforcement_enabled = true
+}
+
+resource "azurerm_postgresql_database" "example" {
+  name                = "SelfImprovementDb"
+  resource_group_name = var.rg-name
+  server_name         = azurerm_postgresql_server.example.name
+  charset             = "UTF8"
+  collation           = "en_US.utf8"
+}
+
 resource "azurerm_key_vault" "key_vault" {
   name                       = "selfimprovementKeyVault"
   location                   = var.location
@@ -95,5 +121,17 @@ resource "azurerm_key_vault_secret" "pgadmin_email_secret" {
 resource "azurerm_key_vault_secret" "pgadmin_password_secret" {
   name         = "pgAdminPassword"
   value        = var.pgadmin_password
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "rabbitmq_user_secret" {
+  name         = "rabbitmqUser"
+  value        = var.rabbitmq_user
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "rabbitmq_password_secret" {
+  name         = "rabbitmqPassword"
+  value        = var.rabbitmq_password
   key_vault_id = azurerm_key_vault.key_vault.id
 }
