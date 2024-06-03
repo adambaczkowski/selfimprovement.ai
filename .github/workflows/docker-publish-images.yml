@@ -9,16 +9,12 @@ permissions:
   id-token: write
 
 jobs:
-  checkout:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-  login_to_azure:
-    runs-on: ubuntu-latest
-    needs: checkout
-    steps:
       - name: Log in to Azure
         uses: azure/login@v2
         with:
@@ -26,24 +22,12 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-  login_to_acr:
-    runs-on: ubuntu-latest
-    needs: login_to_azure
-    steps:
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ secrets.ACR_NAME }}
 
-  setup_docker_build:
-    runs-on: ubuntu-latest
-    needs: login_to_acr
-    steps:
       - name: Set up Docker Build
         uses: docker/setup-buildx-action@v1
 
-  retrieve_secrets:
-    runs-on: ubuntu-latest
-    needs: setup_docker_build
-    steps:
       - name: Retrieve postgresUser from Azure Key Vault
         run: |
           postgresUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresUser --query value -o tsv)
@@ -79,10 +63,6 @@ jobs:
           grafanaPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaPassword --query value -o tsv)
           echo "GRAFANA_PASSWORD=\"${grafanaPassword}\"" >> .env
 
-  build_and_push:
-    runs-on: ubuntu-latest
-    needs: retrieve_secrets
-    steps:
       - name: Build and push Docker images
         env:
           ACR_NAME: ${{ secrets.ACR_NAME }}
@@ -93,10 +73,6 @@ jobs:
           docker-compose --env-file .env -f docker-compose-acr.yml build
           docker-compose --env-file .env -f docker-compose-acr.yml push
 
-  docker_logout:
-    runs-on: ubuntu-latest
-    needs: build_and_push
-    steps:
       - name: Docker logout
         if: always()
         run: docker logout ${{ secrets.ACR_NAME }}.azurecr.io
