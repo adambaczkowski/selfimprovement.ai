@@ -31,12 +31,11 @@ function TaskPage({}: Props) {
   useQuery({
     queryKey: ["getTask"],
     queryFn: async () => {
-      const response = await fetchTask(id || "");
-      const task = response.data;
+      const task = await fetchTask(id || "");
       if (task != null) {
         setTask(task);
       }
-      return response.data;
+      return task;
     },
     refetchOnWindowFocus: false,
   });

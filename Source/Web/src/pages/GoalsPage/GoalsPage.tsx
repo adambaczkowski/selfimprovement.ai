@@ -10,12 +10,11 @@ const GoalsPage = () => {
   useQuery({
     queryKey: ["getGoals"],
     queryFn: async () => {
-      const response = await fetchGoals();
-      const goals = response.data;
+      const goals = await fetchGoals();
       if (goals != null) {
         setGoals(goals);
       }
-      return response.data;
+      return goals;
     },
     refetchOnWindowFocus: false,
   });

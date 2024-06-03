@@ -16,6 +16,7 @@ const SignUpPage = ({}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const signUpInitialValues: SignUpCommand = {
     email: "",
+    name: "",
     password: "",
     confirmPassword: "",
   };
@@ -64,6 +65,7 @@ const SignUpPage = ({}: Props) => {
               <Form className={styles.form_items_container}>
                 <h1 className={styles.heading}>Sign up</h1>
                 <FormTextInput label="Email" name="email" placeholderText="test@email.com"/>
+                <FormTextInput label="Name" name="name" placeholderText="Max"/>
                 <FormTextInput label="Password" name="password" type="password" />
                 <FormTextInput label="Confirm Password" name="confirmPassword" type="password" />
                 <CustomButton text="Submit" type="submit" />

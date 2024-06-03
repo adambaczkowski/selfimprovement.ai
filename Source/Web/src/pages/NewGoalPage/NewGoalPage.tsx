@@ -23,8 +23,9 @@ const NewGoalPage = ({}: Props) => {
     timeAvailabilityPerDay: undefined,
     timeAvailabilityPerWeek: undefined,
     duration: undefined,
-    experience: undefined,
-    learningType: undefined
+    userAdvancement: undefined,
+    learningType: undefined,
+    userInput: undefined
   };
 
   const createGoalMutation = useMutation({
@@ -40,8 +41,8 @@ const NewGoalPage = ({}: Props) => {
   const handleCreateGoal = async (values: CreateGoalCommand) => {
     setIsLoading(true);
     try {
-      const response = await createGoal(values); 
-      const goalId = response?.data?.id;
+      const goal = await createGoal(values); 
+      const goalId = goal?.id;
       navigate(`/goal/${goalId}`);
     } catch (error) {
       console.error('Error creating goal:', error);
@@ -70,11 +71,12 @@ const NewGoalPage = ({}: Props) => {
               <h1 className={styles.heading}>New Goal</h1>
               <FormTextInput label="Goal name" name="name" placeholderText="Marathon"/>
               <FormSelectInput label="Category" name="category" options={enumToArrayOfOptions(GoalCategories)} />
-              <FormSelectInput label="Time TimeAvailabilityPerDay" name="timeAvailabilityPerDay" options={enumToArrayOfOptions(TimeAvailabilityPerDay)} />
-              <FormSelectInput label="Time TimeAvailabilityPerWeek" name="timeAvailabilityPerWeek" options={enumToArrayOfOptions(TimeAvailabilityPerWeek)} />
+              <FormSelectInput label="Time availability per day" name="timeAvailabilityPerDay" options={enumToArrayOfOptions(TimeAvailabilityPerDay)} />
+              <FormSelectInput label="Time availability per week" name="timeAvailabilityPerWeek" options={enumToArrayOfOptions(TimeAvailabilityPerWeek)} />
               <FormNumberInput label="Duration" name="duration" />
               <FormSelectInput label="Experience" name="experience" options={enumToArrayOfOptions(Experience)} />
-              <FormSelectInput label="Learning Type" name="learningType" options={enumToArrayOfOptions(LearningType)} />
+              <FormSelectInput label="Learning type" name="learningType" options={enumToArrayOfOptions(LearningType)} />
+              <FormTextInput label="User input" name="userInput" placeholderText="Marathon"/>
               <button className={styles.create_button}>Create</button>
             </Form>
           </Formik>

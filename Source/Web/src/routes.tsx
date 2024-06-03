@@ -8,7 +8,6 @@ import HomePage from "./pages/HomePage/HomePage";
 import GoalsPage from "./pages/GoalsPage/GoalsPage";
 import GoalPage from "./pages/GoalPage/GoalPage";
 import NewGoalPage from "./pages/NewGoalPage/NewGoalPage";
-import CompletedTasksPage from "./pages/CompletedTasksPage/CompletedTasksPage";
 import ProfileCreationPage from "./pages/ProfileCreationPage/ProfileCreationPage";
 import ResendEmailConfirmationPage from "./pages/ResendEmailConfirmationPage/ResendEmailConfirmationPage";
 import { RequestPasswordResetPage } from "./pages/RequestPasswordResetPage/RequestPasswordResetPage";
@@ -76,10 +75,6 @@ const Routes = ({}: Props) => {
         {
           path: "/tasks",
           element: <TasksPage />,
-        },
-        {
-          path: "/completed",
-          element: <CompletedTasksPage />,
         },
         {
           path: "/calendar",
