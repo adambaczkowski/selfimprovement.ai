@@ -60,6 +60,16 @@ jobs:
           rabbitmqPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name rabbitmqPassword --query value -o tsv)
           echo "RABBITMQ_PASSWORD=\"${rabbitmqPassword}\"" >> .env
 
+      - name: Retrieve grafanaUser from Azure Key Vault
+        run: |
+          grafanaUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaUser --query value -o tsv)
+          echo "GRAFANA_USER=\"${grafanaUser}\"" >> .env
+
+      - name: Retrieve grafanaPassword from Azure Key Vault
+        run: |
+          grafanaPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaPassword --query value -o tsv)
+          echo "GRAFANA_PASSWORD=\"${grafanaPassword}\"" >> .env
+
       - name: Create File Shares for RabbitMq
         run: |
           az storage share create --name rabbitmq --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
