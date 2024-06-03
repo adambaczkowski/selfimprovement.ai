@@ -104,7 +104,7 @@ jobs:
 
   deploy_rabbitmq:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy RabbitMQ to ACI
@@ -135,7 +135,7 @@ jobs:
 
   deploy_ollama:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Ollama to ACI
@@ -161,7 +161,7 @@ jobs:
 
   deploy_frontend:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Frontend to ACI
@@ -183,7 +183,7 @@ jobs:
 
   deploy_identity:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Identity to ACI
@@ -214,7 +214,7 @@ jobs:
 
   deploy_goal:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Goal to ACI
@@ -245,7 +245,7 @@ jobs:
 
   deploy_prompt:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Prompt to ACI
@@ -282,7 +282,7 @@ jobs:
 
   deploy_pgadmin:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy PGAdmin to ACI
@@ -307,7 +307,7 @@ jobs:
 
   deploy_open_webui:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Open WebUI to ACI
@@ -329,7 +329,7 @@ jobs:
 
   deploy_grafana:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Grafana to ACI
@@ -354,7 +354,7 @@ jobs:
 
   deploy_loki:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Loki to ACI
@@ -376,7 +376,7 @@ jobs:
 
   deploy_promtail:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Promtail to ACI
@@ -398,7 +398,7 @@ jobs:
 
   deploy_prometheus:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Prometheus to ACI
@@ -420,7 +420,7 @@ jobs:
 
   deploy_node_exporter:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Node Exporter to ACI
@@ -442,7 +442,7 @@ jobs:
 
   deploy_nginx:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: create_file_shares
     steps:
       - name: Deploy Nginx to ACI
