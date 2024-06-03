@@ -38,7 +38,7 @@ jobs:
       - name: Retrieve postgresUser from Azure Key Vault
         run: |
           postgresUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresUser --query value -o tsv)
-          echo "POSTGRES_USER=\"${postgresPassword}\"" >> .env
+          echo "POSTGRES_USER=\"${postgresUser}\"" >> .env
 
       - name: Retrieve pgAdminEmail from Azure Key Vault
         run: |
@@ -73,6 +73,23 @@ jobs:
       - name: Create File Shares for RabbitMq
         run: |
           az storage share create --name rabbitmq --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Deploy CoreDNS to ACI
+        run: |
+          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository coredns --orderby time_desc --query '[0]' -o tsv)
+          az container create \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --name coredns \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/coredns:${latest_tag} \
+            --cpu 1 \
+            --memory 2 \
+            --ports 53 \
+            --protocol UDP \
+            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --dns-name-label coredns-static-dns \
+            --location ${{ secrets.LOCATION }}
 
       - name: Deploy RabbitMQ to ACI
         continue-on-error: true

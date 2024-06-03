@@ -1,6 +1,17 @@
 version: '3.7'
 
 services:
+
+  coredns:
+    build:
+      context: ./CoreDNS
+      dockerfile: Dockerfile.local
+    container_name: coredns
+    restart: unless-stopped
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+
   postgres:
     container_name: postgres
     build:

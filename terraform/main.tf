@@ -8,38 +8,34 @@ resource "azurerm_container_registry" "acr-dev" {
   admin_enabled       = true
 }
 
-# resource "azurerm_kubernetes_cluster" "aks-dev" {
-#   location            = var.location
-#   name                = "aks-dev-cluster"
-#   resource_group_name = var.rg-name
-#   dns_prefix          = "aks-dev-dns"
+resource "azurerm_virtual_network" "dev_vnet" {
+  name                = "dev-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = var.location
+  resource_group_name = var.rg-name
+}
 
-#   service_principal {
-#     client_id     = var.arm_client_id
-#     client_secret = var.arm_client_secret
-#   }
+resource "azurerm_subnet" "dev_subnet" {
+  name                 = "dev-subnet"
+  resource_group_name  = var.rg-name
+  virtual_network_name = azurerm_virtual_network.dev_vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
 
-#   default_node_pool {
-#     name            = "agentpool"
-#     vm_size         = "Standard_D2_v2"
-#     node_count      = var.node_count
-#     type            = "VirtualMachineScaleSets"
-#     os_disk_size_gb = 250
-#   }
+resource "azurerm_network_profile" "dev_profile" {
+  name                = "dev-network-profile"
+  location            = var.location
+  resource_group_name = var.rg-name
 
-#   linux_profile {
-#     admin_username = var.username
+  container_network_interface {
+    name = "dev-cni"
 
-#     ssh_key {
-#       key_data = var.arm_ssh_key
-#     }
-#   }
-#   network_profile {
-#     network_plugin    = "kubenet"
-#     load_balancer_sku = "standard"
-#   }
-# }
-
+    ip_configuration {
+      name      = "dev-ipconfig"
+      subnet_id = azurerm_subnet.dev_subnet.id
+    }
+  }
+}
 
 resource "azurerm_postgresql_server" "example" {
   name                = "selfimprovementai-psql-server"
@@ -148,3 +144,34 @@ resource "azurerm_key_vault_secret" "grafana_password_secret" {
   key_vault_id = azurerm_key_vault.key_vault.id
 }
 
+# resource "azurerm_kubernetes_cluster" "aks-dev" {
+#   location            = var.location
+#   name                = "aks-dev-cluster"
+#   resource_group_name = var.rg-name
+#   dns_prefix          = "aks-dev-dns"
+
+#   service_principal {
+#     client_id     = var.arm_client_id
+#     client_secret = var.arm_client_secret
+#   }
+
+#   default_node_pool {
+#     name            = "agentpool"
+#     vm_size         = "Standard_D2_v2"
+#     node_count      = var.node_count
+#     type            = "VirtualMachineScaleSets"
+#     os_disk_size_gb = 250
+#   }
+
+#   linux_profile {
+#     admin_username = var.username
+
+#     ssh_key {
+#       key_data = var.arm_ssh_key
+#     }
+#   }
+#   network_profile {
+#     network_plugin    = "kubenet"
+#     load_balancer_sku = "standard"
+#   }
+# }

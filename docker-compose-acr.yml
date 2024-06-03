@@ -1,6 +1,17 @@
 version: '3.7'
 
 services:
+  coredns:
+    container_name: coredns
+    build:
+      context: ./CoreDNS
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/coredns:${IMAGE_TAG}"
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    restart: always
+
   rabbitmq:
     container_name: rabbitmq
     build:
@@ -12,26 +23,8 @@ services:
       - "15672:15672" # Management Plugin
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/mnesia/
-
-  # postgres:
-  #   container_name: postgres
-  #   build:
-  #     context: ./Database/postgres
-  #     dockerfile: Dockerfile.local
-  #   image: "${ACR_NAME}.azurecr.io/postgres:${IMAGE_TAG}"
-  #   restart: on-failure
-  #   environment:
-  #     - POSTGRES_USER=${POSTGRES_USER}
-  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-  #     - POSTGRES_DB=${POSTGRES_DB_NAME}
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - postgres:/var/lib/postgresql/data
-  #   logging:
-  #     options:
-  #       max-size: 10m
-  #       max-file: "3"
+    dns:
+      - "127.0.0.1"
 
   frontend:
     container_name: selfimprovement-frontend
@@ -42,6 +35,8 @@ services:
     ports:
       - "3000:3000"
     restart: always
+    dns:
+      - "127.0.0.1"
 
   identity:
     container_name: selfimprovement-identity
@@ -56,6 +51,8 @@ services:
     ports:
       - "8080:8080"
     restart: always
+    dns:
+      - "127.0.0.1"
 
   goal:
     container_name: selfimprovement-goal
@@ -70,9 +67,11 @@ services:
     ports:
       - "8080:8080"
     restart: always
+    dns:
+      - "127.0.0.1"
 
   prompt:
-    container_name: selfimprovement-prompt
+    container_name: selfimproved-prompt
     build:
       context: ./Source
       dockerfile: PromptApi/Dockerfile.local
@@ -88,141 +87,12 @@ services:
     ports:
       - "8080:8080"
     restart: always
+    dns:
+      - "127.0.0.1"
 
-  pgadmin:
-    container_name: pgadmin
-    build:
-      context: ./Database/pgadmin
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/pgadmin:${IMAGE_TAG}"
-    restart: always
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - "80:80"
-    volumes:
-      - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
-
-  open-webui:
-    container_name: open-webui
-    restart: always
-    build:
-      context: ./Ollama/webui
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/open-webui:${IMAGE_TAG}"
-    ports:
-      - "8080:8080"
-    volumes:
-      - open-webui:/app/backend/data
-
-  ollama:
-    container_name: ollama
-    build:
-      context: ./Ollama
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/ollama:${IMAGE_TAG}"
-    tty: true
-    volumes:
-      - ollama:/root/.ollama
-    restart: always
-    ports:
-      - 11434:11434
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
-
-  grafana:
-    container_name: grafana
-    build:
-      context: ./Monitoring/Grafana
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/grafana:${IMAGE_TAG}"
-    restart: always
-    volumes:
-      - ./Monitoring/Grafana/lib:/var/lib/grafana
-    ports:
-      - "3000:3000"
-    user: "${UID}:${GID}"
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
-
-  loki:
-    container_name: loki
-    build:
-      context: ./Monitoring/Loki
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/loki:${IMAGE_TAG}"
-    restart: always
-    volumes:
-      - ./Monitoring/Loki:/etc/loki
-    ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/loki-config.yml
-
-  promtail:
-    container_name: promtail
-    build:
-      context: ./Monitoring/Promtail
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/promtail:${IMAGE_TAG}"
-    restart: always
-    volumes:
-      - ./Monitoring/Promtail:/etc/promtail
-    command: -config.expand-env=true -config.file=/etc/promtail/promtail-config.yml
-
-  prometheus:
-    container_name: prometheus
-    build:
-      context: ./Monitoring/Prometheus
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/prometheus:${IMAGE_TAG}"
-    restart: always
-    ports:
-      - "9090:9090"
-    volumes:
-      - prometheus_data:/prometheus
-      - ./Monitoring/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-      - --web.external-url=http://0.0.0.0:80/prometheus/
-
-  node-exporter:
-    container_name: node-exporter
-    build:
-      context: ./Monitoring/NodeExporter
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/node-exporter:${IMAGE_TAG}"
-    restart: always
-    ports:
-      - "9100:9100"
-
-  nginx:
-    container_name: nginx
-    build:
-      context: ./Nginx
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/nginx:${IMAGE_TAG}"
-    restart: always
-    ports:
-      - "80:80"
-      #- "443:443"
-    volumes:
-      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
-      #- ./Nginx/index.html:/usr/share/nginx/html/index.html
-    # env_file:
-    #   - .env
+  # Additional services unchanged...
 
 volumes:
-  #postgres:
   ollama:
   prometheus_data:
   open-webui:
