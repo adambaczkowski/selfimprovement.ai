@@ -107,3 +107,11 @@ variable "rabbitmq_user" {
 variable "rabbitmq_password" {
   description = "Key Vault secret for rabbitmq password"
 }
+
+variable "grafana_user" {
+  description = "Key Vault secret for grafana user"
+}
+
+variable "grafana_password" {
+  description = "Key Vault secret for grafana password"
+}

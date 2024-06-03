@@ -143,11 +143,14 @@ services:
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/grafana:${IMAGE_TAG}"
     restart: on-failure
-    user: "1000"
     volumes:
       - ./Monitoring/Grafana/lib:/var/lib/grafana
     ports:
       - "3000:3000"
+    user: "${UID}:${GID}"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
 
   loki:
     container_name: loki

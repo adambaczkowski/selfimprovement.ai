@@ -53,6 +53,16 @@ jobs:
           pgAdminPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminPassword --query value -o tsv)
           echo "PGADMIN_DEFAULT_PASSWORD=\"${pgAdminPassword}\"" >> .env
 
+      - name: Retrieve grafanaUser from Azure Key Vault
+        run: |
+          grafanaUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaUser --query value -o tsv)
+          echo "GRAFANA_USER=\"${grafanaUser}\"" >> .env
+
+      - name: Retrieve grafanaPassword from Azure Key Vault
+        run: |
+          grafanaPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaPassword --query value -o tsv)
+          echo "GRAFANA_PASSWORD=\"${grafanaPassword}\"" >> .env
+
       - name: Build and push Docker images
         env:
           ACR_NAME: ${{ secrets.ACR_NAME }}

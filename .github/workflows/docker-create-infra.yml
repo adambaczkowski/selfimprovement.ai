@@ -273,7 +273,10 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label grafana-static-dns \
-            --location ${{ secrets.LOCATION }}
+            --location ${{ secrets.LOCATION }} \
+             --environment-variables \
+                GF_SECURITY_ADMIN_USER=${{ secrets.GRAFANA_USER }} \
+                GF_SECURITY_ADMIN_PASSWORD=${{ secrets.GRAFANA_PASSWORD }}
 
       - name: Deploy Loki to ACI
         continue-on-error: true

@@ -1,13 +1,8 @@
+# Use the official Grafana image from the Docker Hub
 FROM grafana/grafana:latest
 
-USER root
-
-RUN grafana-cli plugins install grafana-piechart-panel && \
-    grafana-cli plugins install grafana-clock-panel && \
-    grafana-cli plugins install grafana-simple-json-datasource
-
-COPY grafana.ini /etc/grafana/grafana.ini
-RUN chown -R grafana:grafana /etc/grafana/grafana.ini
-USER grafana
+# Expose port 3000 (default Grafana port)
 EXPOSE 3000
-CMD ["grafana-server", "--homepath=/usr/share/grafana", "--config=/etc/grafana/grafana.ini"]
+
+# Start Grafana
+CMD ["grafana-server", "--homepath=/usr/share/grafana"]

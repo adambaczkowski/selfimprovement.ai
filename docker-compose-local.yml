@@ -159,11 +159,14 @@ services:
       context: ./Monitoring/Grafana
       dockerfile: Dockerfile.local
     restart: always
-    user: "1000"
     volumes:
       - ./Monitoring/Grafana/lib:/var/lib/grafana
     ports:
       - "3002:3000"
+    user: "${UID}:${GID}"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
 
   loki:
     container_name: loki
@@ -223,7 +226,6 @@ services:
       - '--path.procfs=/host/proc'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-
 
   rabbitmq:
     container_name: rabbitmq

@@ -135,3 +135,16 @@ resource "azurerm_key_vault_secret" "rabbitmq_password_secret" {
   value        = var.rabbitmq_password
   key_vault_id = azurerm_key_vault.key_vault.id
 }
+
+resource "azurerm_key_vault_secret" "grafana_password_user" {
+  name         = "grafanaUser"
+  value        = var.grafana_user
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "grafana_password_secret" {
+  name         = "grafanaPassword"
+  value        = var.grafana_password
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
+
