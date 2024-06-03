@@ -55,7 +55,7 @@ services:
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
       - "8080:8080"
-    restart: on-failure
+    restart: always
 
   goal:
     container_name: selfimprovement-goal
@@ -81,7 +81,7 @@ services:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
-      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.file.core.windows.net/prompt
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/blob
       - Llama2=ollama-static-dns.polandcentral.azurecontainer.io:11434
       - GoalApiServiceUrl=goal-static-dns.polandcentral.azurecontainer.io:8080
       - IdentityApiServiceUrl=identity-static-dns.polandcentral.azurecontainer.io:8080
@@ -95,7 +95,7 @@ services:
       context: ./Database/pgadmin
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/pgadmin:${IMAGE_TAG}"
-    restart: unless-stopped
+    restart: always
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
@@ -106,7 +106,7 @@ services:
 
   open-webui:
     container_name: open-webui
-    restart: on-failure
+    restart: always
     build:
       context: ./Ollama/webui
       dockerfile: Dockerfile.local
@@ -125,7 +125,7 @@ services:
     tty: true
     volumes:
       - ollama:/root/.ollama
-    restart: unless-stopped
+    restart: always
     ports:
       - 11434:11434
     # deploy:
@@ -142,7 +142,7 @@ services:
       context: ./Monitoring/Grafana
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/grafana:${IMAGE_TAG}"
-    restart: on-failure
+    restart: always
     volumes:
       - ./Monitoring/Grafana/lib:/var/lib/grafana
     ports:
@@ -158,7 +158,7 @@ services:
       context: ./Monitoring/Loki
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/loki:${IMAGE_TAG}"
-    restart: on-failure
+    restart: always
     volumes:
       - ./Monitoring/Loki:/etc/loki
     ports:
@@ -171,7 +171,7 @@ services:
       context: ./Monitoring/Promtail
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/promtail:${IMAGE_TAG}"
-    restart: on-failure
+    restart: always
     volumes:
       - ./Monitoring/Promtail:/etc/promtail
     command: -config.expand-env=true -config.file=/etc/promtail/promtail-config.yml
@@ -182,7 +182,7 @@ services:
       context: ./Monitoring/Prometheus
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/prometheus:${IMAGE_TAG}"
-    restart: unless-stopped
+    restart: always
     ports:
       - "9090:9090"
     volumes:
@@ -201,7 +201,7 @@ services:
       context: ./Monitoring/NodeExporter
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/node-exporter:${IMAGE_TAG}"
-    restart: on-failure
+    restart: always
     ports:
       - "9100:9100"
 
@@ -211,7 +211,7 @@ services:
       context: ./Nginx
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/nginx:${IMAGE_TAG}"
-    restart: unless-stopped
+    restart: always
     ports:
       - "80:80"
       #- "443:443"

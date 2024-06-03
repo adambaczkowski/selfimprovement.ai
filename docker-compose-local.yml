@@ -6,7 +6,7 @@ services:
     build:
       context: ./Database/postgres
       dockerfile: Dockerfile.local
-    restart: on-failure
+    restart: always
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=selfimprovement123
@@ -25,7 +25,7 @@ services:
     build:
       context: ./Database/pgadmin
       dockerfile: Dockerfile.local
-    restart: unless-stopped
+    restart: always
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
       - PGADMIN_DEFAULT_PASSWORD=selfimprovement123
@@ -45,7 +45,7 @@ services:
 
   identity:
     container_name: selfimprovement-identity
-    restart: on-failure
+    restart: always
     build:
       context: ./Source
       dockerfile: IdentityApi/Dockerfile.local
@@ -103,7 +103,7 @@ services:
 
   open-webui:
     container_name: open-webui
-    restart: on-failure
+    restart: always
     build:
       context: ./Ollama/webui
       dockerfile: Dockerfile.local
