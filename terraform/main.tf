@@ -8,60 +8,60 @@ resource "azurerm_container_registry" "acr-dev" {
   admin_enabled       = true
 }
 
-resource "azurerm_virtual_network" "dev_vnet" {
-  name                = "dev-vnet"
-  address_space       = ["10.0.0.0/16"]
-  location            = var.location
-  resource_group_name = var.rg-name
-}
+# resource "azurerm_virtual_network" "dev_vnet" {
+#   name                = "dev-vnet"
+#   address_space       = ["10.0.0.0/16"]
+#   location            = var.location
+#   resource_group_name = var.rg-name
+# }
 
-resource "azurerm_subnet" "dev_subnet" {
-  name                 = "dev-subnet"
-  resource_group_name  = var.rg-name
-  virtual_network_name = azurerm_virtual_network.dev_vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
-  service_endpoints = ["Microsoft.Storage", "Microsoft.Sql"]
-}
+# resource "azurerm_subnet" "dev_subnet" {
+#   name                 = "dev-subnet"
+#   resource_group_name  = var.rg-name
+#   virtual_network_name = azurerm_virtual_network.dev_vnet.name
+#   address_prefixes     = ["10.0.1.0/24"]
+#   service_endpoints = ["Microsoft.Storage", "Microsoft.Sql"]
+# }
 
-resource "azurerm_network_profile" "dev_profile" {
-  name                = "dev-network-profile"
-  location            = var.location
-  resource_group_name = var.rg-name
+# resource "azurerm_network_profile" "dev_profile" {
+#   name                = "dev-network-profile"
+#   location            = var.location
+#   resource_group_name = var.rg-name
 
-  container_network_interface {
-    name = "dev-cni"
+#   container_network_interface {
+#     name = "dev-cni"
 
-    ip_configuration {
-      name      = "dev-ipconfig"
-      subnet_id = azurerm_subnet.dev_subnet.id
-    }
-  }
-}
+#     ip_configuration {
+#       name      = "dev-ipconfig"
+#       subnet_id = azurerm_subnet.dev_subnet.id
+#     }
+#   }
+# }
 
-resource "azurerm_postgresql_server" "example" {
-  name                = "selfimprovementai-psql-server"
-  location            = "germanywestcentral"
-  resource_group_name = var.rg-name
-  sku_name            = "B_Gen5_1"
-  storage_mb          = 5120
-  backup_retention_days = 7
-  geo_redundant_backup_enabled = false
-  auto_grow_enabled   = false
+# resource "azurerm_postgresql_server" "example" {
+#   name                = "selfimprovementai-psql-server"
+#   location            = "germanywestcentral"
+#   resource_group_name = var.rg-name
+#   sku_name            = "B_Gen5_1"
+#   storage_mb          = 5120
+#   backup_retention_days = 7
+#   geo_redundant_backup_enabled = false
+#   auto_grow_enabled   = false
 
-  administrator_login          = var.postgres_user
-  administrator_login_password = var.postgres_password
+#   administrator_login          = var.postgres_user
+#   administrator_login_password = var.postgres_password
 
-  version = "11"
-  ssl_enforcement_enabled = true
-}
+#   version = "11"
+#   ssl_enforcement_enabled = true
+# }
 
-resource "azurerm_postgresql_database" "example" {
-  name                = "SelfImprovementDb"
-  resource_group_name = var.rg-name
-  server_name         = azurerm_postgresql_server.example.name
-  charset             = "UTF8"
-  collation           = "en_US.utf8"
-}
+# resource "azurerm_postgresql_database" "example" {
+#   name                = "SelfImprovementDb"
+#   resource_group_name = var.rg-name
+#   server_name         = azurerm_postgresql_server.example.name
+#   charset             = "UTF8"
+#   collation           = "en_US.utf8"
+# }
 
 resource "azurerm_key_vault" "key_vault" {
   name                       = "selfimprovementKeyVault"
