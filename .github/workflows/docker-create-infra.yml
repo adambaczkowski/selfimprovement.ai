@@ -82,9 +82,9 @@ jobs:
         run: |
           az storage share create --name pgadmin --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
-      - name: Create File Shares for openWebui
+      - name: Create File Shares for openwebui
         run: |
-          az storage share create --name openWebui --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+          az storage share create --name openwebui --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
       - name: Create File Shares for ollama
         run: |
