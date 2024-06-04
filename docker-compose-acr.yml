@@ -268,7 +268,7 @@ volumes:
 
   promtail_data:
     driver: azure_file
-    driver.opts:
+    driver_opts:
       share_name: "promtaildata"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
