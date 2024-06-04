@@ -70,6 +70,7 @@ jobs:
         run: |
           echo "ACR_NAME=${ACR_NAME}" >> .env
           echo "IMAGE_TAG=${IMAGE_TAG}" >> .env
+          echo "STORAGE_ACCOUNT_KEY=${{ secrets.STORAGE_KEY }" >> .env
           docker-compose --env-file .env -f docker-compose-acr.yml build
           docker-compose --env-file .env -f docker-compose-acr.yml push
 
