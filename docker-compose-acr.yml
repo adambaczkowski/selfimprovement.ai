@@ -153,6 +153,7 @@ services:
     image: "${ACR_NAME}.azurecr.io/loki:${IMAGE_TAG}"
     restart: always
     volumes:
+      - ./Monitoring/Loki:/etc/loki
       - loki_data:/etc/loki
     ports:
       - "3100:3100"
@@ -179,6 +180,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
+      - ./Monitoring/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
@@ -208,6 +210,7 @@ services:
       - "80:80"
       #- "443:443"
     volumes:
+      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
       - nginx_data:/etc/nginx
       #- ./Nginx/index.html:/usr/share/nginx/html/index.html
     # env_file:
