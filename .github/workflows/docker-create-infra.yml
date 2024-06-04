@@ -89,7 +89,10 @@ jobs:
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label coredns-static-dns \
-            --location ${{ secrets.LOCATION }}
+            --location ${{ secrets.LOCATION }} \
+            --vnet-name MyVNet \
+            --subnet MySubnet \
+            --network-profile MyNetworkProfile
 
       - name: Deploy RabbitMQ to ACI
         continue-on-error: true
@@ -184,7 +187,6 @@ jobs:
                 Include Error Detail=true" \
                 CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000 \
                 RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
-
 
       - name: Deploy Goal to ACI
         continue-on-error: true
