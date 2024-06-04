@@ -118,7 +118,7 @@ services:
     image: "${ACR_NAME}.azurecr.io/ollama:${IMAGE_TAG}"
     tty: true
     volumes:
-      - ollama:/root/.ollama
+      - ollama_data:/root/.ollama
     restart: always
     ports:
       - 11434:11434
