@@ -108,7 +108,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - open-webui:/app/backend/data
+      - openwebui:/app/backend/data
 
   ollama:
     container_name: ollama
