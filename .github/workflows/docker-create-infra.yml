@@ -78,11 +78,9 @@ jobs:
         run: |
           az storage share create --name rabbitmq --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
-
       - name: Create File Shares for pgadmin
         run: |
           az storage share create --name pgadmin --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
-
 
       - name: Create File Shares for openWebui
         run: |
@@ -128,9 +126,6 @@ jobs:
             --registry-password ${{ secrets.ACR_PASSWORD }} \
             --dns-name-label coredns-static-dns \
             --location ${{ secrets.LOCATION }} \
-            --vnet-name MyVNet \
-            --subnet MySubnet \
-            --network-profile MyNetworkProfile
 
       - name: Deploy RabbitMQ to ACI
         continue-on-error: true
