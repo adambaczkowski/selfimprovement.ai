@@ -6,7 +6,7 @@ import { FormTextInput, FormSelectInput } from "../../components/componentsIndex
 import { EducationLevel, educationOptions } from "../../utils/enums/educationLevel";
 import { ProfileCreationFormValidation } from "./ProfileCreationFormValidation";
 import styles from "./ProfileCreationPage.module.scss";
-import { CreateUserProfileCommand, Education } from "../../utils/api/identity";
+import { UserProfileDto, Education } from "../../utils/api/identity";
 
 type Props = {};
 
@@ -17,17 +17,15 @@ function ProfileCreationPage({}: Props) {
   const [isProfileCreationSucess, setIsProfileCreationSucess] = useState<boolean>(false);
   const { mode } = useParams<{ mode: string }>();
 
-  const creationProfileInitialValues: CreateUserProfileCommand = {
-    name: "",
-    surname: "",
+  const creationProfileInitialValues: UserProfileDto = {
     weight: null,
     height: null,
     age: null,
     educationLevel: Education._0,
-    profileImage: null,
+    profileImageData: null,
   };
 
-  const handleSignUp = async (values: CreateUserProfileCommand) => {
+  const handleSignUp = async (values: UserProfileDto) => {
     console.log(values);
     // try {
     //   const response = await signUp(values);
@@ -78,8 +76,6 @@ function ProfileCreationPage({}: Props) {
           <Form>
             <div className={styles.form_items_container}>
               <h1 className={styles.heading}>{pageTitle}</h1>
-              <FormTextInput label="Name" name="name" />
-              <FormTextInput label="Surname" name="surname" />
               <FormTextInput label="Weight" name="weight" />
               <FormTextInput label="Height" name="height" />
               <FormTextInput label="Age" name="age" />

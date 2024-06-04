@@ -1,0 +1,17 @@
+.:53 {
+    errors
+    health
+
+    # Use the Docker DNS for resolving service names
+    hosts {
+        fallthrough
+    }
+
+    # Forward all other queries to Google's DNS
+    forward . 8.8.8.8
+
+    cache 30
+    loop
+    reload
+    loadbalance
+}

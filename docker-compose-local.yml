@@ -1,12 +1,23 @@
 version: '3.7'
 
 services:
+
+  coredns:
+    build:
+      context: ./CoreDNS
+      dockerfile: Dockerfile.local
+    container_name: coredns
+    restart: unless-stopped
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+
   postgres:
     container_name: postgres
     build:
       context: ./Database/postgres
       dockerfile: Dockerfile.local
-    restart: on-failure
+    restart: always
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=selfimprovement123
@@ -25,7 +36,7 @@ services:
     build:
       context: ./Database/pgadmin
       dockerfile: Dockerfile.local
-    restart: unless-stopped
+    restart: always
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
       - PGADMIN_DEFAULT_PASSWORD=selfimprovement123
@@ -45,7 +56,7 @@ services:
 
   identity:
     container_name: selfimprovement-identity
-    restart: on-failure
+    restart: always
     build:
       context: ./Source
       dockerfile: IdentityApi/Dockerfile.local
@@ -103,7 +114,7 @@ services:
 
   open-webui:
     container_name: open-webui
-    restart: on-failure
+    restart: always
     build:
       context: ./Ollama/webui
       dockerfile: Dockerfile.local
@@ -159,11 +170,14 @@ services:
       context: ./Monitoring/Grafana
       dockerfile: Dockerfile.local
     restart: always
-    user: "1000"
     volumes:
       - ./Monitoring/Grafana/lib:/var/lib/grafana
     ports:
       - "3002:3000"
+    user: "${UID}:${GID}"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
 
   loki:
     container_name: loki
@@ -223,7 +237,6 @@ services:
       - '--path.procfs=/host/proc'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-
 
   rabbitmq:
     container_name: rabbitmq

@@ -6,7 +6,7 @@ positions:
   filename: /tmp/positions.yaml
 
 clients:
-  - url: http://loki:3100/loki/api/v1/push
+  - url: http://loki-static-dns.polandcentral.azurecontainer.io:3100/loki/api/v1/push
 
 scrape_configs:
   - job_name: system
@@ -15,7 +15,7 @@ scrape_configs:
           - localhost
         labels:
           job: varlogs
-          __path__: /var/log/*log
+          __path__: /var/log/*log  # Captures all standard logs
 
   - job_name: application
     static_configs:
@@ -23,4 +23,4 @@ scrape_configs:
           - localhost
         labels:
           job: applogs
-          __path__: /var/log/app/*.log
+          __path__: /var/log/app/*.log  # Captures application-specific logs

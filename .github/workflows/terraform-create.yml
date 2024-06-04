@@ -70,13 +70,33 @@ jobs:
 
       - name: Generate postgres password
         run: |
-          postgres_secret=$(openssl rand -hex 24)
+          postgres_secret=$(openssl rand -hex 16 | awk '{ for(i=1; i<=length($0); i++) printf "%s", (rand() > 0.5 ? toupper(substr($0, i, 1)) : tolower(substr($0, i, 1))); print "" }')
           echo "postgres_password=\"${postgres_secret}\"" >> ./terraform/terraform.tfvars
 
       - name: Generate pg admin password
         run: |
           pg_admin_secret=$(openssl rand -hex 24)
           echo "pgadmin_password=\"${pg_admin_secret}\"" >> ./terraform/terraform.tfvars
+
+      - name: Generate rabbitmq user
+        run: |
+          rabbitmq_user=$(openssl rand -hex 24)
+          echo "rabbitmq_user=\"${rabbitmq_user}\"" >> ./terraform/terraform.tfvars
+
+      - name: Generate rabbitmq password
+        run: |
+          rabbitmq_password=$(openssl rand -hex 24)
+          echo "rabbitmq_password=\"${rabbitmq_password}\"" >> ./terraform/terraform.tfvars
+
+      - name: Generate grafana user
+        run: |
+          grafana_user=$(openssl rand -hex 24)
+          echo "grafana_user=\"${grafana_user}\"" >> ./terraform/terraform.tfvars
+
+      - name: Generate grafana password
+        run: |
+          grafana_password=$(openssl rand -hex 24)
+          echo "grafana_password=\"${grafana_password}\"" >> ./terraform/terraform.tfvars
 
       - name: Configure Terraform Backend
         run: |

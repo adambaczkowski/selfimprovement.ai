@@ -40,12 +40,11 @@ function GoalPage() {
   useQuery({
     queryKey: ["getGoal"],
     queryFn: async () => {
-      const response = await fetchGoal(id || "");
-      const goal = response.data;
+      const goal = await fetchGoal(id || "");
       if (goal != null) {
         setGoal(goal);
       }
-      return response.data;
+      return goal;
     },
     refetchOnWindowFocus: false,
   });
@@ -53,12 +52,11 @@ function GoalPage() {
   useQuery({
     queryKey: ["getTasks"],
     queryFn: async () => {
-      const response = await fetchGoalTasks(id ?? "");
-      const tasks = response.data;
+      const tasks = await fetchGoalTasks(id ?? "");
       if (tasks != null) {
         setTasks(tasks);
       }
-      return response.data;
+      return tasks;
     },
     refetchOnWindowFocus: false,
   });
@@ -98,7 +96,7 @@ function GoalPage() {
         <p className={styles.description}><span>Time Availability Per Week: </span>{goal.timeAvailabilityPerWeek}</p>
         <p className={styles.description}><span>Start date: </span>{dayjs(goal.startDate).format("MM-DD-YYYY")}</p>
         <p className={styles.description}><span>End date: </span>{dayjs(goal.endDate).format("MM-DD-YYYY")}</p>
-        <p className={styles.description}><span>Experience: </span>{goal.experience}</p>
+        <p className={styles.description}><span>User advancement: </span>{goal.userAdvancement}</p>
       </div>
     </div>
       <ItemsGrid title={"Goal Tasks"} tasks={tasks} />

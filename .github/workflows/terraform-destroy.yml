@@ -31,6 +31,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: latest
+
       - name: Generate SSH Key
         run: |
           mkdir -p .ssh
@@ -47,8 +48,16 @@ jobs:
           cat ./terraform/terraform.tfvars
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config=./backend.tfvars
         working-directory: ./terraform
+
+      - name: Download Terraform State File
+        uses: Azure/storage-blobs@v1
+        with:
+          connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          container-name: "tfstate"
+          file-to-download: "terraform.tfstate"
+          download-path: "./terraform"
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve

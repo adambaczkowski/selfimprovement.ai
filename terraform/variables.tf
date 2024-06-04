@@ -76,7 +76,7 @@ variable "username" {
 
 variable "postgres_user" {
   type        = string
-  default     = "admin"
+  default     = "selfimproveAdmin"
   description = "Key Vault secret for postgres username"
 }
 
@@ -98,4 +98,20 @@ variable "pgadmin_email" {
 
 variable "pgadmin_password" {
   description = "Key Vault secret for pgadmin password"
+}
+
+variable "rabbitmq_user" {
+  description = "Key Vault secret for rabbitmq user"
+}
+
+variable "rabbitmq_password" {
+  description = "Key Vault secret for rabbitmq password"
+}
+
+variable "grafana_user" {
+  description = "Key Vault secret for grafana user"
+}
+
+variable "grafana_password" {
+  description = "Key Vault secret for grafana password"
 }

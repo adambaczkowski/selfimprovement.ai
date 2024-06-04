@@ -17,12 +17,11 @@ function HomePage({}: Props) {
   useQuery({
     queryKey: ["getTask"],
     queryFn: async () => {
-      const response = await fetchTasks();
-      const tasks = response.data;
+      const tasks = await fetchTasks();
       if (tasks != null) {
         setTasks(tasks);
       }
-      return response.data;
+      return tasks;
     },
     refetchOnWindowFocus: false,
   });

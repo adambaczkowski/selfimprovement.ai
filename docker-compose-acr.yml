@@ -1,6 +1,19 @@
 version: '3.7'
 
 services:
+  coredns:
+    container_name: coredns
+    build:
+      context: ./CoreDNS
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/coredns:${IMAGE_TAG}"
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    restart: always
+    volumes:
+      - coredns_data:/data
+
   rabbitmq:
     container_name: rabbitmq
     build:
@@ -11,27 +24,7 @@ services:
       - "5672:5672" # AMQP
       - "15672:15672" # Management Plugin
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-
-  postgres:
-    container_name: postgres
-    build:
-      context: ./Database/postgres
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/postgres:${IMAGE_TAG}"
-    restart: on-failure
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB_NAME}
-    ports:
-      - 5432:5432
-    volumes:
-      - postgres:/var/lib/postgresql/data
-    logging:
-      options:
-        max-size: 10m
-        max-file: "3"
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia/
 
   frontend:
     container_name: selfimprovement-frontend
@@ -51,11 +44,11 @@ services:
     image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://0.0.0.0:3000
-      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
       - "8080:8080"
-    restart: on-failure
+    restart: always
 
   goal:
     container_name: selfimprovement-goal
@@ -65,26 +58,26 @@ services:
     image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://0.0.0.0:3000
-      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
       - "8080:8080"
     restart: always
 
   prompt:
-    container_name: selfimprovement-prompt
+    container_name: selfimproved-prompt
     build:
       context: ./Source
       dockerfile: PromptApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://0.0.0.0:3000
-      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
-      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
-      - Llama2=host.docker.internal:11434
-      - GoalApiServiceUrl=host.docker.internal:8080
-      - IdentityApiServiceUrl=host.docker.internal:8080
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/blob
+      - Llama2=ollama-static-dns.polandcentral.azurecontainer.io:11434
+      - GoalApiServiceUrl=goal-static-dns.polandcentral.azurecontainer.io:8080
+      - IdentityApiServiceUrl=identity-static-dns.polandcentral.azurecontainer.io:8080
     ports:
       - "8080:8080"
     restart: always
@@ -95,18 +88,19 @@ services:
       context: ./Database/pgadmin
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/pgadmin:${IMAGE_TAG}"
-    restart: unless-stopped
+    restart: always
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "80:80"
     volumes:
-      - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
+      - pgadmin_data:/var/lib/pgadmin
+
 
   open-webui:
     container_name: open-webui
-    restart: on-failure
+    restart: always
     build:
       context: ./Ollama/webui
       dockerfile: Dockerfile.local
@@ -114,7 +108,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - open-webui:/app/backend/data
+      - open_webui_data:/app/backend/data
 
   ollama:
     container_name: ollama
@@ -124,8 +118,8 @@ services:
     image: "${ACR_NAME}.azurecr.io/ollama:${IMAGE_TAG}"
     tty: true
     volumes:
-      - ollama:/root/.ollama
-    restart: unless-stopped
+      - ollama_data:/root/.ollama
+    restart: always
     ports:
       - 11434:11434
     # deploy:
@@ -142,12 +136,14 @@ services:
       context: ./Monitoring/Grafana
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/grafana:${IMAGE_TAG}"
-    restart: on-failure
-    user: "1000"
+    restart: always
     volumes:
       - ./Monitoring/Grafana/lib:/var/lib/grafana
     ports:
       - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
 
   loki:
     container_name: loki
@@ -155,7 +151,7 @@ services:
       context: ./Monitoring/Loki
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/loki:${IMAGE_TAG}"
-    restart: on-failure
+    restart: always
     volumes:
       - ./Monitoring/Loki:/etc/loki
     ports:
@@ -168,9 +164,9 @@ services:
       context: ./Monitoring/Promtail
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/promtail:${IMAGE_TAG}"
-    restart: on-failure
+    restart: always
     volumes:
-      - ./Monitoring/Promtail:/etc/promtail
+      - promtail_data:/etc/promtail
     command: -config.expand-env=true -config.file=/etc/promtail/promtail-config.yml
 
   prometheus:
@@ -179,11 +175,10 @@ services:
       context: ./Monitoring/Prometheus
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/prometheus:${IMAGE_TAG}"
-    restart: unless-stopped
+    restart: always
     ports:
       - "9090:9090"
     volumes:
-      - prometheus_data:/prometheus
       - ./Monitoring/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - --config.file=/etc/prometheus/prometheus.yml
@@ -198,7 +193,7 @@ services:
       context: ./Monitoring/NodeExporter
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/node-exporter:${IMAGE_TAG}"
-    restart: on-failure
+    restart: always
     ports:
       - "9100:9100"
 
@@ -208,19 +203,90 @@ services:
       context: ./Nginx
       dockerfile: Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/nginx:${IMAGE_TAG}"
-    restart: unless-stopped
+    restart: always
     ports:
       - "80:80"
       #- "443:443"
     volumes:
       - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
+      - nginx_data:/etc/nginx
       #- ./Nginx/index.html:/usr/share/nginx/html/index.html
     # env_file:
     #   - .env
 
 volumes:
-  postgres:
-  ollama:
-  prometheus_data:
-  open-webui:
+  coredns_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "corednsdata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
   rabbitmq_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "rabbitmqdata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+  pgadmin_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "pgadmindata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+  open_webui_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "open_webui_data"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+  ollama_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "ollamadata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+  grafana_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "grafanadata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+  loki_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "lokidata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+  promtail_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "promtaildata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+  prometheus_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "prometheusdata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+  nginx_data:
+    driver: azure_file
+    driver_opts:
+      share_name: "nginxdata"
+      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
+      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
+
+
+networks:
+  default:
+    external:
+      name: dev-vnet

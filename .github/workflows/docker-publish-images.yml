@@ -1,6 +1,6 @@
 name: 🐋 Build and Push Docker Images to Azure Container Registry
 
-on: 
+on:
   workflow_dispatch:
 
 permissions:
@@ -53,6 +53,56 @@ jobs:
           pgAdminPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminPassword --query value -o tsv)
           echo "PGADMIN_DEFAULT_PASSWORD=\"${pgAdminPassword}\"" >> .env
 
+      - name: Retrieve grafanaUser from Azure Key Vault
+        run: |
+          grafanaUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaUser --query value -o tsv)
+          echo "GRAFANA_USER=\"${grafanaUser}\"" >> .env
+
+      - name: Retrieve grafanaPassword from Azure Key Vault
+        run: |
+          grafanaPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaPassword --query value -o tsv)
+          echo "GRAFANA_PASSWORD=\"${grafanaPassword}\"" >> .env
+
+      - name: Create File Shares for CoreDNS
+        run: |
+          az storage share create --name coredns --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for RabbitMq
+        run: |
+          az storage share create --name rabbitmq --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for pgadmin
+        run: |
+          az storage share create --name pgadmin --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for openwebui
+        run: |
+          az storage share create --name openwebui --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for ollama
+        run: |
+          az storage share create --name ollama --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for grafana
+        run: |
+          az storage share create --name grafana --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for loki
+        run: |
+          az storage share create --name loki --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for promtail
+        run: |
+          az storage share create --name promtail --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for prometheus
+        run: |
+          az storage share create --name prometheus --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
+      - name: Create File Shares for nginx
+        run: |
+          az storage share create --name nginx --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+
       - name: Build and push Docker images
         env:
           ACR_NAME: ${{ secrets.ACR_NAME }}
@@ -60,6 +110,8 @@ jobs:
         run: |
           echo "ACR_NAME=${ACR_NAME}" >> .env
           echo "IMAGE_TAG=${IMAGE_TAG}" >> .env
+          echo "STORAGE_ACCOUNT_NAME=${{ secrets. STORAGE_ACCOUNT_NAME }}" >> .env
+          echo "STORAGE_ACCOUNT_KEY=${{ secrets.STORAGE_KEY }}" >> .env
           docker-compose --env-file .env -f docker-compose-acr.yml build
           docker-compose --env-file .env -f docker-compose-acr.yml push
 
