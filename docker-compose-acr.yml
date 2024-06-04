@@ -154,7 +154,6 @@ services:
     restart: always
     volumes:
       - ./Monitoring/Loki:/etc/loki
-      - loki_data:/etc/loki
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/loki-config.yml
@@ -181,7 +180,6 @@ services:
       - "9090:9090"
     volumes:
       - ./Monitoring/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus
