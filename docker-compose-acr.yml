@@ -90,20 +90,20 @@ services:
     dns:
       - "127.0.0.1"
 
-    pgadmin:
-      container_name: pgadmin
-      build:
-        context: ./Database/pgadmin
-        dockerfile: Dockerfile.local
-      image: "${ACR_NAME}.azurecr.io/pgadmin:${IMAGE_TAG}"
-      restart: always
-      environment:
-        - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-        - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-      ports:
-        - "80:80"
-      volumes:
-        - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
+  pgadmin:
+    container_name: pgadmin
+    build:
+      context: ./Database/pgadmin
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/pgadmin:${IMAGE_TAG}"
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "80:80"
+    volumes:
+      - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
 
   open-webui:
     container_name: open-webui
