@@ -111,6 +111,7 @@ jobs:
           az storage share create --name nginx --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
       - name: Deploy CoreDNS to ACI
+        continue-on-error: true
         run: |
           latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository coredns --orderby time_desc --query '[0]' -o tsv)
           az container create \
