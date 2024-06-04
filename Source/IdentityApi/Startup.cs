@@ -1,4 +1,5 @@
-﻿using IdentityApi.Data;
+﻿using System.Text.Json.Serialization;
+using IdentityApi.Data;
 using IdentityApi.Identity.Commands;
 using IdentityApi.Identity.Commands.TokenProvider;
 using IdentityApi.Identity.Services;
@@ -19,7 +20,11 @@ public class Startup(IConfiguration configuration)
     public void ConfigureServices(IServiceCollection services)
     {
         services.Configure<Token>(configuration.GetSection("token"));
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
         services.AddHealthChecks();
         services
             .AddSwagger(configuration, "identity")

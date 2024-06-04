@@ -1,8 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export enum Sex {
-    '_0' = 0,
-    '_1' = 1,
+    MALE = 'Male',
+    FEMALE = 'Female',
 }

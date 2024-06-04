@@ -508,12 +508,11 @@
       },
       "Education": {
         "enum": [
-          0,
-          1,
-          2
+          "Primary",
+          "Secondary",
+          "PostSecondary"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "RequestPasswordResetCommand": {
         "type": "object",
@@ -555,11 +554,10 @@
       },
       "Sex": {
         "enum": [
-          0,
-          1
+          "Male",
+          "Female"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "SignInCommand": {
         "type": "object",
