@@ -71,7 +71,7 @@ jobs:
           echo "ACR_NAME=${ACR_NAME}" >> .env
           echo "IMAGE_TAG=${IMAGE_TAG}" >> .env
           echo "STORAGE_ACCOUNT_KEY=${{ secrets.STORAGE_KEY }}" >> .env
-          docker-compose up --env-file .env -f docker-compose-acr.yml --build
+          docker-compose up --env-file .env -f docker-compose-acr.yml --build --force-recreate
           docker-compose up --env-file .env -f docker-compose-acr.yml push
 
       - name: Docker logout
