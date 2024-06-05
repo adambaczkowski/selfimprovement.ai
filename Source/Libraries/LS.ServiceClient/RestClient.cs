@@ -54,10 +54,10 @@ public class RestClient : IServiceClient
         return await _retryOnServerError.ExecuteAsync(() => Client.SendAsync(requestMessage));
     }
 
-    public async Task<HttpResponseMessage> Post(string serviceName, string path, object request,
+    public async Task<HttpResponseMessage> Post(string serviceName, string path, object request, string? externalApiKey,
         params Header[] headers)
     {
-        var baseAddress = GetBaseAddress(serviceName);
+        var baseAddress = GetBaseAddress(serviceName, !String.IsNullOrEmpty(externalApiKey));
 
         var requestMessage = RequestMessage.Post(
             $"{baseAddress}{path}",
@@ -98,20 +98,26 @@ public class RestClient : IServiceClient
         return await _retryOnServerError.ExecuteAsync(() => Client.SendAsync(requestMessage));
     }
 
-    private string GetBaseAddress(string service)
+    private string GetBaseAddress(string service, bool isExternal = false)
     {
-        var resolvedUrl = $"http://{service}";
+        var resolvedUrl = isExternal ? $"https://{service}" : $"http://{service}";
         resolvedUrl = resolvedUrl.TrimEnd('/') + "/";
-            
         return resolvedUrl;
     }
 
-    private async Task AddAuthorizationBearerToken(HttpRequestMessage httpRequest)
+    private async Task AddAuthorizationBearerToken(HttpRequestMessage httpRequest, string? externalApiKey = null)
     {
-        var usersAccessToken = await _accessTokenProvider.Get();
-        if (usersAccessToken != null)
+        if (externalApiKey is not null)
         {
-            httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", $"{usersAccessToken}");
+            httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", $"{externalApiKey}");
+        }
+        else
+        {
+            var usersAccessToken = await _accessTokenProvider.Get();
+            if (usersAccessToken != null)
+            {
+                httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", $"{usersAccessToken}");
+            }
         }
     }
 

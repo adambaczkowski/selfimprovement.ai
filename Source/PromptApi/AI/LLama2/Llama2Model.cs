@@ -9,6 +9,7 @@ public class Llama2Model(string name,string apiUrl, IPromptBuilderService prompt
     public string Name { get; init; } = name;
     public string ApiUrl { get; init; } = apiUrl;
     public AiModelName AiModelName { get; } = AiModelName.Llama2;
+    public IAiRequestModel RequestModel { get; set; }
 
     public async Task<string> BuildPrompt(string userId, Guid goalId)
     {

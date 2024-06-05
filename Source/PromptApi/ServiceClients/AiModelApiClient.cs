@@ -18,12 +18,13 @@ public class AiModelApiClient(
 {
     protected override string ServiceUrl { get; set; } = String.Empty;
 
-    public async Task<AiResponseModel> GetPromptResponse(IAiModel model, object prompt)
+    public async Task<AiResponseModel> GetPromptResponse(IAiModel model, object requestModel)
     {
         ServiceUrl = configuration[model.AiModelName.ToString()];
+        var externalApiKey = configuration[$"{model.AiModelName.ToString()}_ApiKey"];
         if (!String.IsNullOrEmpty(ServiceUrl))
         {
-            var response = await PostWithResponse<AiResponseModel>(model.ApiUrl, prompt);
+            var response = await PostWithResponse<AiResponseModel>(model.ApiUrl, requestModel, externalApiKey);
 
             return response.Status == HttpStatusCode.OK ? response.Result : null;
         }

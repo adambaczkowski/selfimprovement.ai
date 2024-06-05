@@ -14,6 +14,7 @@ public class ZephyrModel(
     public string Name { get; init; } = name;
     public string ApiUrl { get; init; } = apiUrl;
     public AiModelName AiModelName { get; } = AiModelName.Zephyr;
+    public IAiRequestModel RequestModel { get; set; }
 
     public async Task<string> BuildPrompt(string userId,Guid goalId)
     {

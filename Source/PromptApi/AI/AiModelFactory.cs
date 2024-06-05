@@ -12,13 +12,13 @@ public static class AiModelFactory
     private const string Llama2ApiPath = "api/generate";
     private const string Llama3ApiPath = "";
     private const string ZephyrApiPath = "";
-    private const string GPT35ApiPath = "";
+    private const string Gpt35ApiPath = "v1/chat/completions";
     public static IAiModel CreateModel(AiModelName name, IPromptBuilderService promptBuilderService)
     {
         switch (name)
         {
             case AiModelName.Gpt35:
-                return new Gpt35Model("gpt35", GPT35ApiPath);
+                return new Gpt35Model("gpt35", Gpt35ApiPath, promptBuilderService);
             case AiModelName.Llama2:
                 return new Llama2Model("llama2", Llama2ApiPath, promptBuilderService);
             case AiModelName.Llama3:
