@@ -2,8 +2,8 @@
 
 public enum AiModelName
 {
-    Gpt35,
-    Llama2,
-    Llama3,
-    Zephyr
+    Gpt35 = 0,
+    Llama2 = 1,
+    Llama3 = 2,
+    Zephyr = 3,
 }
