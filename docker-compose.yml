@@ -45,14 +45,14 @@ services:
     volumes:
       - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
 
-  # frontend:
-  #   container_name: selfimprovement-frontend
-  #   build:
-  #     context: ./Source/Web/
-  #     dockerfile: Dockerfile.local
-  #   ports:
-  #     - "3000:3000"
-  #   restart: always
+  frontend:
+    container_name: selfimprovement-frontend
+    build:
+      context: ./Source/Web/
+      dockerfile: Dockerfile.local
+    ports:
+      - "3000:3000"
+    restart: always
 
   identity:
     container_name: selfimprovement-identity
@@ -251,19 +251,19 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
-  # nginx:
-  #   container_name: nginx
-  #   build:
-  #     context: ./Nginx
-  #     dockerfile: Dockerfile.local
-  #   restart: always
-  #   ports:
-  #     - "80:80"
-  #     #- "443:443"
-  #   volumes:
-  #     - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
-  #   # env_file:
-  #   #   - .env
+  nginx:
+    container_name: nginx
+    build:
+      context: ./Nginx
+      dockerfile: Dockerfile.local
+    restart: always
+    ports:
+      - "80:80"
+      #- "443:443"
+    volumes:
+      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
+    # env_file:
+    #   - .env
 
 volumes:
   azurite_data:
