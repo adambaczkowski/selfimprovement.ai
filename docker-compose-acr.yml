@@ -122,8 +122,7 @@ services:
       dockerfile: IdentityApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=postgresql://selfimprovementAdmin@selfimprovementaipsql:selfimprovement123$$@selfimprovementaipsql.postgres.database.azure.com:5432/SelfImprovementDb;Include Error Detail=true
-      #- SelfImprovementDbContext=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
+      - SelfImprovementDbContext=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME};Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
@@ -138,7 +137,7 @@ services:
       dockerfile: GoalApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=postgresql://selfimprovementAdmin@selfimprovementaipsql:selfimprovement123$$@selfimprovementaipsql.postgres.database.azure.com:5432/SelfImprovementDb;Include Error Detail=true
+      - SelfImprovementDbContext=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME};Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
@@ -152,7 +151,7 @@ services:
       dockerfile: PromptApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=postgresql://selfimprovementAdmin@selfimprovementaipsql:selfimprovement123$$@selfimprovementaipsql.postgres.database.azure.com:5432/SelfImprovementDb;Include Error Detail=true
+      - SelfImprovementDbContext=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME};Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite

@@ -117,11 +117,11 @@ jobs:
             --dns-name-label identity-static-dns \
             --location ${{ secrets.LOCATION }} \
             --environment-variables \
-                SelfImprovementDbContext="Host=selfimprovementaipsql.postgres.database.azure.com; \
-                Port=5432; \
-                Database=mydatabase; \
-                User ID=selfimprovementAdmin@selfimprovementaipsql; \
-                Password=selfimprovement123$; \
+                SelfImprovementDbContext="Host=${{ secrets.DB_HOST }}; \
+                Port=${{ secrets.DB_PORT }}; \
+                Database=${{ secrets.DB_NAME }}; \
+                User ID=${{ secrets.DB_USER }}; \
+                Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
                 CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000 \
                 RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
@@ -157,11 +157,11 @@ jobs:
             --dns-name-label goal-static-dns \
             --location ${{ secrets.LOCATION }} \
             --environment-variables \
-                SelfImprovementDbContext="Host=selfimprovementaipsql.postgres.database.azure.com; \
-                Port=5432; \
-                Database=mydatabase; \
-                User ID=selfimprovementAdmin@selfimprovementaipsql; \
-                Password=selfimprovement123$; \
+                SelfImprovementDbContext="Host=${{ secrets.DB_HOST }}; \
+                Port=${{ secrets.DB_PORT }}; \
+                Database=${{ secrets.DB_NAME }}; \
+                User ID=${{ secrets.DB_USER }}; \
+                Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
                 CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000 \
                 RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
@@ -198,11 +198,11 @@ jobs:
             --dns-name-label prompt-static-dns \
             --location ${{ secrets.LOCATION }} \
             --environment-variables \
-                SelfImprovementDbContext="Host=selfimprovementaipsql.postgres.database.azure.com; \
-                Port=5432; \
-                Database=SelfimprovementDb; \
-                User ID=selfimprovementAdmin@selfimprovementaipsql; \
-                Password=selfimprovement123$; \
+                SelfImprovementDbContext="Host=${{ secrets.DB_HOST }}}; \
+                Port=${{ secrets.DB_PORT }}; \
+                Database=${{ secrets.DB_NAME }}; \
+                User ID=${{ secrets.DB_USER }}; \
+                Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
                 CorsOrigin="http://frontend-static-dns.polandcentral.azurecontainer.io:3000" \
                 RabbitMqConnectionUrl="amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/" \
