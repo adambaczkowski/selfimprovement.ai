@@ -11,21 +11,21 @@ const events = [
   {
     id: 1,
     title: 'Task 1',
-    start: new Date(2024, 4, 9), // May 9th, 2024 (year, month (0-indexed), day)
-    end: new Date(2024, 4, 9), // Can be the same date for single-day tasks
+    start: new Date(2024, 5, 9), // May 9th, 2024 (year, month (0-indexed), day)
+    end: new Date(2024, 5, 9), // Can be the same date for single-day tasks
   },
   {
     id: 2,
     title: 'Task 2',
-    start: new Date(2024, 4, 9), // May 10th, 2024 (year, month (0-indexed), day)
-    end: new Date(2024, 4, 9), // Can be the same date for single-day tasks
+    start: new Date(2024, 5, 9), // May 10th, 2024 (year, month (0-indexed), day)
+    end: new Date(2024, 5, 9), // Can be the same date for single-day tasks
   },
-  {
-    id: 3,
-    title: 'Task 3',
-    start: new Date(2024, 4, 9), // May 10th, 2024 (year, month (0-indexed), day)
-    end: new Date(2024, 4, 9), // Can be the same date for single-day tasks
-  },
+  // {
+  //   id: 3,
+  //   title: 'Task 3',
+  //   start: new Date(2024, 5, 9), // May 10th, 2024 (year, month (0-indexed), day)
+  //   end: new Date(2024, 5, 9), // Can be the same date for single-day tasks
+  // },
   // {
   //   id: 4,
   //   title: 'Meeting 2',

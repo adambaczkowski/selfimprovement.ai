@@ -45,8 +45,8 @@ function SmallGoalsList() {
               {shortenString(goal.name, 30).toLowerCase()}
             </p>
             <p className={styles.goal_counter}>
-              {goal.tasks?.length}/{goal.tasks?.length} 
-              {/* {done_1}/{all}  */}
+              {/* {goal.tasks?.length}/{goal.tasks?.length}  */}
+              {done_1}/{all} 
             </p>
             <div className={styles.goal_item_checkbox}>
               {Number(done_1) === Number(all) ? 
