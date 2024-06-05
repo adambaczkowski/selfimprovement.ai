@@ -160,7 +160,7 @@ services:
     container_name: selfimproved-prompt
     build:
       context: ./Source
-      dockerfile: PromptApi/Dockerfile.local
+      dockerfile: PromptApi/Dockerfile.acr
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
