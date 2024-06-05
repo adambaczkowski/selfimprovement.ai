@@ -7,4 +7,4 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 EXPOSE 5672 15672
-VOLUME /var/lib/rabbitmq/mnesia
+VOLUME /var/lib/rabbitmq
