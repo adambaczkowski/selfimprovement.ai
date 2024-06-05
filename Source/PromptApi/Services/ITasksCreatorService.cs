@@ -7,5 +7,5 @@ namespace PromptApi.Services;
 
 public interface ITasksCreatorService
 {
-    public Task<List<GoalTaskResource>> CreateTaskList(GoalCreatedEvent @event, AiModelName aiModelName = AiModelName.Llama2);
+    public Task<List<GoalTaskResource>> CreateTaskList(GoalCreatedEvent @event, AiModelName aiModelName = AiModelName.Gpt35);
 }
