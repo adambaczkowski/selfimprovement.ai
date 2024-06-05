@@ -48,6 +48,7 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IGenericRepository<UserProfile>, UserProfileRepository>();
         services.AddScoped<IEmailSender, EmailSender>();
         services.Register(configuration);
+        services.AddHttpClient();
         services.AddIdentityServices(configuration);
         services.AddBlobStorage(configuration);
     }

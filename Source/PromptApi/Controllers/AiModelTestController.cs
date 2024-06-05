@@ -3,6 +3,7 @@ using LS.Events.PromptApi;
 using LS.Messaging.EventBus;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using PromptApi.AI;
 using PromptApi.Models;
 using PromptApi.Queries;
 using PromptApi.Services;
@@ -46,7 +47,7 @@ public class PromptController(IMediator mediator, ITasksCreatorService tasksCrea
         };
         try
         {
-            var tasks = await _tasksCreatorService.CreateTaskList(ev);
+            var tasks = await _tasksCreatorService.CreateTaskList(ev, AiModelName.Gpt35);
             _eventBus.Publish(new TasksForGoalCreatedEvent()
             {
                 Tasks = tasks
