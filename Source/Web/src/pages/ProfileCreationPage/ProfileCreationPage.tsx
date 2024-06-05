@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { Form, Formik } from "formik";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { FormTextInput, FormSelectInput } from "../../components/componentsIndex";
+import { FormTextInput, FormSelectInput, FormImageInput } from "../../components/componentsIndex";
 import { ProfileCreationFormValidation } from "./ProfileCreationFormValidation";
 import styles from "./ProfileCreationPage.module.scss";
 import { Sex, Education, UserProfileDto } from "../../utils/api/identity";
@@ -110,6 +110,7 @@ function ProfileCreationPage() {
             <FormTextInput label="Age" name="age" />
             <FormSelectInput label="Education level" name="educationLevel" options={enumToArrayOfOptions(Education)} />
             <FormSelectInput label="Sex" name="sex" options={enumToArrayOfOptions(Sex)} />
+            <FormImageInput label="Profile Image" name="profileImageData" />
             <button type="submit" className={styles.create_button}>{mode === "edit" ? "Edit" : "Create"}</button>
           </Form>
         </Formik>

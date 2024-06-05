@@ -2,7 +2,7 @@ import {useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from 'react-router-dom';
 import { LoadingCircle, DailyTasksSidebar, SmallGoalsList, AchievementsComponent } from "../../components/componentsIndex"
-import { GoalTaskDto } from "../../utils/api/goal";
+import { GoalTaskDto, GoalDto } from "../../utils/api/goal";
 import { fetchTasks } from "../../utils/services/goalTaskService";
 import styles from './HomePage.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 type Props = {};
 
 function HomePage({}: Props) {
-  const [tasks, setTasks] = useState<GoalTaskDto []>([]);
+  const [tasks, setTasks] = useState<GoalDto []>([]);
 
   useQuery({
     queryKey: ["getTask"],

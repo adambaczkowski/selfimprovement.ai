@@ -16,6 +16,7 @@ function GoalsList({ title, goals }: Props) {
           <GoalItem
             key={goal.id}
             id={goal.id}
+            name={goal.name}
             category={goal.category}
             timeAvailability={goal.timeAvailability}
             startDate={goal.startDate}

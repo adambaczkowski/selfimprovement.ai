@@ -1,12 +1,34 @@
-import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { menu, signOutIcon} from "./../../utils/enums/sidebarMenu";
 import styles from './Sidebar.module.scss';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { UserProfileDto } from "../../utils/api/identity";
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  unique_name: string;
+}
 
 function Sidebar() {
+  const [user, setUser] = useState<UserProfileDto | null>(null);
   const pathname = useLocation().pathname;
   const navigate = useNavigate();
+
+  function getUsernameFromToken(token: string): string | null {
+    try {
+      const decodedToken = jwtDecode<JwtPayload>(token);
+      console.log(decodedToken);
+      return decodedToken.unique_name;
+    } catch (error) {
+      console.error('Invalid token', error);
+      return null;
+    }
+  }
+
+  const token = localStorage.getItem('userToken');
+  const username = getUsernameFromToken(token as string);
 
   const handleSignOut = async () => {
     try {
@@ -23,7 +45,7 @@ function Sidebar() {
         <Link to={"/profileCreation/edit"} className={styles.image} title='Edit profile'>
           <img src="https://assets.vogue.com/photos/6327939f06377e01c5304296/master/w_1920,c_limit/Fc9-RcUXgAEgljY.jpeg" alt="Your Image" className={styles.image} />
         </Link>
-        <h1 className={styles.sidebar_header}>Adam Kowalski</h1>
+        <h1 className={styles.sidebar_header}>{username}</h1>
       </div>
       <div className={styles.list_container}>
         {menu.map((item) => {
