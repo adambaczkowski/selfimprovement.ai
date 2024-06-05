@@ -102,7 +102,6 @@ services:
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
       - Llama2=host.docker.internal:11434
       - Gpt35=api.openai.com
-      - Gpt35_ApiKey=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
       - GoalApiServiceUrl=host.docker.internal:8081
       - IdentityApiServiceUrl=host.docker.internal:8080
 
