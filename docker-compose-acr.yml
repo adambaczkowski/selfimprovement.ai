@@ -1,19 +1,6 @@
 version: '3.7'
 
 services:
-  # coredns:
-  #   container_name: coredns
-  #   build:
-  #     context: ./CoreDNS
-  #     dockerfile: Dockerfile.local
-  #   image: "${ACR_NAME}.azurecr.io/coredns:${IMAGE_TAG}"
-  #   ports:
-  #     - "53:53/udp"
-  #     - "53:53/tcp"
-  #   restart: always
-  #   volumes:
-  #     - coredns_data:/data
-
   rabbitmq:
     container_name: rabbitmq
     build:
@@ -50,13 +37,6 @@ services:
     restart: always
     ports:
       - 11434:11434
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
 
   grafana:
     container_name: grafana
@@ -134,13 +114,9 @@ services:
     restart: always
     ports:
       - "80:80"
-      #- "443:443"
     volumes:
       - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
       - nginx_data:/etc/nginx
-      #- ./Nginx/index.html:/usr/share/nginx/html/index.html
-    # env_file:
-    #   - .env
 
   frontend:
     container_name: selfimprovement-frontend
@@ -159,7 +135,7 @@ services:
       dockerfile: IdentityApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$;Include Error Detail=true
+      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
@@ -173,7 +149,7 @@ services:
       dockerfile: GoalApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$;Include Error Detail=true
+      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
@@ -187,7 +163,7 @@ services:
       dockerfile: PromptApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$;Include Error Detail=true
+      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/blob
