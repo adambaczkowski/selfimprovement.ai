@@ -23,7 +23,7 @@ public class PromptBuilderService(IGoalApiClient goalApiClient, IIdentityApiClie
         var goal = await goalApiClient.GetSingleGoal(goalId);
 
         var user = await identityApiClient.GetUserDetails(userId);
-
+        
         var basicPromptValuesObject = new BasicPrompt()
         {
             Goal = goal.GoalFriendlyName.ToFriendlyString(),
