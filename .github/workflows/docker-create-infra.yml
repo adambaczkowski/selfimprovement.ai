@@ -31,10 +31,10 @@ jobs:
           rabbitmqPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name rabbitmqPassword --query value -o tsv)
           grafanaUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaUser --query value -o tsv)
           grafanaPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaPassword --query value -o tsv)
-          echo "RABBITMQ_USER=\"${rabbitmqUser}\"" >> .env
-          echo "RABBITMQ_PASSWORD=\"${rabbitmqPassword}\"" >> .env
-          echo "GRAFANA_USER=\"${grafanaUser}\""" >> .env
-          echo "GRAFANA_PASSWORD=\"${grafanaPassword}\"" >> .env
+          echo "RABBITMQ_USER=\"$rabbitmqUser\"" >> .env
+          echo "RABBITMQ_PASSWORD=\"$rabbitmqPassword\"" >> .env
+          echo "GRAFANA_USER=\"$grafanaUser\"" >> .env
+          echo "GRAFANA_PASSWORD=\"$grafanaPassword\"" >> .env
 
       - name: Deploy RabbitMQ to ACI
         continue-on-error: true
