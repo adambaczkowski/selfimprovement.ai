@@ -5,7 +5,7 @@ services:
     container_name: rabbitmq
     build:
       context: ./Rabbitmq
-      dockerfile: Dockerfile.local
+      dockerfile: Dockerfile.acr
     image: "${ACR_NAME}.azurecr.io/rabbitmq:${IMAGE_TAG}"
     ports:
       - "5672:5672" # AMQP
@@ -147,7 +147,7 @@ services:
     container_name: selfimproved-prompt
     build:
       context: ./Source
-      dockerfile: PromptApi/Dockerfile.acr
+      dockerfile: PromptApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
