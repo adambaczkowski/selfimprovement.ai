@@ -161,17 +161,17 @@ services:
       - "8080:8080"
     restart: always
 
-    nginx:
-      container_name: nginx
-      build:
-        context: ./Nginx
-        dockerfile: Dockerfile.local
-      image: "${ACR_NAME}.azurecr.io/nginx:${IMAGE_TAG}"
-      restart: always
-      ports:
-        - "80:80"
-      volumes:
-        - nginx_data:/etc/nginx
+  nginx:
+    container_name: nginx
+    build:
+      context: ./Nginx
+      dockerfile: Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/nginx:${IMAGE_TAG}"
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - nginx_data:/etc/nginx
 
 volumes:
   rabbitmq_data:
