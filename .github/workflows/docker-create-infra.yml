@@ -93,7 +93,7 @@ jobs:
             --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-frontend:${latest_tag} \
             --cpu 1 \
             --memory 2 \
-            --ports 3000 \
+            --ports 80 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
