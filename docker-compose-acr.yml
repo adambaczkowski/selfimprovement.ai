@@ -1,19 +1,6 @@
 version: '3.7'
 
 services:
-  coredns:
-    container_name: coredns
-    build:
-      context: ./CoreDNS
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/coredns:${IMAGE_TAG}"
-    ports:
-      - "53:53/udp"
-      - "53:53/tcp"
-    restart: always
-    volumes:
-      - coredns_data:/data
-
   rabbitmq:
     container_name: rabbitmq
     build:
@@ -25,78 +12,6 @@ services:
       - "15672:15672" # Management Plugin
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/mnesia/
-
-  frontend:
-    container_name: selfimprovement-frontend
-    build:
-      context: ./Source/Web/
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/selfimprovement-frontend:${IMAGE_TAG}"
-    ports:
-      - "3000:3000"
-    restart: always
-
-  identity:
-    container_name: selfimprovement-identity
-    build:
-      context: ./Source
-      dockerfile: IdentityApi/Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
-    environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
-      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
-    ports:
-      - "8080:8080"
-    restart: always
-
-  goal:
-    container_name: selfimprovement-goal
-    build:
-      context: ./Source
-      dockerfile: GoalApi/Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
-    environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
-      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
-    ports:
-      - "8080:8080"
-    restart: always
-
-  prompt:
-    container_name: selfimproved-prompt
-    build:
-      context: ./Source
-      dockerfile: PromptApi/Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
-    environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=${POSTGRES_DB_NAME};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
-      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
-      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
-      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/blob
-      - Llama2=ollama-static-dns.polandcentral.azurecontainer.io:11434
-      - GoalApiServiceUrl=goal-static-dns.polandcentral.azurecontainer.io:8080
-      - IdentityApiServiceUrl=identity-static-dns.polandcentral.azurecontainer.io:8080
-    ports:
-      - "8080:8080"
-    restart: always
-
-  pgadmin:
-    container_name: pgadmin
-    build:
-      context: ./Database/pgadmin
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/pgadmin:${IMAGE_TAG}"
-    restart: always
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - "80:80"
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-
 
   open-webui:
     container_name: open-webui
@@ -122,13 +37,6 @@ services:
     restart: always
     ports:
       - 11434:11434
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
 
   grafana:
     container_name: grafana
@@ -197,22 +105,74 @@ services:
     ports:
       - "9100:9100"
 
-  nginx:
-    container_name: nginx
+  frontend:
+    container_name: selfimprovement-frontend
     build:
-      context: ./Nginx
-      dockerfile: Dockerfile.local
-    image: "${ACR_NAME}.azurecr.io/nginx:${IMAGE_TAG}"
-    restart: always
+      context: ./Source/Web/
+      dockerfile: Dockerfile.acr
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-frontend:${IMAGE_TAG}"
     ports:
       - "80:80"
-      #- "443:443"
-    volumes:
-      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
-      - nginx_data:/etc/nginx
-      #- ./Nginx/index.html:/usr/share/nginx/html/index.html
-    # env_file:
-    #   - .env
+    restart: always
+
+  identity:
+    container_name: selfimprovement-identity
+    build:
+      context: ./Source
+      dockerfile: IdentityApi/Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
+    environment:
+      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
+    ports:
+      - "8080:8080"
+    restart: always
+
+  goal:
+    container_name: selfimprovement-goal
+    build:
+      context: ./Source
+      dockerfile: GoalApi/Dockerfile.local
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
+    environment:
+      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
+    ports:
+      - "8080:8080"
+    restart: always
+
+  prompt:
+    container_name: selfimproved-prompt
+    build:
+      context: ./Source
+      dockerfile: PromptApi/Dockerfile.acr
+    image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
+    environment:
+      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
+      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/blob
+      - Llama2=ollama-static-dns.polandcentral.azurecontainer.io:11434
+      - GoalApiServiceUrl=goal-static-dns.polandcentral.azurecontainer.io:8080
+      - IdentityApiServiceUrl=identity-static-dns.polandcentral.azurecontainer.io:8080
+    ports:
+      - "8080:8080"
+    restart: always
+
+    nginx:
+      container_name: nginx
+      build:
+        context: ./Nginx
+        dockerfile: Dockerfile.local
+      image: "${ACR_NAME}.azurecr.io/nginx:${IMAGE_TAG}"
+      restart: always
+      ports:
+        - "80:80"
+      volumes:
+        - ./Nginx/acr_conf/nginx.conf:/etc/nginx/nginx.conf
+        - nginx_data:/etc/nginx
 
 volumes:
   coredns_data:
@@ -284,9 +244,3 @@ volumes:
       share_name: "nginxdata"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
-
-
-networks:
-  default:
-    external:
-      name: dev-vnet
