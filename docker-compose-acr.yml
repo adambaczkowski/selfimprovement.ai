@@ -122,8 +122,10 @@ services:
       dockerfile: IdentityApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
+      - SelfImprovementDbContext=postgresql://selfimprovementAdmin@selfimprovementaipsql:selfimprovement123$$@selfimprovementaipsql.postgres.database.azure.com:5432/SelfImprovementDb;Include Error Detail=true
+      #- SelfImprovementDbContext=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
       - "8080:8080"
@@ -136,7 +138,7 @@ services:
       dockerfile: GoalApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
+      - SelfImprovementDbContext=postgresql://selfimprovementAdmin@selfimprovementaipsql:selfimprovement123$$@selfimprovementaipsql.postgres.database.azure.com:5432/SelfImprovementDb;Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
@@ -150,10 +152,10 @@ services:
       dockerfile: PromptApi/Dockerfile.local
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
-      - SelfImprovementDbContext=Host=selfimprovementaipsql.postgres.database.azure.com;Port=5432;Database=SelfImprovementDb;User ID=selfimprovementAdmin@selfimprovementaipsql;Password=selfimprovement123$$;Include Error Detail=true
+      - SelfImprovementDbContext=postgresql://selfimprovementAdmin@selfimprovementaipsql:selfimprovement123$$@selfimprovementaipsql.postgres.database.azure.com:5432/SelfImprovementDb;Include Error Detail=true
       - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
-      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/blob
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite
       - Llama2=ollama-static-dns.polandcentral.azurecontainer.io:11434
       - GoalApiServiceUrl=goal-static-dns.polandcentral.azurecontainer.io:8080
       - IdentityApiServiceUrl=identity-static-dns.polandcentral.azurecontainer.io:8080

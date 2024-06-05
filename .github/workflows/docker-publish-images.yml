@@ -108,6 +108,10 @@ jobs:
         run: |
           az storage share create --name nginx --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
 
+      - name: Create blob storage container
+        run: |
+          az storage container create --name azurite --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --account-key ${{ secrets.STORAGE_KEY }}
+
       - name: Build and push Docker images
         env:
           ACR_NAME: ${{ secrets.ACR_NAME }}

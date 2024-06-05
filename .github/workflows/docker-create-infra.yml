@@ -200,14 +200,14 @@ jobs:
             --environment-variables \
                 SelfImprovementDbContext="Host=selfimprovementaipsql.postgres.database.azure.com; \
                 Port=5432; \
-                Database=mydatabase; \
+                Database=SelfimprovementDb; \
                 User ID=selfimprovementAdmin@selfimprovementaipsql; \
                 Password=selfimprovement123$; \
                 Include Error Detail=true" \
                 CorsOrigin="http://frontend-static-dns.polandcentral.azurecontainer.io:3000" \
                 RabbitMqConnectionUrl="amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/" \
                 BlobStorageConnectionUrl="UseDevelopmentStorage=true; \
-                DevelopmentStorageProxyUri=https://selfimprovementstorage.file.core.windows.net/prompt" \
+                DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite" \
                 Llama2="ollama-static-dns.polandcentral.azurecontainer.io:11434" \
                 GoalApiServiceUrl="goal-static-dns.polandcentral.azurecontainer.io:8080" \
                 IdentityApiServiceUrl="identity-static-dns.polandcentral.azurecontainer.io:8080"
