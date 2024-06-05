@@ -7,33 +7,11 @@ import { GoalDetailsDto, GoalTaskDto } from "../../utils/api/goal";
 import { ItemsGrid } from "../../components/componentsIndex"
 import { fetchGoal } from "../../utils/services/goalService";
 import { fetchGoalTasks } from "../../utils/services/goalTaskService";
+import { addSpacesBeforeCapitals } from "../../utils/helpers/addSpacesBeforeCapitals";
 import dayjs from 'dayjs';
-
-// const exampleTasks: GoalTask[] = [
-//   {
-//       content: "Set Up Development Environment",
-//       estimatedDuration: new Date(2024, 3, 20, 1, 30),
-//       isCompleted: false,
-//       date: new Date(2024, 3, 20),
-//   },
-// ];
-
-// const exampleDailyTasks: DailyTask[] = [
-//   {
-//     weekTitle: "Week 1: January 17-21, 2024",
-//     date: "January 17, 2024",
-//     tasks: [
-//       "Set Up Development Environment",
-//       "Install Python and a Code Editor (e.g., VS Code)",
-//       "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-//     ],
-//     isCompleted: true
-//   },
-// ];
 
 function GoalPage() {
   const { id } = useParams();
-  // const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
   const [tasks, setTasks] = useState<GoalTaskDto[]>([]);
   const [goal, setGoal] = useState<GoalDetailsDto>();
 
@@ -61,11 +39,6 @@ function GoalPage() {
     refetchOnWindowFocus: false,
   });
 
-  // useEffect(() => {
-  //   return setDailyTasks(
-  //     exampleDailyTasks
-  //   );
-  // }, []);
 
   if (!goal) {
     return (
@@ -86,19 +59,21 @@ function GoalPage() {
   return (
     <div className={styles.background_container}>
       <GoBackButton />
-      <div className={styles.goal_item}>
-      <div className={styles.goal_header}>
-        <h1>{goal.category}</h1>
-        <p className={styles.description}><span>Learning type: </span>{goal.learningType}</p>
+        <div className={styles.goal_item}>
+        <div className={styles.goal_header}>
+          <h1>{goal.name}</h1>
+          <p className={styles.description}><span>Category: </span>{goal.category}</p>
+          <p className={styles.description}><span>Time: </span>
+            {dayjs(goal.startDate).format("MM-DD-YYYY")} {"\<----\>"} {dayjs(goal.endDate).format("MM-DD-YYYY")}
+          </p>
+        </div>
+        <div className={styles.goal_description}>
+          <p className={styles.description}><span>Specific category: </span>{goal.goalFriendlyName}</p>
+          <p className={styles.description}><span>Your advancement: </span>{goal.userAdvancement}</p>
+          <p className={styles.description}><span>Your learning type: </span>{goal.learningType}</p>
+          <p className={styles.description}><span>Your thoughts: </span>{goal.userInput}</p>
+        </div>
       </div>
-      <div className={styles.goal_description}>
-        <p className={styles.description}><span>Time Availability Per Day: </span>{goal.timeAvailabilityPerDay}</p>
-        <p className={styles.description}><span>Time Availability Per Week: </span>{goal.timeAvailabilityPerWeek}</p>
-        <p className={styles.description}><span>Start date: </span>{dayjs(goal.startDate).format("MM-DD-YYYY")}</p>
-        <p className={styles.description}><span>End date: </span>{dayjs(goal.endDate).format("MM-DD-YYYY")}</p>
-        <p className={styles.description}><span>User advancement: </span>{goal.userAdvancement}</p>
-      </div>
-    </div>
       <ItemsGrid title={"Goal Tasks"} tasks={tasks} />
     </div>
   );

@@ -6,6 +6,7 @@ import LoadingCircle from "./LoadingCircle/LoadingCircle"
 import CustomButton from "./CustomButton/Button";
 import FormTextInput from "./Formik/FormTextInput/FormTextInput"
 import FormSelectInput from "./Formik/FormSelectImput/FormSelectInput"
+import FormImageInput from "./Formik/FormImageInput/FormImageInput"
 import DailyTaskList from "./NumberListBox/NumberListBox"
 import ItemsGrid from "./ItemsGrid/ItemsGrid"
 import GoalsList from "./GoalsList/GoalsList"
@@ -24,6 +25,7 @@ export {
     CustomButton,
     FormTextInput,
     FormSelectInput,
+    FormImageInput,
     DailyTaskList,
     ItemsGrid,
     GoalsList,
