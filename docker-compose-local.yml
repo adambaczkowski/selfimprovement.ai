@@ -100,6 +100,8 @@ services:
       - CorsOrigin=http://localhost:3000
       - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
+      - Gpt35=api.openai.com
+      - Gpt35_ApiKey=sk-proj-fKa36WMlImH9VtU4woCmT3BlbkFJIlk3D0HFpSxPMy1KTPEb
       - Llama2=host.docker.internal:11434
       - GoalApiServiceUrl=host.docker.internal:8081
       - IdentityApiServiceUrl=host.docker.internal:8080

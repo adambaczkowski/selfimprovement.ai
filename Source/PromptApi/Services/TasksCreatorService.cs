@@ -1,5 +1,6 @@
 ﻿using LS.Events.GoalApi;
 using LS.Events.PromptApi;
+using OpenAI_API.Models;
 using PromptApi.AI;
 using PromptApi.AI.GPT35;
 using PromptApi.Models;
@@ -11,15 +12,9 @@ public class TasksCreatorService(IPromptBuilderService promptBuilderService, IAi
 {
     public async Task<List<GoalTaskResource>> CreateTaskList(GoalCreatedEvent @event, AiModelName aiModelName = AiModelName.Gpt35)
     {
-        var model = AiModelFactory.CreateModel(aiModelName, promptBuilderService);
+        var model = AiModelFactory.CreateModel(aiModelName, promptBuilderService, aiModelApiClient, configuration);
         var prompt = await model.BuildPrompt(@event.UserId, @event.GoalId);
-        model.RequestModel = new Gpt35RequestModel()
-        {
-            model = "gpt-3.5-turbo",
-            response_format = new { type = "json_object" },
-            prompt = prompt
-        };
-        var response = await aiModelApiClient.GetPromptResponse(model, model.RequestModel);
+        var response = await model.GetPromptResponse(prompt);
         var taskList = model.ProcessModelResponse(response);
         
         return taskList;

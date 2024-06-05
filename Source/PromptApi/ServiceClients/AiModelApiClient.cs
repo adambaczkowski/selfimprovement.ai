@@ -21,10 +21,9 @@ public class AiModelApiClient(
     public async Task<AiResponseModel> GetPromptResponse(IAiModel model, object requestModel)
     {
         ServiceUrl = configuration[model.AiModelName.ToString()];
-        var externalApiKey = configuration[$"{model.AiModelName.ToString()}_ApiKey"];
         if (!String.IsNullOrEmpty(ServiceUrl))
         {
-            var response = await PostWithResponse<AiResponseModel>(model.ApiUrl, requestModel, externalApiKey);
+            var response = await PostWithResponse<AiResponseModel>(model.ApiUrl, requestModel);
 
             return response.Status == HttpStatusCode.OK ? response.Result : null;
         }

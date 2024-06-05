@@ -12,5 +12,6 @@ public interface IAiModel
     public IAiRequestModel RequestModel { get; set; }
 
     public Task<string> BuildPrompt(string userId, Guid goalId);
+    public Task<AiResponseModel> GetPromptResponse(string prompt);
     public List<GoalTaskResource> ProcessModelResponse(AiResponseModel responseModel);
 }

@@ -15,6 +15,11 @@ public class Llama3Model(string name,string apiUrl, IPromptBuilderService prompt
     {
         throw new NotImplementedException();
     }
+    
+    public async Task<AiResponseModel> GetPromptResponse(string prompt)
+    {
+        return null;
+    }
 
     public List<GoalTaskResource> ProcessModelResponse(AiResponseModel responseModel)
     {
