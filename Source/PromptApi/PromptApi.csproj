@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="OpenAI" Version="1.11.0" />
   </ItemGroup>
   <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
     <Exec Command="dotnet tool run swagger tofile --output swagger.json $(OutputPath)$(AssemblyName).dll v1" ContinueOnError="true" EnvironmentVariables="DOTNET_ROLL_FORWARD=LatestMajor" />

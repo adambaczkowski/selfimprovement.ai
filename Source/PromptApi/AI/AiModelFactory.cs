@@ -13,14 +13,14 @@ public static class AiModelFactory
     private const string Llama3ApiPath = "";
     private const string ZephyrApiPath = "";
     private const string Gpt35ApiPath = "v1/chat/completions";
-    public static IAiModel CreateModel(AiModelName name, IPromptBuilderService promptBuilderService)
+    public static IAiModel CreateModel(AiModelName name, IPromptBuilderService promptBuilderService, IAiModelApiClient aiModelApiClient, IConfiguration configuration)
     {
         switch (name)
         {
             case AiModelName.Gpt35:
-                return new Gpt35Model("gpt35", Gpt35ApiPath, promptBuilderService);
+                return new Gpt35Model("gpt35", Gpt35ApiPath, promptBuilderService, configuration);
             case AiModelName.Llama2:
-                return new Llama2Model("llama2", Llama2ApiPath, promptBuilderService);
+                return new Llama2Model("llama2", Llama2ApiPath, promptBuilderService, aiModelApiClient);
             case AiModelName.Llama3:
                 return new Llama3Model("llama3", Llama3ApiPath, promptBuilderService);
             case AiModelName.Zephyr:

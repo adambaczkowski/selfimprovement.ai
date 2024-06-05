@@ -20,6 +20,11 @@ public class ZephyrModel(
     {
         return await promptBuilderService.CreatePrompt(userId, goalId);
     }
+    
+    public async Task<AiResponseModel> GetPromptResponse(string prompt)
+    {
+        return null;
+    }
 
     public List<GoalTaskResource> ProcessModelResponse(AiResponseModel responseModel)
     {

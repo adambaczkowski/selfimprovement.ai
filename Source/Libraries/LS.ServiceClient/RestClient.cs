@@ -58,13 +58,13 @@ public class RestClient : IServiceClient
         params Header[] headers)
     {
         var baseAddress = GetBaseAddress(serviceName, !String.IsNullOrEmpty(externalApiKey));
-
+    
         var requestMessage = RequestMessage.Post(
             $"{baseAddress}{path}",
             request,
             (headers ?? Array.Empty<Header>()));
-
-        await AddAuthorizationBearerToken(requestMessage);
+        
+        await AddAuthorizationBearerToken(requestMessage, externalApiKey);
 
         return await _retryOnServerError.ExecuteAsync(() => Client.SendAsync(requestMessage));
     }

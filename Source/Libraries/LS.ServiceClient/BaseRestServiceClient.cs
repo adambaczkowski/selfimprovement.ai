@@ -27,7 +27,7 @@ public abstract class BaseRestServiceClient(
         return data;
     }
 
-    protected async Task<T?> Post<T>(string path, object request, string? externalApiKey, params Header[] headers)
+    protected async Task<T?> Post<T>(string path, object request, string? externalApiKey = null, params Header[] headers)
     {
         var clientResponse = await _client.Post(ServiceUrl, path, request, externalApiKey, headers);
         var clientResponseString = await clientResponse.Content.ReadAsStringAsync();
@@ -35,7 +35,7 @@ public abstract class BaseRestServiceClient(
         return data;
     }
 
-    protected async Task<Response<T>> PostWithResponse<T>(string path, object request, string? externalApiKey, params Header[] headers)
+    protected async Task<Response<T>> PostWithResponse<T>(string path, object request, string? externalApiKey = null, params Header[] headers)
     {
         var clientResponse = await _client.Post(ServiceUrl, path, request, externalApiKey, headers);
         var result = new Response<T> { Status = clientResponse.StatusCode };
@@ -48,7 +48,7 @@ public abstract class BaseRestServiceClient(
         return result;
     }
 
-    protected async Task<Response> PostWithResponse(string path, object request,string? externalApiKey, params Header[] headers)
+    protected async Task<Response> PostWithResponse(string path, object request,string? externalApiKey = null, params Header[] headers)
     {
         var clientResponse = await _client.Post(ServiceUrl, path, request, externalApiKey, headers);
         var result = new Response { Status = clientResponse.StatusCode };
@@ -56,7 +56,7 @@ public abstract class BaseRestServiceClient(
         return result;
     }
 
-    protected async Task Post(string path, object request, string? externalApiKey, params Header[] headers)
+    protected async Task Post(string path, object request, string? externalApiKey = null, params Header[] headers)
     {
         await _client.Post(ServiceUrl, path, request, externalApiKey, headers);
     }
