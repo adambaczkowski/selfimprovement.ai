@@ -171,7 +171,6 @@ services:
       ports:
         - "80:80"
       volumes:
-        - ./Nginx/acr_conf/nginx.conf:/etc/nginx/nginx.conf
         - nginx_data:/etc/nginx
 
 volumes:
