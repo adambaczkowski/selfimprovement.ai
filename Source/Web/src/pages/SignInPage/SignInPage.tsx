@@ -20,7 +20,7 @@ const SignInPage = ({}: Props) => {
     try {
       const response = await signIn(values);
       localStorage.setItem("userToken", JSON.stringify(response.token));
-      navigate("/tasks");
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

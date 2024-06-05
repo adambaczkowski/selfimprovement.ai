@@ -3,7 +3,7 @@ import { Form, Formik } from "formik";
 import { FormSelectInput, LoadingCircle } from "../../components/componentsIndex";
 import { NewGoalFormValidation } from "./NewGoalFormValidationSchema";
 import styles from "./NewGoalPage.module.scss";
-import { CreateGoalCommand, Experience, GoalCategories, LearningType, TimeAvailabilityPerDay, TimeAvailabilityPerWeek } from "../../utils/api/goal";
+import { CreateGoalCommand, Experience, GoalCategories, Goals, LearningType, TimeAvailabilityPerDay, TimeAvailabilityPerWeek } from "../../utils/api/goal";
 import { enumToArrayOfOptions } from "../../utils/helpers/enumToArrayOfOptions";
 import FormNumberInput from "../../components/Formik/FormNumberInput/FormNumberInput";
 import FormTextInput from "../../components/Formik/FormTextInput/FormTextInput";
@@ -18,8 +18,9 @@ const NewGoalPage = ({}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   
   const goalInitialValues: CreateGoalCommand = {
-    category: undefined,
     name: undefined,
+    category: undefined,
+    goalFriendlyName: undefined,
     timeAvailabilityPerDay: undefined,
     timeAvailabilityPerWeek: undefined,
     duration: undefined,
@@ -71,12 +72,13 @@ const NewGoalPage = ({}: Props) => {
               <h1 className={styles.heading}>New Goal</h1>
               <FormTextInput label="Goal name" name="name" placeholderText="Marathon"/>
               <FormSelectInput label="Category" name="category" options={enumToArrayOfOptions(GoalCategories)} />
+              <FormSelectInput label="Specific category" name="goalFriendlyName" options={enumToArrayOfOptions(Goals)} />
               <FormSelectInput label="Time availability per day" name="timeAvailabilityPerDay" options={enumToArrayOfOptions(TimeAvailabilityPerDay)} />
               <FormSelectInput label="Time availability per week" name="timeAvailabilityPerWeek" options={enumToArrayOfOptions(TimeAvailabilityPerWeek)} />
               <FormNumberInput label="Duration" name="duration" />
               <FormSelectInput label="Experience" name="experience" options={enumToArrayOfOptions(Experience)} />
               <FormSelectInput label="Learning type" name="learningType" options={enumToArrayOfOptions(LearningType)} />
-              <FormTextInput label="User input" name="userInput" placeholderText="Marathon"/>
+              <FormTextInput label="Your more specific description ;)" name="userInput" placeholderText="Marathon"/>
               <button className={styles.create_button}>Create</button>
             </Form>
           </Formik>

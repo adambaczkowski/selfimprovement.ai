@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
-import { MenuItem, FormControl, InputLabel, ThemeProvider } from "@mui/material";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { MenuItem, FormControl, InputLabel, ThemeProvider, Select, SelectChangeEvent  } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#7e68ba", // Your desired color for the underline
+      main: "#7e68ba",
     },
   },
 });
@@ -16,33 +14,32 @@ interface Props {
   label: string;
   name: string;
   options: { label: string; value: string | number }[];
-  value?: number | null | "";
-  onChange?: (value: number) => void;
 }
 
 const FormSelectInput = (props: Props) => {
   const { name, label, options } = props;
-  const [field, meta, helpers] = useField(name);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null); // Initialize state
+  const [field, meta] = useField(name);
+  const { setFieldValue } = useFormikContext(); // Get setFieldValue from Formik context
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSelectedOption(event.target.value as unknown as number);
+    const value = event.target.value as string | number;
+    setFieldValue(name, value); // Update Formik's state
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <FormControl style={{ width: "16rem" }}>
+      <FormControl style={{ width: "16rem" }} variant="outlined">
         <InputLabel htmlFor={name}>{label}</InputLabel>
         <Select
           labelId={`${name}-label`}
           id={name}
-          value={selectedOption?.toString()} // Convert selectedOption to a string
+          value={field.value}
           label={label}
           onChange={handleChange}
           error={meta.touched && !!meta.error}
         >
-          {options.map((option, index) => (
-            <MenuItem key={index} value={option.value}>
+          {options.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}

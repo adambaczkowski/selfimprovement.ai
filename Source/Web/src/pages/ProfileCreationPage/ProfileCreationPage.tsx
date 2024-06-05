@@ -1,43 +1,76 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 import { Form, Formik } from "formik";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { FormTextInput, FormSelectInput } from "../../components/componentsIndex";
-import { EducationLevel, educationOptions } from "../../utils/enums/educationLevel";
 import { ProfileCreationFormValidation } from "./ProfileCreationFormValidation";
 import styles from "./ProfileCreationPage.module.scss";
-import { UserProfileDto, Education } from "../../utils/api/identity";
-
-type Props = {};
+import { Sex, Education, UserProfileDto } from "../../utils/api/identity";
+import { createUser, editUser, fetchUser } from "../../utils/services/userService";
+import { enumToArrayOfOptions } from "../../utils/helpers/enumToArrayOfOptions";
 
 // This page has two modes: edit and create. The mode is determined by the URL parameter.
 // Edit Profile URL example: /profileCreation/edit
 // New Profile URL example: /profileCreation/new
-function ProfileCreationPage({}: Props) {
-  const [isProfileCreationSucess, setIsProfileCreationSucess] = useState<boolean>(false);
+function ProfileCreationPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<UserProfileDto | null>(null);
+  const navigate = useNavigate();
+  const [isProfileCreationSuccess, setIsProfileCreationSuccess] = useState<boolean>(false);
   const { mode } = useParams<{ mode: string }>();
 
+  useQuery({
+    queryKey: ["getUser"],
+    queryFn: async () => {
+      const user = await fetchUser();
+      if (user) {
+        setUser(user);
+      }
+      return user;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  
   const creationProfileInitialValues: UserProfileDto = {
+    sex: undefined,
     weight: null,
     height: null,
     age: null,
-    educationLevel: Education._0,
+    educationLevel: undefined,
     profileImageData: null,
   };
 
-  const handleSignUp = async (values: UserProfileDto) => {
-    console.log(values);
-    // try {
-    //   const response = await signUp(values);
-    //   if (response.isSuccess) {
-    //     setIsSignUpSucess(true);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  const handleCreateProfile = async (values: UserProfileDto) => {
+    setIsLoading(true);
+    try {
+      await createUser(values); 
+      setIsProfileCreationSuccess(true);
+      navigate(`/`);
+    } catch (error) {
+      console.error('Error editing profile:', error);
+      // Handle error if needed
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  if (isProfileCreationSucess) {
+  const handleEditProfile = async (values: UserProfileDto) => {
+    setIsLoading(true);
+    try {
+      await editUser(values); 
+      setIsProfileCreationSuccess(true);
+      navigate(`/`);
+    } catch (error) {
+      console.error('Error editing profile:', error);
+      // Handle error if needed
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isProfileCreationSuccess) {
     return <div>Yea good!</div>;
   }
   if (mode !== "new" && mode !== "edit") {
@@ -53,8 +86,7 @@ function ProfileCreationPage({}: Props) {
     pageTitle = "DEFAULT PROFILE";
   }
 
-  const goBackButton =
-    mode !== "new" ? (
+  const goBackButton = mode !== "new" ? (
       <Link className={styles.go_back_button} to="/tasks">
         <ArrowBackIcon />
       </Link>
@@ -62,26 +94,23 @@ function ProfileCreationPage({}: Props) {
 
   return (
     <div className={styles.background_container}>
-      {goBackButton}
+      {mode === "edit" ? goBackButton : null}
       <div className={styles.extended_background_container}>
         <Formik
           initialValues={creationProfileInitialValues}
-          onSubmit={(values) => {
-            handleSignUp(values);
-          }}
-          validationSchema={ProfileCreationFormValidation}
+          onSubmit={handleCreateProfile}
+          validationSchema={null} //NewGoalFormValidation}
           validateOnChange={false}
           validateOnBlur={false}
         >
-          <Form>
-            <div className={styles.form_items_container}>
-              <h1 className={styles.heading}>{pageTitle}</h1>
-              <FormTextInput label="Weight" name="weight" />
-              <FormTextInput label="Height" name="height" />
-              <FormTextInput label="Age" name="age" />
-              <FormSelectInput label="Education Level" name="educationLevel" value={EducationLevel.Primary} options={educationOptions} />
-              <button className={styles.create_button}>Create</button>
-            </div>
+          <Form className={styles.form_items_container}>
+            <h1 className={styles.heading}>{pageTitle}</h1>
+            <FormTextInput label="Weight" name="weight" />
+            <FormTextInput label="Height" name="height" />
+            <FormTextInput label="Age" name="age" />
+            <FormSelectInput label="Education level" name="educationLevel" options={enumToArrayOfOptions(Education)} />
+            <FormSelectInput label="Sex" name="sex" options={enumToArrayOfOptions(Sex)} />
+            <button type="submit" className={styles.create_button}>{mode === "edit" ? "Edit" : "Create"}</button>
           </Form>
         </Formik>
       </div>
