@@ -175,45 +175,38 @@ services:
         - nginx_data:/etc/nginx
 
 volumes:
-  coredns_data:
-    driver: azure_file
-    driver_opts:
-      share_name: "corednsdata"
-      storage_account_name: "${STORAGE_ACCOUNT_NAME}"
-      storage_account_key: "${STORAGE_ACCOUNT_KEY}"
-
   rabbitmq_data:
     driver: azure_file
     driver_opts:
-      share_name: "rabbitmqdata"
+      share_name: "rabbitmq"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
 
   pgadmin_data:
     driver: azure_file
     driver_opts:
-      share_name: "pgadmindata"
+      share_name: "pgadmin"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
 
   open_webui_data:
     driver: azure_file
     driver_opts:
-      share_name: "open_webui_data"
+      share_name: "openwebui"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
 
   ollama_data:
     driver: azure_file
     driver_opts:
-      share_name: "ollamadata"
+      share_name: "ollama"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
 
   grafana_data:
     driver: azure_file
     driver_opts:
-      share_name: "grafanadata"
+      share_name: "grafana"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
 
@@ -227,20 +220,20 @@ volumes:
   promtail_data:
     driver: azure_file
     driver_opts:
-      share_name: "promtaildata"
+      share_name: "promtail"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
 
   prometheus_data:
     driver: azure_file
     driver_opts:
-      share_name: "prometheusdata"
+      share_name: "prometheus"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
 
   nginx_data:
     driver: azure_file
     driver_opts:
-      share_name: "nginxdata"
+      share_name: "nginx"
       storage_account_name: "${STORAGE_ACCOUNT_NAME}"
       storage_account_key: "${STORAGE_ACCOUNT_KEY}"
