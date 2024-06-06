@@ -17,7 +17,7 @@ function ItemsGrid({ title, tasks }: Props) {
           <TaskItem
             key={task.id}
             id={task.id}
-            title={task.content}
+            title={task.title}
             description={task.content}
             date={task.date}
             isCompleted={task.isCompleted}

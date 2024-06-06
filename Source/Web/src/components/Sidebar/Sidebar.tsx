@@ -19,7 +19,6 @@ function Sidebar() {
   function getUsernameFromToken(token: string): string | null {
     try {
       const decodedToken = jwtDecode<JwtPayload>(token);
-      console.log(decodedToken);
       return decodedToken.unique_name;
     } catch (error) {
       console.error('Invalid token', error);

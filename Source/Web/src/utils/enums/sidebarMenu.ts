@@ -1,4 +1,4 @@
-import { signOut, check, squareCheckSolid, squareCheckRegular, home, calendar, todo, goals } from "./icons";
+import { signOut, check, squareCheckSolid, squareCheckRegular, home, calendarSolid, calendarRegular, todo, goals } from "./icons";
 
 const menu = [
   {
@@ -16,7 +16,7 @@ const menu = [
   {
     id: 3,
     title: "calendar",
-    icon: calendar,
+    icon: calendarSolid,
     link: "/calendar",
   },
   {
@@ -36,4 +36,6 @@ const menu = [
 export { signOut as signOutIcon }
 export { squareCheckSolid as squareCheckSolidIcon }
 export { squareCheckRegular as squareCheckRegularIcon }
+export { calendarSolid as calendarSolid }
+export { calendarRegular as calendarRegular }
 export { menu };

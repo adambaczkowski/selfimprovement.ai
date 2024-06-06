@@ -59,21 +59,21 @@ function GoalPage() {
   return (
     <div className={styles.background_container}>
       <GoBackButton />
-        <div className={styles.goal_item}>
-        <div className={styles.goal_header}>
-          <h1>{goal.name}</h1>
-          <p className={styles.description}><span>Category: </span>{goal.category}</p>
-          <p className={styles.description}><span>Time: </span>
-            {dayjs(goal.startDate).format("MM-DD-YYYY")} {"\<----\>"} {dayjs(goal.endDate).format("MM-DD-YYYY")}
-          </p>
+          <div className={styles.goal_item}>
+          <div className={styles.goal_header}>
+            <h1>{goal.name}</h1>
+            <p className={styles.description}><span>Category: </span>{addSpacesBeforeCapitals(goal.category?.toString() ?? '')}</p>
+            <p className={styles.description}><span>Time: </span>
+              {dayjs(goal.startDate).format("MM-DD-YYYY")} {"\<----\>"} {dayjs(goal.endDate).format("MM-DD-YYYY")}
+            </p>
+          </div>
+          <div className={styles.goal_description}>
+            <p className={styles.description}><span>Specific category: </span>{addSpacesBeforeCapitals(goal.goalFriendlyName?.toString() ?? '')}</p>
+            <p className={styles.description}><span>Your advancement: </span>{addSpacesBeforeCapitals(goal.userAdvancement?.toString() ?? '')}</p>
+            <p className={styles.description}><span>Your learning type: </span>{addSpacesBeforeCapitals(goal.learningType?.toString() ?? '')}</p>
+            <p className={styles.description}><span>Your thoughts: </span>{goal.userInput}</p>
+          </div>
         </div>
-        <div className={styles.goal_description}>
-          <p className={styles.description}><span>Specific category: </span>{goal.goalFriendlyName}</p>
-          <p className={styles.description}><span>Your advancement: </span>{goal.userAdvancement}</p>
-          <p className={styles.description}><span>Your learning type: </span>{goal.learningType}</p>
-          <p className={styles.description}><span>Your thoughts: </span>{goal.userInput}</p>
-        </div>
-      </div>
       <ItemsGrid title={"Goal Tasks"} tasks={tasks} />
     </div>
   );
