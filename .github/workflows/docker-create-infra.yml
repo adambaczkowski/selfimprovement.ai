@@ -123,7 +123,7 @@ jobs:
                 User ID=${{ secrets.DB_USER }}; \
                 Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
-                CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000 \
+                CorsOrigin=http://localhost:3000 \
                 RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
 
       - name: Add firewall database rule for identity
@@ -163,7 +163,7 @@ jobs:
                 User ID=${{ secrets.DB_USER }}; \
                 Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
-                CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000 \
+                CorsOrigin=http://localhost:3000 \
                 RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
 
       - name: Add firewall database rule for goal
@@ -204,7 +204,7 @@ jobs:
                 User ID=${{ secrets.DB_USER }}; \
                 Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
-                CorsOrigin="http://frontend-static-dns.polandcentral.azurecontainer.io:3000" \
+                CorsOrigin="http://localhost:3000" \
                 RabbitMqConnectionUrl="amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/" \
                 BlobStorageConnectionUrl="UseDevelopmentStorage=true; \
                 DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite" \
