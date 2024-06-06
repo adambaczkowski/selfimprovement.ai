@@ -123,7 +123,7 @@ services:
     image: "${ACR_NAME}.azurecr.io/selfimprovement-identity:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME};Include Error Detail=true
-      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - CorsOrigin=http://localhost:3000
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
@@ -138,7 +138,7 @@ services:
     image: "${ACR_NAME}.azurecr.io/selfimprovement-goal:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME};Include Error Detail=true
-      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - CorsOrigin=http://localhost:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
     ports:
       - "8080:8080"
@@ -152,7 +152,7 @@ services:
     image: "${ACR_NAME}.azurecr.io/selfimprovement-prompt:${IMAGE_TAG}"
     environment:
       - SelfImprovementDbContext=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME};Include Error Detail=true
-      - CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000
+      - CorsOrigin=http://localhost:3000
       - RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite
       - Llama2=ollama-static-dns.polandcentral.azurecontainer.io:11434

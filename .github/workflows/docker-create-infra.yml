@@ -341,7 +341,7 @@ jobs:
             --image ${{ secrets.ACR_NAME }}.azurecr.io/nginx:${latest_tag} \
             --cpu 1 \
             --memory 2 \
-            --ports 80 \
+            --ports 80 443 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
