@@ -28,13 +28,13 @@ jobs:
             --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
             --name selfimprovementaipsql \
             --location germanywestcentral \
-            --admin-user  ${{ secrets.DB_USER }}\
+            --admin-user ${{ secrets.DB_USER }}\
             --admin-password ${{ secrets.DB_PASS }} \
             --sku-name B_Gen5_1
 
       - name: Create PostgreSQL Database
         run: |
           az postgres db create \
-            --resource-group dev-rg \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
             --server-name selfimprovementaipsql \
             --name ${{ secrets.DB_NAME }}
