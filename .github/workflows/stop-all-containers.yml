@@ -1,0 +1,32 @@
+name: 🛑📦 Stop all ACI containers
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+        - name: Stop All ACI Containers
+          run: |
+            container_groups=$(az container list --query "[].name" -o tsv)
+            for container_group in $container_groups
+            do
+              echo "Stopping $container_group"
+              az container stop --name $container_group --resource-group YOUR_RESOURCE_GROUP
+            done
