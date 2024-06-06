@@ -157,7 +157,7 @@ services:
       - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite
       - Llama2=ollama-static-dns.polandcentral.azurecontainer.io:11434
       - Gpt35=api.openai.com
-      - Gpt35_ApiKey=${{ GPT35_API_KEY }}
+      - Gpt35_ApiKey=${GPT35_API_KEY}
       - GoalApiServiceUrl=goal-static-dns.polandcentral.azurecontainer.io:8080
       - IdentityApiServiceUrl=identity-static-dns.polandcentral.azurecontainer.io:8080
     ports:
