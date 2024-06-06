@@ -28,5 +28,5 @@ jobs:
             for container_group in $container_groups
             do
               echo "Stopping $container_group"
-              az container stop --name $container_group --resource-group YOUR_RESOURCE_GROUP
+              az container stop --name $container_group --resource-group ${{ secrets.RESOURCE_GROUP_NAME }}
             done
