@@ -63,6 +63,11 @@ jobs:
           dbkey=${{ secrets.DB_HOST }}
           echo "DB_HOST =\"${dbkey}\"" >> .env
 
+      - name: Retrieve postgres port secret
+        run: |
+          port=${{ secrets.DB_PORT }}
+          echo "DB_PORT =\"${port}\"" >> .env
+
       - name: Retrieve STORAGE_ACCOUNT_NAME
         run: |
           echo "STORAGE_ACCOUNT_NAME=\"${{ secrets.STORAGE_ACCOUNT_NAME }}\"" >> .env
