@@ -1,47 +1,52 @@
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from "react-query";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { fetchTasks } from "../../utils/services/goalTaskService";
 import moment from 'moment';
 import  './CalendarPage.scss';
 const localizer = momentLocalizer(moment);
 
-type Props = {};
+type Event = {
+  id: string,
+  title: string,
+  start: Date,
+  end: Date,
+};
 
-const events = [
-  {
-    id: 1,
-    title: 'Task 1',
-    start: new Date(2024, 5, 9), // May 9th, 2024 (year, month (0-indexed), day)
-    end: new Date(2024, 5, 9), // Can be the same date for single-day tasks
-  },
-  {
-    id: 2,
-    title: 'Task 2',
-    start: new Date(2024, 5, 9), // May 10th, 2024 (year, month (0-indexed), day)
-    end: new Date(2024, 5, 9), // Can be the same date for single-day tasks
-  },
-  // {
-  //   id: 3,
-  //   title: 'Task 3',
-  //   start: new Date(2024, 5, 9), // May 10th, 2024 (year, month (0-indexed), day)
-  //   end: new Date(2024, 5, 9), // Can be the same date for single-day tasks
-  // },
-  // {
-  //   id: 4,
-  //   title: 'Meeting 2',
-  //   start: new Date(2024, 4, 9), // May 10th, 2024 (year, month (0-indexed), day)
-  //   end: new Date(2024, 4, 9), // Can be the same date for single-day tasks
-  // },
-];
-
-
-function CalendarPage({}: Props) {
+function CalendarPage() {
   const navigate = useNavigate();
+  const [events, setEvents] = useState<Event[]>([]);
+
+  useQuery({
+    queryKey: ["getTasks"],
+    queryFn: async () => {
+      const tasks = await fetchTasks();
+      if (tasks != null) {
+        const mappedEvents: Event[] = tasks.map((task) => {
+          const startDate = task.date ? new Date(task.date) : new Date();
+          startDate.setMonth(startDate.getMonth() + 1);
+          const endDate = new Date(startDate);
+
+          return {
+            id: task.id ?? '',
+            title: task.title || 'Untitled Task',
+            start: startDate,
+            end: endDate,
+          };
+        });
+        console.log(mappedEvents);
+        setEvents(mappedEvents);
+      }
+      return tasks;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   const handleDoubleClickEvent = (event: { id: any; }) => {
-    // const eventId = event.id; 
-    // navigate(`/task/${eventId}`); // TODO: add id do URL
-    navigate(`/task`);
+    const eventId = event.id; 
+    navigate(`/task/${eventId}`);
   };
 
   return (
@@ -54,7 +59,7 @@ function CalendarPage({}: Props) {
         startAccessor="start"
         endAccessor="end"
         onDoubleClickEvent={handleDoubleClickEvent}
-        style={{ height: 600 }}
+        style={{ height: 500 }}
       />
     </div>
   );

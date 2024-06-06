@@ -93,7 +93,7 @@ jobs:
             --image ${{ secrets.ACR_NAME }}.azurecr.io/selfimprovement-frontend:${latest_tag} \
             --cpu 1 \
             --memory 2 \
-            --ports 3000 \
+            --ports 80 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \
@@ -117,13 +117,13 @@ jobs:
             --dns-name-label identity-static-dns \
             --location ${{ secrets.LOCATION }} \
             --environment-variables \
-                SelfImprovementDbContext="Host=selfimprovementaipsql.postgres.database.azure.com; \
-                Port=5432; \
-                Database=mydatabase; \
-                User ID=selfimprovementAdmin@selfimprovementaipsql; \
-                Password=selfimprovement123$; \
+                SelfImprovementDbContext="Host=${{ secrets.DB_HOST }}; \
+                Port=${{ secrets.DB_PORT }}; \
+                Database=${{ secrets.DB_NAME }}; \
+                User ID=${{ secrets.DB_USER }}; \
+                Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
-                CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000 \
+                CorsOrigin=http://localhost:3000 \
                 RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
 
       - name: Add firewall database rule for identity
@@ -157,13 +157,13 @@ jobs:
             --dns-name-label goal-static-dns \
             --location ${{ secrets.LOCATION }} \
             --environment-variables \
-                SelfImprovementDbContext="Host=selfimprovementaipsql.postgres.database.azure.com; \
-                Port=5432; \
-                Database=mydatabase; \
-                User ID=selfimprovementAdmin@selfimprovementaipsql; \
-                Password=selfimprovement123$; \
+                SelfImprovementDbContext="Host=${{ secrets.DB_HOST }}; \
+                Port=${{ secrets.DB_PORT }}; \
+                Database=${{ secrets.DB_NAME }}; \
+                User ID=${{ secrets.DB_USER }}; \
+                Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
-                CorsOrigin=http://frontend-static-dns.polandcentral.azurecontainer.io:3000 \
+                CorsOrigin=http://localhost:3000 \
                 RabbitMqConnectionUrl=amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/
 
       - name: Add firewall database rule for goal
@@ -198,16 +198,16 @@ jobs:
             --dns-name-label prompt-static-dns \
             --location ${{ secrets.LOCATION }} \
             --environment-variables \
-                SelfImprovementDbContext="Host=selfimprovementaipsql.postgres.database.azure.com; \
-                Port=5432; \
-                Database=mydatabase; \
-                User ID=selfimprovementAdmin@selfimprovementaipsql; \
-                Password=selfimprovement123$; \
+                SelfImprovementDbContext="Host=${{ secrets.DB_HOST }}}; \
+                Port=${{ secrets.DB_PORT }}; \
+                Database=${{ secrets.DB_NAME }}; \
+                User ID=${{ secrets.DB_USER }}; \
+                Password=${{ secrets.DB_PASS }}; \
                 Include Error Detail=true" \
-                CorsOrigin="http://frontend-static-dns.polandcentral.azurecontainer.io:3000" \
+                CorsOrigin="http://localhost:3000" \
                 RabbitMqConnectionUrl="amqp://rabbitmq-static-dns.polandcentral.azurecontainer.io:5672/" \
                 BlobStorageConnectionUrl="UseDevelopmentStorage=true; \
-                DevelopmentStorageProxyUri=https://selfimprovementstorage.file.core.windows.net/prompt" \
+                DevelopmentStorageProxyUri=https://selfimprovementstorage.blob.core.windows.net/azurite" \
                 Llama2="ollama-static-dns.polandcentral.azurecontainer.io:11434" \
                 GoalApiServiceUrl="goal-static-dns.polandcentral.azurecontainer.io:8080" \
                 IdentityApiServiceUrl="identity-static-dns.polandcentral.azurecontainer.io:8080"
@@ -263,39 +263,39 @@ jobs:
                 GF_SECURITY_ADMIN_USER=${{ secrets.GRAFANA_USER }} \
                 GF_SECURITY_ADMIN_PASSWORD=${{ secrets.GRAFANA_PASSWORD }}
 
-      - name: Deploy Loki to ACI
-        continue-on-error: true
-        run: |
-          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository loki --orderby time_desc --query '[0]' -o tsv)
-          az container create \
-            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-            --name loki \
-            --image ${{ secrets.ACR_NAME }}.azurecr.io/loki:${latest_tag} \
-            --cpu 1 \
-            --memory 2 \
-            --ports 3100 \
-            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label loki-static-dns \
-            --location ${{ secrets.LOCATION }}
+      # - name: Deploy Loki to ACI
+      #   continue-on-error: true
+      #   run: |
+      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository loki --orderby time_desc --query '[0]' -o tsv)
+      #     az container create \
+      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+      #       --name loki \
+      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/loki:${latest_tag} \
+      #       --cpu 1 \
+      #       --memory 2 \
+      #       --ports 3100 \
+      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+      #       --registry-username ${{ secrets.ACR_USERNAME }} \
+      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
+      #       --dns-name-label loki-static-dns \
+      #       --location ${{ secrets.LOCATION }}
 
-      - name: Deploy Promtail to ACI
-        continue-on-error: true
-        run: |
-          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository promtail --orderby time_desc --query '[0]' -o tsv)
-          az container create \
-            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-            --name promtail \
-            --image ${{ secrets.ACR_NAME }}.azurecr.io/promtail:${latest_tag} \
-            --cpu 1 \
-            --memory 2 \
-            --ports 9080 \
-            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label promtail-static-dns \
-            --location ${{ secrets.LOCATION }}
+      # - name: Deploy Promtail to ACI
+      #   continue-on-error: true
+      #   run: |
+      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository promtail --orderby time_desc --query '[0]' -o tsv)
+      #     az container create \
+      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+      #       --name promtail \
+      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/promtail:${latest_tag} \
+      #       --cpu 1 \
+      #       --memory 2 \
+      #       --ports 9080 \
+      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+      #       --registry-username ${{ secrets.ACR_USERNAME }} \
+      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
+      #       --dns-name-label promtail-static-dns \
+      #       --location ${{ secrets.LOCATION }}
 
       - name: Deploy Prometheus to ACI
         continue-on-error: true
@@ -314,22 +314,22 @@ jobs:
             --dns-name-label prometheus-static-dns \
             --location ${{ secrets.LOCATION }}
 
-      - name: Deploy Node Exporter to ACI
-        continue-on-error: true
-        run: |
-          latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository node-exporter --orderby time_desc --query '[0]' -o tsv)
-          az container create \
-            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-            --name node-exporter \
-            --image ${{ secrets.ACR_NAME }}.azurecr.io/node-exporter:${latest_tag} \
-            --cpu 1 \
-            --memory 2 \
-            --ports 9100 \
-            --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --dns-name-label node-exporter-static-dns \
-            --location ${{ secrets.LOCATION }}
+      # - name: Deploy Node Exporter to ACI
+      #   continue-on-error: true
+      #   run: |
+      #     latest_tag=$(az acr repository show-tags --name ${{ secrets.ACR_NAME }} --repository node-exporter --orderby time_desc --query '[0]' -o tsv)
+      #     az container create \
+      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+      #       --name node-exporter \
+      #       --image ${{ secrets.ACR_NAME }}.azurecr.io/node-exporter:${latest_tag} \
+      #       --cpu 1 \
+      #       --memory 2 \
+      #       --ports 9100 \
+      #       --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
+      #       --registry-username ${{ secrets.ACR_USERNAME }} \
+      #       --registry-password ${{ secrets.ACR_PASSWORD }} \
+      #       --dns-name-label node-exporter-static-dns \
+      #       --location ${{ secrets.LOCATION }}
 
       - name: Deploy Nginx to ACI
         continue-on-error: true
@@ -341,7 +341,7 @@ jobs:
             --image ${{ secrets.ACR_NAME }}.azurecr.io/nginx:${latest_tag} \
             --cpu 1 \
             --memory 2 \
-            --ports 80 \
+            --ports 80 443 \
             --registry-login-server ${{ secrets.ACR_NAME }}.azurecr.io \
             --registry-username ${{ secrets.ACR_USERNAME }} \
             --registry-password ${{ secrets.ACR_PASSWORD }} \

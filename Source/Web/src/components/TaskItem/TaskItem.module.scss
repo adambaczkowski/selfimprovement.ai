@@ -8,9 +8,9 @@
   padding: 1.2rem 1rem;
   border-radius: 1rem;
   margin: 20px;
-  min-width: 14rem; /* Set minimum width */
+  min-width: 13rem; /* Set minimum width */
   min-height: 14px; /* Set minimum height */
-  max-width: 16rem; /* Set maximum width */
+  max-width: 15.5rem; /* Set maximum width */
   max-height: 18rem; /* Set maximum height */
 
   color: inherit;
@@ -25,8 +25,20 @@
     transform: scale(1.01) translateY(-3px) rotate(0.3deg)/* Combine transform properties */
   }
 
+  .dateComponent {
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    gap: 0.5rem;
+    margin-top: auto;
+    margin-bottom: -1rem;
+    color: rgb(90, 90, 90);
+    font-size: 0.85rem;
+  }
+
   .date {
     margin-top: auto;
+    margin-top: -0.1rem;
   }
 
   h1 {

@@ -7,22 +7,6 @@ import styles from './TasksPage.module.scss';
 
 function TasksPage() {
   const [tasks, setTasks] = useState<GoalTaskDto[]>([]);
-  // const [dailyTasks, setDailyTasks] = useState<DailyTask[]>([]);
-
-  // useEffect(() => {
-  //   setDailyTasks([
-  //     {
-  //       weekTitle: "Week 1: January 17-21, 2024",
-  //       date: "January 17, 2024",
-  //       tasks: [
-  //         "Set Up Development Environment",
-  //         "Install Python and a Code Editor (e.g., VS Code)",
-  //         "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-  //       ],
-  //       isCompleted: true
-  //     },
-  //   ]);
-  // }, []);
 
   useQuery({
     queryKey: ["getTasks"],
