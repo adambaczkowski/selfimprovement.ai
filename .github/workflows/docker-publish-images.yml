@@ -31,27 +31,17 @@ jobs:
       - name: Retrieve postgresUser from Azure Key Vault
         run: |
           postgresUser=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresUser --query value -o tsv)
-          echo "POSTGRES_USER=\"${postgresUser}\"" > .env
+          echo "DB_USER=\"${postgresUser}\"" > .env
 
       - name: Retrieve postgresPassword from Azure Key Vault
         run: |
           postgresPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresPassword --query value -o tsv)
-          echo "POSTGRES_PASSWORD=\"${postgresPassword}\"" >> .env
+          echo "DB_PASS=\"${postgresPassword}\"" >> .env
 
       - name: Retrieve postgresDbName from Azure Key Vault
         run: |
           postgresDbName=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name postgresDbName --query value -o tsv)
-          echo "POSTGRES_DB_NAME=\"${postgresDbName}\"" >> .env
-
-      - name: Retrieve pgAdminEmail from Azure Key Vault
-        run: |
-          pgAdminEmail=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminEmail --query value -o tsv)
-          echo "PGADMIN_DEFAULT_EMAIL=\"${pgAdminEmail}\"" >> .env
-
-      - name: Retrieve pgAdminPassword from Azure Key Vault
-        run: |
-          pgAdminPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name pgAdminPassword --query value -o tsv)
-          echo "PGADMIN_DEFAULT_PASSWORD=\"${pgAdminPassword}\"" >> .env
+          echo "DB_NAME=\"${postgresDbName}\"" >> .env
 
       - name: Retrieve grafanaUser from Azure Key Vault
         run: |
@@ -68,6 +58,11 @@ jobs:
           gpt35=${{ secrets.GPT35_API_KEY }}
           echo "GPT35_API_KEY =\"${gpt35}\"" >> .env
 
+      - name: Retrieve postgres host secret
+        run: |
+          dbkey=${{ secrets.DB_HOST }}
+          echo "DB_HOST =\"${dbkey}\"" >> .env
+
       - name: Retrieve STORAGE_ACCOUNT_NAME
         run: |
           echo "STORAGE_ACCOUNT_NAME=\"${{ secrets.STORAGE_ACCOUNT_NAME }}\"" >> .env
@@ -83,7 +78,6 @@ jobs:
       - name: Create File Shares for RabbitMq
         run: |
           az storage share create --name rabbitmq --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
-
 
       - name: Create File Shares for openwebui
         run: |
