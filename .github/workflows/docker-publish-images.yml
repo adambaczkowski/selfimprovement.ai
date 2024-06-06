@@ -63,6 +63,11 @@ jobs:
           grafanaPassword=$(az keyvault secret show --vault-name ${{ secrets.KEY_VAULT_NAME }} --name grafanaPassword --query value -o tsv)
           echo "GRAFANA_PASSWORD=\"${grafanaPassword}\"" >> .env
 
+      - name: Retrieve gpt3.5 token
+        run: |
+          gpt35=${{ secrets.GPT35_API_KEY }}
+          echo "GPT35_API_KEY =\"${gpt35}\"" >> .env
+
       - name: Retrieve STORAGE_ACCOUNT_NAME
         run: |
           echo "STORAGE_ACCOUNT_NAME=\"${{ secrets.STORAGE_ACCOUNT_NAME }}\"" >> .env
