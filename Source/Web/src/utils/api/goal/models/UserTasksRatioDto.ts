@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type DeleteGoalCommand = {
-    goalId?: string;
+export type UserTasksRatioDto = {
+    completedTasksCount?: number;
+    allTasksCount?: number;
 };
 

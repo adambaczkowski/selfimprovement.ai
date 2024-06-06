@@ -2,7 +2,9 @@
 using GoalApi.Goal.Commands.DeleteGoal;
 using GoalApi.Goal.Dtos;
 using GoalApi.Goal.Queries.GetSingleGoal;
+using GoalApi.Goal.Queries.GetUserDoneToOverallTasksRatio;
 using GoalApi.Goal.Queries.GetUserGoals;
+using GoalApi.Goal.Queries.GetUserHomeGoals;
 using LS.Common;
 using LS.Startup;
 using MediatR;
@@ -35,6 +37,25 @@ public class GoalController(IMediator mediator, ICurrentUserService currentUserS
     {
         query.UserId = currentUserService.UserId;
         
+        return mediator.Send(query);
+    }
+    
+    [Authorize]
+    [Route("/UserHomeGoals")]
+    [HttpGet]
+    public Task<List<GoalHomeDto>> GetUserHomeGoals([FromQuery] GetUserHomeGoalsQuery query)
+    {
+        query.UserId = currentUserService.UserId;
+        
+        return mediator.Send(query);
+    }
+    
+    [Authorize]
+    [Route("/DoneToOverallTasksRatio")]
+    [HttpGet]
+    public Task<UserTasksRatioDto> GetUserDoneTasksRatio([FromQuery] GetUserDoneToOverallTasksRatioQuery query)
+    {
+        query.UserId = currentUserService.UserId;
         return mediator.Send(query);
     }
     
