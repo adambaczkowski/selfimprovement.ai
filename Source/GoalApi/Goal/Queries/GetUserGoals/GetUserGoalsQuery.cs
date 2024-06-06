@@ -17,6 +17,7 @@ public class GetUserGoalsQueryHandler(IGenericRepository<Models.Goal> goalReposi
     public async Task<List<GoalDto>> Handle(GetUserGoalsQuery request, CancellationToken cancellationToken)
     {
         var goals = await goalRepository.GetQuery()
+            .Include(x => x.Tasks)
             .Where(x => x.UserId == request.UserId)
             .ToListAsync(cancellationToken);
         

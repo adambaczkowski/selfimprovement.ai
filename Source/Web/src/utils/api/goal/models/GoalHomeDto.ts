@@ -2,7 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type DeleteGoalCommand = {
-    goalId?: string;
+export type GoalHomeDto = {
+    name?: string | null;
+    completedTasksCount?: number;
+    allTasksCount?: number;
 };
 
