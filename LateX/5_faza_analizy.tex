@@ -135,11 +135,37 @@ Etyczne wykorzystanie modeli językowych oraz sztucznej inteligencji jest kluczo
 \clearpage
 
 \subsection{Platformy chmurowe}
+Platformy chmurowe to zaawansowane systemy, które umożliwiają firmom i organizacjom dostęp do zasobów obliczeniowych przez Internet, bez konieczności posiadania i zarządzania własną infrastrukturą IT. Oto kilka kluczowych informacji na temat platform chmurowych:
 
+Definicja i Działanie
+
+Platforma chmurowa to system operacyjny i sprzęt serwerów w centrum danych, skonfigurowany do świadczenia usług obliczeniowych dla klientów. Umożliwia ona firmom wynajmowanie dostępu do zasobów obliczeniowych, takich jak serwery, bazy danych, magazyny danych, analityka, sieci, oprogramowanie i inteligencja, na zasadzie płatności za użycie.
+
+Rodzaje Platform Chmurowych
+
+1. Chmura Publiczna: Usługi świadczone przez zewnętrznych dostawców, dostępne dla wielu klientów przez Internet. Przykłady to Amazon Web Services (AWS), Google Cloud Platform, Microsoft Azure, Alibaba Cloud i IBM Cloud.
+2. Chmura Prywatna: Dedykowana dla jednej organizacji, może być zarządzana wewnętrznie lub przez zewnętrznego dostawcę. Oferuje większą kontrolę nad zasobami i bezpieczeństwem.
+3. Chmura Hybrydowa: Kombinacja chmury publicznej i prywatnej, umożliwiająca przenoszenie danych i aplikacji między nimi, co zapewnia większą elastyczność i optymalizację infrastruktury.
+
+Korzyści z Używania Platform Chmurowych
+
+- Elastyczność: Możliwość szybkiego skalowania zasobów w górę lub w dół w zależności od potrzeb biznesowych, co pozwala unikać ryzyka nadmiernego lub niedostatecznego przydziału zasobów.
+- Redukcja Kosztów: Eliminacja kosztów kapitałowych związanych z budową i utrzymaniem własnych centrów danych oraz płatność tylko za faktycznie używane zasoby.
+- Wydajność: Dostęp do dużej mocy obliczeniowej i magazynowej na żądanie, co pozwala unikać wąskich gardeł i zapewnia lepszą wydajność aplikacji.
+- Szybkość Wdrożenia: Możliwość szybkiego wdrażania technologii na całym świecie, co skraca czas wprowadzenia produktów na rynek.
+- Zwiększona Produktywność: Zespoły IT są zwolnione z zarządzania, utrzymania i aktualizacji sprzętu i oprogramowania na miejscu, co pozwala im skupić się na bardziej strategicznych zadaniach.
+- Bezpieczeństwo: Dostawcy chmurowi inwestują znaczne środki w technologie zabezpieczające, co często zapewnia wyższy poziom bezpieczeństwa niż w przypadku własnych centrów danych.
+- Niezawodność: Platformy chmurowe są bardziej odporne dzięki rozproszonej infrastrukturze, co zapewnia szybsze odzyskiwanie danych po awariach.
+
+Platformy chmurowe odgrywają kluczową rolę w nowoczesnych strategiach IT, umożliwiając firmom szybkie i efektywne skalowanie swoich operacji oraz wprowadzanie innowacji.
 \subsubsection{Opis platform}
+Platformy chmurowe to zintegrowane zestawy technologii umożliwiające użytkownikom zdalne korzystanie z szerokiej gamy zasobów komputerowych przez Internet. Te cyfrowe ekosystemy oferują skalowalne rozwiązania IT, takie jak serwery, pamięć, bazy danych oraz oprogramowanie, wszystko dostępne jako usługa. Główne kategorie tych usług to: Infrastructure as a Service (IaaS), Platform as a Service (PaaS) oraz Software as a Service (SaaS).
 
+Korzystanie z platform chmurowych przynosi wiele korzyści. Elastyczność i skalowalność pozwalają na szybkie dostosowywanie zasobów do aktualnych potrzeb, bez konieczności inwestycji w drogie sprzęty i infrastrukturę. Oszczędności kosztów wynikają z modelu opłat "pay as you go", co oznacza, że płaci się tylko za te zasoby, które są faktycznie wykorzystywane. Bezpieczeństwo danych jest również kluczowym aspektem, z zaawansowanymi rozwiązaniami chroniącymi przed utratą danych i cyberatakami.
 \subsubsection{Wybór - Plaforma Microsoft Azure}
 \clearpage
+Platfroma Azure została wybrana do naszego projektu ze względu na to,że nasz zespół miał już doświadczenie zarówno prywatne jak i komercyjne w tej technologi. Kolejnym atutem rozwiązania firmy z Redmond, jest bogata oferta serwisów oraz technologii potrzebnych do zbudowania do aplikacji opartej o architekturę mikroserwisów.
+W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mikroserwisów dzięki usługom takim jak Azure Kubernetes Service, który upraszcza zarządzanie kontenerami, oraz Azure Container Instances. Platforma oferuje również integracje z narzędziami deweloperskimi oraz CI/CD.
 
 \subsection{Wymagania funkcjonalne}
 
@@ -150,6 +176,7 @@ Etyczne wykorzystanie modeli językowych oraz sztucznej inteligencji jest kluczo
 \subsubsection{Scenariusze przypadków użycia}
 
 \subsubsection{Sposób przechowywania danych}
+Dane użytkowników są przechowywane w bazie danych PostgreSQL, co zapewnia efektywne zarządzanie dużymi zbiorami danych oraz wysoki poziom bezpieczeństwa. PostgreSQL, jako zaawansowany system zarządzania relacyjnymi bazami danych, oferuje szerokie możliwości skalowania i optymalizacji, co jest kluczowe przy obsłudze danych wrażliwych i osobowych.
 
 \subsubsection{Diagramy}
 \clearpage
@@ -163,8 +190,6 @@ Etyczne wykorzystanie modeli językowych oraz sztucznej inteligencji jest kluczo
 
 \subsection{Opis prototypów}
 Prototypy opracowane na etapie planowania całej aplikacji okazały się niezwykle pomocne w ustaleniu funkcjonalności oraz ogólnego zarysu aplikacji. Jednakże, po dokładnej analizie trendów dotyczących UX/UI oraz tematyki aplikacji, konieczne było wykonanie nowego aspektu wizualnego. Zmieniono kolorystykę oraz doprecyzowano wygląd poszczególnych komponentów, aby spełnić wymagania standardów UX/UI oraz zapewnić użytkownikom maksymalny komfort podczas korzystania z aplikacji. Ważnym celem było stworzenie projektu przyjaznego i intuicyjnego, a także spełnienie wymogów dotyczących dostępności. Wszystkie te aspekty zostały uwzględnione podczas projektowania i implementacji aplikacji.
-
-\hspace{4}
 
 \begin{figure}[h]
     \centering

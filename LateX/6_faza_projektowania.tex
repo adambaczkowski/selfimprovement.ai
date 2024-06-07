@@ -18,8 +18,28 @@ W odpowiedzi na te problemy, architektura mikroserwisowa została zaprojektowana
 
 Architektura mikroserwisowa pozwala również na lepsze wykorzystanie zasobów sprzętowych poprzez niezależne skalowanie poszczególnych mikroserwisów w zależności od obciążenia, co prowadzi do lepszej wydajności i oszczędności kosztów operacyjnych. Dodatkowo, ułatwia ona wprowadzanie zmian i aktualizacji aplikacji poprzez możliwość modyfikacji jednego mikroserwisu bez wpływu na pozostałe.
 
-
 Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury obliczeniowej, umożliwiają efektywne zarządzanie i wdrażanie mikrousług, co stanowi kluczowy element nowoczesnych środowisk biznesowych.
+
+\subsubsection{GitOps}
+Podczas procesu tworzenia oprogramowania zastosowaliśmy powszechne praktyki zgodne z kulturą i praktykami DevOps. Jedną z nich jest GitOps, czyli podejście do zarządzania infrastrukturą i aplikacjami, które traktuje kod źródłowy jako jedyną prawdę w procesie CI/CD. Wykorzystuje narzędzia takie jak Git do automatyzacji procesów wdrożeniowych, zapewniając przy tym spójność i przejrzystość konfiguracji dzięki wersjonowaniu i kodowi źródłowemu.
+
+\subsubsection{Github}
+Naszym repozytorium kodu została platforma Github, a narzędziem CI/CD "Github Actions", wybór rozwiązania wynikał głównie z dwóch czynników. Pierwszym czynnikiem było wcześniejsze nawyki oraz preferencje całego zespołu pracy z repozytorium kodu. Drugim integracja ze środowiskiem chmurowym Azure, ponieważ Github i jego wszystkie elementy należą do firmy Microsoft.
+
+\subsubsection{Pipeline}
+Pipeline w kontekście GitHub Actions to zautomatyzowany proces, który składa się z serii zadań (jobs), które są wykonywane po każdym zdarzeniu w repozytorium, takim jak push czy pull request. Każde zadanie może zawierać kroki (steps), które wykonują specyficzne akcje, takie jak kompilacja kodu, testy, aż do wdrożenia aplikacji, co pozwala na ciągłą integrację i dostarczanie oprogramowania.
+
+\subsubsection{Monitoring}
+Architektura mikroserwisów potrzebuje dobrego systemu monitoringu, ponieważ system w prównaniu do monolitu jest bardziej zdecentralizowany i potrzebuje dokładnej analizy różnych metryk takich jak: natężenie ruchu sieciowego, liczba wolnej pamięci RAM zużywanej przez dany serwis itp.
+
+\subsubsection{Prometheus i Grafana}
+Narzędzia takie jak Prometheus oraz Grafana są bardzo powszechne we współczesnych aplikacjach chmurowych. Prometheus to system monitoringu i alertowania, który zbiera i przechowuje metryki w czasie rzeczywistym w formie serii czasowych. Dane są zbierane za pomocą protokołu HTTP z różnych źródeł, takich jak serwery czy aplikacje, a następnie wyświetlane w programie Grafna, która umożliwia ich analizę i wizualizację za pomocą zapytań i grafów.
+
+\subsubsection{RabbitMq}
+Ważnym czynnikiem jest jak poszczególne komponenty aplikacji komunikują się ze sobą, ze względu na izolację zasobów muszą one się komunikować za pomocą wspólnego dla nich mechanizmu. RabbitMQ to popularny open-source'owy broker wiadomości, który umożliwia asynchroniczną komunikację między komponentami oprogramowania poprzez wymianę wiadomości. Umożliwia to tworzenie rozproszonych systemów, które są bardziej skalowalne i odporne na błędy, dzięki wykorzystaniu różnorodnych wzorców komunikacyjnych, takich jak publikowanie/subskrypcja czy kolejki.
+
+\subsubsection{Zastosowane praktyki}
+Nasze mikroserwisy opierają się o cztery autorskie kontenery, napisane w technologiach .Net oraz React, za pomocą odpowiednio napisanych pipelinów jesteśmy w stanie utworzyć proces który sprawdza konfigurację pliku "docker-compose", przeprowadzić walidację parametrów oraz dostarczyć niezbędne zmienne środowiskowe aby utworzyć własne obrazy Dockerowe. Przechowywane są one w Azure Container Registry (ACR), rozwiązanie zapewnia prywatne repozytorium kontenerów co jest prawidłową praktyką bezpieczeństwa we współczesnych systemach chmurowych.
 
 \clearpage
 
@@ -42,7 +62,7 @@ Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury
 \item {\bf Konteneryzacja}
    - Wykorzystanie technologii konteneryzacji, na przykład Docker, umożliwiającej pakowanie oprogramowania w izolowane jednostki, co ułatwia przenośność i wdrażanie aplikacji.
 
-\item {\bf Infrastruktura Jako Kod}
+\item {\bf Infrastruktura Jako Kod (IaaC)}
    - Traktowanie infrastruktury jak kodu programistycznego, co umożliwia jej zarządzanie, wdrażanie i skalowanie przy użyciu praktyk znanym z programowania.
 
 \item {\bf Kultura i Współpraca}
@@ -127,7 +147,7 @@ W sumie, CI/CD to kluczowy element podejścia DevOps, przyczyniający się do ba
 {\bf Orkiestracja Kontenerów dla Skalowalnych i Zdecentralizowanych Aplikacji}
 
 \noindent Kubernetes, często nazywany "K8s" (gdzie "8s" oznacza osiem liter 'ubernete'), to popularna platforma do automatyzacji, zarządzania i orkiestracji kontenerów. Kontenery są lekkimi, przenośnymi jednostkami uruchomieniowymi, a Kubernetes ułatwia zarządzanie ich cyklem życia, skalowaniem i dystrybucją w rozproszonych środowiskach.
-\\
+
 
 {\bf Podstawowe Koncepcje Kubernetes:}
 
@@ -223,7 +243,7 @@ Kubernetes stał się fundamentalnym narzędziem w świecie kontenerów, pomagaj
 \begin{enumerate}
 \item {\bf Wczesne Wykrywanie Problemów}
    - Monitorowanie pozwala na szybkie identyfikowanie i diagnozowanie potencjalnych problemów, zanim wpłyną negatywnie na użytkowników.
-
+   
 \item {\bf Optymalizacja Wydajności}
    - Analiza metryk i logów umożliwia optymalizację wydajności aplikacji poprzez identyfikację obszarów wymagających ulepszeń.
 
@@ -309,7 +329,13 @@ Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Compo
 
 {\bf Diagram Container} - przedstawia kontenery zawierające komponenty aplikacji oraz opisuje ich rolę i wzajemne zależności.
 
-[WSTAW OBRAZEK]
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/devops/architecture.png}
+    \caption{Architektura aplikacji selfimproment.ai}
+    \label{fig:my_label}
+\end{figure}
+
 \clearpage
 
 {\bf Diagram Component} - prezentuje poszczególne komponenty aplikacji, ich interfejsy oraz wzajemne powiązania.
@@ -340,6 +366,24 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
 \item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika w aplikacjach webowych.
 
 \item {\bf SCSS} - jest preprocesorem CSS, który wprowadza dodatkowe funkcje i możliwości do standardowego języka CSS. Dzięki SCSS można pisać bardziej czytelny i łatwiejszy do zarządzania kod CSS poprzez zastosowanie zmiennych, zagnieżdżania, mixinów oraz funkcji. Zmienne pozwalają na definiowanie wartości, które mogą być wielokrotnie używane w kodzie, co ułatwia utrzymanie spójności wizualnej i szybką zmianę wyglądu całej aplikacji. Zagnieżdżanie umożliwia definiowanie stylów dla zagnieżdżonych elementów HTML, co sprawia, że kod jest bardziej zorganizowany i czytelny. Mixiny pozwalają na zdefiniowanie zestawów stylów, które mogą być używane wielokrotnie, co eliminuje powtarzalność kodu i ułatwia jego utrzymanie. Dodatkowo, SCSS oferuje możliwość korzystania z zaawansowanych funkcji matematycznych oraz logiki, co czyni go bardziej elastycznym i potężnym narzędziem przy tworzeniu zaawansowanych stylów CSS. Dzięki swojej popularności i wsparciu przez wiele narzędzi deweloperskich, SCSS stał się standardem w pracy nad projektami front-endowymi, umożliwiając programistom bardziej efektywne i produktywne tworzenie stylów dla aplikacji internetowych.
+
+\item {\bf .Net} - Jest platformą programistyczną od Microsoft, która umożliwia tworzenie aplikacji na różne systemy operacyjne, zarówno serwerowe, desktopowe, jak i mobilne. Dzięki wsparciu dla wielu języków programowania oraz bogatej bibliotece klas, .NET jest wyjątkowo elastyczny i popularny wśród programistów, oferując zarówno wydajność, jak i bezpieczeństwo aplikacji.
+
+\item {\bf Docker} - Jest narzędziem do zarządzania kontenerami, które pozwala na pakowanie aplikacji wraz z ich zależnościami w lekkie, przenośne, samowystarczalne kontenery, które mogą być łatwo przemieszczane między różnymi środowiskami. Umożliwia to szybkie wdrażanie oraz skalowanie aplikacji w różnorodnych środowiskach.
+
+\item {\bf Kubernetes} - To otwartoźródłowy system do automatyzacji wdrażania, skalowania oraz zarządzania aplikacjami kontenerowymi. Kubernetes umożliwia łatwą orkiestrację kontenerów, zarządzanie cyklem życia aplikacji oraz zapewnia wysoką dostępność i skalowalność usług.
+
+\item {\bf Kind} - Jest narzędziem służącym do uruchamiania lokalnych klastrów Kubernetes za pomocą kontenerów Dockera. Idealnie nadaje się do testowania Kubernetes w izolowanym środowisku na pojedynczym komputerze, co jest przydatne w rozwoju oprogramowania i testowaniu.
+
+\item {\bf Azurite} - Jest lekkim, otwartoźródłowym emulatorem usług magazynowych Azure, który pozwala na lokalne uruchamianie i testowanie aplikacji korzystających z usług Azure Storage bez konieczności dostępu do chmury Azure, co jest przydatne w fazie rozwoju i testów.
+
+\item {\bf Powershell} - To zaawansowany język skryptowy i środowisko powłoki zaprojektowane przez Microsoft dla systemów Windows, które umożliwia zautomatyzowanie zarządzania systemem oraz aplikacjami. Powershell jest wyposażony w potężne narzędzia do manipulacji obiektami i integracji z innymi technologiami.
+
+\item {\bf Bash} - Jest jednym z najpopularniejszych języków skryptowych dla powłoki systemów typu Unix, który umożliwia skuteczne zarządzanie systemem oraz automatyzację zadań za pomocą prostych skryptów. Bash jest ceniony za swoją prostotę i mocne wsparcie w środowiskach Linux i macOS oraz w kontenerach Dockerowych.
+
+\item {\bf Terraform} - Jest narzędziem do zarządzania infrastrukturą jako kodem, które pozwala na definiowanie i wdrażanie infrastruktury w różnych dostawcach usług chmurowych za pomocą prostego języka konfiguracyjnego. Terraform jest wykorzystywany do budowy, zmian i wersjonowania infrastruktury bezpiecznie i efektywnie.
+
+\item {\bf Azure KeyVault} - Jest to usługa zarządzania kluczami i sekretami, która pozwala na bezpieczne przechowywanie danych poufnych, takich jak klucze szyfrowania, certyfikaty oraz hasła. Dzięki Azure KeyVault, aplikacje mogą bezpiecznie uzyskiwać dostęp do potrzebnych tajemnic bez konieczności ich jawnej ekspozycji w kodzie, co znacznie zwiększa bezpieczeństwo i zarządzanie poufnościami w środowisku chmurowym.
 
 \end{enumerate}
 
@@ -374,3 +418,4 @@ const user: User = new UserAccount("Murphy", 1);
 \clearpage
 
 \subsection{Zastosowane praktyki bezpieczeństwa}
+W ramach zastosowanych praktyk bezpieczeństwa wykorzystano pipeline do automatyzacji procesów testowania i wdrażania, co zapewnia ciągłość i spójność dostarczania oprogramowania. Użycie narzędzia Terraform umożliwiło zarządzanie infrastrukturą jako kodem, zwiększając kontrolę i przejrzystość konfiguracji systemu. Dodatkowo, zaimplementowano rozwiązania takie jak Azure KeyVault do bezpiecznego przechowywania i zarządzania secretami, co znacząco podnosi poziom zabezpieczeń. Wszelkie poufne dane, takie jak hasła czy klucze API, są przechowywane jako secrety i zmienne środowiskowe, co ogranicza ryzyko ich wykorzystania przez nieuprawnione osoby i zapewnia lepszą kontrolę dostępu do wrażliwych zasobów.
