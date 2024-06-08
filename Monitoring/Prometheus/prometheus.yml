@@ -1,28 +1,20 @@
-# Global settings
 global:
-  scrape_interval: 15s # Set the scrape interval to every 15 seconds
-  evaluation_interval: 15s # Evaluate rules every 15 seconds
+  scrape_interval: 15s
+  evaluation_interval: 15s
 
-# Scrape configurations
 scrape_configs:
-  # Scrape configuration for Prometheus itself
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
 
-  # Scrape configuration for Node Exporter
   - job_name: 'node-exporter'
     static_configs:
       - targets: ['node-exporter-static-dns.polandcentral.azurecontainer.io:9100']
 
-  # Add other scrape targets as needed
-  # Example for scraping metrics from Grafana (if Grafana metrics endpoint is enabled)
   - job_name: 'grafana'
     static_configs:
       - targets: ['grafana-static-dns.polandcentral.azurecontainer.io:3000']
 
-
-  # Example to add Loki as a target, if Loki had a metrics endpoint
   - job_name: 'loki'
     static_configs:
       - targets: ['loki-static-dns.polandcentral.azurecontainer.io:3100']

@@ -1,16 +1,7 @@
+# docker compose --env-file .env -f docker-compose-local.yml up --build
 version: '3.7'
 
 services:
-
-  # coredns:
-  #   build:
-  #     context: ./CoreDNS
-  #     dockerfile: Dockerfile.local
-  #   container_name: coredns
-  #   restart: unless-stopped
-  #   ports:
-  #     - "53:53/udp"
-  #     - "53:53/tcp"
 
   postgres:
     container_name: postgres
@@ -19,9 +10,9 @@ services:
       dockerfile: Dockerfile.local
     restart: always
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=selfimprovement123
-      - POSTGRES_DB=SelfImprovementDb
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - 5432:5432
     volumes:
@@ -31,49 +22,49 @@ services:
         max-size: 10m
         max-file: "3"
 
-  # pgadmin:
-  #   container_name: pgadmin
-  #   build:
-  #     context: ./Database/pgadmin
-  #     dockerfile: Dockerfile.local
-  #   restart: always
-  #   environment:
-  #     - PGADMIN_DEFAULT_EMAIL=admin@selfimprovement.ai
-  #     - PGADMIN_DEFAULT_PASSWORD=selfimprovement123
-  #   ports:
-  #     - "5050:80"
-  #   volumes:
-  #     - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
+  pgadmin:
+    container_name: pgadmin
+    build:
+      context: ./Database/pgadmin
+      dockerfile: Dockerfile.local
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5050:80"
+    volumes:
+      - ./Database/Lib/config.py:/pgadmin4/web/config_local.py
 
-  # open-webui:
-  #   container_name: open-webui
-  #   restart: always
-  #   build:
-  #     context: ./Ollama/webui
-  #     dockerfile: Dockerfile.local
-  #   ports:
-  #     - "3001:8080"
-  #   volumes:
-  #     - open-webui:/app/backend/data
+  open-webui:
+    container_name: open-webui
+    restart: always
+    build:
+      context: ./Ollama/webui
+      dockerfile: Dockerfile.local
+    ports:
+      - "3001:8080"
+    volumes:
+      - open-webui:/app/backend/data
 
-  # ollama:
-  #   container_name: ollama
-  #   build:
-  #     context: ./Ollama
-  #     dockerfile: Dockerfile.local
-  #   tty: true
-  #   volumes:
-  #     - ollama:/root/.ollama
-  #   restart: always
-  #   ports:
-  #     - 11434:11434
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
+  ollama:
+    container_name: ollama
+    build:
+      context: ./Ollama
+      dockerfile: Dockerfile.local
+    tty: true
+    volumes:
+      - ollama:/root/.ollama
+    restart: always
+    ports:
+      - 11434:11434
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
@@ -87,16 +78,6 @@ services:
       - "10002:10002"
     command: "azurite-blob --blobHost 0.0.0.0 -l /data"
 
-  # mailhog:
-  #   container_name: mailhog
-  #   restart: always
-  #   build:
-  #     context: ./Mail
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "1025:1025"
-  #     - "8025:8025"
-
   grafana:
     container_name: grafana
     build:
@@ -108,8 +89,8 @@ services:
     ports:
       - "3002:3000"
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=admin=${GF_SECURITY_ADMIN_PASSWORD}
 
   loki:
     container_name: loki
@@ -193,8 +174,6 @@ services:
       - "443:443"
     volumes:
       - ./Nginx/local_conf/nginx.conf:/etc/nginx/nginx.conf
-    # env_file:
-    #   - .env
 
   frontend:
     container_name: selfimprovement-frontend
@@ -212,9 +191,9 @@ services:
       context: ./Source
       dockerfile: IdentityApi/Dockerfile.local
     environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
-      - CorsOrigin=http://localhost:3000
-      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
+      - SelfImprovementDbContext=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
+      - CorsOrigin=${CORS_ORIGIN}
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=${AZURITE_URL}
     ports:
       - "8080:8080"
     deploy:
@@ -229,9 +208,9 @@ services:
       context: ./Source
       dockerfile: GoalApi/Dockerfile.local
     environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
-      - CorsOrigin=http://localhost:3000
-      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
+      - SelfImprovementDbContext=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
+      - CorsOrigin=${CORS_ORIGIN}
+      - RabbitMqConnectionUrl=${RABBIT_URL}
     ports:
       - "8081:8080"
     deploy:
@@ -247,15 +226,15 @@ services:
       context: ./Source
       dockerfile: PromptApi/Dockerfile.local
     environment:
-      - SelfImprovementDbContext=Host=postgres;Port=5432;Database=SelfImprovementDb;User ID=admin;Password=selfimprovement123;Include Error Detail=true
-      - CorsOrigin=http://localhost:3000
-      - RabbitMqConnectionUrl=amqp://guest:guest@host.docker.internal:5672/
-      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite
-      - Llama2=host.docker.internal:11434
+      - SelfImprovementDbContext=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Include Error Detail=true
+      - CorsOrigin=${CORS_ORIGIN}
+      - RabbitMqConnectionUrl=${RABBIT_URL}
+      - BlobStorageConnectionUrl=UseDevelopmentStorage=true;DevelopmentStorageProxyUri=${AZURITE_URL}
+      - Llama2=${OLLAMA_URL}
       - Gpt35=api.openai.com
-      - Gpt35_ApiKey=sk-proj-fKa36WMlImH9VtU4woCmT3BlbkFJIlk3D0HFpSxPMy1KTPEb
-      - GoalApiServiceUrl=host.docker.internal:8081
-      - IdentityApiServiceUrl=host.docker.internal:8080
+      - Gpt35_ApiKey=${GPT35_API_KEY}
+      - GoalApiServiceUrl=${GOAL_URL}
+      - IdentityApiServiceUrl=${IDENTITY_URL}
 
     ports:
       - "8082:8080"
