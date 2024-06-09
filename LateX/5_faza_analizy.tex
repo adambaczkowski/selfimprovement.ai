@@ -125,14 +125,72 @@ Struktura promptów odgrywa istotną rolę w wydobywaniu pożądanych informacji
 
 \noindent Bezpieczeństwo promptów to ważny, ale często pomijany aspekt rozwoju i wdrażania generatywnej sztucznej inteligencji. Wraz z ciągłym rozwojem technologii GenAI, konieczne jest opracowanie solidnych mechanizmów bezpieczeństwa w celu ochrony przed potencjalnymi zagrożeniami. Rozwiązania te zapewnią, że GenAI będzie wykorzystywana w sposób odpowiedzialny i przyniesie korzyści społeczeństwu.
 
-
 \subsubsection{Fine-tuning}
 Jest to modyfikowanie istniejących modeli językowych w celu dostosowania ich do konkretnego zadania lub zbioru danych, odgrywa kluczową rolę w dziedzinie uczenia maszynowego i przetwarzania języka naturalnego. Proces ten polega na dalszym trenowaniu modeli na specyficznych danych lub zadaniach, co pozwala na poprawę ich wydajności i skuteczności w konkretnych zastosowaniach. Fine-tuning modeli LLM może być stosowany do różnorodnych zadań, takich jak tłumaczenie maszynowe, generowanie tekstu, analiza sentymentu czy wykrywanie fraz kluczowych. W ten sposób możliwe jest dostosowanie ogólnych modeli językowych do specyficznych potrzeb użytkowników i zastosowań, co przyczynia się do poprawy jakości rezultatów oraz dostosowania modeli do konkretnego kontekstu biznesowego lub naukowego.
+
+\subsubsection{Halucynacje sztucznej inteligencji}
+Halucynacje sztucznej inteligencji to zjawisko, w którym modele językowe generują odpowiedzi, które nie mają podstaw w rzeczywistych danych, na których zostały przeszkolone. Oto kluczowe informacje na ten temat:
+
+Halucynacje to potencjalnie nieprawidłowe, niezamierzone i nierealistyczne wyniki generowane przez modele językowe, wynikające z ich niezdolności do generowania istotnych informacji opartych na danych treningowych. Mogą one przybierać formę odpowiedzi, które brzmią przekonująco, ale nie mają pokrycia w faktach.
+
+Główne przyczyny halucynacji to:
+
+1. Ograniczone dane treningowe: Jeśli dane treningowe są niewystarczające lub brakuje im różnorodności, model może mieć trudności z uchwyceniem złożoności języka, co prowadzi do halucynacji.
+
+2. Błędy w danych treningowych: Jeśli dane treningowe zawierają luki lub błędne informacje, modele mogą włączyć i wzmocnić te uprzedzenia, powodując halucynacje utrwalające fałszywe informacje.
+
+3. Szum w danych wejściowych: Niekompletne lub zaszumione dane wejściowe utrudniają modelom dokładne przewidywanie, co prowadzi do halucynacji.
+
+Przykłady i Zagrożenia
+
+Halucynacje mogą prowadzić do generowania fałszywych informacji, takich jak sfabrykowane fakty, nieprawdziwe twierdzenia czy zmyślone orzeczenia sądowe. Stanowi to poważne zagrożenie dla wiarygodności i dokładności informacji dostarczanych przez modele AI, szczególnie w dziedzinach wymagających wieloetapowego rozumowania.
+
+Badania wykazały, że niektóre popularne chatboty, takie jak ChatGPT, Bard i Bing, mogą halucynować nawet w co czwartej odpowiedzi. Dlatego kluczowe jest świadome korzystanie z tych narzędzi i weryfikowanie uzyskanych informacji.
+
+Strategie Minimalizacji Halucynacji
+
+Firmy takie jak OpenAI podejmują wysiłki, aby zminimalizować halucynacje, stosując techniki takie jak "nadzór procesu" - monitorowanie procesu generowania odpowiedzi w celu wykrycia i skorygowania potencjalnych halucynacji.
+
+Ponadto, ważne jest ciągłe doskonalenie modeli AI poprzez poszerzanie i oczyszczanie danych treningowych oraz opracowywanie zaawansowanych metod uczenia maszynowego, które lepiej radzą sobie z kontekstem i rozumieniem.
+
+Chociaż halucynacje AI stanowią wyzwanie, świadomość tego zjawiska i ciągłe doskonalenie technologii może pomóc w zmniejszeniu jego wpływu i zwiększeniu wiarygodności systemów AI.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/chatgpt_trick.jpg}
+    \caption{Kreatywny sposób na oszukanie chatbota w celu rozwiązania captcha }
+    \label{fig:my_label}
+\end{figure}
+
+\subsubsection{Zagrożenia}
+Sztuczna inteligencja (AI) może być potencjalnie wykorzystywana do nieetycznych celów na kilka sposobów:
+
+Utrwalanie Uprzedzeń i Dyskryminacji
+Jeśli dane treningowe dla modeli AI zawierają uprzedzenia lub wzorce dyskryminacji, algorytmy mogą je utrwalać i skalować na dużą skalę. Może to prowadzić do niesprawiedliwych decyzji i nierównego traktowania niektórych grup społecznych.
+
+Naruszanie Prywatności
+Zaawansowane systemy AI mogą być wykorzystywane do masowej inwigilacji, śledzenia i gromadzenia danych osobowych bez zgody i wiedzy osób, naruszając ich prawo do prywatności.
+
+Dezinformacja i Manipulacja
+Modele generatywne AI mogą być użyte do tworzenia fałszywych treści, takich jak deepfake'i wideo, sfabrykowane wiadomości czy fałszywe recenzje produktów, w celu wprowadzania w błąd i manipulowania opinią publiczną.
+
+Cyberataki i Szkodliwe Oprogramowanie
+Zdolności AI mogą być wykorzystywane przez hakerów do tworzenia zaawansowanych wirusów, botnetów i innych form szkodliwego oprogramowania, które są trudniejsze do wykrycia i zwalczania.
+
+
 
 \subsubsection{Large Language Models}
 Duże modele językowe (LLM) to zaawansowane algorytmy sztucznej inteligencji, które wykorzystują techniki głębokiego uczenia się i obszerne zbiory danych do generowania, podsumowywania i przewidywania nowych treści w języku naturalnym. Modele te, takie jak LLM oparte na transformatorach, są zaprojektowane tak, aby rozumieć relacje między słowami i frazami, umożliwiając im równoległe przetwarzanie całych sekwencji tekstu. Modele LLM są szkolone na ogromnych ilościach danych, zazwyczaj z miliardami parametrów, co pozwala im na dostarczanie dokładnych i szybkich odpowiedzi w różnych dziedzinach. LLM mają wiele zalet dla organizacji i użytkowników, w tym rozszerzalność, zdolność adaptacji, elastyczność, wysoką wydajność, dokładność i łatwość szkolenia. Można je dostosować do konkretnych przypadków użycia, wykonywać różne zadania i generować odpowiedzi z niskim opóźnieniem. Jednak LLM wiążą się również z wyzwaniami, takimi jak wysokie koszty rozwoju i operacyjne, potencjalna stronniczość danych szkoleniowych, brak możliwości wyjaśnienia wyników, ryzyko halucynacji (dostarczanie niedokładnych odpowiedzi) oraz złożoność ze względu na dużą liczbę parametrów. Modele te mają szeroki zakres zastosowań w dziedzinach takich jak technologia, opieka zdrowotna, obsługa klienta, marketing, prawo, bankowość i wiele innych. Mogą pomagać w zadaniach takich jak copywriting, odpowiadanie na pytania z bazy wiedzy, transformacja miejsca pracy i konwersacyjna sztuczna inteligencja. LLM zmieniają sposób, w jaki technologia wchodzi w interakcję z użytkownikami i są uważane za kluczowy element nowoczesnego krajobrazu cyfrowego, rewolucjonizując i ulepszając środowisko pracy.
 
-\subsubsection{Ranking Modeli???}
+\subsubsection{Ranking Modeli}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/llms_benchmark.png}
+    \caption{Benchmark modeli LLM}
+    \label{fig:my_label}
+\end{figure}
+
 
 \subsubsection{Etyka}
 Etyczne wykorzystanie modeli językowych oraz sztucznej inteligencji jest kluczowe w dzisiejszym świecie technologicznym. W kontekście rozwijających się Large Language Models (LLMs) i sztucznej inteligencji, istnieje konieczność uwzględnienia kwestii etycznych, moralnych oraz odpowiedzialnego podejścia do ich zastosowań. Modeli językowych, takich jak GPT-3.5 czy inne zaawansowane systemy AI, mogą generować treści, odpowiadać na pytania, tłumaczyć języki, czy nawet projektować. Jednakże, istnieje ryzyko, że te modele mogą przekazywać błędne informacje, szerzyć dezinformację, lub być źródłem treści szkodliwych. Dlatego ważne jest, aby organizacje i twórcy tych modeli dbali o uczciwość, transparentność, oraz odpowiedzialność za generowane treści. W kontekście etyki, istotne jest również zapewnienie, że modele językowe nie promują dyskryminacji, uprzedzeń, czy szkodliwych treści. Konieczne jest monitorowanie i regulacja sposobu, w jaki te modele są używane, aby zapewnić, że służą dobrobytowi społeczeństwa i nie naruszają praw człowieka. Ważne jest również, aby modele językowe były rozwijane z poszanowaniem prywatności danych, zapewnieniem bezpieczeństwa informacji oraz zgodności z przepisami dotyczącymi ochrony danych osobowych. Odpowiedzialne podejście do tworzenia i wykorzystywania modeli językowych jest kluczowe dla budowania zaufania społecznego do sztucznej inteligencji i technologii opartych na AI.
