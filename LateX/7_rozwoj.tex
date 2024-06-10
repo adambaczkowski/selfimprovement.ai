@@ -1,9 +1,9 @@
 \section{Napotkane problemy}
-Podczas tworzenia aplikacji zrezygnowaliśmy z Kubernetesa oraz Azure Kubernetes Service, koszty okazały się nieproporcjonalne do obecnego stanu i liczby użytkowników aplikacji. Aplikacja jest obecnie oparta wyłącznia na kontenerach dockerowych oraz modułach platformy Azure.
+Podczas tworzenia aplikacji zrezygnowaliśmy z Kubernetesa oraz Azure Kubernetes Service, koszty okazały się nieproporcjonalne do obecnego stanu i liczby użytkowników aplikacji. Aplikacja jest obecnie oparta wyłącznie na kontenerach dockerowych oraz innych modułach platformy Azure.
 
 Kolejnym problemem napotkanym podczas tworzenia naszej pracy, były lokalne modele LLM, często bez odpowiedniej konfiguracji karty graficznej z kontenerem, operacje modelu były wykonywane wyłącznie na procesorze, spowodowało to bardzo duże opóźnienia w otrzymaniu jakiej koliwek odpowiedzi na wysłany prompt przez model językowy.
 
-Dużym problemem okazały się rownież koszty utrzymania infrastruktury na środowisku deweloperskim, naszym budżetem na projket było 200 złotych, jednak analizując prognozę kosztów w Azurze nasz budżet szybko został przekroczony. Największy koszt wygenerowały instancje kontenerów dockerowych. 
+Dużym problemem okazały się rownież koszty utrzymania infrastruktury na środowisku deweloperskim, naszym budżetem na projket było około 200 złotych, jednak analizując prognozę kosztów w Azurze nasz budżet szybko został przekroczony. Największy koszt wygenerowały instancje kontenerów dockerowych działające w chmurze. 
 
 \begin{figure}[h]
     \centering
@@ -23,7 +23,7 @@ Dużym problemem okazały się rownież koszty utrzymania infrastruktury na śro
 \section{Rozwój}
 
 \subsection{Plany na przyszłość}
-Wraz z rozwojem aplikacjo oraz przyrostu jej popularności i stabilności, niezbędne staje się przemyślenie kierunków jej dalszego rozwoju. Kluczowym aspektem, który planujemy wprowadzić, jest model biznesowy oparty o subskrypcję. Taki model przynosi wiele korzyści zarówno dla użytkowników, jak i dla nas jako deweloperów, oferując stabilne źródło przychodów oraz możliwość ciągłego rozwijania i ulepszania naszego produktu oraz utrzymania kosztów związanych z architekturą aplikacji.
+Wraz z rozwojem aplikacji oraz przyrostu jej popularności i stabilności, niezbędne staje się przemyślenie kierunków jej dalszego rozwoju. Kluczowym aspektem, który planujemy wprowadzić, jest model biznesowy oparty o subskrypcję. Taki model przynosi wiele korzyści zarówno dla użytkowników, jak i dla nas jako deweloperów, oferując stabilne źródło przychodów oraz możliwość ciągłego rozwijania i ulepszania naszego produktu oraz utrzymania kosztów związanych z architekturą aplikacji.
 
 Wprowadzenie modelu subskrypcyjnego pozwoli na regularne aktualizacje funkcjonalności oraz utrzymanie wysokiego poziomu wsparcia technicznego. Użytkownicy, subskrybując naszą usługę, będą mieli stały dostęp do najnowszych ulepszeń i dodatków, co zwiększy ich zaangażowanie. Model ten umożliwia również lepsze dostosowanie funkcji aplikacji do oczekiwań i potrzeb oraz pozwoli na pokrycie opłat związanych z infrastrukturą w chmurze.
 

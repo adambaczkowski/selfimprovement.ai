@@ -12,7 +12,7 @@
     
     \item {\bf Model językowy} - Model językowy w dziedzinie informatyki i sztucznej inteligencji to system komputerowy zaprojektowany do rozumienia, interpretowania i generowania ludzkiego języka naturalnego. Opiera się on na algorytmach uczenia maszynowego, głównie uczenia głębokiego, które uczą się struktury, semantyki i kontekstu języka przez analizę i przetwarzanie ogromnych zbiorów tekstów.
 
-    Takie modele składają się z wielowarstwowych sieci neuronowych, z których każda warstwa przetwarza różne aspekty języka, od rozpoznawania słów po interpretację znaczeń. Centralnym elementem jest algorytm 'transformer', który efektywnie przetwarza długie sekwencje tekstu, zachowując kontekst i znaczenie.
+    Takie modele składają się z wielowarstwowych sieci neuronowych, z których każda warstwa przetwarza różne aspekty języka, od rozpoznawania słów po interpretację znaczeń. Centralnym elementem jest algorytm "transformer", który efektywnie przetwarza długie sekwencje tekstu, zachowując kontekst i znaczenie.
     
     Modele językowe są trenowane na dużych zbiorach tekstowych, zawierających różnorodne formy języka. Proces treningu polega na dostosowywaniu parametrów sieci neuronowej, aby jak najlepiej odwzorować naturalne użycie języka. W wyniku tego treningu, modele te są zdolne do tworzenia nowych, koherentnych wypowiedzi, reagowania na zapytania i analizy języka na wysokim poziomie.
     \\
@@ -34,7 +34,7 @@
 \subsubsection{Opis modeli językowych}
 
 \begin{enumerate}
- \item {\bf ChatGPT} - to specjalistyczna wersja modelu językowego opracowana przez OpenAI, zaprojektowana głównie do prowadzenia konwersacji w formie tekstowej. Jest to aplikacja modelu GPT (Generative Pre-trained Transformer) skoncentrowana na interakcjach dialogowych, zdolna do generowania naturalnie brzmiących, koherentnych i kontekstualnie adekwatnych odpowiedzi w czasie rzeczywistym.
+ \item {\bf ChatGPT} - to specjalistyczna wersja modelu językowego opracowana przez firmę OpenAI, zaprojektowana głównie do prowadzenia konwersacji w formie tekstowej. Jest to aplikacja modelu GPT skoncentrowana na interakcjach dialogowych, zdolna do generowania naturalnie brzmiących, spójnych i kontekstualnie adekwatnych odpowiedzi w czasie rzeczywistym.
 
     Podstawą działania ChatGPT jest zaawansowany model językowy oparty na architekturze transformer, który został wytrenowany na ogromnych zbiorach danych tekstowych, w tym na dialogach i rozmowach. Dzięki temu ChatGPT wykazuje zdolność do zrozumienia zapytań w kontekście konwersacji i generowania płynnych, spójnych odpowiedzi.
     
@@ -42,11 +42,9 @@
     
     Model ten jest często wykorzystywany w aplikacjach do obsługi klienta, asystentach cyfrowych, edukacji, a także jako narzędzie do interakcji i angażowania użytkowników na platformach internetowych. Zdolność ChatGPT do naturalnej interakcji językowej sprawia, że znajduje on zastosowanie w różnorodnych środowiskach, gdzie istotna jest zdolność do prowadzenia płynnej, ludzko brzmiącej konwersacji.
     \\
-    \item {\bf Gemini} - to duży model językowy (LLM), który jest szkolony na ogromnym zbiorze danych tekstu i kodu. LLM-y są w stanie generować tekst, tłumaczyć języki, pisać różnego rodzaju kreatywne treści i odpowiadać na pytania w sposób informacyjny.
+    \item {\bf LLAMA} - LLAMA (Lifelong Language Model Agent) to model językowy opracowany przez firmę Meta, zaprojektowany został do wydajnej pracy z mniejszą ilością danych niż jego konkurenci. Wykorzystuje on technikę zwaną retreningiem, dzięki której jest w stanie dostosować się i uczyć na podstawie nowych informacji przez cały okres swojego działania, co znacznie poprawia jego skuteczność w zadaniach NLP (Natural Language Processing). LLAMA jest także zoptymalizowanym modelem językowym pod kątem wielozadaniowości, dzięki czemu sprawnie radzi sobie z różnorodnymi zadaniami językowymi, zapewniając przy tym efektywność w użyciu zasobów obliczeniowych.
     \\
-    \item {\bf LLAMA} - LLAMA (Lifelong Language Model Agent) to model językowy opracowany przez firmę Meta, zaprojektowany do wydajnej pracy z mniejszą ilością danych niż jego konkurenci. Wykorzystuje on technikę zwane retreningiem, dzięki której jest w stanie dostosować się i uczyć na podstawie nowych informacji przez cały okres swojego działania, co poprawia jego skuteczność w zadaniach NLP (Natural Language Processing). LLAMA jest także zoptymalizowany pod kątem wielozadaniowości, co pozwala mu radzić sobie z różnorodnymi zadaniami językowymi, zapewniając przy tym efektywność w użyciu zasobów obliczeniowych.
-    \\
-    \item {\bf Zephyr Stable} - Zephyr Stable LLM to narzędzie do przetwarzania języka naturalnego, które bazuje na modelach uczenia maszynowego, skoncentrowane na stabilności i niezawodności w czasie długotrwałego działania. Jego architektura jest zaprojektowana tak, aby zapewniać równowagę między dokładnością odpowiedzi a zachowaniem spójności i adekwatności w trakcie interakcji z użytkownikiem. Model ten jest szczególnie przydatny w aplikacjach, które wymagają trwałej i efektywnej komunikacji maszyna-człowiek, jak chatboty czy asystenci głosowi, gdzie niezmienna jakość i precyzja są kluczowe.
+    \item {\bf Zephyr Stable} - Zephyr Stable LLM to narzędzie do przetwarzania języka naturalnego, które bazuje na modelach uczenia maszynowego. Jest skoncentrowane na stabilności i niezawodności w czasie długotrwałego działania. Jego architektura jest zaprojektowana tak, aby zapewniać równowagę między dokładnością odpowiedzi a zachowaniem spójności i adekwatności w trakcie interakcji z użytkownikiem. Model ten jest szczególnie przydatny w aplikacjach, które wymagają trwałej i efektywnej komunikacji maszyna-człowiek, jak chatboty czy asystenci głosowi, gdzie niezmienna jakość i precyzja są kluczowe.
     \\
 
 \end{enumerate}
@@ -55,7 +53,7 @@
 
 Rozwój modeli językowych, szczególnie za sprawą zaawansowanych technologii opartych na sztucznej inteligencji, wprowadził nowe możliwości w dziedzinie przetwarzania języka naturalnego. Jednym z kluczowych obszarów wykorzystania tych modeli jest prompt engineering, czyli kształtowanie i dostosowywanie zapytań (promptów) w celu uzyskania pożądanych odpowiedzi od modeli językowych. Niniejszy rozdział skupia się na analizie konkretnych przypadków użycia modeli językowych w kontekście prompt engineeringu.
 
-Przed przystąpieniem do analizy przypadków użycia istotne jest określenie modeli językowych, które będą poddane ocenie. W ramach niniejszej pracy magisterskiej skupimy się na modelach opartych na architekturze GPT (Generative Pre-trained Transformer), a w szczególności na, GPT-3.5,GPT-4, oraz Bard. Wybór tych modeli wynika z ich doskonałej zdolności do zrozumienia kontekstu, elastyczności w generowaniu tekstów oraz szerokiej gamy zastosowań w dziedzinie języka naturalnego.
+Przed przystąpieniem do analizy przypadków użycia istotne jest określenie modeli językowych, które będą poddane ocenie. W ramach niniejszej pracy magisterskiej skupimy się na modelach opartych na architekturze GPT (Generative Pre-trained Transformer), a w szczególności na, GPT-3.5,GPT-4. Wybór tych modeli wynika z ich doskonałej zdolności do zrozumienia kontekstu, elastyczności w generowaniu tekstów oraz szerokiej gamy zastosowań w dziedzinie języka naturalnego.
  
 Analiza przypadków użycia rozpocznie się od szczegółowego zrozumienia procesu prompt engineeringu. Proces ten obejmuje identyfikację celu zapytania, dostosowanie struktury promptu, a także optymalizację parametrów modelu w celu uzyskania precyzyjnych i zadowalających wyników. Przeanalizujemy różne strategie prompt engineeringu, w tym zmiany w sformułowaniu pytań, manipulacje długością promptu oraz eksperymenty z parametrami kontekstowymi.
 
@@ -69,7 +67,7 @@ Projektowanie prompt'ów jest kluczowym aspektem w tworzeniu efektywnych interak
 \noindent\textbf{Analiza celu naszego prompta}
 
 Każdy prompt, musi zostac tak zaprojektowany aby spełniał wymagania techniczne aplikacji.
-Aplikacja jest podzielona na wiele etapów gdzie użytkownik otrzymuje specjalnie przygotowane odpowiedzi w zależności od opcji, które wybierze.
+Aplikacja jest podzielona na wiele etapów gdzie użytkownik otrzymuje specjalnie wygenerowane odpowiedzi w zależności od opcji, które wcześniej wybierze.
 \\
 
 \noindent\textbf{Wybór Słów Kluczowych}
@@ -88,7 +86,7 @@ Struktura promptów odgrywa istotną rolę w wydobywaniu pożądanych informacji
 \noindent Bezpieczeństwo promptów dotyczy ochrony przed złośliwym wykorzystaniem duzych modeli językowych (LLM) poprzez manipulowanie promptami, czyli wejściami dostarczanymi modelowi. Ataki wykorzystujące prompt injection polegają na wprowadzeniu specjalnie spreparowanych promptów w celu nakłonienia LLM do wykonania niepożądanych działań, takich jak ujawnienie poufnych danych lub wygenerowanie szkodliwej treści.
 \\
 
-\noindent {\bf Rodzaje ataków na prompt security:}
+\noindent {\bf Rodzaje ataków związane z prompt security:}
 
 \begin{enumerate}
 \item {\bf Wstrzyknięcie promptu (Prompt Injection)}
@@ -129,31 +127,21 @@ Struktura promptów odgrywa istotną rolę w wydobywaniu pożądanych informacji
 Jest to modyfikowanie istniejących modeli językowych w celu dostosowania ich do konkretnego zadania lub zbioru danych, odgrywa kluczową rolę w dziedzinie uczenia maszynowego i przetwarzania języka naturalnego. Proces ten polega na dalszym trenowaniu modeli na specyficznych danych lub zadaniach, co pozwala na poprawę ich wydajności i skuteczności w konkretnych zastosowaniach. Fine-tuning modeli LLM może być stosowany do różnorodnych zadań, takich jak tłumaczenie maszynowe, generowanie tekstu, analiza sentymentu czy wykrywanie fraz kluczowych. W ten sposób możliwe jest dostosowanie ogólnych modeli językowych do specyficznych potrzeb użytkowników i zastosowań, co przyczynia się do poprawy jakości rezultatów oraz dostosowania modeli do konkretnego kontekstu biznesowego lub naukowego.
 
 \subsubsection{Halucynacje sztucznej inteligencji}
-Halucynacje sztucznej inteligencji to zjawisko, w którym modele językowe generują odpowiedzi, które nie mają podstaw w rzeczywistych danych, na których zostały przeszkolone. Oto kluczowe informacje na ten temat:
+Halucynacje sztucznej inteligencji to zjawisko, w którym modele językowe generują odpowiedzi, które nie mają podstaw w rzeczywistych danych, na których zostały przeszkolone.
 
-Halucynacje to potencjalnie nieprawidłowe, niezamierzone i nierealistyczne wyniki generowane przez modele językowe, wynikające z ich niezdolności do generowania istotnych informacji opartych na danych treningowych. Mogą one przybierać formę odpowiedzi, które brzmią przekonująco, ale nie mają pokrycia w faktach.
+Halucynacje to potencjalnie nieprawidłowe, niezamierzone i nierealistyczne wyniki generowane przez modele językowe, wynikające z ich niezdolności do zrozumienia istotnych informacji opartych na danych treningowych. Mogą one przybierać formę odpowiedzi, które brzmią przekonująco, ale nie mają pokrycia w faktach.
 
-Główne przyczyny halucynacji to:
+Głównymi przyczynami halucynacji mogą być ograniczone dane treningowe. Jeśli zestaw zbiorów danych jest niewystarczający lub brakuje różnorodności, model może mieć trudności z uchwyceniem złożoności języka, co prowadzi do tak zwanych halucynacji.
 
-1. Ograniczone dane treningowe: Jeśli dane treningowe są niewystarczające lub brakuje im różnorodności, model może mieć trudności z uchwyceniem złożoności języka, co prowadzi do halucynacji.
+Kolejnym ważnym aspektem mogą byc, błędy w danych treningowych, jeśli zawierają luki lub błędne informacje modele mogą włączyć i wzmocnić te uprzedzenia, powodując halucynacje utrwalające fałszywe informacje.
 
-2. Błędy w danych treningowych: Jeśli dane treningowe zawierają luki lub błędne informacje, modele mogą włączyć i wzmocnić te uprzedzenia, powodując halucynacje utrwalające fałszywe informacje.
+Również dużą rolę w jakości informacji odgrywa szum danych wejściowych. Niekompletne lub zaszumione dane wejściowe utrudniają modelom dokładne przewidywanie, co prowadzi do zwrócenia błędnych odpowiedzi przez model językowy.
 
-3. Szum w danych wejściowych: Niekompletne lub zaszumione dane wejściowe utrudniają modelom dokładne przewidywanie, co prowadzi do halucynacji.
-
-Przykłady i Zagrożenia
-
-Halucynacje mogą prowadzić do generowania fałszywych informacji, takich jak sfabrykowane fakty, nieprawdziwe twierdzenia czy zmyślone orzeczenia sądowe. Stanowi to poważne zagrożenie dla wiarygodności i dokładności informacji dostarczanych przez modele AI, szczególnie w dziedzinach wymagających wieloetapowego rozumowania.
+Halucynacje mogą prowadzić do generowania fałszywych informacji, takich jak sfabrykowane fakty, nieprawdziwe twierdzenia czy zmyślone sytuacje. Stanowi to poważne zagrożenie dla wiarygodności i dokładności informacji dostarczanych przez modele AI, szczególnie w dziedzinach wymagających wieloetapowego rozumowania.
 
 Badania wykazały, że niektóre popularne chatboty, takie jak ChatGPT, Bard i Bing, mogą halucynować nawet w co czwartej odpowiedzi. Dlatego kluczowe jest świadome korzystanie z tych narzędzi i weryfikowanie uzyskanych informacji.
 
-Strategie Minimalizacji Halucynacji
-
 Firmy takie jak OpenAI podejmują wysiłki, aby zminimalizować halucynacje, stosując techniki takie jak "nadzór procesu" - monitorowanie procesu generowania odpowiedzi w celu wykrycia i skorygowania potencjalnych halucynacji.
-
-Ponadto, ważne jest ciągłe doskonalenie modeli AI poprzez poszerzanie i oczyszczanie danych treningowych oraz opracowywanie zaawansowanych metod uczenia maszynowego, które lepiej radzą sobie z kontekstem i rozumieniem.
-
-Chociaż halucynacje AI stanowią wyzwanie, świadomość tego zjawiska i ciągłe doskonalenie technologii może pomóc w zmniejszeniu jego wpływu i zwiększeniu wiarygodności systemów AI.
 
 \begin{figure}[h]
     \centering
@@ -163,24 +151,16 @@ Chociaż halucynacje AI stanowią wyzwanie, świadomość tego zjawiska i ciąg�
 \end{figure}
 
 \subsubsection{Zagrożenia}
-Sztuczna inteligencja (AI) może być potencjalnie wykorzystywana do nieetycznych celów na kilka sposobów:
+Sztuczna inteligencja (AI) może być potencjalnie wykorzystywana do nieetycznych celów na wiele sposobów. 
 
-Utrwalanie Uprzedzeń i Dyskryminacji
-Jeśli dane treningowe dla modeli AI zawierają uprzedzenia lub wzorce dyskryminacji, algorytmy mogą je utrwalać i skalować na dużą skalę. Może to prowadzić do niesprawiedliwych decyzji i nierównego traktowania niektórych grup społecznych.
+SJeśli dane treningowe dla modeli AI zawierają uprzedzenia lub wzorce dyskryminacji, algorytmy mogą je utrwalać i skalować na dużą skalę. Może to prowadzić do niesprawiedliwych decyzji i nierównego traktowania niektórych grup społecznych. Zaawansowane systemy AI mogą być wykorzystywane do masowej inwigilacji, śledzenia i gromadzenia danych osobowych bez zgody i wiedzy osób, naruszając ich prawo do prywatności.
 
-Naruszanie Prywatności
-Zaawansowane systemy AI mogą być wykorzystywane do masowej inwigilacji, śledzenia i gromadzenia danych osobowych bez zgody i wiedzy osób, naruszając ich prawo do prywatności.
+Modele językowe mogą być użyte do tworzenia fałszywych treści, takich jak deepfake'i w postaci fałszywych nagrań, sfabrykowanych wiadomości.
 
-Dezinformacja i Manipulacja
-Modele generatywne AI mogą być użyte do tworzenia fałszywych treści, takich jak deepfake'i wideo, sfabrykowane wiadomości czy fałszywe recenzje produktów, w celu wprowadzania w błąd i manipulowania opinią publiczną.
-
-Cyberataki i Szkodliwe Oprogramowanie
-Zdolności AI mogą być wykorzystywane przez hakerów do tworzenia zaawansowanych wirusów, botnetów i innych form szkodliwego oprogramowania, które są trudniejsze do wykrycia i zwalczania.
-
-
+Nieodpowiednio wykorzystane zdolności sztucznej inteligencji mogą być wykorzystywane przez hakerów do tworzenia zaawansowanych wirusów, botnetów i innych form szkodliwego oprogramowania, które są trudniejsze do wykrycia i zwalczania.
 
 \subsubsection{Large Language Models}
-Duże modele językowe (LLM) to zaawansowane algorytmy sztucznej inteligencji, które wykorzystują techniki głębokiego uczenia się i obszerne zbiory danych do generowania, podsumowywania i przewidywania nowych treści w języku naturalnym. Modele te, takie jak LLM oparte na transformatorach, są zaprojektowane tak, aby rozumieć relacje między słowami i frazami, umożliwiając im równoległe przetwarzanie całych sekwencji tekstu. Modele LLM są szkolone na ogromnych ilościach danych, zazwyczaj z miliardami parametrów, co pozwala im na dostarczanie dokładnych i szybkich odpowiedzi w różnych dziedzinach. LLM mają wiele zalet dla organizacji i użytkowników, w tym rozszerzalność, zdolność adaptacji, elastyczność, wysoką wydajność, dokładność i łatwość szkolenia. Można je dostosować do konkretnych przypadków użycia, wykonywać różne zadania i generować odpowiedzi z niskim opóźnieniem. Jednak LLM wiążą się również z wyzwaniami, takimi jak wysokie koszty rozwoju i operacyjne, potencjalna stronniczość danych szkoleniowych, brak możliwości wyjaśnienia wyników, ryzyko halucynacji (dostarczanie niedokładnych odpowiedzi) oraz złożoność ze względu na dużą liczbę parametrów. Modele te mają szeroki zakres zastosowań w dziedzinach takich jak technologia, opieka zdrowotna, obsługa klienta, marketing, prawo, bankowość i wiele innych. Mogą pomagać w zadaniach takich jak copywriting, odpowiadanie na pytania z bazy wiedzy, transformacja miejsca pracy i konwersacyjna sztuczna inteligencja. LLM zmieniają sposób, w jaki technologia wchodzi w interakcję z użytkownikami i są uważane za kluczowy element nowoczesnego krajobrazu cyfrowego, rewolucjonizując i ulepszając środowisko pracy.
+Duże modele językowe (LLM) to zaawansowane algorytmy sztucznej inteligencji, które wykorzystują techniki głębokiego uczenia się i obszerne zbiory danych do generowania, podsumowywania i przewidywania nowych treści w języku naturalnym. Modele te, opierają się głównie na transformatorach, są zaprojektowane tak, aby rozumieć relacje między słowami i frazami, umożliwiając im równoległe przetwarzanie całych sekwencji tekstu. Szkolenie odbywa się na ogromnych ilościach danych, zazwyczaj z miliardami parametrów, co pozwala im na dostarczanie dokładnych i szybkich odpowiedzi. Modele językowe wiążą się również z wyzwaniami, takimi jak wysokie koszty rozwoju i operacyjne, potencjalna stronniczość danych szkoleniowych, brak możliwości wyjaśnienia wyników, ryzyko halucynacji (dostarczanie niedokładnych odpowiedzi) oraz złożoność ze względu na dużą liczbę parametrów.
 
 \subsubsection{Ranking Modeli}
 
@@ -193,31 +173,30 @@ Duże modele językowe (LLM) to zaawansowane algorytmy sztucznej inteligencji, k
 
 
 \subsubsection{Etyka}
-Etyczne wykorzystanie modeli językowych oraz sztucznej inteligencji jest kluczowe w dzisiejszym świecie technologicznym. W kontekście rozwijających się Large Language Models (LLMs) i sztucznej inteligencji, istnieje konieczność uwzględnienia kwestii etycznych, moralnych oraz odpowiedzialnego podejścia do ich zastosowań. Modeli językowych, takich jak GPT-3.5 czy inne zaawansowane systemy AI, mogą generować treści, odpowiadać na pytania, tłumaczyć języki, czy nawet projektować. Jednakże, istnieje ryzyko, że te modele mogą przekazywać błędne informacje, szerzyć dezinformację, lub być źródłem treści szkodliwych. Dlatego ważne jest, aby organizacje i twórcy tych modeli dbali o uczciwość, transparentność, oraz odpowiedzialność za generowane treści. W kontekście etyki, istotne jest również zapewnienie, że modele językowe nie promują dyskryminacji, uprzedzeń, czy szkodliwych treści. Konieczne jest monitorowanie i regulacja sposobu, w jaki te modele są używane, aby zapewnić, że służą dobrobytowi społeczeństwa i nie naruszają praw człowieka. Ważne jest również, aby modele językowe były rozwijane z poszanowaniem prywatności danych, zapewnieniem bezpieczeństwa informacji oraz zgodności z przepisami dotyczącymi ochrony danych osobowych. Odpowiedzialne podejście do tworzenia i wykorzystywania modeli językowych jest kluczowe dla budowania zaufania społecznego do sztucznej inteligencji i technologii opartych na AI.
+Wraz z bardzo szybkim rozwojem sztucznej inteligencji, pojawia się wiele dylematów natury etycznej związanych zarówno z prawami autorskimi trenowanych danych oraz faktycznych rezultatów stworzonych przez AI. Istnieje ryzyko, że modele mogą przekazywać błędne informacje, szerzyć dezinformację, lub być źródłem treści szkodliwych często nielegalnych. Dlatego ważne jest, aby organizacje i twórcy tych modeli dbali o uczciwość, transparentność, oraz brali odpowiedzialność za generowane treści.
+
 \clearpage
 
 \subsection{Platformy chmurowe}
-Platformy chmurowe to zaawansowane systemy, które umożliwiają firmom i organizacjom dostęp do zasobów obliczeniowych przez Internet, bez konieczności posiadania i zarządzania własną infrastrukturą IT. Oto kilka kluczowych informacji na temat platform chmurowych:
+Platformy chmurowe to zaawansowane systemy, które umożliwiają firmom i organizacjom dostęp do zasobów obliczeniowych przez Internet, bez konieczności posiadania i zarządzania własną infrastrukturą IT.
 
-Definicja i Działanie
+Platforma chmurowa to komponenty składające się z systemów operacyjnych, serwerów w centrum danych skonfigurowanych pod personalne potrzeby klientów. Umożliwiają one organizacjom wynajmowanie dostępu do zasobów obliczeniowych, takich jak serwery, bazy danych, magazyny danych, analityk, sieci wirtualnych. Model biznesowy dostawców usług chmurowych opiera się na zasadzie "pay as you go" (z .ang) płać za te zasoby, które zużyjesz.
 
-Platforma chmurowa to system operacyjny i sprzęt serwerów w centrum danych, skonfigurowany do świadczenia usług obliczeniowych dla klientów. Umożliwia ona firmom wynajmowanie dostępu do zasobów obliczeniowych, takich jak serwery, bazy danych, magazyny danych, analityka, sieci, oprogramowanie i inteligencja, na zasadzie płatności za użycie.
-
-Rodzaje Platform Chmurowych
+Usługi chmurowe możemy podzielić na trzy kluczowe rodzaje:
 
 1. Chmura Publiczna: Usługi świadczone przez zewnętrznych dostawców, dostępne dla wielu klientów przez Internet. Przykłady to Amazon Web Services (AWS), Google Cloud Platform, Microsoft Azure, Alibaba Cloud i IBM Cloud.
 2. Chmura Prywatna: Dedykowana dla jednej organizacji, może być zarządzana wewnętrznie lub przez zewnętrznego dostawcę. Oferuje większą kontrolę nad zasobami i bezpieczeństwem.
 3. Chmura Hybrydowa: Kombinacja chmury publicznej i prywatnej, umożliwiająca przenoszenie danych i aplikacji między nimi, co zapewnia większą elastyczność i optymalizację infrastruktury.
 
-Korzyści z Używania Platform Chmurowych
+Korzyści z Używania Platform Chmurowych:
 
-- Elastyczność: Możliwość szybkiego skalowania zasobów w górę lub w dół w zależności od potrzeb biznesowych, co pozwala unikać ryzyka nadmiernego lub niedostatecznego przydziału zasobów.
-- Redukcja Kosztów: Eliminacja kosztów kapitałowych związanych z budową i utrzymaniem własnych centrów danych oraz płatność tylko za faktycznie używane zasoby.
-- Wydajność: Dostęp do dużej mocy obliczeniowej i magazynowej na żądanie, co pozwala unikać wąskich gardeł i zapewnia lepszą wydajność aplikacji.
-- Szybkość Wdrożenia: Możliwość szybkiego wdrażania technologii na całym świecie, co skraca czas wprowadzenia produktów na rynek.
-- Zwiększona Produktywność: Zespoły IT są zwolnione z zarządzania, utrzymania i aktualizacji sprzętu i oprogramowania na miejscu, co pozwala im skupić się na bardziej strategicznych zadaniach.
-- Bezpieczeństwo: Dostawcy chmurowi inwestują znaczne środki w technologie zabezpieczające, co często zapewnia wyższy poziom bezpieczeństwa niż w przypadku własnych centrów danych.
-- Niezawodność: Platformy chmurowe są bardziej odporne dzięki rozproszonej infrastrukturze, co zapewnia szybsze odzyskiwanie danych po awariach.
+1. Elastyczność: Możliwość szybkiego skalowania zasobów w górę lub w dół w zależności od potrzeb biznesowych, co pozwala uniknąć nadmiernego lub niedostatecznego przydziału zasobów obliczeniowych.
+2. Redukcja Kosztów: Eliminacja kosztów kapitałowych związanych z budową i utrzymaniem własnych centrów danych oraz płatność tylko za faktycznie używane zasoby.
+3. Wydajność: Dostęp do dużej mocy obliczeniowej i magazynowej na żądanie, co pozwala unikać wąskich gardeł i zapewnia lepszą wydajność aplikacji.
+4. Szybkość Wdrożenia: Możliwość szybkiego wdrażania technologii na całym świecie, co skraca czas wprowadzenia produktów na rynek.
+5. Zwiększona Produktywność: Zespoły IT są zwolnione z zarządzania, utrzymania i aktualizacji sprzętu i oprogramowania na miejscu, co pozwala im skupić się na bardziej strategicznych zadaniach.
+6. Bezpieczeństwo: Dostawcy chmurowi inwestują znaczne środki w technologie zabezpieczające, co często zapewnia wyższy poziom bezpieczeństwa niż w przypadku własnych centrów danych.
+7. Niezawodność: Platformy chmurowe są bardziej odporne dzięki rozproszonej infrastrukturze, co zapewnia szybsze odzyskiwanie danych po awariach systemów.
 
 Platformy chmurowe odgrywają kluczową rolę w nowoczesnych strategiach IT, umożliwiając firmom szybkie i efektywne skalowanie swoich operacji oraz wprowadzanie innowacji.
 \subsubsection{Opis platform}
