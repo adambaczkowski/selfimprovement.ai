@@ -37,7 +37,7 @@ export const RequestPasswordResetPage = ({}: Props) => {
           className={styles.login_image}  
         />
         <div>
-          <h1 className={styles.login_heading}>selfimprovement.io</h1>
+          <h1 className={styles.login_heading}>selfimprovement.ai</h1>
           <Formik
             initialValues={requestPasswordResetInitialValues}
             onSubmit={(values) => {
