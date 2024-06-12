@@ -398,6 +398,8 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
     \item {\bf TypeScript} - to nadzbiór języka JavaScript, który dodaje statyczną typizację, co znacząco zwiększa bezpieczeństwo oraz czytelność kodu. Dzięki TypeScriptowi programiści mogą definiować typy danych oraz interfejsy, co ułatwia wykrywanie błędów podczas kompilacji. Ponadto, TypeScript oferuje bogate narzędzia do refaktoryzacji kodu oraz zapewnia lepsze wsparcie dla środowisk programistycznych, co przekłada się na wyższą produktywność i jakość aplikacji. Jego elastyczność i skalowalność czynią go popularnym wyborem przy tworzeniu aplikacji webowych o większej złożoności.
     
     \item {\bf React.js} - to biblioteka JavaScript stworzona przez Facebook (Meta), służąca do budowy interfejsów użytkownika. Dzięki Reactowi możliwe jest tworzenie aplikacji, które dynamicznie reagują na zmiany danych w czasie rzeczywistym, co przekłada się na szybkość i efektywność działania aplikacji. Centralnym konceptem w React jest tworzenie komponentów, które stanowią niezależne i niezawodne elementy interfejsu użytkownika.
+
+    \item {\bf React Query} - to biblioteka JavaScript dla aplikacji React, która upraszcza zarządzanie i synchronizację danych pochodzących z zewnętrznych źródeł. Jest szczególnie przydatna w aplikacjach, które intensywnie korzystają z danych i potrzebują efektywnego zarządzania zapytaniami HTTP.
     
     \item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika w aplikacjach webowych.
     
@@ -419,8 +421,8 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
 
 \noindent Folder components zawiera zbiór wielokrotnego użytku komponentów, które są podstawowymi elementami budującymi interfejs użytkownika. Każdy komponent jest umieszczony w oddzielnym folderze, co ułatwia jego rozwój i utrzymanie. Na przykład:
 \begin{enumerate}
-    \item {\bf DailyTaskSelector:} Komponent odpowiedzialny za wybór codziennych zadań.
-    \item {\bf ErrorBoundary:} Komponent służący do obsługi błędów w aplikacji.
+    \item {\bf AchievementComponent:} Komponent wyświetlający list osiągnieć.
+    \item {\bf ItemsGrid:} Komponent służący do wyświtlania siatki z zadaniami.
     \item {\bf Formik:} Komponenty związane z zarządzaniem formularzami za pomocą biblioteki Formik.
     \item {\bf GoalItem i GoalsList:} Komponenty do wyświetlania poszczególnych celów oraz listy celów.
     \item {\bf Sidebar:} Komponent nawigacyjny bocznego paska.
@@ -434,7 +436,7 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
 \noindent Folder pages zawiera komponenty odpowiadające za różne widoki aplikacji. Każda strona jest oddzielnym komponentem, który składa się z mniejszych komponentów znajdujących się w folderze components. Na przykład:
 \begin{enumerate}
     \item {\bf CalendarPage:} Strona wyświetlająca kalendarz użytkownika.
-    \item {\bf ConfirmEmailPage:} Strona do potwierdzenia adresu e-mail.
+    \item {\bf TasksPage:} Strona do wyświetlania  listy wszystkich zadań.
     \item {\bf GoalPage i GoalsPage:} Strony do wyświetlania szczegółów poszczególnych celów oraz listy wszystkich celów.
     \item {\bf HomePage:} Strona główna aplikacji.
     \item {\bf NewGoalPage:} Strona do tworzenia nowych celów.
@@ -457,24 +459,266 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
 
 \subsubsection{Przykłady implementacji}
 
-\begin{lstlisting}[language=Java, caption=Typescript example]
-interface User {
-  name: string;
-  id: number;
+\noindent{\bf Komponenty:}
+\\
+
+\noindent{\bf ItemsGrid}
+\begin{lstlisting}[language=html, caption=ItemsGrid example]
+function ItemsGrid({ title, tasks }: Props) {
+  return (
+    <div>
+      <h1 className={styles.page_header}>{title}</h1>
+      <div className={styles.tasks_grid}>
+        {tasks.map((task: any) => (
+          <TaskItem
+            key={task.id}
+            id={task.id}
+            title={task.title}
+            description={task.content}
+            date={task.date}
+            isCompleted={task.isCompleted}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
- 
-class UserAccount {
-  name: string;
-  id: number;
- 
-  constructor(name: string, id: number) {
-    this.name = name;
-    this.id = id;
-  }
-}
- 
-const user: User = new UserAccount("Murphy", 1);
 \end{lstlisting}
+Funkcja ItemsGrid jest komponentem React wyświetlającym siatkę zadań. Komponent renderuje nagłówek z tytułem oraz div zawierający listę zadań, gdzie każde zadanie jest wyświetlane za pomocą komponentu TaskItem. Każdy TaskItem otrzymuje właściwości takie jak id, title, description, date, i isCompleted, umożliwiając efektywne zarządzanie i wyświetlanie szczegółów zadań.
+\\
+
+\noindent{\bf TaskItem}
+\begin{lstlisting}[language=html, caption=TaskItem example]
+function TaskItem({ id, title, description,
+date, isCompleted }: Props) {
+  return (
+    <Link to={`/task/${id}`} 
+    className={styles.task_item} 
+    title={title}>
+      <h1>{title}</h1>
+      <p className={styles.description}>{description}</p>
+      <div className={styles.dateComponent}>
+        <FontAwesomeIcon icon={calendarRegular as IconProp}/>
+        <p className={styles.date}>{
+            dayjs(date).format("MM-DD-YYYY")
+        }</p>
+      </div>
+      <div className={styles.task_footer}>
+          <button
+            className={styles.complete_button}
+            onClick={() => {
+              const task = {
+                isCompleted: !isCompleted,
+              };
+            }}
+          >
+            Completed
+          </button>
+        )
+      </div>
+    </Link>
+  );
+}
+\end{lstlisting}
+Funkcja ItemsGrid jest komponentem React wyświetlającym siatkę zadań. Komponent renderuje nagłówek z tytułem oraz div zawierający listę zadań, gdzie każde zadanie jest wyświetlane za pomocą komponentu TaskItem. Każdy TaskItem otrzymuje właściwości takie jak id, title, description, date, i isCompleted, umożliwiając efektywne zarządzanie i wyświetlanie szczegółów zadań.
+\\
+
+\noindent{\bf Strony:}
+\\
+
+\noindent{\bf TasksPage}
+\begin{lstlisting}[language=html, caption=TasksPage example]
+function TasksPage() {
+  const [tasks, setTasks] = useState<GoalTaskDto[]>([]);
+
+  useQuery({
+    queryKey: ["getTasks"],
+    queryFn: async () => {
+      const tasks = await fetchTasks();
+      if (tasks != null) {
+        setTasks(tasks);
+      }
+      return tasks;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  return (
+    <div className={styles.background_container}>
+      <ItemsGrid title={"All tasks"} tasks={tasks} />
+    </div>
+  );
+}
+\end{lstlisting}
+Komponent TasksPage pobiera i wyświetla listę zadań użytkownika w postaci siatki. Używa hooka useState do zarządzania stanem zadań oraz useQuery z react-query do asynchronicznego pobierania danych z fetchTasks. Po pobraniu zadań, aktualizuje stan za pomocą setTasks. Renderuje komponent ItemsGrid z tytułem "All tasks" oraz listą zadań, otoczony divem ze stylami background\_container.
+\\
+
+\noindent{\bf GoalPage}
+\begin{lstlisting}[language=html, caption=GoalPage example]
+function TasksPage() function GoalPage() {
+  const { id } = useParams();
+  const [tasks, setTasks] = useState<GoalTaskDto[]>([]);
+  const [goal, setGoal] = useState<GoalDetailsDto>();
+
+  useQuery({
+    queryKey: ["getGoal"],
+    queryFn: async () => {
+      const goal = await fetchGoal(id || "");
+      if (goal != null) {
+        setGoal(goal);
+      }
+      return goal;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  useQuery({
+    queryKey: ["getTasks"],
+    queryFn: async () => {
+      const tasks = await fetchGoalTasks(id ?? "");
+      if (tasks != null) {
+        setTasks(tasks);
+      }
+      return tasks;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  if (!tasks) {
+    return (
+      <div className={styles.background_container}>
+        <LoadingCircle timeout={10000} 
+        errorMessage="Something went wrong" />
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.background_container}>
+      <GoBackButton />
+          <div className={styles.goal_item}>
+          <div className={styles.goal_header}>
+            <h1>{goal.name}</h1>
+            <p className={styles.description}>
+            <span>Category: </span>
+            {addSpacesBeforeCapitals(
+                goal.category?.toString() ?? ''
+            )}</p>
+            <p className={styles.description}>
+                <span>Time: </span>
+                {dayjs(goal.startDate).format("MM-DD-YYYY")}
+                {"\<----\>"} 
+                {dayjs(goal.endDate).format("MM-DD-YYYY")}
+            </p>
+          </div>
+          <div className={styles.goal_description}>
+            <p className={styles.description}>
+                <span>Specific category: </span>
+                {addSpacesBeforeCapitals(
+                    goal.goalFriendlyName?.toString() ?? ''
+                )}
+            </p>
+            <p className={styles.description}>
+                <span>Your advancement: </span>
+                {addSpacesBeforeCapitals(
+                goal.userAdvancement?.toString() ?? ''
+                )}
+            </p>
+            <p className={styles.description}>
+                <span>Your learning type: </span>
+                {addSpacesBeforeCapitals(
+                goal.learningType?.toString() ?? ''
+                )}
+            </p>
+            <p className={styles.description}>
+                <span>Your thoughts: </span>
+                {goal.userInput}
+            </p>
+          </div>
+        </div>
+      <ItemsGrid title={"Goal Tasks"} tasks={tasks} />
+    </div>
+  );
+}
+\end{lstlisting}
+Komponent TasksPage pobiera i wyświetla listę zadań użytkownika w postaci siatki. Używa hooka useState do zarządzania stanem zadań oraz useQuery z react-query do asynchronicznego pobierania danych z fetchTasks. Po pobraniu zadań, aktualizuje stan za pomocą setTasks. Renderuje komponent ItemsGrid z tytułem "All tasks" oraz listą zadań, otoczony divem ze stylami background\_container.
+
+\subsubsection{Komunikacja z backendem}
+
+\noindent{\bf API i integracja}
+
+\noindent W naszej aplikacji do zarządzania i synchronizacji danych z zewnętrznymi źródłami wykorzystujemy bibliotekę React Query, która upraszcza pracę z API. W celu pobierania danych z serwera, używamy hooka useQuery, który automatycznie zarządza stanami zapytań (ładowanie, sukces, błąd) i synchronizacją danych.
+
+\noindent Poniższy fragment kodu ilustruje sposób integracji z naszym API przy użyciu useQuery:
+
+\begin{lstlisting}[language=html, caption=useQuery example]
+useQuery({
+  queryKey: ["getTasks"],
+  queryFn: async () => {
+    const tasks = await fetchTasks();
+    if (tasks != null) {
+      setTasks(tasks);
+    }
+    return tasks;
+  },
+  refetchOnWindowFocus: false,
+});
+\end{lstlisting}
+
+\subsubsection{Autoryzacja i uwierzytelnianie}
+
+W naszej aplikacji webowej za autoryzację i uwierzytelnianie użytkowników odpowiadają komponenty ProtectedRoutes oraz SignInPage, które razem zapewniają bezpieczny dostęp do chronionych zasobów i funkcjonalności aplikacji.
+\\
+
+\noindent{\bf ProtectedRoutes}
+
+\noindent Komponent ProtectedRoutes zabezpiecza dostęp do chronionych ścieżek w aplikacji. Sprawdza, czy w localStorage jest zapisany token użytkownika (userToken). Jeśli token istnieje, użytkownik jest autoryzowany i przekierowany do odpowiedniego widoku (Outlet). W przeciwnym razie, użytkownik jest przekierowany na stronę logowania (/signIn).
+
+\begin{lstlisting}[language=html, caption=ProtectedRoutes example]
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
+
+const ProtectedRoutes = () => {
+  const localStorageToken = localStorage.getItem("userToken");
+
+  return localStorageToken ?
+        <Outlet /> :
+        <Navigate to="/signIn" replace />;
+};
+
+export default ProtectedRoutes;
+\end{lstlisting}
+
+
+\noindent{\bf SignInPage}
+
+\noindent Komponent SignInPage umożliwia użytkownikom logowanie się do aplikacji. Wykorzystuje Formik do obsługi formularza logowania oraz jego walidacji. Po poprawnym wypełnieniu formularza, funkcja handleSignIn wysyła dane logowania do serwera za pomocą funkcji signIn. W przypadku pomyślnego zalogowania, token otrzymany z serwera jest zapisywany w localStorage, a użytkownik jest przekierowywany do strony głównej.
+
+\begin{lstlisting}[language=html, caption=handleSignIn example]
+  const handleSignIn = async (values: SignInCommand) => {
+    try {
+      const response = await signIn(values);
+      localStorage.setItem(
+            "userToken",
+            JSON.stringify(response.token)
+      );
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+\end{lstlisting}
+
+\noindent{\bf Proces uwierzytelniania}
+
+\begin{enumerate}
+    \item {\bf Formularz logowania:} Użytkownik wprowadza swój adres e-mail i hasło. Po wypełnieniu formularza, Formik przesyła dane do funkcji handleSignIn.
+    \item {\bf Wysyłanie danych do serwera:} Funkcja handleSignIn wysyła dane logowania do serwera za pomocą funkcji signIn. Serwer weryfikuje dane i zwraca token uwierzytelniający, jeśli logowanie było udane.
+    \item {\bf Przechowywanie tokenu:} Token otrzymany z serwera jest zapisywany w localStorage.
+    \item {\bf Autoryzacja:} Komponent ProtectedRoutes sprawdza obecność tokenu w localStorage. Jeśli token istnieje, użytkownik ma dostęp do chronionych zasobów, w przeciwnym razie jest przekierowywany na stronę logowania.
+\end{enumerate}
+
+Dzięki tym mechanizmom, nasza aplikacja zapewnia bezpieczny i intuicyjny sposób uwierzytelniania oraz autoryzacji użytkowników.
 
 \clearpage
 
@@ -494,28 +738,44 @@ Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każd
 
 \item {\bf .Net} - Jest platformą programistyczną stworzoną przez firmę Microsoft, która umożliwia tworzenie aplikacji na różne systemy operacyjne, zarówno serwerowe, desktopowe, jak i mobilne. Dzięki wsparciu dla wielu języków programowania oraz bogatej bibliotece klas, .NET jest wyjątkowo elastyczny i popularny wśród programistów, oferując zarówno wydajność, jak i bezpieczeństwo aplikacji.
 
-\item {\bf Entity Framework} - 
+\item {\bf Entity Framework} - to obiektowo-relacyjny mapper (ORM) dla platformy .NET, który umożliwia programistom pracę z bazą danych przy użyciu obiektów domeny specyficznej aplikacji, eliminując konieczność pisania większości kodu dostępu do danych. EF pozwala na mapowanie relacyjnych baz danych na modele obiektowe, co znacząco ułatwia zarządzanie danymi w aplikacjach .NET.
 
-\item {\bf MediatR} - 
+\item {\bf MediatR} - to prosta biblioteka umożliwiająca implementację wzorca Mediatora w aplikacjach .NET. Wzorzec ten pomaga w zarządzaniu zależnościami między różnymi częściami systemu, umożliwiając przesyłanie komunikatów (zapytania, komendy, zdarzenia) między komponentami bez bezpośrednich zależności. MediatR upraszcza strukturę kodu i wspiera utrzymanie luźno powiązanych komponentów.
 
-\item {\bf Fluent Validation} - 
+\item {\bf Fluent Validation} - to popularna biblioteka do walidacji danych w aplikacjach .NET, która umożliwia definiowanie reguł walidacji w sposób deklaratywny i czytelny. Dzięki FluentValidation można tworzyć kompleksowe reguły walidacji dla modeli danych, zapewniając, że dane wejściowe są poprawne zanim trafią do dalszego przetwarzania.
 
-\item {\bf Swashbuckle} - 
+\item {\bf Swashbuckle} - Swashbuckle to biblioteka, która integruje narzędzie Swagger z aplikacjami ASP.NET Core. Swagger to framework umożliwiający automatyczne generowanie dokumentacji API w formacie interaktywnej strony, która zawiera opis endpointów, parametrów i schematów odpowiedzi. Dzięki Swashbuckle możliwe jest generowanie API.
 
-\item {\bf Polly} - 
+\item {\bf Polly} -  to biblioteka .NET do obsługi odporności i wykrywania błędów, która umożliwia implementację strategii zarządzania błędami, takich jak retry, circuit breaker, timeout, bulkhead isolation itp. Dzięki Polly można poprawić niezawodność aplikacji poprzez automatyczne reagowanie na błędy i nieoczekiwane problemy z dostępem do zasobów zewnętrznych.
 
-\item {\bf Automapper} - 
+\item {\bf Automapper} -  to narzędzie do mapowania obiektów w aplikacjach .NET, które automatyzuje proces kopiowania danych między obiektami o różnych typach. Jest szczególnie przydatne, gdy dane muszą być przenoszone między warstwami aplikacji, na przykład między warstwą danych a warstwą prezentacji. Automapper zmniejsza ilość kodu potrzebnego do mapowania danych i poprawia czytelność aplikacji.
 
-\item {\bf RabbitMq} - 
+\item {\bf RabbitMq} - to popularny broker wiadomości, który umożliwia wymianę wiadomości między różnymi systemami i komponentami za pośrednictwem kolejek. Jest szeroko stosowany w architekturach opartych na mikrousługach do implementacji komunikacji asynchronicznej i zapewnia niezawodność oraz skalowalność przesyłania wiadomości.
 
-\item {\bf Newtonsoft.Json} - 
-
+\item {\bf Newtonsoft.Json} - to biblioteka .NET do pracy z danymi w formacie JSON. Umożliwia łatwe serializowanie i deserializowanie obiektów do i z JSON, co jest często wykorzystywane w aplikacjach webowych, API oraz do wymiany danych między serwerem a klientem. Newtonsoft.Json jest znany ze swojej wydajności i bogatej funkcjonalności, co czyni go jednym z najpopularniejszych narzędzi do pracy z JSON w ekosystemie .NET.
 
 \end{enumerate}
 \subsubsection{Wzorce projektowe}
-\subparagraph{CQRS}
+\subparagraph{CQRS(Command Query Responsibility Segregation)}
+
+CQRS to wzorzec architektoniczny, który oddziela operacje modyfikujące dane (komendy) od operacji odczytujących dane (zapytania). W tradycyjnych podejściach do projektowania systemów, te operacje są często obsługiwane przez te same modele i metody. CQRS proponuje użycie oddzielnych modeli dla zapytań i komend, co pozwala na optymalizację każdego z nich pod kątem różnych wymagań. Modele zapytań mogą być dostosowane do szybkiego odczytu danych, natomiast modele komend mogą skupić się na walidacji i przetwarzaniu logiki biznesowej. CQRS często jest stosowany w połączeniu z Event Sourcingiem, gdzie zmiany stanu aplikacji są reprezentowane jako sekwencje zdarzeń.
 \subparagraph{SOLID}
-\subparagraph{Repository}
+
+SOLID to akronim odnoszący się do pięciu zasad projektowych obiektowego programowania, które mają na celu tworzenie elastycznego, łatwego w utrzymaniu i rozszerzalnego kodu. Zasady SOLID to:
+
+\begin{enumerate}
+\item {\bf S (Single Responsibility Principle)} - każda klasa powinna mieć tylko jedną odpowiedzialność, czyli powinna zajmować się tylko jednym aspektem funkcjonalności systemu.
+
+\item {\bf O (Open/Closed Principle)} - klasy powinny być otwarte na rozszerzenia, ale zamknięte na modyfikacje. Oznacza to, że powinniśmy być w stanie rozszerzać zachowanie klasy bez zmiany jej kodu źródłowego.
+\item {\bf L (Liskov Substitution Principle)} - obiekty powinny być zastępowalne przez instancje ich podtypów bez zmiany poprawności programu.
+
+\item {\bf I (Interface Segregation Principle)} - klient nie powinien być zmuszany do implementacji interfejsów, których nie używa. Lepiej jest mieć więcej wyspecjalizowanych interfejsów niż jeden ogólny.
+
+\item {\bf D (Dependency Inversion Principle)} - moduły wysokiego poziomu nie powinny zależeć od modułów niskiego poziomu. Oba powinny zależeć od abstrakcji. Abstrakcje nie powinny zależeć od szczegółów, szczegóły powinny zależeć od abstrakcji.
+\end{enumerate}
+\subparagraph{Wzorzec Repozytorium}
+
+Wzorzec Repozytorium jest wzorcem projektowym używanym do abstrakcji dostępu do danych. Repozytorium działa jako pośrednik między warstwą aplikacji a warstwą dostępu do danych, dostarczając jednorodny interfejs do wykonywania operacji CRUD (Create, Read, Update, Delete). Używając wzorca repozytorium, aplikacje mogą być bardziej modularne i łatwiej jest je testować, ponieważ logika biznesowa jest oddzielona od szczegółów implementacji dostępu do danych. Repozytorium może być używane zarówno z bazami danych, jak i z innymi źródłami danych, a także może ułatwiać implementację jednostkowych testów poprzez możliwość łatwego zamockowania warstwy dostępu do danych.
 \subsubsection{Architektura mikroserwisu}
 \subparagraph{Ws}
 \subparagraph{Komunikacja z innymi mikroserwisami}

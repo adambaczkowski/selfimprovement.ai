@@ -1,14 +1,19 @@
 \section{Faza analizy}
 \subsection{Wstęp}
 
-\indent Block
+W dobie dynamicznego rozwoju technologii informatycznych, sztuczna inteligencja (AI) oraz uczenie maszynowe (ML) odgrywają coraz większą rolę w różnorodnych dziedzinach życia. Jednym z najnowszych osiągnięć w tej dziedzinie są modele językowe dużej skali (LLM), które potrafią generować tekst na wysokim poziomie zrozumienia i spójności. Modele te, takie jak Chat-GPT, LLama czy Zephyr, znajdują szerokie zastosowanie w wielu branżach, od tworzenia treści po automatyzację obsługi klienta.
+
+Niniejsza praca magisterska ma na celu stworzenie aplikacji webowej, która wykorzystując modele LLM, będzie w stanie generować plany działania prowadzące do osiągnięcia określonych celów, takich jak np. przebiegnięcie maratonu czy nauka programowania. Aplikacja ma wspierać użytkowników w realizacji tych celów poprzez dostarczanie zadań i harmonogramów działania. W ramach pracy porównane zostaną różne modele LLM pod kątem jakości generowanych planów oraz ich efektywności.
+
+Aplikacja zostanie zbudowana w oparciu o nowoczesne technologie frontendowe i backendowe. Interfejs użytkownika zostanie zaprojektowany z wykorzystaniem biblioteki React, natomiast backend aplikacji będzie oparty na języku C\# oraz frameworku ASP.NET Core. Kluczowym elementem projektu będzie również implementacja architektury mikroserwisowej w chmurze Azure, co zapewni skalowalność i niezawodność systemu.
+
+Wierzę, że niniejsza praca magisterska dostarczy wartościowych informacji i praktycznych rozwiązań w zakresie wykorzystania modeli LLM do wspomagania realizacji celów użytkowników, a także przyczyni się do dalszego rozwoju aplikacji webowych wykorzystujących nowoczesne technologie informatyczne.
 
 \clearpage
 
 \subsection{Cele i założenia}
 
-
-{\bf Cel główny:}
+\noindent{\bf Cel główny:}
 
 Celem głównym niniejszej pracy magisterskiej jest zaprojektowanie i implementacja aplikacji webowej, która wykorzystując modele językowe dużej skali (LLM), będzie w stanie generować plany działania prowadzące do osiągnięcia określonych celów, takich jak przebiegnięcie maratonu czy nauka programowania. Aplikacja ma wspierać użytkowników w realizacji tych celów poprzez dostarczanie zadań i harmonogramów na kilka tygodni w przód.
 \\
@@ -190,7 +195,7 @@ Struktura promptów odgrywa istotną rolę w wydobywaniu pożądanych informacji
     \item {\bf Szkolenie LLM w zakresie bezpieczeństwa} - Opracowywanie modeli odpornych na manipulacje poprzez odpowiednie ich szkolenie.
 \end{enumerate}
 
-{\bf Wnioski}
+\noindent{\bf Wnioski}
 
 \noindent Bezpieczeństwo promptów to ważny, ale często pomijany aspekt rozwoju i wdrażania generatywnej sztucznej inteligencji. Wraz z ciągłym rozwojem technologii GenAI, konieczne jest opracowanie solidnych mechanizmów bezpieczeństwa w celu ochrony przed potencjalnymi zagrożeniami. Rozwiązania te zapewnią, że GenAI będzie wykorzystywana w sposób odpowiedzialny i przyniesie korzyści społeczeństwu.
 
@@ -283,14 +288,247 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \subsubsection{Opis funkcjonalności systemu}
 
+\noindent Aplikacja ma posiadać następujące funkcjonalności systemu:
+\begin{enumerate}
+    \item[*] {\bf Rejestracja użytkownika} - polega na utworzeniu konta użytkownika poprzez podanie adresu e-mail, nazwy i hasła.
+    \item[*] {\bf Logowanie użytkownika} - umożliwia zalogowanie się do aplikacji za pomocą adresu e-mail i hasła.
+    \item[*] {\bf Tworzenie celów} - pozwala użytkownikowi na definiowanie nowych celów do osiągnięcia.
+    \item[*] {\bf Generowanie planów} - wykorzystuje modele LLM do generowania planów działania dla zdefiniowanych celów.
+    \item[*] {\bf Wyświetlanie listy zadań} - prezentuje użytkownikowi listę zadań do wykonania w celu osiągnięcia zamierzonego celu.
+    \item[*] {\bf Zarządzanie zadaniami} - umożliwia użytkownikowi oznaczanie zadań jako ukończone lub nieukończone.
+    \item[*] {\bf Przyznawanie osiągnięć} - moduł, który przyznaje użytkownikom odznaki za realizację określonej liczby celów i zadań, motywując ich do dalszego działania. Użytkownicy mogą zdobywać różne odznaki, które są widoczne na ich profilach.
+    \item[*] {\bf Integracja z modelami LLM} - zapewnia komunikację z wybranymi modelami LLM w celu generowania planów działania.
+    \item[*] {\bf Zabezpieczone strony} - chroni dostęp do określonych stron aplikacji, wymagając uprzedniego zalogowania.
+\end{enumerate}
+
 \subsubsection{Diagram przypadków użycia}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Obrazy/diagrams/use_case_diagram.png}
+    \caption{Diagram przypadków użycia}
+    \label{fig:my_label}
+\end{figure}
+
 \subsubsection{Scenariusze przypadków użycia}
+
+{\noindent \bf{\large 1. Rejestracja użytkownika\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Rejestracja użytkownika w systemie\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } W aplikacji (bazie danych) użytkownik nie posiada konta\\
+{\bf Gwarancja powodzenia: } W aplikacji (bazie danych) został zarejestrowany użytkownik\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item Aktor wypełnia formularz rejestracyjny i klika przycisk rejestracji
+        \item System zapisuje dane użytkownika i tworzy nowe konto
+        \item Wyświetla się strona z panelem użytkownika
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+{\noindent \bf Rozszerzenia: }
+\begin{center}
+    \begin{description}
+        \item{2a.} Podany adres e-mail jest już zarejestrowany, rejestracja nie powiodła się
+    \end{description}
+\end{center}
+
+\noindent\rule{14cm}{0.1pt} % długość i grubość linii
+
+{\noindent \bf{\large 2. Logowanie użytkownika\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Logowanie użytkownika do systemu\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } W aplikacji (bazie danych) użytkownik posiada konto\\
+{\bf Gwarancja powodzenia: } W aplikacji użytkownik został zalogowany\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item Aktor wypełnia formularz logowania i klika przycisk logowania
+        \item System weryfikuje dane i loguje użytkownika
+        \item Wyświetla się strona z panelem użytkownika
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+{\noindent \bf Rozszerzenia: }
+\begin{center}
+    \begin{description}
+        \item{2a.} Podany adres e-mail lub hasło jest nieprawidłowe, logowanie nie powiodło się
+    \end{description}
+\end{center}
+
+\noindent\rule{14cm}{0.1pt} % długość i grubość linii
+
+{\noindent \bf{\large 3. Dodaj cel\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Dodawanie nowego celu przez użytkownika\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } Użytkownik jest zalogowany w systemie\\
+{\bf Gwarancja powodzenia: } Nowy cel został zapisany w systemie\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item Aktor wypełnia formularz dodawania celu i klika przycisk zapisu
+        \item System zapisuje nowy cel
+        \item Wyświetla się widok szczegółowy celu z nowo dodanymi zadaniami
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+{\noindent \bf Rozszerzenia: }
+\begin{center}
+    \begin{description}
+        \item{2a.} Formularz zawiera nieprawidłowe dane, cel nie został zapisany
+    \end{description}
+\end{center}
+
+\noindent\rule{14cm}{0.1pt} % długość i grubość linii
+
+{\noindent \bf{\large 4. Wyświetl stronę startową\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Wyświetlanie strony startowej aplikacji\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } Użytkownik jest zalogowany w systemie\\
+{\bf Gwarancja powodzenia: } Strona startowa została poprawnie wyświetlona\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item System ładuje i wyświetla stronę startową
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+
+\noindent\rule{14cm}{0.1pt} % długość i grubość linii
+
+{\noindent \bf{\large 5. Wyświetl cele\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Wyświetlanie listy celów użytkownika\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } Użytkownik jest zalogowany w systemie\\
+{\bf Gwarancja powodzenia: } Lista celów została poprawnie wyświetlona\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item System ładuje i wyświetla listę celów użytkownika
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+
+\noindent\rule{14cm}{0.1pt} % długość i grubość linii
+
+{\noindent \bf{\large 6. Wyświetl szczegóły celu\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Wyświetlanie szczegółów wybranego celu\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } Użytkownik jest zalogowany w systemie, posiada zapisane cele\\
+{\bf Gwarancja powodzenia: } Szczegóły celu zostały poprawnie wyświetlone\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item System ładuje i wyświetla szczegóły wybranego celu
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+
+\noindent\rule{14cm}{0.1pt} % długość i grubość linii
+
+{\noindent \bf{\large 7. Wyświetl wszystkie zadania\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Wyświetlanie listy wszystkich zadań\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } Użytkownik jest zalogowany w systemie\\
+{\bf Gwarancja powodzenia: } Lista zadań została poprawnie wyświetlona\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item System ładuje i wyświetla listę wszystkich zadań
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+
+\noindent\rule{14cm}{0.1pt} % długość i grubość linii
+
+{\noindent \bf{\large 8. Wyświetl szczegóły zadania\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Wyświetlanie szczegółów wybranego zadania\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } Użytkownik jest zalogowany w systemie, posiada zapisane zadania\\
+{\bf Gwarancja powodzenia: } Szczegóły zadania zostały poprawnie wyświetlone\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item System ładuje i wyświetla szczegóły wybranego zadania
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+
+\noindent\rule{14cm}{0.1pt} % długość i grubość linii
+
+{\noindent \bf{\large 9. Edytuj szczegóły konta\par}}
+\vspace{0.5cm}
+{\noindent \bf Kontekst użycia: } Edytowanie szczegółów konta użytkownika\\
+{\bf Poziom: } Cel użytkownika\\
+{\bf Aktor główny: } Użytkownik\\
+{\bf Warunek początkowy: } Użytkownik jest zalogowany w systemie\\
+{\bf Gwarancja powodzenia: } Szczegóły konta zostały poprawnie zaktualizowane\\
+{\bf Wyzwalacz: } Użytkownik\\
+{\bf Główny scenariusz powodzenia: }
+\begin{center}
+    \begin{enumerate}
+        \item Użytkownik (aktor) uruchamia przypadek użycia
+        \item System ładuje formularz edycji szczegółów konta
+        \item Użytkownik wypełnia formularz i zapisuje zmiany
+        \item System zapisuje zaktualizowane dane użytkownika
+        \item Aplikacja kończy przypadek użycia
+    \end{enumerate}
+\end{center}
+{\noindent \bf Rozszerzenia: }
+\begin{center}
+    \begin{description}
+        \item{4a.} Formularz zawiera nieprawidłowe dane, edycja nie powiodła się
+    \end{description}
+\end{center}
+
 
 \subsubsection{Sposób przechowywania danych}
 Dane użytkowników są przechowywane w bazie danych PostgreSQL, co zapewnia efektywne zarządzanie dużymi zbiorami danych oraz wysoki poziom bezpieczeństwa. PostgreSQL, jako zaawansowany system zarządzania relacyjnymi bazami danych, oferuje szerokie możliwości skalowania i optymalizacji, co jest kluczowe przy obsłudze danych wrażliwych i osobowych.
 
+\clearpage
+
 \subsubsection{Diagramy}
+
+{\noindent \bf Diagram aktywności dodania celu: }
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/diagrams/add_goal_activity_diagram.png}
+    \caption{Diagram Aktywności dla przypadku dodanie celu}
+    \label{fig:my_label}
+\end{figure}
+
 \clearpage
 
 \subsection{Wymagania niefunkcjonalne}

@@ -1,6 +1,5 @@
 import { TaskItem } from "../../components/componentsIndex"
 import styles from './ItemsGrid.module.scss';
-import { DailyTask } from './../../pages/TasksPage/types/DailyTask'; 
 import { GoalTaskDto } from "../../utils/api/goal";
 
 interface Props {
