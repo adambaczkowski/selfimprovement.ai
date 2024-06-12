@@ -1,8 +1,17 @@
 \section{Faza projektowania}
-W tym rozdziale omówimy etap projektowania oraz ogólną architekturę aplikacji selfimprovement.ai. Przedstawimy moduły tworzące tę aplikację, ich wzajemne zależności oraz integrację z zewnętrznymi systemami. Architektura została opracowana zgodnie z modelem C4, co pozwoli na klarowne przedstawienie struktury systemu oraz jego poszczególnych komponentów.
+W tym rozdziale omówimy etap projektowania oraz ogólną architekturę aplikacji selfimprovement.ai. Przedstawimy moduły tworzące tę aplikację, ich wzajemne zależności oraz integrację z zewnętrznymi systemami. Architektura została opracowana zgodnie z modelem C4 (opisanym w kolejnym rozdziale 4.4), co pozwoli na klarowne przedstawienie struktury systemu oraz jego poszczególnych komponentów.
+
+Aby ułatwić zrozumienie budowy naszego systemu stworzyliśmy również dodatkowy diagram wizualizujący architekturę systemu.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Obrazy/architecture.png}
+    \caption{Container Diagram}
+    \label{fig:my_label}
+\end{figure}
 
 \subsection{Ogólny opis architektury}
-selfimprovement.ai to platforma internetowa, która umożliwia użytkownikom tworzenie spersonalizowanych planów na podstawie ich potrzeb oraz celów, takich jak plany treningowe, które pomagają użytkownikom zrealizować plan rozwoju w optymalnie zaplanowanym czasie. Aplikacja składa się z dwóch głównych części: front-endu i back-endu.
+Selfimprovement.ai to platforma internetowa, która umożliwia użytkownikom tworzenie spersonalizowanych planów na podstawie ich potrzeb oraz celów, takich jak plany treningowe, które pomagają użytkownikom zrealizować plan rozwoju w optymalnie zaplanowanym czasie. Aplikacja składa się z dwóch głównych części: front-endu i back-endu.
 
 Front-end aplikacji selfimprovement.ai został napisany w React.js. Jest to popularne rozwiązanie do tworzenia aplikacji internetowych, które pozwala na budowanie szybkich, responsywnych i dynamicznie generowanych stron. W aplikacji selfimprovement.ai front-end odpowiada za prezentację danych oraz interakcję z użytkownikiem. Cała interakcja użytkownika z front-endem jest realizowana przy użyciu React.js, co umożliwia dynamiczne generowanie zawartości, takie jak strony do tworzenia celów, przeglądanie ich w kalendarzu czy analiza postępów. Dodatkowo, aplikacja wykorzystuje architekturę mikroserwisów, co pozwala na elastyczne i skalowalne zarządzanie różnymi funkcjonalnościami systemu.
 
@@ -73,6 +82,8 @@ Nasze mikroserwisy opierają się o cztery autorskie kontenery, napisane w techn
    - Utrzymywanie ciągłego monitorowania działania systemu, zbieranie danych, analiza i reakcja na ewentualne problemy.
 \end{enumerate}
 
+\clearpage
+
 \noindent{\bf Korzyści DevOps:}
 
 \begin{enumerate}
@@ -91,13 +102,35 @@ Nasze mikroserwisy opierają się o cztery autorskie kontenery, napisane w techn
 
 W skrócie, DevOps stanowi holistyczne podejście do wytwarzania oprogramowania, łączące aspekty kulturowe, procesowe i technologiczne w celu stworzenia efektywnego i responsywnego środowiska IT.
 
+\subsubsection{Opis technologii}
+
+\begin{enumerate}
+
+\item {\bf Docker} - Jest narzędziem do zarządzania kontenerami, które pozwala na pakowanie aplikacji wraz z ich zależnościami w lekkie, przenośne, samowystarczalne kontenery, które mogą być łatwo przemieszczane między różnymi środowiskami. Umożliwia to szybkie wdrażanie oraz skalowanie aplikacji w różnorodnych środowiskach.
+
+\item {\bf Kubernetes} - To otwartoźródłowy system do automatyzacji wdrażania, skalowania oraz zarządzania aplikacjami kontenerowymi. Kubernetes umożliwia łatwą orkiestrację kontenerów, zarządzanie cyklem życia aplikacji oraz zapewnia wysoką dostępność i skalowalność usług.
+
+\item {\bf Kind} - Jest narzędziem służącym do uruchamiania lokalnych klastrów Kubernetesowych za pomocą Dockera. Idealnie nadaje się do testowania w izolowanym środowisku na pojedynczym komputerze, co jest przydatne w testowaniu aplikacji przed etapem zaimplementowania jej w architekturze chmurowej.
+
+\item {\bf Azurite} - Jest lekkim, otwartoźródłowym emulatorem usług magazynowych Azure, który pozwala na lokalne uruchamianie i testowanie aplikacji korzystających z usług Azure Storage bez konieczności dostępu do chmury Azure, co jest przydatne w fazie rozwoju i testów.
+
+\item {\bf Powershell} - To zaawansowany język skryptowy i środowisko powłoki zaprojektowane przez Microsoft dla systemów Windows, które umożliwia zautomatyzowanie zarządzania systemem oraz aplikacjami. Powershell jest wyposażony w potężne narzędzia do manipulacji obiektami i integracji z innymi technologiami.
+
+\item {\bf Bash} - Jest jednym z najpopularniejszych języków skryptowych dla powłoki systemów typu Unix, który umożliwia skuteczne zarządzanie systemem oraz automatyzację zadań za pomocą prostych skryptów. Bash jest ceniony za swoją prostotę i mocne wsparcie w środowiskach Linux i macOS oraz w kontenerach Dockerowych.
+
+\item {\bf Terraform} - Jest narzędziem do zarządzania infrastrukturą jako kodem, które pozwala na definiowanie i wdrażanie infrastruktury w różnych dostawcach usług chmurowych za pomocą prostego języka konfiguracyjnego. Terraform jest wykorzystywany do budowy, zmian i wersjonowania infrastruktury bezpiecznie i efektywnie.
+
+\item {\bf Azure KeyVault} - Jest to usługa zarządzania kluczami i sekretami, która pozwala na bezpieczne przechowywanie danych poufnych, takich jak klucze szyfrowania, certyfikaty oraz hasła. Dzięki Azure KeyVault, aplikacje mogą bezpiecznie uzyskiwać dostęp do potrzebnych haseł oraz kluczy bez konieczności ich jawnej ekspozycji w kodzie, co znacznie zwiększa bezpieczeństwo i zarządzanie danymi poufnymi.
+
+\end{enumerate}
+
 \subsubsection{CI/CD}
 {\bf Ciągła Integracja i Ciągłe Dostarczanie/Dostosowywanie:}
 
-\noindent CI/CD to skrót od dwóch kluczowych praktyk w inżynierii oprogramowania: Ciągłej Integracji (Continuous Integration) i Ciągłego Dostarczania/Dostosowywania (Continuous Delivery/Continuous Deployment). Te praktyki są kluczowymi elementami podejścia DevOps, mającym na celu skrócenie cyklu dostarczania oprogramowania i poprawę jakości wytwarzanego kodu.
+\noindent CI/CD to skrót od dwóch kluczowych praktyk w inżynierii oprogramowania: Ciągłej Integracji (Continuous Integration) i Ciągłego Dostarczania/Dostosowywania (Continuous Delivery/Continuous Deployment). Te praktyki są ważnymi elementami podejścia DevOps, mającym na celu skrócenie cyklu dostarczania oprogramowania i poprawę jakości wytwarzanego kodu.
 \\
 
-{\bf Ciągła Integracja (CI):}
+\noindent{\bf Ciągła Integracja (CI):}
 
 \noindent Ciągła Integracja odnosi się do praktyki regularnego i automatycznego łączenia zmian wprowadzanych przez różnych członków zespołu programistycznego do wspólnego repozytorium kodu. Głównym celem CI jest wczesne wykrywanie i rozwiązywanie konfliktów oraz zapewnienie, że kod jest zawsze w spójnym i testowalnym stanie. Kluczowymi elementami CI są:
 
@@ -112,7 +145,7 @@ W skrócie, DevOps stanowi holistyczne podejście do wytwarzania oprogramowania,
    - Analiza jakości kodu poprzez narzędzia sprawdzające zgodność z ustalonymi standardami.
 \end{enumerate}
 
-{\bf Ciągłe Dostarczanie (CD) i Ciągłe Dostosowywanie (CD):}
+\noindent{\bf Ciągłe Dostarczanie (CD) i Ciągłe Dostosowywanie (CD):}
 
 \noindent Ciągłe Dostarczanie i Ciągłe Dostosowywanie to dwa powiązane, ale różniące się podejścia do dostarczania oprogramowania do produkcji.
 
@@ -147,7 +180,7 @@ W sumie, CI/CD to kluczowy element podejścia DevOps, przyczyniający się do ba
 {\bf Orkiestracja Kontenerów dla Skalowalnych i Zdecentralizowanych Aplikacji}
 
 \noindent Kubernetes, często nazywany "K8s" (gdzie "8s" oznacza osiem liter 'ubernete'), to popularna platforma do automatyzacji, zarządzania i orkiestracji kontenerów. Kontenery są lekkimi, przenośnymi jednostkami uruchomieniowymi, a Kubernetes ułatwia zarządzanie ich cyklem życia, skalowaniem i dystrybucją w rozproszonych środowiskach.
-
+\\
 
 {\bf Podstawowe Koncepcje Kubernetes:}
 
@@ -215,9 +248,10 @@ W sumie, CI/CD to kluczowy element podejścia DevOps, przyczyniający się do ba
 Kubernetes stał się fundamentalnym narzędziem w świecie kontenerów, pomagając organizacjom osiągnąć elastyczność, niezawodność i skalowalność ich aplikacji w środowiskach chmurowych i lokalnych.
 \subsubsection{Monitorowanie aplikacji}
 
-{\bf Kluczowy Element Zarządzania i Utrzymania Wysokiej Jakości Systemów}
+\noindent{\bf Kluczowy Element Zarządzania i Utrzymania Wysokiej Jakości Systemów}
 
 \noindent Monitorowanie aplikacji to proces zbierania, analizy i interpretacji danych dotyczących działania aplikacji w celu zapewnienia wydajności, niezawodności oraz efektywności operacyjnej. Skuteczne monitorowanie jest kluczowym elementem w zarządzaniu systemami informatycznymi, umożliwiając szybkie wykrywanie, diagnozowanie i rozwiązywanie potencjalnych problemów.
+\\
 
 \noindent{\bf Elementy Składowe Monitorowania Aplikacji:}
 
@@ -267,7 +301,7 @@ Kubernetes stał się fundamentalnym narzędziem w świecie kontenerów, pomagaj
    - Narzędzie do wizualizacji danych monitorowania, integrujące się z różnymi źródłami danych.
 \end{enumerate}
 
-{\bf Wnioski:}
+\noindent{\bf Wnioski:}
 
 \noindent Monitorowanie aplikacji to nieodłączny element utrzymania nowoczesnych systemów informatycznych. Skuteczne monitorowanie pozwala na szybką reakcję na problemy, optymalizację wydajności oraz efektywne zarządzanie zasobami, przyczyniając się do zapewnienia niezawodności i satysfakcji użytkowników.
 \clearpage
@@ -316,7 +350,7 @@ Model C4 to narzędzie służące do opisywania i komunikowania architektury apl
 Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Component oraz Code. Poziom Context prezentuje kontekst, w jakim działa aplikacja oraz jej relacje z otoczeniem. Poziom Container obejmuje kontenery, w których znajdują się poszczególne komponenty aplikacji. Poziom Component opisuje komponenty aplikacji, ich interfejsy oraz wzajemne zależności. Poziom Code prezentuje implementację kodu poszczególnych komponentów. W dalszej części rozdziału przedstawimy każdy z tych poziomów abstrakcji na przykładzie naszej aplikacji.
 \\
 
-{\bf Diagram Context} - to graficzna reprezentacja całego systemu wraz z jego otoczeniem i kontekstem, w jakim działa aplikacja.
+\noindent{\bf Diagram Context} - to graficzna reprezentacja całego systemu wraz z jego otoczeniem i kontekstem, w jakim działa aplikacja.
 
 \begin{figure}[h]
     \centering
@@ -324,32 +358,34 @@ Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Compo
     \caption{Context Diagram}
     \label{fig:my_label}
 \end{figure}
-
 \clearpage
 
-{\bf Diagram Container} - przedstawia kontenery zawierające komponenty aplikacji oraz opisuje ich rolę i wzajemne zależności.
+\noindent{\bf Diagram Container} - przedstawia kontenery zawierające komponenty aplikacji oraz opisuje ich rolę i wzajemne zależności.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{Obrazy/devops/architecture.png}
-    \caption{Architektura aplikacji selfimproment.ai}
+    \includegraphics[width=0.95\textwidth]{Obrazy/c4_model/container_diagram.png}
+    \caption{Container Diagram}
     \label{fig:my_label}
 \end{figure}
-
 \clearpage
 
-{\bf Diagram Component} - prezentuje poszczególne komponenty aplikacji, ich interfejsy oraz wzajemne powiązania.
+\noindent{\bf Diagram Component} - prezentuje poszczególne komponenty aplikacji, ich interfejsy oraz wzajemne powiązania.
 
-[WSTAW OBRAZEK]
-\clearpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.1\textwidth]{Obrazy/c4_model/component_diagram.png}
+    \caption{Component Diagram}
+    \label{fig:my_label}
+\end{figure}
 
 Model C4 okazał się niezwykle przydatnym narzędziem do opisu architektury naszej aplikacji selfimprovement.ai. Przeanalizowaliśmy składniki aplikacji oraz ich zależności na poziomach Context, Container i Component, co pozwoliło nam lepiej zrozumieć strukturę systemu. Diagramy Context, Container i Component były kluczowe w ułatwieniu komunikacji w zespole oraz planowaniu architektury i implementacji. Wnioski z zastosowania Modelu C4 przyczyniły się do bardziej efektywnego projektowania, rozwijania i utrzymywania aplikacji poprzez lepsze zarządzanie złożonością systemu oraz usprawnienie komunikacji w całym zespole programistycznym.
 \clearpage
 
-\subsection{Aplikacje front-endowe}
+\subsection{Aplikacja front-endowa}
 Frontend w kontekście aplikacji webowych odgrywa kluczową rolę, stanowiąc interfejs użytkownika, który jest pierwszym punktem kontaktu z aplikacją. Jest to warstwa, którą użytkownicy widzą i z nią interakcjonują, obejmująca prezentację danych oraz funkcjonalności, które umożliwiają użytkownikom wygodne korzystanie z aplikacji. Frontend musi być zarówno estetyczny, jak i intuicyjny, aby zapewnić pozytywne wrażenia użytkownika oraz skuteczną realizację celów aplikacji.
 
-Tworzenie frontendu to proces kompleksowy, który wymaga zrozumienia potrzeb użytkowników, projektowania interfejsu użytkownika oraz implementacji odpowiednich funkcjonalności. Współczesne technologie frontendowe, takie jak TypeScript, React i Material-UI (MUI), zapewniają programistom narzędzia i biblioteki umożliwiające efektywne tworzenie nowoczesnych i interaktywnych interfejsów użytkownika.
+Tworzenie frontendu to proces kompleksowy, który wymaga zrozumienia potrzeb użytkowników, projektowania interfejsu użytkownika oraz implementacji odpowiednich funkcjonalności. Współczesne technologie frontendowe, takie jak TypeScript, React, Material-UI (MUI) i SCSS, zapewniają programistom narzędzia i biblioteki umożliwiające efektywne tworzenie nowoczesnych i interaktywnych interfejsów użytkownika.
 
 W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w aplikacji webowej, skupiając się na roli i znaczeniu użytych przez nas technologii. Przeanalizujemy, jak te narzędzia mogą być wykorzystane w praktyce do projektowania i implementacji atrakcyjnych oraz funkcjonalnych interfejsów użytkownika. Poprzez zrozumienie procesu tworzenia frontendu oraz korzyści płynących z wykorzystania zaawansowanych technologii, będziemy mogli lepiej zrozumieć rolę frontendu w kontekście aplikacji webowych oraz skuteczniej realizować cele projektowe.
 
@@ -357,35 +393,67 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
 
 \begin{enumerate}
 
-\item {\bf JavaScript} - jest dynamicznym, interpretowanym językiem programowania, który jest powszechnie używany do tworzenia interaktywnych aplikacji internetowych. Jest to język skryptowy, który działa po stronie klienta (w przeglądarce internetowej), co umożliwia tworzenie interaktywnych elementów, animacji oraz obsługę zdarzeń. JavaScript jest niezbędny do implementacji funkcjonalności frontendowych, takich jak manipulacja DOM (Document Object Model), obsługa formularzy, walidacja danych oraz komunikacja z serwerem za pomocą asynchronicznych żądań AJAX.
-
-\item {\bf TypeScript} - to nadzbiór języka JavaScript, który dodaje statyczną typizację, co znacząco zwiększa bezpieczeństwo oraz czytelność kodu. Dzięki TypeScriptowi programiści mogą definiować typy danych oraz interfejsy, co ułatwia wykrywanie błędów podczas kompilacji. Ponadto, TypeScript oferuje bogate narzędzia do refaktoryzacji kodu oraz zapewnia lepsze wsparcie dla środowisk programistycznych, co przekłada się na wyższą produktywność i jakość aplikacji. Jego elastyczność i skalowalność czynią go popularnym wyborem przy tworzeniu aplikacji webowych o większej złożoności.
-
-\item {\bf React.js} - to biblioteka JavaScript stworzona przez Facebook (Meta), służąca do budowy interfejsów użytkownika. Dzięki Reactowi możliwe jest tworzenie aplikacji, które dynamicznie reagują na zmiany danych w czasie rzeczywistym, co przekłada się na szybkość i efektywność działania aplikacji. Centralnym konceptem w React jest tworzenie komponentów, które stanowią niezależne i niezawodne elementy interfejsu użytkownika.
-
-\item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika w aplikacjach webowych.
-
-\item {\bf SCSS} - jest preprocesorem CSS, który wprowadza dodatkowe funkcje i możliwości do standardowego języka CSS. Dzięki SCSS można pisać bardziej czytelny i łatwiejszy do zarządzania kod CSS poprzez zastosowanie zmiennych, zagnieżdżania, mixinów oraz funkcji. Zmienne pozwalają na definiowanie wartości, które mogą być wielokrotnie używane w kodzie, co ułatwia utrzymanie spójności wizualnej i szybką zmianę wyglądu całej aplikacji. Zagnieżdżanie umożliwia definiowanie stylów dla zagnieżdżonych elementów HTML, co sprawia, że kod jest bardziej zorganizowany i czytelny. Mixiny pozwalają na zdefiniowanie zestawów stylów, które mogą być używane wielokrotnie, co eliminuje powtarzalność kodu i ułatwia jego utrzymanie. Dodatkowo, SCSS oferuje możliwość korzystania z zaawansowanych funkcji matematycznych oraz logiki, co czyni go bardziej elastycznym i potężnym narzędziem przy tworzeniu zaawansowanych stylów CSS. Dzięki swojej popularności i wsparciu przez wiele narzędzi deweloperskich, SCSS stał się standardem w pracy nad projektami front-endowymi, umożliwiając programistom bardziej efektywne i produktywne tworzenie stylów dla aplikacji internetowych.
-
-\item {\bf .Net} - Jest platformą programistyczną stworzoną przez firmę Microsoft, która umożliwia tworzenie aplikacji na różne systemy operacyjne, zarówno serwerowe, desktopowe, jak i mobilne. Dzięki wsparciu dla wielu języków programowania oraz bogatej bibliotece klas, .NET jest wyjątkowo elastyczny i popularny wśród programistów, oferując zarówno wydajność, jak i bezpieczeństwo aplikacji.
-
-\item {\bf Docker} - Jest narzędziem do zarządzania kontenerami, które pozwala na pakowanie aplikacji wraz z ich zależnościami w lekkie, przenośne, samowystarczalne kontenery, które mogą być łatwo przemieszczane między różnymi środowiskami. Umożliwia to szybkie wdrażanie oraz skalowanie aplikacji w różnorodnych środowiskach.
-
-\item {\bf Kubernetes} - To otwartoźródłowy system do automatyzacji wdrażania, skalowania oraz zarządzania aplikacjami kontenerowymi. Kubernetes umożliwia łatwą orkiestrację kontenerów, zarządzanie cyklem życia aplikacji oraz zapewnia wysoką dostępność i skalowalność usług.
-
-\item {\bf Kind} - Jest narzędziem służącym do uruchamiania lokalnych klastrów Kubernetesowych za pomocą Dockera. Idealnie nadaje się do testowania w izolowanym środowisku na pojedynczym komputerze, co jest przydatne w testowaniu aplikacji przed etapem zaimplementowania jej w architekturze chmurowej.
-
-\item {\bf Azurite} - Jest lekkim, otwartoźródłowym emulatorem usług magazynowych Azure, który pozwala na lokalne uruchamianie i testowanie aplikacji korzystających z usług Azure Storage bez konieczności dostępu do chmury Azure, co jest przydatne w fazie rozwoju i testów.
-
-\item {\bf Powershell} - To zaawansowany język skryptowy i środowisko powłoki zaprojektowane przez Microsoft dla systemów Windows, które umożliwia zautomatyzowanie zarządzania systemem oraz aplikacjami. Powershell jest wyposażony w potężne narzędzia do manipulacji obiektami i integracji z innymi technologiami.
-
-\item {\bf Bash} - Jest jednym z najpopularniejszych języków skryptowych dla powłoki systemów typu Unix, który umożliwia skuteczne zarządzanie systemem oraz automatyzację zadań za pomocą prostych skryptów. Bash jest ceniony za swoją prostotę i mocne wsparcie w środowiskach Linux i macOS oraz w kontenerach Dockerowych.
-
-\item {\bf Terraform} - Jest narzędziem do zarządzania infrastrukturą jako kodem, które pozwala na definiowanie i wdrażanie infrastruktury w różnych dostawcach usług chmurowych za pomocą prostego języka konfiguracyjnego. Terraform jest wykorzystywany do budowy, zmian i wersjonowania infrastruktury bezpiecznie i efektywnie.
-
-\item {\bf Azure KeyVault} - Jest to usługa zarządzania kluczami i sekretami, która pozwala na bezpieczne przechowywanie danych poufnych, takich jak klucze szyfrowania, certyfikaty oraz hasła. Dzięki Azure KeyVault, aplikacje mogą bezpiecznie uzyskiwać dostęp do potrzebnych tajemnic bez konieczności ich jawnej ekspozycji w kodzie, co znacznie zwiększa bezpieczeństwo i zarządzanie poufnościami w środowisku chmurowym.
+    \item {\bf JavaScript} - jest dynamicznym, interpretowanym językiem programowania, który jest powszechnie używany do tworzenia interaktywnych aplikacji internetowych. Jest to język skryptowy, który działa po stronie klienta (w przeglądarce internetowej), co umożliwia tworzenie interaktywnych elementów, animacji oraz obsługę zdarzeń. JavaScript jest niezbędny do implementacji funkcjonalności frontendowych, takich jak manipulacja DOM (Document Object Model), obsługa formularzy, walidacja danych oraz komunikacja z serwerem za pomocą asynchronicznych żądań AJAX.
+    
+    \item {\bf TypeScript} - to nadzbiór języka JavaScript, który dodaje statyczną typizację, co znacząco zwiększa bezpieczeństwo oraz czytelność kodu. Dzięki TypeScriptowi programiści mogą definiować typy danych oraz interfejsy, co ułatwia wykrywanie błędów podczas kompilacji. Ponadto, TypeScript oferuje bogate narzędzia do refaktoryzacji kodu oraz zapewnia lepsze wsparcie dla środowisk programistycznych, co przekłada się na wyższą produktywność i jakość aplikacji. Jego elastyczność i skalowalność czynią go popularnym wyborem przy tworzeniu aplikacji webowych o większej złożoności.
+    
+    \item {\bf React.js} - to biblioteka JavaScript stworzona przez Facebook (Meta), służąca do budowy interfejsów użytkownika. Dzięki Reactowi możliwe jest tworzenie aplikacji, które dynamicznie reagują na zmiany danych w czasie rzeczywistym, co przekłada się na szybkość i efektywność działania aplikacji. Centralnym konceptem w React jest tworzenie komponentów, które stanowią niezależne i niezawodne elementy interfejsu użytkownika.
+    
+    \item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika w aplikacjach webowych.
+    
+    \item {\bf SCSS} - jest preprocesorem CSS, który wprowadza dodatkowe funkcje i możliwości do standardowego języka CSS. Dzięki SCSS można pisać bardziej czytelny i łatwiejszy do zarządzania kod CSS poprzez zastosowanie zmiennych, zagnieżdżania, mixinów oraz funkcji. Zmienne pozwalają na definiowanie wartości, które mogą być wielokrotnie używane w kodzie, co ułatwia utrzymanie spójności wizualnej i szybką zmianę wyglądu całej aplikacji. Zagnieżdżanie umożliwia definiowanie stylów dla zagnieżdżonych elementów HTML, co sprawia, że kod jest bardziej zorganizowany i czytelny. Mixiny pozwalają na zdefiniowanie zestawów stylów, które mogą być używane wielokrotnie, co eliminuje powtarzalność kodu i ułatwia jego utrzymanie. Dodatkowo, SCSS oferuje możliwość korzystania z zaawansowanych funkcji matematycznych oraz logiki, co czyni go bardziej elastycznym i potężnym narzędziem przy tworzeniu zaawansowanych stylów CSS. Dzięki swojej popularności i wsparciu przez wiele narzędzi deweloperskich, SCSS stał się standardem w pracy nad projektami front-endowymi, umożliwiając programistom bardziej efektywne i produktywne tworzenie stylów dla aplikacji internetowych.
+    
+    \item {\bf Font Awesome} - to biblioteka oferująca setki wektorowych ikon, które można bez trudu dodawać do aplikacji webowych. Dzięki temu ikony są łatwo skalowalne i zachowują wysoką jakość obrazu. Integracja ikon z witryną jest prosta i może być dokonana za pomocą klas CSS lub kodu HTML.
+    
+    \item {\bf Formik} - to biblioteka ułatwiająca zarządzanie formularzami w aplikacjach webowych opartych na React. Zapewnia proste i intuicyjne narzędzia do obsługi pól formularzy, walidacji danych oraz zarządzania stanem formularzy. Dzięki Formikowi, tworzenie i utrzymywanie formularzy staje się bardziej efektywne i mniej podatne na błędy, co znacząco poprawia doświadczenie użytkownika.
 
 \end{enumerate}
+
+\subsubsection{Struktura aplikacji}
+
+\noindent{\bf Architektura komponentów}
+
+\noindent W naszej aplikacji webowej przyjęliśmy modularne podejście do tworzenia komponentów, co pozwala na łatwiejsze zarządzanie kodem, jego ponowne wykorzystanie oraz lepszą skalowalność projektu. Struktura naszej aplikacji składa się z dwóch głównych części: components oraz pages. Oprócz tego struktura zawiera folder utils gdzie znajdują się serwisy do komunikacji z zewnętrznym api oraz różnego rodzaju helpery czy elementy stylistyczne.
+
+\noindent{\bf Komponenty}
+
+\noindent Folder components zawiera zbiór wielokrotnego użytku komponentów, które są podstawowymi elementami budującymi interfejs użytkownika. Każdy komponent jest umieszczony w oddzielnym folderze, co ułatwia jego rozwój i utrzymanie. Na przykład:
+\begin{enumerate}
+    \item {\bf DailyTaskSelector:} Komponent odpowiedzialny za wybór codziennych zadań.
+    \item {\bf ErrorBoundary:} Komponent służący do obsługi błędów w aplikacji.
+    \item {\bf Formik:} Komponenty związane z zarządzaniem formularzami za pomocą biblioteki Formik.
+    \item {\bf GoalItem i GoalsList:} Komponenty do wyświetlania poszczególnych celów oraz listy celów.
+    \item {\bf Sidebar:} Komponent nawigacyjny bocznego paska.
+    \item {\bf LoadingCircle:} Komponent wyświetlający animację ładowania.
+\end{enumerate}
+\noindent Każdy folder komponentu zawiera wszystkie niezbędne pliki, takie jak pliki TypeScript oraz moduły SCSS, co umożliwia modularny rozwój.
+\\
+
+\noindent{\bf Strony}
+
+\noindent Folder pages zawiera komponenty odpowiadające za różne widoki aplikacji. Każda strona jest oddzielnym komponentem, który składa się z mniejszych komponentów znajdujących się w folderze components. Na przykład:
+\begin{enumerate}
+    \item {\bf CalendarPage:} Strona wyświetlająca kalendarz użytkownika.
+    \item {\bf ConfirmEmailPage:} Strona do potwierdzenia adresu e-mail.
+    \item {\bf GoalPage i GoalsPage:} Strony do wyświetlania szczegółów poszczególnych celów oraz listy wszystkich celów.
+    \item {\bf HomePage:} Strona główna aplikacji.
+    \item {\bf NewGoalPage:} Strona do tworzenia nowych celów.
+\end{enumerate}
+
+\noindent Takie podejście pozwala na łatwe zarządzanie widokami aplikacji oraz szybkie tworzenie nowych stron poprzez ponowne wykorzystanie istniejących komponentów.
+\\
+
+\noindent{\bf Zalety modularnego podejścia}
+
+\noindent Modularne podejście do tworzenia komponentów w naszej aplikacji przynosi liczne korzyści:
+\begin{enumerate}
+    \item {\bf Łatwość utrzymania:} Komponenty są odseparowane, co ułatwia ich modyfikację i debugowanie.
+    \item {\bf Ponowne wykorzystanie:} Komponenty mogą być wielokrotnie wykorzystywane w różnych częściach aplikacji, co redukuje duplikację kodu.
+    \item {\bf Skalowalność:} Struktura pozwala na łatwe rozszerzanie aplikacji o nowe funkcjonalności bez wprowadzania chaosu w kodzie.
+    \item {\bf Testowalność:} Modułowa budowa ułatwia pisanie testów jednostkowych oraz integracyjnych dla poszczególnych komponentów.
+\end{enumerate}
+
+\noindent Dzięki takiemu podejściu, nasza aplikacja jest bardziej przejrzysta, łatwiejsza w zarządzaniu oraz gotowa do przyszłych rozbudów.
 
 \subsubsection{Przykłady implementacji}
 
@@ -411,10 +479,50 @@ const user: User = new UserAccount("Murphy", 1);
 \clearpage
 
 \subsection{Aplikacje back-endowe}
+Back-end jest fundamentalnym elementem aplikacji webowych, odpowiedzialnym za realizację logiki biznesowej i zarządzanie danymi. Działa on w tle, obsługując operacje serwerowe, przetwarzanie informacji i interakcje z bazą danych. Kluczową rolą back-endu jest zapewnienie bezpieczeństwa i spójności danych oraz sprawna obsługa komunikacji między użytkownikiem a serwerem.
 
-\subsubsection{Opis bibliotek/szkielet}
+Tworzenie back-endu to złożony proces, który wymaga głębokiej wiedzy na temat architektury systemów, projektowania interfejsów API oraz implementacji logiki biznesowej. Nowoczesne technologie back-endowe, takie jak C\#, .NET Core, Entity Framework i SQL Server, dostarczają deweloperom zaawansowane narzędzia i biblioteki, które umożliwiają tworzenie wydajnych, skalowalnych i bezpiecznych aplikacji internetowych.
 
+C\# to wszechstronny język programowania stworzony przez Microsoft, cechujący się silnym typowaniem, programowaniem obiektowym i nowoczesnymi funkcjami, które usprawniają tworzenie efektywnych aplikacji. W połączeniu z .NET Core, C\# umożliwia budowanie aplikacji działających na różnych systemach operacyjnych dzięki swojej wieloplatformowości. Entity Framework natomiast upraszcza operacje na bazach danych, pozwalając programistom na pracę z danymi za pomocą obiektów zamiast tradycyjnych zapytań SQL.
+
+Kolejnym istotnym aspektem back-endu jest zapewnienie bezpieczeństwa aplikacji. C\# i .NET Core oferują szeroki wachlarz wbudowanych mechanizmów zabezpieczeń, takich jak autoryzacja, uwierzytelnianie i zarządzanie sesjami, które pomagają chronić dane użytkowników. Regularne testowanie i monitorowanie aplikacji jest niezbędne dla zapewnienia jej niezawodności i wysokiej wydajności.
+
+Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każdej aplikacji webowej, umożliwiając efektywne zarządzanie danymi, zapewniając bezpieczeństwo i skalowalność, co przekłada się na niezawodność działania i zadowolenie użytkowników.
+\subsubsection{Opis bibliotek i frameworków}
+
+\begin{enumerate}
+
+\item {\bf .Net} - Jest platformą programistyczną stworzoną przez firmę Microsoft, która umożliwia tworzenie aplikacji na różne systemy operacyjne, zarówno serwerowe, desktopowe, jak i mobilne. Dzięki wsparciu dla wielu języków programowania oraz bogatej bibliotece klas, .NET jest wyjątkowo elastyczny i popularny wśród programistów, oferując zarówno wydajność, jak i bezpieczeństwo aplikacji.
+
+\item {\bf Entity Framework} - 
+
+\item {\bf MediatR} - 
+
+\item {\bf Fluent Validation} - 
+
+\item {\bf Swashbuckle} - 
+
+\item {\bf Polly} - 
+
+\item {\bf Automapper} - 
+
+\item {\bf RabbitMq} - 
+
+\item {\bf Newtonsoft.Json} - 
+
+
+\end{enumerate}
+\subsubsection{Wzorce projektowe}
+\subparagraph{CQRS}
+\subparagraph{SOLID}
+\subparagraph{Repository}
+\subsubsection{Architektura mikroserwisu}
+\subparagraph{Ws}
+\subparagraph{Komunikacja z innymi mikroserwisami}
 \subsubsection{Przykłady implementacji}
+\subparagraph{Tworzenie promptów}
+\subparagraph{Autoryzacja}
+\subparagraph{Obsługa eventów}
 \clearpage
 
 \subsection{Zastosowane praktyki bezpieczeństwa}

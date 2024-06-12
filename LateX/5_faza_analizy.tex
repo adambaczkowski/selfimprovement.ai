@@ -7,6 +7,79 @@
 
 \subsection{Cele i założenia}
 
+
+{\bf Cel główny:}
+
+Celem głównym niniejszej pracy magisterskiej jest zaprojektowanie i implementacja aplikacji webowej, która wykorzystując modele językowe dużej skali (LLM), będzie w stanie generować plany działania prowadzące do osiągnięcia określonych celów, takich jak przebiegnięcie maratonu czy nauka programowania. Aplikacja ma wspierać użytkowników w realizacji tych celów poprzez dostarczanie zadań i harmonogramów na kilka tygodni w przód.
+\\
+
+\noindent{\bf Cele szczegółowe: }
+\begin{enumerate}
+    \item {\bf Analiza i porównanie różnych modeli LLM:}
+        \begin{itemize}
+            \item[*] Przeprowadzenie badań nad dostępnymi modelami LLM, takimi jak CHAT GPT, LLAMA, Zephyr Stable, i ich zdolnościami do generowania zadań.
+            \item[*] Porównanie wybranych modeli pod kątem jakości generowanych planów, efektywności oraz zasobów obliczeniowych.
+       \end{itemize}
+    
+    \item {\bf Projekt i implementacja aplikacji webowej:}
+        \begin{itemize}
+            \item[*] Stworzenie interfejsu użytkownika za pomocą React, umożliwiającego łatwą interakcję z aplikacją.
+            \item[*] Implementacja backendu w języku C\# z wykorzystaniem frameworku ASP.NET Core, który będzie obsługiwał logikę biznesową oraz komunikację z modelami LLM.
+       \end{itemize}
+    
+    \item {\bf Integracja z modelami LLM:}
+        \begin{itemize}
+            \item[*] Zintegrowanie wybranych modeli LLM z aplikacją w sposób umożliwiający dynamiczne generowanie planów i zadań.
+            \item[*] Zapewnienie mechanizmów optymalizacji i skalowalności w celu obsługi wielu użytkowników jednocześnie.
+       \end{itemize}
+    
+    \item {\bf Budowa architektury mikroserwisowej w chmurze Azure:}
+        \begin{itemize}
+            \item[*] Zdefiniowanie mikroserwisów odpowiadających za różne funkcjonalności aplikacji (np. zarządzanie użytkownikami, komunikacja z LLM, harmonogramowanie zadań).
+            \item[*] Implementacja i wdrożenie mikroserwisów w środowisku chmurowym Azure z użyciem takich technologii jak Kubernetes, Azure KeyVault.
+       \end{itemize}
+    
+    \item {\bf Testowanie i walidacja:}
+        \begin{itemize}
+            \item[*] Przeprowadzenie testów funkcjonalnych i wydajnościowych aplikacji oraz poszczególnych mikroserwisów.
+       \end{itemize}
+    
+    \item {\bf Dokumentacja i raportowanie wyników:}
+        \begin{itemize}
+            \item[*] Opracowanie pełnej dokumentacji technicznej projektu, obejmującej zarówno kod źródłowy, jak i szczegółowe opisy architektury i integracji.
+            \item[*] Sporządzenie raportu z wyników porównania modeli LLM oraz wydajności i skalowalności aplikacji.
+       \end{itemize}
+
+\end{enumerate}
+
+\noindent{\bf Założenia }
+\begin{enumerate}
+    \item {\bf Skalowalność:}
+        \begin{itemize}
+            \item[*] Aplikacja musi być skalowalna i zdolna do obsługi dużej liczby jednoczesnych użytkowników bez znacznej utraty wydajności.
+       \end{itemize}
+    
+    \item {\bf Interaktywność i intuicyjność:}
+        \begin{itemize}
+            \item[*] Interfejs użytkownika musi być prosty, intuicyjny i przyjazny, aby umożliwić łatwą interakcję z aplikacją nawet mniej zaawansowanym technicznie użytkownikom.
+       \end{itemize}
+    
+    \item {\bf Bezpieczeństwo danych:}
+        \begin{itemize}
+            \item[*] Wszelkie dane użytkowników, w tym dane osobowe oraz informacje o celach i zadaniach, muszą być przechowywane i przetwarzane zgodnie z najlepszymi praktykami w zakresie bezpieczeństwa i ochrony danych.
+       \end{itemize}
+    
+    \item {\bf Elastyczność modelu:}
+        \begin{itemize}
+            \item[*] Aplikacja powinna być elastyczna i pozwalać na łatwe dodawanie nowych modeli LLM oraz aktualizacje istniejących, w miarę jak nowe technologie będą dostępne.
+       \end{itemize}
+    
+    \item {\bf Użycie technologii chmurowych:}
+        \begin{itemize}
+            \item[*] Cała infrastruktura aplikacji, w tym mikroserwisy, bazy danych oraz usługi AI, zostanie wdrożona w chmurze Azure, co zapewni wysoką dostępność, niezawodność oraz łatwość zarządzania.
+       \end{itemize}
+\end{enumerate}
+
 \subsection{Podstawa teoretyczna}
 \begin{enumerate}
     
@@ -26,8 +99,6 @@
     \\
      
  \end{enumerate}
-
-\clearpage
 
 \subsection{Prompt engineering}
 
@@ -153,7 +224,7 @@ Firmy takie jak OpenAI podejmują wysiłki, aby zminimalizować halucynacje, sto
 \subsubsection{Zagrożenia}
 Sztuczna inteligencja (AI) może być potencjalnie wykorzystywana do nieetycznych celów na wiele sposobów. 
 
-SJeśli dane treningowe dla modeli AI zawierają uprzedzenia lub wzorce dyskryminacji, algorytmy mogą je utrwalać i skalować na dużą skalę. Może to prowadzić do niesprawiedliwych decyzji i nierównego traktowania niektórych grup społecznych. Zaawansowane systemy AI mogą być wykorzystywane do masowej inwigilacji, śledzenia i gromadzenia danych osobowych bez zgody i wiedzy osób, naruszając ich prawo do prywatności.
+Jeśli dane treningowe dla modeli AI zawierają uprzedzenia lub wzorce dyskryminacji, algorytmy mogą je utrwalać i skalować na dużą skalę. Może to prowadzić do niesprawiedliwych decyzji i nierównego traktowania niektórych grup społecznych. Zaawansowane systemy AI mogą być wykorzystywane do masowej inwigilacji, śledzenia i gromadzenia danych osobowych bez zgody i wiedzy osób, naruszając ich prawo do prywatności.
 
 Modele językowe mogą być użyte do tworzenia fałszywych treści, takich jak deepfake'i w postaci fałszywych nagrań, sfabrykowanych wiadomości.
 
@@ -224,8 +295,9 @@ Dane użytkowników są przechowywane w bazie danych PostgreSQL, co zapewnia efe
 
 \subsection{Wymagania niefunkcjonalne}
 \begin{itemize}
-    \item[*] W przypadku gdy użytkownik korzysta z komputera stacjonarnego lub urządzenia mobilnego aplikacja powinna działać na jednej z powyższych przeglądarek: Google Chrome(wersja 95 i wyżej), Opera GX. 
-    \item[*] Aplikacja powinna poprawnie działać na serwerze aplikacyjnym z następującymi parametrami: procesor 8 rdzeni, 16 gb DDR4 pamięci operacyjnej RAM, przestrzeń dyskowa 128gb (SSD) na pliki, indeksy i skany. Rekomendowanym systemem operacyjnym jest Windows Server 2012 R2 lub nowszy.
+    \item[*] W przypadku gdy użytkownik korzysta z komputera stacjonarnego lub urządzenia mobilnego aplikacja powinna działać na: Google Chrome(wersja 95 i wyżej), Firefox lub Opera. 
+    \item[*] Aplikacja powinna poprawnie działać na środowisku chmurowym np. Azure. Rekomendowanym systemem operacyjnym jest 64 bitowy system GNU/Linux, ponieważ najlepiej jest on przystosowany do środowiska chmurowego. W przypadku użycia kontenerów zalecane jest utworzenie własnego repozytorium do przechowywania źródeł obrazów np. Azure Conainer Registry. Ddla każdego uruchomionego kontenera należy zapewnić minimum 1 rdzeń procesora oraz 2GB pamięci RAM. Dla optymalizacji działania aplikacji, wszystkie komponenty powinny się znajdować w tej samej lub bardzo do siebie zbliżonej lokalizacji, aby uniknąć zbędnych opóźnień.
+    \item[*] Aplikacja uruchomiona na lokalnym środowisku powinna poprawnie działać na komputerze z zainstalowanym system operacyjnym wspierającym konteneryzację Docker oraz wirtualizację np. Ubuntu Linux lub Windows 10/11. Najlepiej używać procesora o architekturze "x86\_64/amd64" i posiadać minmalną ilość pamięci RAM wynoszącej 4GB.
 \end{itemize}
 \clearpage
 
