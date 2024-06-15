@@ -1,2 +1,32 @@
 \section{Podsumowanie}
-asdfasdfasdf
+\subsection{Stopień realizacji założeń}
+W ramach niniejszej pracy magisterskiej zrealizowano wszystkie założenia, które zostały przedstawione na etapie planowania i projektowania. Głównym celem projektu było zaprojektowanie i implementacja aplikacji webowej wykorzystującej modele językowe dużej skali (LLM) do generowania planów działania wspierających użytkowników w osiąganiu zdefiniowanych celów.
+
+Założenia projektowe obejmowały kilka kluczowych obszarów. Przede wszystkim, architektura aplikacji została zaplanowana w sposób umożliwiający wysoką skalowalność i efektywność, co zostało osiągnięte dzięki implementacji mikroserwisowej w chmurze Azure, wykorzystując technologie takie jak Azure Kubernetes Service. To pozwoliło na obsługę dużej liczby użytkowników jednocześnie bez utraty wydajności, spełniając założenia dotyczące skalowalności.
+
+Interfejs użytkownika został zaprojektowany z myślą o prostocie, intuicyjności i przyjazności dla użytkowników o różnym stopniu zaawansowania technicznego. Wykorzystanie frameworka React umożliwiło stworzenie interaktywnego środowiska, które wspiera użytkowników w łatwym korzystaniu z funkcji aplikacji.
+
+Bezpieczeństwo danych było priorytetem podczas całego procesu projektowania i implementacji. Wszystkie informacje użytkowników, w tym dane osobowe oraz szczegóły dotyczące celów i zadań, są przechowywane \linebreak i przetwarzane zgodnie z najnowszymi standardami bezpieczeństwa. Zastosowanie mechanizmów szyfrowania danych i zarządzania dostępem zapewnia pełną ochronę prywatności użytkowników.
+
+Integracja modeli LLM z aplikacją została zrealizowana w sposób umożliwiający dynamiczne generowanie planów działania. Architektura aplikacji jest elastyczna i pozwala na łatwe dodawanie nowych modeli oraz aktualizację istniejących, co umożliwia aplikacji dostosowanie się do zmieniających się potrzeb i nowych technologii w dziedzinie sztucznej inteligencji.
+
+Cała infrastruktura aplikacji, w tym mikroserwisy, bazy danych oraz usługi AI, została wdrożona w chmurze Azure, co zapewnia wysoką dostępność, niezawodność oraz łatwość zarządzania. Wybór technologii chmurowych był kluczowy dla realizacji założeń dotyczących infrastruktury, zapewniając jednocześnie możliwość szybkiego skalowania i adaptacji aplikacji do rosnących potrzeb użytkowników. Niestety ze względu na duże koszta nie możliwe było utrzymanie tej architektury dla tego została ona postawiona jedynie\linebreak w celach naukowych na kilka dni. Każdy z celów szczegółowych oraz założeń technicznych został skrupulatnie spełniony, co pozwala na wyciągnięcie kilku istotnych wniosków.
+\subsection{Wnioski Końcowe}
+
+Niniejsza praca magisterska miała na celu zaprojektowanie i implementację aplikacji webowej, która wykorzystuje modele językowe dużej skali (LLM) do generowania planów działania, wspierających użytkowników w osiąganiu ich celów, takich jak przebiegnięcie maratonu czy nauka programowania. Aplikacja ta integruje nowoczesne technologie frontendowe \linebreak i backendowe oraz architekturę mikroserwisową opartą na chmurze Azure, co zapewnia jej skalowalność, niezawodność oraz efektywność.
+
+W ramach pracy przeprowadzono szczegółową analizę dostępnych modeli LLM, takich jak Chat GPT, LLama oraz Zephyre, i porównano ich efektywność w kontekście generowania planów. Dzięki temu możliwe było wybranie najbardziej odpowiednich modeli do integracji z aplikacją.
+
+Interfejs użytkownika został zbudowany przy użyciu biblioteki React, co zapewniło modularność, elastyczność oraz łatwość utrzymania kodu. Użycie narzędzi takich jak Formik do zarządzania formularzami oraz React Query do zarządzania zapytaniami HTTP i synchronizacją danych z serwerem znacznie uprościło proces tworzenia aplikacji.
+
+Backend aplikacji, oparty na języku C\# i frameworku ASP.NET Core, został zaprojektowany jako zestaw mikroserwisów, co umożliwia łatwe zarządzanie poszczególnymi funkcjonalnościami oraz ich skalowanie w miarę potrzeb. Wdrożenie mikroserwisów w środowisku chmurowym Azure przyczyniło się do zapewnienia wysokiej dostępności i niezawodności systemu.
+
+Podczas tworzenia aplikacji napotkano pewne problemy. Zrezygnowano z Kubernetesa oraz Azure Kubernetes Service, ponieważ koszty okazały się nieproporcjonalne do obecnego stanu i liczby użytkowników aplikacji.\linebreak W rezultacie, aplikacja jest obecnie oparta wyłącznie na kontenerach Dockerowych oraz innych modułach platformy Azure. Ponadto, lokalne modele LLM często działały wyłącznie na procesorze zamiast na karcie graficznej z powodu nieodpowiedniej konfiguracji, co powodowało duże opóźnienia\linebreak w otrzymywaniu odpowiedzi na zapytania. 
+
+Dużym problemem okazały się również koszty utrzymania infrastruktury na środowisku deweloperskim. Naszym budżetem na projekt było około 200 złotych, jednak analizując prognozę kosztów w Azure, nasz budżet szybko został przekroczony. Największe koszty wygenerowały instancje kontenerów Dockerowych działające w chmurze.
+
+Szczególną uwagę poświęcono również aspektom autoryzacji i uwierzytelniania użytkowników, które są kluczowe dla bezpieczeństwa aplikacji. Implementacja mechanizmów logowania, rejestracji oraz zarządzania sesjami użytkowników zapewniła bezpieczne korzystanie z aplikacji.
+
+W trakcie realizacji projektu napotkano wiele wyzwań, takich jak integracja różnych technologii, zapewnienie wydajności i skalowalności systemu oraz optymalizacja interfejsu użytkownika pod kątem użyteczności\linebreak i responsywności. Dzięki zastosowaniu nowoczesnych narzędzi i najlepszych praktyk inżynierii oprogramowania, udało się stworzyć aplikację, która nie tylko spełnia założone cele, ale także stanowi solidną podstawę do dalszego rozwoju.
+
+Podsumowując, praca ta dostarczyła wartościowych informacji na temat wykorzystania modeli LLM w praktycznych zastosowaniach oraz przyczyniła się do rozwoju wiedzy na temat projektowania i implementacji nowoczesnych aplikacji webowych. Wyniki pracy mogą być podstawą do dalszych badań oraz inspiracją do tworzenia innowacyjnych rozwiązań wspierających użytkowników w osiąganiu ich celów.

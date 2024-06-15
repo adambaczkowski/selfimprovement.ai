@@ -3,10 +3,10 @@ W tym rozdziale omówimy etap projektowania oraz ogólną architekturę aplikacj
 
 Aby ułatwić zrozumienie budowy naszego systemu stworzyliśmy również dodatkowy diagram wizualizujący architekturę systemu.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{Obrazy/architecture.png}
-    \caption{Container Diagram}
+    \caption{Diagram architektury aplikacji}
     \label{fig:my_label}
 \end{figure}
 
@@ -25,32 +25,30 @@ Monolity na początku oferowały wygodę w zakresie rozwoju, wdrażania i utrzym
 
 W odpowiedzi na te problemy, architektura mikroserwisowa została zaprojektowana jako alternatywa. W tym podejściu każda funkcja aplikacji jest implementowana jako oddzielny mikroserwis, komunikujący się ze sobą poprzez interfejsy programistyczne (API), co umożliwia niezależne wdrażanie, skalowanie i rozwijanie poszczególnych części aplikacji. Dzięki temu, nawet największe i najbardziej złożone aplikacje stają się bardziej elastyczne, skalowalne i łatwiejsze w utrzymaniu.
 
-Architektura ta pozwala również na lepsze wykorzystanie zasobów sprzętowych poprzez niezależne skalowanie poszczególnych mikroserwisów w zależności od obciążenia, co prowadzi do lepszej wydajności i oszczędności kosztów operacyjnych. Dodatkowo, ułatwia ona wprowadzanie zmian i aktualizacji w aplikacji poprzez możliwość modyfikacji jednego komponentu bez wpływu na pozostałe.
+Architektura ta pozwala również na lepsze wykorzystanie zasobów sprzętowych poprzez niezależne skalowanie poszczególnych mikroserwisów\linebreak w zależności od obciążenia, co prowadzi do lepszej wydajności i oszczędności kosztów operacyjnych. Dodatkowo, ułatwia ona wprowadzanie zmian i aktualizacji w aplikacji poprzez możliwość modyfikacji jednego komponentu bez wpływu na pozostałe.
 
 Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury obliczeniowej, umożliwiają efektywne zarządzanie i wdrażanie mikrousług, co stanowi kluczowy element nowoczesnych środowisk biznesowych.
 
 \subsubsection{GitOps}
-Podczas procesu wytwarzania oprogramowania zastosowaliśmy powszechne praktyki zgodne z kulturą i praktykami DevOps. Jedną z nich jest GitOps, czyli podejście do zarządzania infrastrukturą i aplikacjami, które traktuje kod źródłowy jako jedyną prawdę w procesie CI/CD. Wykorzystuje narzędzia takie jak Git do automatyzacji procesów wdrożeniowych, zapewniając przy tym spójność i przejrzystość konfiguracji dzięki wersjonowaniu i kodowi źródłowemu.
+Podczas procesu wytwarzania oprogramowania zastosowaliśmy powszechne praktyki zgodne z kulturą i praktykami DevOps. Jedną z nich jest GitOps, czyli podejście do zarządzania infrastrukturą i aplikacjami, które traktuje kod źródłowy jako jedyną prawdę w procesie CI/CD. Wykorzystuje narzędzia takie jak Git do automatyzacji procesów wdrożeniowych, zapewniając przy tym spójność i przejrzystość konfiguracji dzięki wersjonowaniu\linebreak i kodowi źródłowemu.
 
 \subsubsection{Github}
 Naszym repozytorium kodu została platforma Github, a narzędziem CI/CD "Github Actions", wybór rozwiązania wynikał głównie z dwóch czynników. Pierwszym czynnikiem było wcześniejsze nawyki oraz preferencje całego zespołu pracy z repozytorium kodu. Drugim integracja ze środowiskiem chmurowym Azure, ponieważ Github i jego wszystkie elementy należą do firmy Microsoft.
 
 \subsubsection{Pipeline}
-Pipeline w kontekście GitHub Actions to zautomatyzowany proces, który składa się z serii zadań (jobs), które są wykonywane po każdym zdarzeniu w repozytorium, takim jak push czy pull request. Każde zadanie może zawierać kroki (steps), które wykonują specyficzne akcje, takie jak kompilacja kodu, testy, aż do wdrożenia aplikacji, co pozwala na ciągłą integrację i dostarczanie oprogramowania.
+Pipeline w kontekście GitHub Actions to zautomatyzowany proces, który składa się z serii zadań (jobs), które są wykonywane po każdym zdarzeniu w repozytorium, takim jak push czy pull request. Każde zadanie może zawierać kroki (steps), które wykonują specyficzne akcje, takie jak kompilacja kodu, testy, aż do wdrożenia aplikacji, co pozwala na ciągłą integrację\linebreak i dostarczanie oprogramowania.
 
 \subsubsection{Monitoring}
 Architektura mikroserwisów potrzebuje dobrego systemu monitoringu, ponieważ system w prównaniu do monolitu jest bardziej zdecentralizowany i potrzebuje dokładnej analizy różnych metryk takich jak: natężenie ruchu sieciowego, liczba wolnej pamięci RAM zużywanej przez dany serwis itp.
 
 \subsubsection{Prometheus i Grafana}
-Narzędzia takie jak Prometheus oraz Grafana są bardzo powszechne we współczesnych aplikacjach chmurowych. Prometheus to system monitoringu i alertowania, który zbiera i przechowuje metryki w czasie rzeczywistym w formie serii czasowych. Dane są zbierane za pomocą protokołu HTTP z różnych źródeł, takich jak serwery czy aplikacje, a następnie wyświetlane w programie Grafna, która umożliwia ich analizę i wizualizację za pomocą zapytań i grafów.
+Narzędzia takie jak Prometheus oraz Grafana są bardzo powszechne we współczesnych aplikacjach chmurowych. Prometheus to system monitoringu i alertowania, który zbiera i przechowuje metryki w czasie rzeczywistym w formie serii czasowych. Dane są zbierane za pomocą protokołu HTTP\linebreak z różnych źródeł, takich jak serwery czy aplikacje, a następnie wyświetlane w programie Grafna, która umożliwia ich analizę i wizualizację za pomocą zapytań i grafów.
 
 \subsubsection{RabbitMq}
 Ważnym czynnikiem jest jak poszczególne komponenty aplikacji komunikują się ze sobą, ze względu na izolację zasobów muszą one się komunikować za pomocą wspólnego dla nich mechanizmu. RabbitMQ to popularny open-source'owy broker wiadomości, który umożliwia asynchroniczną komunikację między komponentami oprogramowania poprzez wymianę wiadomości. Umożliwia to tworzenie rozproszonych systemów, które są bardziej skalowalne i odporne na błędy, dzięki wykorzystaniu różnorodnych wzorców komunikacyjnych, takich jak publikowanie/subskrypcja czy kolejki.
 
 \subsubsection{Zastosowane praktyki}
 Nasze mikroserwisy opierają się o cztery autorskie kontenery, napisane w technologiach .Net oraz React, za pomocą odpowiednio napisanych pipelinów jesteśmy w stanie utworzyć proces który sprawdza konfigurację pliku "docker-compose", przeprowadzić walidację parametrów oraz dostarczyć niezbędne zmienne środowiskowe aby utworzyć własne obrazy Dockerowe. Przechowywane są one w Azure Container Registry (ACR), rozwiązanie zapewnia prywatne repozytorium kontenerów co jest prawidłową praktyką bezpieczeństwa we współczesnych systemach chmurowych.
-
-\clearpage
 
 \subsection{DevOps}
 
@@ -82,8 +80,6 @@ Nasze mikroserwisy opierają się o cztery autorskie kontenery, napisane w techn
    - Utrzymywanie ciągłego monitorowania działania systemu, zbieranie danych, analiza i reakcja na ewentualne problemy.
 \end{enumerate}
 
-\clearpage
-
 \noindent{\bf Korzyści DevOps:}
 
 \begin{enumerate}
@@ -100,7 +96,7 @@ Nasze mikroserwisy opierają się o cztery autorskie kontenery, napisane w techn
    - Automatyzacja procesów i bardziej efektywne zarządzanie zasobami przekładają się na oszczędności czasu i środków.
 \end{enumerate}
 
-W skrócie, DevOps stanowi holistyczne podejście do wytwarzania oprogramowania, łączące aspekty kulturowe, procesowe i technologiczne w celu stworzenia efektywnego i responsywnego środowiska IT.
+W skrócie, DevOps stanowi holistyczne podejście do wytwarzania oprogramowania, łączące aspekty kulturowe, procesowe i technologiczne\linebreak w celu stworzenia efektywnego i responsywnego środowiska IT.
 
 \subsubsection{Opis technologii}
 
@@ -110,13 +106,13 @@ W skrócie, DevOps stanowi holistyczne podejście do wytwarzania oprogramowania,
 
 \item {\bf Kubernetes} - To otwartoźródłowy system do automatyzacji wdrażania, skalowania oraz zarządzania aplikacjami kontenerowymi. Kubernetes umożliwia łatwą orkiestrację kontenerów, zarządzanie cyklem życia aplikacji oraz zapewnia wysoką dostępność i skalowalność usług.
 
-\item {\bf Kind} - Jest narzędziem służącym do uruchamiania lokalnych klastrów Kubernetesowych za pomocą Dockera. Idealnie nadaje się do testowania w izolowanym środowisku na pojedynczym komputerze, co jest przydatne w testowaniu aplikacji przed etapem zaimplementowania jej w architekturze chmurowej.
+\item {\bf Kind} - Jest narzędziem służącym do uruchamiania lokalnych klastrów Kubernetesowych za pomocą Dockera. Idealnie nadaje się do testowania\linebreak w izolowanym środowisku na pojedynczym komputerze, co jest przydatne\linebreak w testowaniu aplikacji przed etapem zaimplementowania jej w architekturze chmurowej.
 
 \item {\bf Azurite} - Jest lekkim, otwartoźródłowym emulatorem usług magazynowych Azure, który pozwala na lokalne uruchamianie i testowanie aplikacji korzystających z usług Azure Storage bez konieczności dostępu do chmury Azure, co jest przydatne w fazie rozwoju i testów.
 
-\item {\bf Powershell} - To zaawansowany język skryptowy i środowisko powłoki zaprojektowane przez Microsoft dla systemów Windows, które umożliwia zautomatyzowanie zarządzania systemem oraz aplikacjami. Powershell jest wyposażony w potężne narzędzia do manipulacji obiektami i integracji z innymi technologiami.
+\item {\bf Powershell} - To zaawansowany język skryptowy i środowisko powłoki zaprojektowane przez Microsoft dla systemów Windows, które umożliwia zautomatyzowanie zarządzania systemem oraz aplikacjami. Powershell jest wyposażony w potężne narzędzia do manipulacji obiektami\linebreak i integracji z innymi technologiami.
 
-\item {\bf Bash} - Jest jednym z najpopularniejszych języków skryptowych dla powłoki systemów typu Unix, który umożliwia skuteczne zarządzanie systemem oraz automatyzację zadań za pomocą prostych skryptów. Bash jest ceniony za swoją prostotę i mocne wsparcie w środowiskach Linux i macOS oraz w kontenerach Dockerowych.
+\item {\bf Bash} - Jest jednym z najpopularniejszych języków skryptowych dla powłoki systemów typu Unix, który umożliwia skuteczne zarządzanie systemem oraz automatyzację zadań za pomocą prostych skryptów. Bash jest ceniony za swoją prostotę i mocne wsparcie w środowiskach Linux\linebreak i macOS oraz w kontenerach Dockerowych.
 
 \item {\bf Terraform} - Jest narzędziem do zarządzania infrastrukturą jako kodem, które pozwala na definiowanie i wdrażanie infrastruktury w różnych dostawcach usług chmurowych za pomocą prostego języka konfiguracyjnego. Terraform jest wykorzystywany do budowy, zmian i wersjonowania infrastruktury bezpiecznie i efektywnie.
 
@@ -132,7 +128,7 @@ W skrócie, DevOps stanowi holistyczne podejście do wytwarzania oprogramowania,
 
 \noindent{\bf Ciągła Integracja (CI):}
 
-\noindent Ciągła Integracja odnosi się do praktyki regularnego i automatycznego łączenia zmian wprowadzanych przez różnych członków zespołu programistycznego do wspólnego repozytorium kodu. Głównym celem CI jest wczesne wykrywanie i rozwiązywanie konfliktów oraz zapewnienie, że kod jest zawsze w spójnym i testowalnym stanie. Kluczowymi elementami CI są:
+\noindent Ciągła Integracja odnosi się do praktyki regularnego i automatycznego łączenia zmian wprowadzanych przez różnych członków zespołu programistycznego do wspólnego repozytorium kodu. Głównym celem CI jest wczesne wykrywanie i rozwiązywanie konfliktów oraz zapewnienie, że kod jest zawsze\linebreak w spójnym i testowalnym stanie. Kluczowymi elementami CI są:
 
 \begin{enumerate}
 \item {\bf Automatyczne Budowanie (Build)}
@@ -179,8 +175,9 @@ W sumie, CI/CD to kluczowy element podejścia DevOps, przyczyniający się do ba
 
 {\bf Orkiestracja Kontenerów dla Skalowalnych i Zdecentralizowanych Aplikacji}
 
-\noindent Kubernetes, często nazywany "K8s" (gdzie "8s" oznacza osiem liter 'ubernete'), to popularna platforma do automatyzacji, zarządzania i orkiestracji kontenerów. Kontenery są lekkimi, przenośnymi jednostkami uruchomieniowymi, a Kubernetes ułatwia zarządzanie ich cyklem życia, skalowaniem i dystrybucją w rozproszonych środowiskach.
-\\
+\noindent Kubernetes, często nazywany "K8s" (gdzie "8s" oznacza osiem liter 'ubernete'), to popularna platforma do automatyzacji, zarządzania i orkiestracji kontenerów. Kontenery są lekkimi, przenośnymi jednostkami uruchomieniowymi, a Kubernetes ułatwia zarządzanie ich cyklem życia, skalowaniem\linebreak i dystrybucją w rozproszonych środowiskach.
+
+\clearpage
 
 {\bf Podstawowe Koncepcje Kubernetes:}
 
@@ -211,7 +208,7 @@ W sumie, CI/CD to kluczowy element podejścia DevOps, przyczyniający się do ba
 
 \begin{enumerate}
 \item {\bf Orkiestracja}
-   - Automatyczne zarządzanie cyklem życia kontenerów, w tym ich uruchamianiem, zatrzymywaniem i skalowaniem.
+   - Automatyczne zarządzanie cyklem życia kontenerów,\linebreak w tym ich uruchamianiem, zatrzymywaniem i skalowaniem.
 
 \item {\bf Skalowalność}
    - Możliwość dynamicznego dostosowywania liczby instancji kontenerów w zależności od obciążenia aplikacji.
@@ -242,7 +239,7 @@ W sumie, CI/CD to kluczowy element podejścia DevOps, przyczyniający się do ba
    - Zapewnienie jednolitego środowiska uruchomieniowego dla kontenerów niezależnie od lokalizacji czy infrastruktury.
 
 \item {\bf Automatyzacja i Współpraca}
-   - Ułatwienie automatyzacji procesów wytwarzania oprogramowania oraz współpracy między zespołami Dev i Ops.
+   - Ułatwienie automatyzacji procesów wytwarzania oprogramowania oraz współpracy między zespołami\linebreak Dev i Ops.
 \end{enumerate}
 
 Kubernetes stał się fundamentalnym narzędziem w świecie kontenerów, pomagając organizacjom osiągnąć elastyczność, niezawodność i skalowalność ich aplikacji w środowiskach chmurowych i lokalnych.
@@ -304,13 +301,12 @@ Kubernetes stał się fundamentalnym narzędziem w świecie kontenerów, pomagaj
 \noindent{\bf Wnioski:}
 
 \noindent Monitorowanie aplikacji to nieodłączny element utrzymania nowoczesnych systemów informatycznych. Skuteczne monitorowanie pozwala na szybką reakcję na problemy, optymalizację wydajności oraz efektywne zarządzanie zasobami, przyczyniając się do zapewnienia niezawodności i satysfakcji użytkowników.
-\clearpage
 
 \subsection{Baza danych}
-PostgreSQL, często po prostu "Postgres", to system zarządzania obiektowo-relacyjnymi bazami danych (ORDBMS) z naciskiem na rozszerzalność i zgodność ze standardami. Jako serwer bazy danych, jego podstawową funkcją jest przechowywanie danych, bezpieczne i wspierające najlepsze praktyki, oraz późniejsze ich pobieranie, zgodnie z wymaganiami innych aplikacji, zarówno tych na tym samym komputerze, jak i tych uruchomionych na innym komputerze w sieci (w tym w Internecie). Może obsługiwać obciążenia od małych aplikacji na jednym komputerze do dużych aplikacji internetowych z wieloma jednoczesnymi użytkownikami. Najnowsze wersje zapewniają również replikację samej bazy danych w celu zapewnienia bezpieczeństwa i skalowalności.
+PostgreSQL, często po prostu "Postgres", to system zarządzania obiektowo-relacyjnymi bazami danych (ORDBMS) z naciskiem na rozszerzalność i zgodność ze standardami. Jako serwer bazy danych, jego podstawową funkcją jest przechowywanie danych, bezpieczne i wspierające najlepsze praktyki, oraz późniejsze ich pobieranie, zgodnie z wymaganiami innych aplikacji, zarówno tych na tym samym komputerze, jak i tych uruchomionych na innym komputerze w sieci (w tym w Internecie). Może obsługiwać obciążenia od małych aplikacji na jednym komputerze do dużych aplikacji internetowych z wieloma jednoczesnymi użytkownikami. Najnowsze wersje zapewniają również replikację samej bazy danych w celu zapewnienia bezpieczeństwa\linebreak i skalowalności.
 
 \subsubsection{Nginx}
-Nginx (wymawiane "engine-x") to potężny serwer WWW, serwer odwrotne-proxy i równoważnik obciążenia. Pierwotnie stworzony przez Igora Sysoeva w 2004 roku, aby rozwiązać problem C10k (obsługi ponad 10 000 równoczesnych połączeń), Nginx zdobył powszechne uznanie ze względu na swoją wydajność, skalowalność i wszechstronność.
+Nginx (wymawiane "engine-x") to potężny serwer WWW, serwer odwrotne-proxy i równoważnik obciążenia (load balancer). Pierwotnie stworzony przez Igora Sysoeva w 2004 roku, aby rozwiązać problem C10k (obsługi ponad 10 000 równoczesnych połączeń), Nginx zdobył powszechne uznanie ze względu na swoją wydajność, skalowalność i wszechstronność.
 \\
 
 \noindent{\bf Główne cechy Nginx obejmują:}
@@ -319,10 +315,11 @@ Nginx (wymawiane "engine-x") to potężny serwer WWW, serwer odwrotne-proxy i r�
 \item {\bf Wysoką wydajność: }
 Nginx jest znany ze swojej efektywności w obsłudze równoczesnych połączeń i żądań, co czyni go odpowiednim do obsługi witryn internetowych i aplikacji o dużej liczbie odwiedzin.
 
-\item {\bf Proxy odwrotny:}
-Nginx może działać jako proxy odwrotne, siedząc przed serwerami WWW, aby obsłużyć przychodzące żądania klientów. Może rozprowadzać te żądania do wielu serwerów backendowych na podstawie różnych kryteriów, takich jak algorytmy równoważenia obciążenia, stan serwera lub lokalizacja geograficzna.
+\item {\bf Reverse proxy:}
+Nginx może działać jako reverse proxy, siedząc przed serwerami WWW, aby obsłużyć przychodzące żądania klientów. Może rozprowadzać te żądania do wielu serwerów backendowych na podstawie różnych kryteriów, takich jak algorytmy równoważenia obciążenia, stan serwera lub lokalizacja geograficzna.
+Serwery tego typu mogą mieć wiele zastosowań m.in. odciążanie serwerów docelowych, cachowanie, czy ukrywanie serwerów docelowych. Charakteryzują się tym, że są przygotowywane pod konkretny serwer lub serwery docelowe. Mogą znajdować się zarówno w tej samej serwerowni co serwer docelowy, ale mogą również stanowić element sieci dostawczej (CDN) rozrzuconej na dużym obszarze. 
 
-\item {\bf Równoważenie obciążenia: }
+\item {\bf Load balancer: }
 Nginx obejmuje możliwości równoważenia obciążenia, pozwalając na rozprowadzenie przychodzącego ruchu na wiele serwerów w celu poprawy niezawodności, skalowalności i wydajności.
 
 \item {\bf Serwer HTTP:} 
@@ -331,28 +328,33 @@ Nginx efektywnie obsługuje treści statyczne i może być również skonfigurow
 \item {\bf Zakończenie SSL/TLS:}
 Nginx może obsługiwać zakończenie SSL/TLS, rozładowując proces szyfrowania i deszyfrowania z serwerów backendowych, poprawiając tym samym wydajność.
 
-\item {\bf Pamięć podręczna proxy odwróconego:}
+\item {\bf Pamięć podręczna reverse proxy:}
 Nginx może buforować treści statyczne i dynamiczne w pamięci lub na dysku, zmniejszając obciążenie serwerów backendowych i poprawiając czasy odpowiedzi dla klientów.
 
 \item {\bf Obsługa HTTP/2 i HTTP/3:}
-Nginx obsługuje nowoczesne protokoły HTTP, w tym HTTP/2 i HTTP/3, które oferują lepszą wydajność i bezpieczeństwo w porównaniu do starszych wersji.
+Nginx obsługuje nowoczesne protokoły HTTP, w tym HTTP/2 i HTTP/3, które oferują lepszą wydajność\linebreak i bezpieczeństwo w porównaniu do starszych wersji.
 
 \item {\bf Bezpieczeństwo:}
 Nginx zawiera funkcje zapobiegające powszechnym zagrożeniom dla bezpieczeństwa sieci, takim jak ataki DDoS, wstrzykiwanie SQL i skrypty między witrynami (XSS).
+
+\item {\bf Rate limiting:}
+Nginx umożliwia ograniczenie liczby żądań z danego adresu IP lub dla określonych ścieżek URL w celu ochrony przed atakami typu DDoS i nadmiernym obciążeniem serwera. Konfiguracja rate limitingu odbywa się za pomocą dyrektywy limit\_req w pliku konfiguracyjnym Nginx.
+
 \end{enumerate}
 
 Nginx jest powszechnie używany przez programistów internetowych, administratorów systemów i specjalistów DevOps do budowy skalowalnych, wysoko wydajnych aplikacji internetowych i usług. Jest znany z lekkiej architektury, niskiego zużycia zasobów i łatwości konfiguracji, co czyni go popularnym wyborem dla szerokiego zakresu zastosowań, od małych witryn do rozległych rozproszonych systemów.
-\clearpage
 
 \subsection{Model C4}
-Model C4 to narzędzie służące do opisywania i komunikowania architektury aplikacji. W niniejszym rozdziale omówimy jego zastosowanie w kontekście naszej aplikacji selfimprovement.ai. Przedstawimy składniki naszej aplikacji, ich wzajemne powiązania oraz integracje z zewnętrznymi systemami.\\
+Model C4 to narzędzie służące do opisywania i komunikowania architektury aplikacji. W niniejszym rozdziale omówimy jego zastosowanie\linebreak w kontekście naszej aplikacji selfimprovement.ai. Przedstawimy składniki naszej aplikacji, ich wzajemne powiązania oraz integracje z zewnętrznymi systemami.\\
 
 Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Component oraz Code. Poziom Context prezentuje kontekst, w jakim działa aplikacja oraz jej relacje z otoczeniem. Poziom Container obejmuje kontenery, w których znajdują się poszczególne komponenty aplikacji. Poziom Component opisuje komponenty aplikacji, ich interfejsy oraz wzajemne zależności. Poziom Code prezentuje implementację kodu poszczególnych komponentów. W dalszej części rozdziału przedstawimy każdy z tych poziomów abstrakcji na przykładzie naszej aplikacji.
-\\
+
+\clearpage
+
 
 \noindent{\bf Diagram Context} - to graficzna reprezentacja całego systemu wraz z jego otoczeniem i kontekstem, w jakim działa aplikacja.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.4\textwidth]{Obrazy/c4_model/context_diagram.png}
     \caption{Context Diagram}
@@ -362,7 +364,7 @@ Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Compo
 
 \noindent{\bf Diagram Container} - przedstawia kontenery zawierające komponenty aplikacji oraz opisuje ich rolę i wzajemne zależności.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{Obrazy/c4_model/container_diagram.png}
     \caption{Container Diagram}
@@ -372,22 +374,22 @@ Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Compo
 
 \noindent{\bf Diagram Component} - prezentuje poszczególne komponenty aplikacji, ich interfejsy oraz wzajemne powiązania.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.1\textwidth]{Obrazy/c4_model/component_diagram.png}
     \caption{Component Diagram}
     \label{fig:my_label}
 \end{figure}
 
-Model C4 okazał się niezwykle przydatnym narzędziem do opisu architektury naszej aplikacji selfimprovement.ai. Przeanalizowaliśmy składniki aplikacji oraz ich zależności na poziomach Context, Container i Component, co pozwoliło nam lepiej zrozumieć strukturę systemu. Diagramy Context, Container i Component były kluczowe w ułatwieniu komunikacji w zespole oraz planowaniu architektury i implementacji. Wnioski z zastosowania Modelu C4 przyczyniły się do bardziej efektywnego projektowania, rozwijania i utrzymywania aplikacji poprzez lepsze zarządzanie złożonością systemu oraz usprawnienie komunikacji w całym zespole programistycznym.
+Model C4 okazał się niezwykle przydatnym narzędziem do opisu architektury naszej aplikacji selfimprovement.ai. Przeanalizowaliśmy składniki aplikacji oraz ich zależności na poziomach Context, Container i Component, co pozwoliło nam lepiej zrozumieć strukturę systemu. Diagramy Context, Container i Component były kluczowe w ułatwieniu komunikacji w zespole oraz planowaniu architektury i implementacji. Wnioski z zastosowania Modelu C4 przyczyniły się do bardziej efektywnego projektowania, rozwijania\linebreak i utrzymywania aplikacji poprzez lepsze zarządzanie złożonością systemu oraz usprawnienie komunikacji w całym zespole programistycznym.
 \clearpage
 
 \subsection{Aplikacja front-endowa}
-Frontend w kontekście aplikacji webowych odgrywa kluczową rolę, stanowiąc interfejs użytkownika, który jest pierwszym punktem kontaktu z aplikacją. Jest to warstwa, którą użytkownicy widzą i z nią interakcjonują, obejmująca prezentację danych oraz funkcjonalności, które umożliwiają użytkownikom wygodne korzystanie z aplikacji. Frontend musi być zarówno estetyczny, jak i intuicyjny, aby zapewnić pozytywne wrażenia użytkownika oraz skuteczną realizację celów aplikacji.
+Frontend w kontekście aplikacji webowych odgrywa kluczową rolę, stanowiąc interfejs użytkownika, który jest pierwszym punktem kontaktu\linebreak z aplikacją. Jest to warstwa, którą użytkownicy widzą i z nią interakcjonują, obejmująca prezentację danych oraz funkcjonalności, które umożliwiają użytkownikom wygodne korzystanie z aplikacji. Frontend musi być zarówno estetyczny, jak i intuicyjny, aby zapewnić pozytywne wrażenia użytkownika oraz skuteczną realizację celów aplikacji.
 
 Tworzenie frontendu to proces kompleksowy, który wymaga zrozumienia potrzeb użytkowników, projektowania interfejsu użytkownika oraz implementacji odpowiednich funkcjonalności. Współczesne technologie frontendowe, takie jak TypeScript, React, Material-UI (MUI) i SCSS, zapewniają programistom narzędzia i biblioteki umożliwiające efektywne tworzenie nowoczesnych i interaktywnych interfejsów użytkownika.
 
-W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w aplikacji webowej, skupiając się na roli i znaczeniu użytych przez nas technologii. Przeanalizujemy, jak te narzędzia mogą być wykorzystane w praktyce do projektowania i implementacji atrakcyjnych oraz funkcjonalnych interfejsów użytkownika. Poprzez zrozumienie procesu tworzenia frontendu oraz korzyści płynących z wykorzystania zaawansowanych technologii, będziemy mogli lepiej zrozumieć rolę frontendu w kontekście aplikacji webowych oraz skuteczniej realizować cele projektowe.
+W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w aplikacji webowej, skupiając się na roli i znaczeniu użytych przez nas technologii. Przeanalizujemy, jak te narzędzia mogą być wykorzystane\linebreak w praktyce do projektowania i implementacji atrakcyjnych oraz funkcjonalnych interfejsów użytkownika. Poprzez zrozumienie procesu tworzenia frontendu oraz korzyści płynących z wykorzystania zaawansowanych technologii, będziemy mogli lepiej zrozumieć rolę frontendu w kontekście aplikacji webowych oraz skuteczniej realizować cele projektowe.
 
 \subsubsection{Opis bibliotek i frameworków}
 
@@ -397,15 +399,15 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
     
     \item {\bf TypeScript} - to nadzbiór języka JavaScript, który dodaje statyczną typizację, co znacząco zwiększa bezpieczeństwo oraz czytelność kodu. Dzięki TypeScriptowi programiści mogą definiować typy danych oraz interfejsy, co ułatwia wykrywanie błędów podczas kompilacji. Ponadto, TypeScript oferuje bogate narzędzia do refaktoryzacji kodu oraz zapewnia lepsze wsparcie dla środowisk programistycznych, co przekłada się na wyższą produktywność i jakość aplikacji. Jego elastyczność i skalowalność czynią go popularnym wyborem przy tworzeniu aplikacji webowych o większej złożoności.
     
-    \item {\bf React.js} - to biblioteka JavaScript stworzona przez Facebook (Meta), służąca do budowy interfejsów użytkownika. Dzięki Reactowi możliwe jest tworzenie aplikacji, które dynamicznie reagują na zmiany danych w czasie rzeczywistym, co przekłada się na szybkość i efektywność działania aplikacji. Centralnym konceptem w React jest tworzenie komponentów, które stanowią niezależne i niezawodne elementy interfejsu użytkownika.
+    \item {\bf React.js} - to biblioteka JavaScript stworzona przez Facebook (Meta), służąca do budowy interfejsów użytkownika. Dzięki Reactowi możliwe jest tworzenie aplikacji, które dynamicznie reagują na zmiany danych\linebreak w czasie rzeczywistym, co przekłada się na szybkość i efektywność działania aplikacji. Centralnym konceptem w React jest tworzenie komponentów, które stanowią niezależne i niezawodne elementy interfejsu użytkownika.
 
     \item {\bf React Query} - to biblioteka JavaScript dla aplikacji React, która upraszcza zarządzanie i synchronizację danych pochodzących z zewnętrznych źródeł. Jest szczególnie przydatna w aplikacjach, które intensywnie korzystają z danych i potrzebują efektywnego zarządzania zapytaniami HTTP.
     
-    \item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika w aplikacjach webowych.
+    \item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować\linebreak w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika w aplikacjach webowych.
     
-    \item {\bf SCSS} - jest preprocesorem CSS, który wprowadza dodatkowe funkcje i możliwości do standardowego języka CSS. Dzięki SCSS można pisać bardziej czytelny i łatwiejszy do zarządzania kod CSS poprzez zastosowanie zmiennych, zagnieżdżania, mixinów oraz funkcji. Zmienne pozwalają na definiowanie wartości, które mogą być wielokrotnie używane w kodzie, co ułatwia utrzymanie spójności wizualnej i szybką zmianę wyglądu całej aplikacji. Zagnieżdżanie umożliwia definiowanie stylów dla zagnieżdżonych elementów HTML, co sprawia, że kod jest bardziej zorganizowany i czytelny. Mixiny pozwalają na zdefiniowanie zestawów stylów, które mogą być używane wielokrotnie, co eliminuje powtarzalność kodu i ułatwia jego utrzymanie. Dodatkowo, SCSS oferuje możliwość korzystania z zaawansowanych funkcji matematycznych oraz logiki, co czyni go bardziej elastycznym i potężnym narzędziem przy tworzeniu zaawansowanych stylów CSS. Dzięki swojej popularności i wsparciu przez wiele narzędzi deweloperskich, SCSS stał się standardem w pracy nad projektami front-endowymi, umożliwiając programistom bardziej efektywne i produktywne tworzenie stylów dla aplikacji internetowych.
+    \item {\bf SCSS} - jest preprocesorem CSS, który wprowadza dodatkowe funkcje\linebreak i możliwości do standardowego języka CSS. Dzięki SCSS można pisać bardziej czytelny i łatwiejszy do zarządzania kod CSS poprzez zastosowanie zmiennych, zagnieżdżania, mixinów oraz funkcji. Zmienne pozwalają na definiowanie wartości, które mogą być wielokrotnie używane w kodzie, co ułatwia utrzymanie spójności wizualnej i szybką zmianę wyglądu całej aplikacji. Zagnieżdżanie umożliwia definiowanie stylów dla zagnieżdżonych elementów HTML, co sprawia, że kod jest bardziej zorganizowany\linebreak i czytelny. Mixiny pozwalają na zdefiniowanie zestawów stylów, które mogą być używane wielokrotnie, co eliminuje powtarzalność kodu i ułatwia jego utrzymanie. Dodatkowo, SCSS oferuje możliwość korzystania z zaawansowanych funkcji matematycznych oraz logiki, co czyni go bardziej elastycznym i potężnym narzędziem przy tworzeniu zaawansowanych stylów CSS. Dzięki swojej popularności i wsparciu przez wiele narzędzi deweloperskich, SCSS stał się standardem w pracy nad projektami front-endowymi, umożliwiając programistom bardziej efektywne i produktywne tworzenie stylów dla aplikacji internetowych.
     
-    \item {\bf Font Awesome} - to biblioteka oferująca setki wektorowych ikon, które można bez trudu dodawać do aplikacji webowych. Dzięki temu ikony są łatwo skalowalne i zachowują wysoką jakość obrazu. Integracja ikon z witryną jest prosta i może być dokonana za pomocą klas CSS lub kodu HTML.
+    \item {\bf Font Awesome} - to biblioteka oferująca setki wektorowych ikon, które można bez trudu dodawać do aplikacji webowych. Dzięki temu ikony są łatwo skalowalne i zachowują wysoką jakość obrazu. Integracja ikon \linebreak z witryną jest prosta i może być dokonana za pomocą klas CSS lub kodu HTML.
     
     \item {\bf Formik} - to biblioteka ułatwiająca zarządzanie formularzami w aplikacjach webowych opartych na React. Zapewnia proste i intuicyjne narzędzia do obsługi pól formularzy, walidacji danych oraz zarządzania stanem formularzy. Dzięki Formikowi, tworzenie i utrzymywanie formularzy staje się bardziej efektywne i mniej podatne na błędy, co znacząco poprawia doświadczenie użytkownika.
 
@@ -415,7 +417,7 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
 
 \noindent{\bf Architektura komponentów}
 
-\noindent W naszej aplikacji webowej przyjęliśmy modularne podejście do tworzenia komponentów, co pozwala na łatwiejsze zarządzanie kodem, jego ponowne wykorzystanie oraz lepszą skalowalność projektu. Struktura naszej aplikacji składa się z dwóch głównych części: components oraz pages. Oprócz tego struktura zawiera folder utils gdzie znajdują się serwisy do komunikacji z zewnętrznym api oraz różnego rodzaju helpery czy elementy stylistyczne.
+\noindent W naszej aplikacji webowej przyjęliśmy modularne podejście do tworzenia komponentów, co pozwala na łatwiejsze zarządzanie kodem, jego ponowne wykorzystanie oraz lepszą skalowalność projektu. Struktura naszej aplikacji składa się z dwóch głównych części: components oraz pages. Oprócz tego struktura zawiera folder utils gdzie znajdują się serwisy do komunikacji\linebreak z zewnętrznym api oraz różnego rodzaju helpery czy elementy stylistyczne.
 
 \noindent{\bf Komponenty}
 
@@ -484,7 +486,7 @@ function ItemsGrid({ title, tasks }: Props) {
   );
 }
 \end{lstlisting}
-Funkcja ItemsGrid jest komponentem React wyświetlającym siatkę zadań. Komponent renderuje nagłówek z tytułem oraz div zawierający listę zadań, gdzie każde zadanie jest wyświetlane za pomocą komponentu TaskItem. Każdy TaskItem otrzymuje właściwości takie jak id, title, description, date, i isCompleted, umożliwiając efektywne zarządzanie i wyświetlanie szczegółów zadań.
+Funkcja ItemsGrid jest komponentem React wyświetlającym siatkę zadań. Komponent renderuje nagłówek z tytułem oraz div zawierający listę zadań, gdzie każde zadanie jest wyświetlane za pomocą komponentu TaskItem. Każdy TaskItem otrzymuje właściwości takie jak id, title, description, date oraz isCompleted, umożliwiając efektywne zarządzanie i wyświetlanie szczegółów zadań.
 \\
 
 \noindent{\bf TaskItem}
@@ -520,7 +522,7 @@ date, isCompleted }: Props) {
   );
 }
 \end{lstlisting}
-Funkcja ItemsGrid jest komponentem React wyświetlającym siatkę zadań. Komponent renderuje nagłówek z tytułem oraz div zawierający listę zadań, gdzie każde zadanie jest wyświetlane za pomocą komponentu TaskItem. Każdy TaskItem otrzymuje właściwości takie jak id, title, description, date, i isCompleted, umożliwiając efektywne zarządzanie i wyświetlanie szczegółów zadań.
+Funkcja ItemsGrid jest komponentem React wyświetlającym siatkę zadań. Komponent renderuje nagłówek z tytułem oraz div zawierający listę zadań, gdzie każde zadanie jest wyświetlane za pomocą komponentu TaskItem. Każdy TaskItem otrzymuje właściwości takie jak id, title, description, date oraz isCompleted, umożliwiając efektywne zarządzanie i wyświetlanie szczegółów zadań.
 \\
 
 \noindent{\bf Strony:}
@@ -647,7 +649,7 @@ Komponent TasksPage pobiera i wyświetla listę zadań użytkownika w postaci si
 
 \noindent{\bf API i integracja}
 
-\noindent W naszej aplikacji do zarządzania i synchronizacji danych z zewnętrznymi źródłami wykorzystujemy bibliotekę React Query, która upraszcza pracę z API. W celu pobierania danych z serwera, używamy hooka useQuery, który automatycznie zarządza stanami zapytań (ładowanie, sukces, błąd) i synchronizacją danych.
+\noindent W naszej aplikacji do zarządzania i synchronizacji danych z zewnętrznymi źródłami wykorzystujemy bibliotekę React Query, która upraszcza pracę\linebreak z API. W celu pobierania danych z serwera, używamy hooka useQuery, który automatycznie zarządza stanami zapytań (ładowanie, sukces, błąd) i synchronizacją danych.
 
 \noindent Poniższy fragment kodu ilustruje sposób integracji z naszym API przy użyciu useQuery:
 
@@ -672,7 +674,7 @@ W naszej aplikacji webowej za autoryzację i uwierzytelnianie użytkowników odp
 
 \noindent{\bf ProtectedRoutes}
 
-\noindent Komponent ProtectedRoutes zabezpiecza dostęp do chronionych ścieżek w aplikacji. Sprawdza, czy w localStorage jest zapisany token użytkownika (userToken). Jeśli token istnieje, użytkownik jest autoryzowany i przekierowany do odpowiedniego widoku (Outlet). W przeciwnym razie, użytkownik jest przekierowany na stronę logowania (/signIn).
+\noindent Komponent ProtectedRoutes zabezpiecza dostęp do chronionych ścieżek\linebreak w aplikacji. Sprawdza, czy w localStorage jest zapisany token użytkownika (userToken). Jeśli token istnieje, użytkownik jest autoryzowany i przekierowany do odpowiedniego widoku (Outlet). W przeciwnym razie, użytkownik jest przekierowany na stronę logowania (/signIn).
 
 \begin{lstlisting}[language=html, caption=ProtectedRoutes example]
 import React from "react";
@@ -692,7 +694,7 @@ export default ProtectedRoutes;
 
 \noindent{\bf SignInPage}
 
-\noindent Komponent SignInPage umożliwia użytkownikom logowanie się do aplikacji. Wykorzystuje Formik do obsługi formularza logowania oraz jego walidacji. Po poprawnym wypełnieniu formularza, funkcja handleSignIn wysyła dane logowania do serwera za pomocą funkcji signIn. W przypadku pomyślnego zalogowania, token otrzymany z serwera jest zapisywany w localStorage, a użytkownik jest przekierowywany do strony głównej.
+\noindent Komponent SignInPage umożliwia użytkownikom logowanie się do aplikacji. Wykorzystuje Formik do obsługi formularza logowania oraz jego walidacji. Po poprawnym wypełnieniu formularza, funkcja handleSignIn wysyła dane logowania do serwera za pomocą funkcji signIn. W przypadku pomyślnego zalogowania, token otrzymany z serwera jest zapisywany w localStorage,\linebreak a użytkownik jest przekierowywany do strony głównej.
 
 \begin{lstlisting}[language=html, caption=handleSignIn example]
   const handleSignIn = async (values: SignInCommand) => {
@@ -713,19 +715,19 @@ export default ProtectedRoutes;
 
 \begin{enumerate}
     \item {\bf Formularz logowania:} Użytkownik wprowadza swój adres e-mail i hasło. Po wypełnieniu formularza, Formik przesyła dane do funkcji handleSignIn.
-    \item {\bf Wysyłanie danych do serwera:} Funkcja handleSignIn wysyła dane logowania do serwera za pomocą funkcji signIn. Serwer weryfikuje dane i zwraca token uwierzytelniający, jeśli logowanie było udane.
+    \item {\bf Wysyłanie danych do serwera:} Funkcja handleSignIn wysyła dane logowania do serwera za pomocą funkcji signIn. Serwer weryfikuje dane\linebreak i zwraca token uwierzytelniający, jeśli logowanie było udane.
     \item {\bf Przechowywanie tokenu:} Token otrzymany z serwera jest zapisywany w localStorage.
-    \item {\bf Autoryzacja:} Komponent ProtectedRoutes sprawdza obecność tokenu w localStorage. Jeśli token istnieje, użytkownik ma dostęp do chronionych zasobów, w przeciwnym razie jest przekierowywany na stronę logowania.
+    \item {\bf Autoryzacja:} Komponent ProtectedRoutes sprawdza obecność tokenu\linebreak w localStorage. Jeśli token istnieje, użytkownik ma dostęp do chronionych zasobów, w przeciwnym razie jest przekierowywany na stronę logowania.
 \end{enumerate}
 
-Dzięki tym mechanizmom, nasza aplikacja zapewnia bezpieczny i intuicyjny sposób uwierzytelniania oraz autoryzacji użytkowników.
+Dzięki tym mechanizmom, nasza aplikacja zapewnia bezpieczny\linebreak i intuicyjny sposób uwierzytelniania oraz autoryzacji użytkowników.
 
 \clearpage
 
 \subsection{Aplikacje back-endowe}
-Back-end jest fundamentalnym elementem aplikacji webowych, odpowiedzialnym za realizację logiki biznesowej i zarządzanie danymi. Działa on w tle, obsługując operacje serwerowe, przetwarzanie informacji i interakcje z bazą danych. Kluczową rolą back-endu jest zapewnienie bezpieczeństwa i spójności danych oraz sprawna obsługa komunikacji między użytkownikiem a serwerem.
+Back-end jest fundamentalnym elementem aplikacji webowych, odpowiedzialnym za realizację logiki biznesowej i zarządzanie danymi. Działa on w tle, obsługując operacje serwerowe, przetwarzanie informacji i interakcje z bazą danych. Kluczową rolą back-endu jest zapewnienie bezpieczeństwa\linebreak i spójności danych oraz sprawna obsługa komunikacji między użytkownikiem a serwerem.
 
-Tworzenie back-endu to złożony proces, który wymaga głębokiej wiedzy na temat architektury systemów, projektowania interfejsów API oraz implementacji logiki biznesowej. Nowoczesne technologie back-endowe, takie jak C\#, .NET Core, Entity Framework i SQL Server, dostarczają deweloperom zaawansowane narzędzia i biblioteki, które umożliwiają tworzenie wydajnych, skalowalnych i bezpiecznych aplikacji internetowych.
+ Nowoczesne technologie back-endowe, takie jak C\#, .NET Core, Entity Framework i SQL Server, dostarczają deweloperom zaawansowane narzędzia i biblioteki, które umożliwiają tworzenie wydajnych, skalowalnych\linebreak i bezpiecznych aplikacji internetowych.
 
 C\# to wszechstronny język programowania stworzony przez Microsoft, cechujący się silnym typowaniem, programowaniem obiektowym i nowoczesnymi funkcjami, które usprawniają tworzenie efektywnych aplikacji. W połączeniu z .NET Core, C\# umożliwia budowanie aplikacji działających na różnych systemach operacyjnych dzięki swojej wieloplatformowości. Entity Framework natomiast upraszcza operacje na bazach danych, pozwalając programistom na pracę z danymi za pomocą obiektów zamiast tradycyjnych zapytań SQL.
 
@@ -748,42 +750,615 @@ Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każd
 
 \item {\bf Polly} -  to biblioteka .NET do obsługi odporności i wykrywania błędów, która umożliwia implementację strategii zarządzania błędami, takich jak retry, circuit breaker, timeout, bulkhead isolation itp. Dzięki Polly można poprawić niezawodność aplikacji poprzez automatyczne reagowanie na błędy i nieoczekiwane problemy z dostępem do zasobów zewnętrznych.
 
-\item {\bf Automapper} -  to narzędzie do mapowania obiektów w aplikacjach .NET, które automatyzuje proces kopiowania danych między obiektami o różnych typach. Jest szczególnie przydatne, gdy dane muszą być przenoszone między warstwami aplikacji, na przykład między warstwą danych a warstwą prezentacji. Automapper zmniejsza ilość kodu potrzebnego do mapowania danych i poprawia czytelność aplikacji.
+\item {\bf Automapper} -  to narzędzie do mapowania obiektów w aplikacjach .NET, które automatyzuje proces kopiowania danych między obiektami o różnych typach. Jest szczególnie przydatne, gdy dane muszą być przenoszone między warstwami aplikacji, na przykład między warstwą danych a warstwą prezentacji. Automapper zmniejsza ilość kodu potrzebnego do mapowania danych\linebreak i poprawia czytelność aplikacji.
 
 \item {\bf RabbitMq} - to popularny broker wiadomości, który umożliwia wymianę wiadomości między różnymi systemami i komponentami za pośrednictwem kolejek. Jest szeroko stosowany w architekturach opartych na mikrousługach do implementacji komunikacji asynchronicznej i zapewnia niezawodność oraz skalowalność przesyłania wiadomości.
 
-\item {\bf Newtonsoft.Json} - to biblioteka .NET do pracy z danymi w formacie JSON. Umożliwia łatwe serializowanie i deserializowanie obiektów do i z JSON, co jest często wykorzystywane w aplikacjach webowych, API oraz do wymiany danych między serwerem a klientem. Newtonsoft.Json jest znany ze swojej wydajności i bogatej funkcjonalności, co czyni go jednym z najpopularniejszych narzędzi do pracy z JSON w ekosystemie .NET.
+\item {\bf Newtonsoft.Json} - to biblioteka .NET do pracy z danymi w formacie JSON. Umożliwia łatwe serializowanie i deserializowanie obiektów do\linebreak i z JSON, co jest często wykorzystywane w aplikacjach webowych, API oraz do wymiany danych między serwerem a klientem. Newtonsoft.Json jest znany ze swojej wydajności i bogatej funkcjonalności, co czyni go jednym z najpopularniejszych narzędzi do pracy z JSON w ekosystemie .NET.
 
 \end{enumerate}
+
 \subsubsection{Wzorce projektowe}
-\subparagraph{CQRS(Command Query Responsibility Segregation)}
 
-CQRS to wzorzec architektoniczny, który oddziela operacje modyfikujące dane (komendy) od operacji odczytujących dane (zapytania). W tradycyjnych podejściach do projektowania systemów, te operacje są często obsługiwane przez te same modele i metody. CQRS proponuje użycie oddzielnych modeli dla zapytań i komend, co pozwala na optymalizację każdego z nich pod kątem różnych wymagań. Modele zapytań mogą być dostosowane do szybkiego odczytu danych, natomiast modele komend mogą skupić się na walidacji i przetwarzaniu logiki biznesowej. CQRS często jest stosowany w połączeniu z Event Sourcingiem, gdzie zmiany stanu aplikacji są reprezentowane jako sekwencje zdarzeń.
-\subparagraph{SOLID}
+\subparagraph{MediatR} - jest to wzorzec, który pozwala na dekompozycję dużych monolitycznych systemów na mniejsze, bardziej zarządzalne komponenty. Wzorzec mediator pozwala na zarządzanie interakcjami między obiektami poprzez centralny punkt komunikacji(mediatora), eliminując bezpośrednie zależności między komponentami. Dzięki temu system staje się bardziej modularny, elastyczny i łatwiejszy w utrzymaniu. 
 
-SOLID to akronim odnoszący się do pięciu zasad projektowych obiektowego programowania, które mają na celu tworzenie elastycznego, łatwego w utrzymaniu i rozszerzalnego kodu. Zasady SOLID to:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Obrazy/mediatR.png}
+    \caption{Wzorzec MediatR}
+    \label{fig:enter-label}
+\end{figure}
 
+\subparagraph{CQRS (Command Query Responsibility Segregation)} - to wzorzec architektoniczny, który oddziela operacje modyfikujące dane (komendy) od operacji odczytujących dane (zapytania). W tradycyjnych podejściach do projektowania systemów, te operacje są często obsługiwane przez te same modele i metody. CQRS proponuje użycie oddzielnych modeli dla zapytań\linebreak i komend, co pozwala na optymalizację każdego z nich pod kątem różnych wymagań. Modele zapytań mogą być dostosowane do szybkiego odczytu danych, natomiast modele komend mogą skupić się na walidacji i przetwarzaniu logiki biznesowej. CQRS często jest stosowany w połączeniu z Event Sourcingiem, gdzie zmiany stanu aplikacji są reprezentowane jako sekwencje zdarzeń.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Obrazy/cqrs.png}
+    \caption{Wzorzec CQRS}
+    \label{fig:enter-label}
+\end{figure}
+
+\subparagraph{SOLID} - to akronim odnoszący się do pięciu zasad projektowych obiektowego programowania, które mają na celu tworzenie elastycznego, łatwego\linebreak w utrzymaniu i rozszerzalnego kodu. Zasady SOLID to:
 \begin{enumerate}
 \item {\bf S (Single Responsibility Principle)} - każda klasa powinna mieć tylko jedną odpowiedzialność, czyli powinna zajmować się tylko jednym aspektem funkcjonalności systemu.
-
-\item {\bf O (Open/Closed Principle)} - klasy powinny być otwarte na rozszerzenia, ale zamknięte na modyfikacje. Oznacza to, że powinniśmy być w stanie rozszerzać zachowanie klasy bez zmiany jej kodu źródłowego.
+\item {\bf O (Open/Closed Principle)} - klasy powinny być otwarte na rozszerzenia, ale zamknięte na modyfikacje. Oznacza to, że powinniśmy być\linebreak w stanie rozszerzać zachowanie klasy bez zmiany jej kodu źródłowego.
 \item {\bf L (Liskov Substitution Principle)} - obiekty powinny być zastępowalne przez instancje ich podtypów bez zmiany poprawności programu.
-
 \item {\bf I (Interface Segregation Principle)} - klient nie powinien być zmuszany do implementacji interfejsów, których nie używa. Lepiej jest mieć więcej wyspecjalizowanych interfejsów niż jeden ogólny.
-
 \item {\bf D (Dependency Inversion Principle)} - moduły wysokiego poziomu nie powinny zależeć od modułów niskiego poziomu. Oba powinny zależeć od abstrakcji. Abstrakcje nie powinny zależeć od szczegółów, szczegóły powinny zależeć od abstrakcji.
 \end{enumerate}
-\subparagraph{Wzorzec Repozytorium}
 
-Wzorzec Repozytorium jest wzorcem projektowym używanym do abstrakcji dostępu do danych. Repozytorium działa jako pośrednik między warstwą aplikacji a warstwą dostępu do danych, dostarczając jednorodny interfejs do wykonywania operacji CRUD (Create, Read, Update, Delete). Używając wzorca repozytorium, aplikacje mogą być bardziej modularne i łatwiej jest je testować, ponieważ logika biznesowa jest oddzielona od szczegółów implementacji dostępu do danych. Repozytorium może być używane zarówno z bazami danych, jak i z innymi źródłami danych, a także może ułatwiać implementację jednostkowych testów poprzez możliwość łatwego zamockowania warstwy dostępu do danych.
-\subsubsection{Architektura mikroserwisu}
-\subparagraph{Ws}
-\subparagraph{Komunikacja z innymi mikroserwisami}
+\subparagraph{Wzorzec Repozytorium} - jest wzorcem projektowym używanym do abstrakcji dostępu do danych. Repozytorium działa jako pośrednik między warstwą aplikacji a warstwą dostępu do danych, dostarczając jednorodny interfejs do wykonywania operacji CRUD (Create, Read, Update, Delete). Używając wzorca repozytorium, aplikacje mogą być bardziej modularne i łatwiej jest je testować, ponieważ logika biznesowa jest oddzielona od szczegółów implementacji dostępu do danych. Repozytorium może być używane zarówno\linebreak z bazami danych, jak i z innymi źródłami danych, a także może ułatwiać implementację jednostkowych testów poprzez możliwość łatwego zamockowania warstwy dostępu do danych.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Obrazy/repository.png}
+    \caption{Wzorzec Repozytorium}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsubsection{Struktura projektu}
+Aplikacja backendowa składa się z trzech różnych mikroserwisów oraz sześciu bibliotek zawierających logikę dzieloną pomiędzy mikroserwisami. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Obrazy/BackendStruktura.png}
+    \caption{Ułożenie mikroserwisów w projekcie}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{enumerate}
+\item {\bf LS.Common} - biblioteka zawierająca logikę wspólną dla wszystkich mikroserwisów, obejmująca obiekty enum, implementację repozytorium, zarządzanie Azure Blob Storage oraz interfejsy takie jak IEntity, które oznaczają modele przechowywane w bazie danych.
+\item {\bf LS.Events} - biblioteka zawierająca definicje obiektów eventów używanych w całej aplikacji.
+\item {\bf LS.Logging} - biblioteka zawierająca logikę monitorowania aplikacji oraz zapisywania błędów do logów.
+\item {\bf LS.Messaging} - biblioteka odpowiedzialna za implementację kolejki eventów za pomocą brokera RabbitMQ. Wykorzystywana do komunikacji między mikroserwisami poprzez nasłuchiwanie i publikowanie eventów.
+\item {\bf LS.ServiceClient} - biblioteka zawierająca implementację klienta RESTowego do komunikacji między mikroserwisami. Umożliwia wysyłanie zapytań typu GET, POST, PUT i DELETE.
+\item {\bf LS.Startup} - blioteka zawierająca rozszerzenia ułatwiające inicjalizację mikroserwisu, takie jak konfiguracja Swaggera, CORS oraz narzędzia do sprawdzania stanu mikroserwisu.
+\item {\bf GoalApi} - mikroserwis odpowiedzialny za zarządzanie celami użytkowników. Zapewnia funkcje do tworzenia, edycji i pobierania celów oraz zadań przypisanych do użytkownika.
+\item {\bf IdentityApi} - mikroserwis zarządzający użytkownikami platformy. Obejmuje autentykację, autoryzację oraz generowanie tokenów JWT dla użytkowników, umożliwiających dostęp do platformy. Zapewnia również logikę zarządzania profilem użytkownika.
+\item {\bf PromptApi} - mikroserwis odpowiedzialny za tworzenie promptów, komunikację z modelami AI oraz przetwarzanie odpowiedzi uzyskanych\linebreak z tych modeli.
+\end{enumerate}
+
+Przy tworzeniu każdego z mikroserwisów została zastosowana architektura vertical slice. Architektura Vertical Slice to podejście do organizacji kodu, które skupia się na funkcjonalnych jednostkach lub "pionowych kawałkach" aplikacji. W odróżnieniu od tradycyjnych architektur warstwowych (gdzie kod jest organizowany w poziome warstwy, takie jak warstwa danych, warstwa logiki biznesowej i warstwa prezentacji), architektura Vertical Slice organizuje kod wokół funkcjonalnych przypadków użycia. Każdy "slice" (kawałek) zawiera wszystkie elementy potrzebne do realizacji konkretnego przypadku użycia, od interfejsu użytkownika, przez logikę biznesową, aż po dostęp do danych.
+
+\subparagraph{Kluczowe koncepcje architektury Vertical Slice}
+
+\begin{enumerate}
+\item {\bf Separation by Feature} - każdy slice odpowiada za konkretną funkcjonalność lub przypadek użycia aplikacji. Może to być na przykład obsługa rejestracji użytkownika, przetwarzanie zamówienia, czy generowanie raportu.
+\item {\bf Self-contained Units} - każdy slice jest samodzielną jednostką, zawierającą wszystko, co potrzebne do realizacji swojej funkcji: kontrolery, usługi, repozytoria, modele danych, itp.
+\item {\bf Decoupling} - slices są niezależne od siebie, co umożliwia łatwiejsze zarządzanie, testowanie i rozwijanie poszczególnych funkcji aplikacji.
+\end{enumerate}
+
+\subparagraph{Zalety architektury Vertical Slice}
+
+\begin{enumerate}
+\item {\bf Modularność} - każdy slice jest niezależny, co ułatwia zarządzanie kodem i wdrażanie zmian bez wpływu na inne części systemu.
+\item {\bf Testowalność} - każdy slice można łatwo testować niezależnie, co zwiększa pewność co do poprawności działania kodu.
+\item {\bf Skalowalność zespołu} - praca nad poszczególnymi slices może być równoległa, co umożliwia efektywniejsze skalowanie zespołu programistycznego.
+\item {\bf Czytelność} - kod jest zorganizowany wokół konkretnych funkcji, co zwiększa jego czytelność i zrozumiałość.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Obrazy/goalFolderBE.png}
+    \caption{Ułożenie folderów w mikroserwisie}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Obrazy/strukturaFolderowBE.png}
+    \caption{Ułożenie folderów dla każdego z modeli}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsubsection{Mikroserwisy a baza danych}
+W naszym projekcie wszystkie mikroserwisy dzielą jedną bazę danych jest to tak zwana Shared Database. Zdecydowaliśmy się na to podejście ze względu na łatwość wdrożenia oraz w celu zaoszczędzenia zasobów, ponieważ większa pojedyncza baza jest mniej kosztowna od wielu mniejszych.
+
+\subparagraph{Zalety wspólnej bazy danych}
+
+\begin{enumerate}
+\item {\bf Prostsza implementacja początkowa} - dzielenie jednej bazy danych może być łatwiejsze do wdrożenia na początkowym etapie projektu, zwłaszcza jeśli organizacja nie ma dużego doświadczenia z mikroserwisami.
+\item {\bf Łatwość w dostępie do wspólnych danych} - jeśli mikroserwisy często potrzebują dostępu do wspólnych danych w czasie rzeczywistym, dzielenie jednej bazy danych może uprościć ten proces, eliminując potrzebę implementacji mechanizmów komunikacji między mikroserwisami.
+\item {\bf Oszczędność zasobów} - utrzymywanie jednej bazy danych może być mniej kosztowne pod względem zarządzania zasobami, takimi jak serwery baz danych i personel techniczny.
+\item {\bf Spójność danych} - gdy wszystkie mikroserwisy korzystają z jednej bazy danych, unika się problemów związanych z replikacją i synchronizacją danych między różnymi bazami danych.
+\end{enumerate}
+
+\subparagraph{Wady wspólnej bazy danych}
+
+\begin{enumerate}
+\item {\bf Konsolidacja odpowiedzialności} - dzielenie jednej bazy danych może prowadzić do problemów ze spójnością i niezależnością mikroserwisów. Mikroserwisy mogą stać się bardziej skomplikowane i trudniejsze do zarządzania, gdy muszą dzielić schematy bazy danych i logikę.
+\item {\bf Trudności w skalowaniu} - wspólna baza danych może stać się wąskim gardłem w miarę wzrostu ruchu i obciążenia. Mikroserwisy, które dzielą jedną bazę danych, mogą napotkać na problemy z wydajnością i skalowalnością.
+\item {\bf Trudności w zarządzaniu schematami} - zmiany w schemacie bazy danych mogą wymagać skoordynowanych aktualizacji wielu mikroserwisów, co komplikuje proces wdrażania i zwiększa ryzyko błędów.
+\item {\bf Potencjalne problemy z transakcjami} - chociaż jedna baza danych może upraszczać transakcje między mikroserwisami, może również prowadzić do problemów z blokadami i konkurencją o zasoby bazy danych.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Obrazy/erBazyDanych.png}
+    \caption{Diagram ER}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsubsection{Komunikacja pomiędzy mikroserwisami}
+W naszym projekcie, komunikacja między mikroserwisami może odbywać się na różne sposoby, przy użyciu brokera wiadomości RabbitMQ oraz klienta HTTP. Każde z tych podejść ma swoje zalety i wady oraz jest odpowiednie w różnych scenariuszach.
+
+\paragraph {Komunikacja za pomocą Event Bus (RabbitMQ)}
+   
+\subparagraph{Kluczowe koncepcje}
+
+\begin{enumerate}
+\item {\bf Publisher} - mikroserwis, który wysyła wiadomości (publikuje zdarzenia).
+\item {\bf Consumer} - mikroserwis, który odbiera wiadomości (subskrybuje zdarzenia).
+\item {\bf Exchange} - komponent RabbitMQ, który odbiera wiadomości od producentów i przekazuje je do odpowiednich kolejek.
+\item {\bf Queue} - kolejki, do których trafiają wiadomości i z których konsumenci je odbierają.
+\end{enumerate}
+
+\begin{lstlisting}[language=Python, caption=Implementacja kolejki RabbitMq, linewidth=160mm]
+		public async void Publish<TEvent>(TEvent @event)
+			where TEvent : Event
+		{
+			if (!_persistentConnection.IsConnected)
+			{
+				_persistentConnection.TryConnect();
+			}
+
+			var policy = Policy
+				.Handle<BrokerUnreachableException>()
+				.Or<SocketException>()
+				.WaitAndRetry(
+                    _publishRetryCount, retryAttempt => 
+                    TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                    (exception, timeSpan) =>
+				{
+					_logger.LogWarning(
+                    exception, 
+                    "Could not publish event #{EventId} after
+                     {Timeout} seconds: {ExceptionMessage}.", 
+                     @event.Id, $"{timeSpan.TotalSeconds:n1}", 
+                     exception.Message
+                     );
+				});
+
+			var eventName = @event.GetType().Name;
+
+			_logger.LogTrace(
+            "Creating RabbitMQ channel to publish event 
+            #{EventId} ({EventName})...", 
+            @event.Id, eventName
+            );
+
+			using (var channel = 
+                _persistentConnection.CreateModel())
+			{
+				_logger.LogTrace(
+                    "Declaring RabbitMQ exchange to publish 
+                    event #{EventId}...",
+                    @event.Id
+                );
+
+				channel.ExchangeDeclare(
+                    exchange: _exchangeName, 
+                    type: "direct"
+                    );
+
+				var message = JsonSerializer.Serialize(@event);
+				var body = Encoding.UTF8.GetBytes(message);
+
+				policy.Execute(() =>
+				{
+					var properties = channel.CreateBasicProperties();
+					properties.DeliveryMode = 
+                    (byte)DeliveryMode.Persistent;
+
+					_logger.LogTrace(
+                    "Publishing event to RabbitMQ 
+                    with ID #{EventId}...", 
+                    @event.Id
+                    );
+
+					channel.BasicPublish(
+						exchange: _exchangeName,
+						routingKey: eventName,
+						mandatory: true,
+						basicProperties: properties,
+						body: body);
+
+					_logger.LogTrace(
+                     "Published event with ID #{EventId}.", 
+                     @event.Id
+                     );
+				});
+			}
+		}
+
+		public void Subscribe<TEvent, TEventHandler>()
+			where TEvent : Event
+			where TEventHandler : IEventHandler<TEvent>
+		{
+			var eventName = 
+            _subscriptionsManager.GetEventIdentifier<TEvent>();
+			var eventHandlerName = typeof(TEventHandler).Name;
+
+			AddQueueBindForEventSubscription(eventName);
+
+			_logger.LogInformation(
+               "Subscribing to event {EventName} 
+               with {EventHandler}...", 
+               eventName, eventHandlerName
+               );
+
+			_subscriptionsManager.AddSubscription<TEvent, TEventHandler>();
+			StartBasicConsume();
+
+			_logger.LogInformation(
+               "Subscribed to event {EventName} 
+               with {EvenHandler}.", 
+               eventName, eventHandlerName
+               );
+		}
+\end{lstlisting}
+
+\subparagraph{Zalety}
+
+\begin{enumerate}
+\item {\bf Asynchroniczność} - mikroserwisy nie muszą oczekiwać na odpowiedź, co zwiększa wydajność i skalowalność.
+\item {\bf Odporność na błędy} - komunikaty są kolejkowane, co zapewnia niezawodność w przypadku tymczasowych problemów z dostępnością mikroserwisów.
+\item {\bf Luźne powiązanie} - mikroserwisy są mniej zależne od siebie, co ułatwia rozwój i wdrażanie.
+\end{enumerate}
+
+\subparagraph{Wady}
+
+\begin{enumerate}
+\item {\bf Złożoność} - wymaga dodatkowej infrastruktury i zarządzania brokerem wiadomości.
+\item {\bf Trudniejsze debugowanie} - asynchroniczność i luźne powiązanie mogą utrudniać śledzenie przepływu danych.
+\end{enumerate}
+
+\paragraph {Komunikacja za pomocą klienta HTTP}
+
+\subparagraph{Kluczowe koncepcje}
+
+\begin{enumerate}
+\item {\bf Request} - żądanie wysyłane przez mikroserwis-klient do mikroserwisu-serwera.
+\item {\bf Response} - odpowiedź zwracana przez mikroserwis-serwer do mikroserwisu-klienta.
+\end{enumerate}
+\begin{lstlisting}[language=Python, caption=Funkcje POST i GET klienta HTTP, linewidth=160mm]
+ public async Task<HttpResponseMessage> Get(string serviceName, 
+ string path, object request = null, 
+ params Header[] headers)
+    {
+        var baseAddress = GetBaseAddress(serviceName);
+        var queryString = request != null
+            ? await ToQueryString(request)
+            : string.Empty;
+
+        var requestMessage = RequestMessage.Get(
+            $"{baseAddress}{path}?{queryString}".TrimEnd('?'),
+            (headers ?? Array.Empty<Header>()));
+
+        await AddAuthorizationBearerToken(requestMessage);
+        return await _retryOnServerError.ExecuteAsync(() 
+            => Client.SendAsync(requestMessage));
+    }
+
+    public async Task<HttpResponseMessage> Post(string serviceName, 
+    string path, object request, string? externalApiKey, 
+    params Header[] headers)
+    {
+        var baseAddress = 
+        GetBaseAddress(
+        serviceName, 
+        !String.IsNullOrEmpty(externalApiKey)
+        );
+    
+        var requestMessage = RequestMessage.Post(
+            $"{baseAddress}{path}",
+            request,
+            (headers ?? Array.Empty<Header>()));
+        
+        await AddAuthorizationBearerToken(
+        requestMessage, 
+        externalApiKey
+        );
+
+        return await _retryOnServerError.ExecuteAsync(() 
+            => Client.SendAsync(requestMessage));
+    }
+\end{lstlisting}
+\subparagraph{Zalety}
+\begin{enumerate}
+\item {\bf Prostota} - łatwy do zrozumienia i implementacji, dobrze wspierany\linebreak w ekosystemie .NET.
+\item {\bf Bezpośredniość} - umożliwia bezpośrednią komunikację i szybkie uzyskiwanie odpowiedzi.
+\item {\bf Łatwe debugowanie} - łatwiejsze do monitorowania i debugowania\linebreak w porównaniu do asynchronicznej komunikacji.
+\end{enumerate}
+
+\subparagraph{Wady}
+
+\begin{enumerate}
+\item {\bf Słaba skalowalność} - bezpośrednia komunikacja może prowadzić do problemów z wydajnością w przypadku dużego ruchu.
+\item {\bf Większa zależność} - mikroserwisy muszą być dostępne w tym samym czasie, co zwiększa ryzyko awarii.
+\item {\bf Brak odporności na błędy} - problemy z dostępnością jednego mikroserwisu mogą wpływać na inne mikroserwisy.
+
+\end{enumerate}
+
+\subsubsection{Automatyczne generowanie serwisów do komunikacji z backendem}
+Automatyczne generowanie serwisów frontendowych na podstawie specyfikacji OpenAPI polega na tworzeniu gotowego kodu klienta, który umożliwia komunikację z backendowym API. Specyfikacja OpenAPI opisuje wszystkie endpointy API, ich parametry, odpowiedzi, typy danych i inne szczegóły. Narzędzie openapi-typescript-codegen wykorzystuje tę specyfikację do wygenerowania kodu klienta w TypeScript, który można bezpośrednio wykorzystać w projekcie frontendowym.
+
+\subparagraph{Specyfikacja OpenAPI} - jest zawsze w formacie JSON lub YAML. Tę specyfikację można wygenerować automatycznie za pomocą Swashbuckle\linebreak w ASP.NET Core, co zostało opisane wcześniej.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Obrazy/swaggerExample.png}
+    \caption{Wycinek pliku swagger.json}
+    \label{fig:enter-label}
+\end{figure}
+
+\subparagraph{Generowanie kodu} - narzędzie openapi-typescript-codegen przetwarza specyfikację OpenAPI i generuje pliki TypeScript, które zawierają:
+
+\begin{enumerate}
+\item {\bf Modele danych} - definicje typów i interfejsów, które reprezentują dane używane przez API.
+\item {\bf Funkcje API} - funkcje do wykonywania zapytań HTTP do endpointów API, zgodnie z opisem w specyfikacji.
+\end{enumerate}
+
+\begin{lstlisting}[language=html, caption=Przykład wygenerowanego kodu Typescript, linewidth=160mm]
+export class GoalService {
+    /**
+     * @returns GoalDto Success
+     * @throws ApiError
+     */
+    public static post({
+        requestBody,
+    }: {
+        requestBody?: CreateGoalCommand,
+    }): CancelablePromise<GoalDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * @returns GoalDto Success
+     * @throws ApiError
+     */
+    public static getUserGoals({
+        userId,
+    }: {
+        userId?: string,
+    }): CancelablePromise<Array<GoalDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/UserGoals',
+            query: {
+                'UserId': userId,
+            },
+        });
+    }
+}
+\end{lstlisting}
+
+\subparagraph{Integracja w projekcie} - wygenerowany kod klienta można bezpośrednio włączyć do projektu frontendowego, co umożliwia programistom frontendowym łatwe wywoływanie endpointów API bez potrzeby ręcznego pisania zapytań HTTP. Wygenerowane funkcje są typowane, co poprawia bezpieczeństwo typów i pomaga w unikaniu błędów podczas kompilacji.
+
+\subparagraph{Zalety}
+
+\begin{enumerate}
+\item {\bf Automatyzacja} - eliminuje ręczne pisanie kodu klienta, co redukuje błędy i przyspiesza rozwój.
+\item {\bf Spójność} - wygenerowany kod jest zgodny z aktualną specyfikacją API, co zapewnia zgodność typów i struktur danych.
+\item {\bf Łatwość utrzymania} - zmiany w API mogą być łatwo uwzględnione przez ponowne wygenerowanie klienta na podstawie zaktualizowanej specyfikacji OpenAPI.
+\item {\bf Typowanie} - wygenerowane typy i interfejsy poprawiają bezpieczeństwo typów i ułatwiają pracę z kodem w TypeScript.
+\end{enumerate}
+
 \subsubsection{Przykłady implementacji}
+\subparagraph{Query do pobierania zadań dla celu}
+\begin{lstlisting}[language=Python, caption=Pobieranie listy zadań dla celu, linewidth=160mm]
+public class GetAllGoalTasksQuery :  IRequest<List<GoalTaskDto>>
+{
+    public bool? IsCompleted { get; init; }
+    public Guid? GoalId { get; init; }
+    public DateTime? DayFrom { get; init; }
+    public DateTime? DayTo { get; init; }
+    public string UserId { get; set; }
+}
+
+public class GetAllGoalTasksQueryHandler(
+    IGenericRepository<Models.GoalTask> goalTaskRepository, 
+    IMapper mapper
+    )
+    : IRequestHandler<GetAllGoalTasksQuery, List<GoalTaskDto>>
+{
+    public async Task<List<GoalTaskDto>> Handle(
+        GetAllGoalTasksQuery request, 
+        CancellationToken cancellationToken
+        )
+    {
+        var goalTasks = await goalTaskRepository.GetQuery()
+            .Include(x => x.Goal)
+            .Where(x => x.Goal.UserId == request.UserId)
+            .WhereIf(
+                request.GoalId.HasValue, 
+                x => x.GoalId == request.GoalId
+            )
+            .WhereIf(
+                request.IsCompleted.HasValue, 
+                x => x.IsCompleted == request.IsCompleted
+                )
+            .WhereIf(
+                request.DayFrom.HasValue, 
+                x => x.Date >= request.DayFrom
+            )
+            .WhereIf(
+                request.DayTo.HasValue, 
+                x => x.Date <= request.DayTo
+            )
+            .ToListAsync(cancellationToken);
+
+        return mapper.Map<List<GoalTaskDto>>(goalTasks);
+    }
+}
+\end{lstlisting}
+Powyższy kod definiuje handler zapytania GetAllGoalTasksQuery w aplikacji wykorzystującej MediatR do zarządzania zapytaniami i ich obsługą. Klasa GetAllGoalTasksQuery zawiera właściwości filtrowania, takie jak stan ukończenia zadań (IsCompleted), identyfikator celu (GoalId), zakres dat (DayFrom, DayTo) oraz identyfikator użytkownika (UserId).
+
+Handler GetAllGoalTasksQueryHandler implementuje interfejs IRequestHandler, który przetwarza zapytania typu GetAllGoalTasksQuery i zwraca listę obiektów GoalTaskDto. W metodzie Handle handler pobiera zadania z repozytorium (goalTaskRepository) przy użyciu metody GetQuery(), która zwraca zapytanie typu IQueryable. Następnie, przy użyciu rozszerzenia WhereIf, dodaje warunki filtrujące w zależności od wartości parametrów zapytania. Filtruje zadania na podstawie stanu ukończenia, identyfikatora celu, zakresu dat i identyfikatora użytkownika. Wynikowe zadania są następnie mapowane na listę obiektów GoalTaskDto za pomocą mapper i zwracane jako wynik zapytania.
+
+Ten handler jest przykładem użycia MediatR, Entity Framework oraz AutoMapper do obsługi zapytań w aplikacji opartej na wzorcu CQRS, umożliwiając skalowalność i przejrzystość kodu.
+\subparagraph{Generowanie tokenu JWT}
+\begin{lstlisting}[language=Python, caption=Generowanie tokenu JWT, linewidth=160mm]
+private async Task<string> GenerateJwtToken(Models.User user)
+    {
+        var roles = (await userManager.GetRolesAsync(user));
+        string role = roles.Count != 0 ? roles[0] : null;
+        byte[] secret = Encoding.UTF8.GetBytes(_token.Secret);
+
+        JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+        SecurityTokenDescriptor descriptor = 
+            new SecurityTokenDescriptor
+        {
+            Issuer = _token.Issuer,
+            Audience = _token.Audience,
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                new Claim("UserId", user.Id),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Email),
+            }),
+            Expires = DateTime.UtcNow.AddMinutes(_token.Expiry),
+            SigningCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(secret), 
+            SecurityAlgorithms.HmacSha256Signature
+            )
+        };
+        SecurityToken token = handler.CreateToken(descriptor);
+        return handler.WriteToken(token);
+    }
+\end{lstlisting}
+Powyższy kod to metoda GenerateJwtToken, która generuje token JWT (JSON Web Token) dla użytkownika. Najpierw pobiera role użytkownika, a następnie przygotowuje klucz symetryczny do podpisania tokena. Tworzy instancję JwtSecurityTokenHandler i definiuje SecurityTokenDescriptor z informacjami takimi jak wystawca, odbiorca, tożsamość (zawierająca roszczenia z identyfikatorem użytkownika, nazwą użytkownika i emailem), datą wygaśnięcia oraz podpisem. Token jest tworzony i kodowany przy użyciu JwtSecurityTokenHandler, a następnie zwracany jako ciąg znaków.
 \subparagraph{Tworzenie promptów}
-\subparagraph{Autoryzacja}
-\subparagraph{Obsługa eventów}
-\clearpage
+Konstruowanie promptów polega na pobieraniu odpowiednich szablonów przechowywanych w Azure Blob Storage, a następnie uzupełnianie ich o niezbędnę dane.
+\begin{lstlisting}[language=Python, caption=Ładowanie promptów, linewidth=160mm]
+private async Task<string> LoadSinglePrompt(string promptFileName, 
+    IPromptValues? promptValuesObject = null
+    )
+    {
+        var promptTemplateString = await blobStorageService.
+        DownloadPromptFileAsync(promptFileName);
+
+        if (promptValuesObject != null)
+        {
+            var promptValuesDict = PromptRenderHelper.
+            ConvertPromptValuesToDictonary(promptValuesObject);
+            var promptRenderedString = PromptRenderHelper.Render(
+                promptTemplateString, 
+                promptValuesDict);
+            return promptRenderedString;
+        }
+
+        return promptTemplateString;
+    }
+\end{lstlisting}
+Powyższa funkcja LoadSinglePrompt demonstruje, jak pobierany i uzupełniany jest szablon wykorzystywany do konstrukcji prompta. Na początku pobierany jest szablon tekstowy z magazynu blobów. Jeśli do funkcji nie przekazano obiektu implementującego interfejs IPromptValues zawierającego wartości do wypełnienia szablonu, funkcja zwraca sam szablon. Gdy obiekt\linebreak z wartościami zostanie przekazany, jest konwertowany na słownik, a następnie, za pomocą funkcji Render, wartości te uzupełniają szablon. W obu przypadkach funkcja zwraca szablon, w drugim przypadku z wypełnionymi wartościami. Użycie interfejsu IPromptValues umożliwia łatwe wczytywanie\linebreak i uzupełnianie różnych szablonów różnymi wartościami przy użyciu tej samej funkcji.
+
+\begin{lstlisting}[language=Python, caption=Przykład wykorzystania funkcji LoadSinglePrompt, linewidth=160mm]
+var basicPromptValuesObject = new BasicPrompt()
+        {
+            Goal = goal.GoalFriendlyName.ToFriendlyString(),
+            UserAdvancement = goal.UserAdvancement.ToString().ToLower(),
+            ReachGoalInThisManyWeeks = CountWeeksBetweenTwoDates(
+                    goal.StartDate, 
+                    goal.EndDate
+                ),
+            FreeDaysEachWeek = (int)goal.TimeAvailabilityPerWeek,
+            FreeMinutesEachDay = (int)goal.TimeAvailabilityPerDay,
+            TodaysDate = DateTime.Today.ToShortDateString()
+        };
+        
+var basicPrompt = await LoadSinglePrompt(BasicPromptFileName, 
+        basicPromptValuesObject);
+\end{lstlisting}
+
+\subparagraph{Komunikacja z modelami AI}
+W celu umożliwienia komunikacji z różnymi modelami AI zaprojektowany został interfejs IAiModel. Definiuje on niezbędne parametry do tworzenia i przetwarzania zapytań wysyłanych do modeli AI. Dzięki zastosowaniu tego interfejsu możemy uzyskać czysty i testowalny kod, a także łatwo zaimplementować inne modele. Jest to możliwe, ponieważ wszystkie modele korzystają z tej samej logiki, różnią się jedynie funkcjami zawartymi w interfejsie, takimi jak budowanie promptu czy przetwarzanie odpowiedzi.
+\begin{lstlisting}[language=Python, caption=Inerfejs IAiModel, linewidth=160mm]
+public interface IAiModel
+{
+    public string Name { get; init; }
+    public string ApiUrl { get; init; }
+    public AiModelName AiModelName { get;}
+    public IAiRequestModel RequestModel { get; set; }
+
+    public Task<string> BuildPrompt(string userId, Guid goalId);
+    public Task<AiResponseModel> GetPromptResponse(string prompt);
+    public List<GoalTaskResource> ProcessModelResponse(
+        AiResponseModel responseModel);
+}
+\end{lstlisting}
+Interfejs IAiModel składa się z właściwości Name i ApiUrl, które przechowują nazwę modelu oraz URL API, a także właściwości AiModelName i RequestModel, które identyfikują model i przechowują zapytanie. Interfejs zawiera również metody asynchroniczne BuildPrompt, tworzącą prompt na podstawie identyfikatorów użytkownika i celu, oraz GetPromptResponse, zwracającą odpowiedź modelu AI. Dodatkowo, metoda ProcessModelResponse przetwarza odpowiedź modelu i zwraca listę zasobów zadania. Dzięki temu interfejsowi możliwe jest łatwe dodawanie nowych modeli AI przy zachowaniu spójnej logiki działania.
+\begin{lstlisting}[language=Python, caption=Komunikacja z modelem AI przy użyciu klienta RESTowego, linewidth=160mm]
+public class AiModelApiClient(
+    IAccessTokenProvider accessTokenProvider,
+    IHttpClientFactory httpClientFactory,
+    IConfiguration configuration)
+    : BaseRestServiceClient(accessTokenProvider, 
+    httpClientFactory), IAiModelApiClient
+{
+    protected override string ServiceUrl { get; set; } = String.Empty;
+
+    public async Task<AiResponseModel> GetPromptResponse(IAiModel model, 
+        object requestModel)
+    {
+        ServiceUrl = configuration[model.AiModelName.ToString()];
+        if (!String.IsNullOrEmpty(ServiceUrl))
+        {
+            var response = await PostWithResponse<AiResponseModel>(
+                model.ApiUrl, 
+                requestModel
+            );
+
+            return response.Status == HttpStatusCode.OK ? 
+                response.Result : 
+                null;
+        }
+
+        return null;
+    }
+}
+\end{lstlisting}
+Funkcja GetPromptResponse w klasie AiModelApiClient odpowiada za wysyłanie żądań do różnych modeli AI na podstawie ich konfiguracji. Najpierw pobiera odpowiedni URL usługi AI z pliku konfiguracyjnego, używając nazwy modelu AI jako klucza. Następnie wysyła żądanie POST z danymi requestModel do tego URL i zwraca odpowiedź w postaci AiResponseModel, jeśli status odpowiedzi jest OK (200). W przeciwnym razie zwraca null, gdy nie uda się pobrać lub wysłać żądania. Dzięki temu mechanizmowi można dynamicznie komunikować się z różnymi modelami AI zgodnie z ich konfiguracją.
+
+\begin{lstlisting}[language=Python, caption=Implementacja interfejsu IAiModel na podstawie modelu Llama2, linewidth=160mm]
+public class Llama2Model(string name,
+    string apiUrl, 
+    IPromptBuilderService promptBuilderService, 
+    IAiModelApiClient aiModelApiClient
+) : IAiModel
+{
+    public string Name { get; init; } = name;
+    public string ApiUrl { get; init; } = apiUrl;
+    public AiModelName AiModelName { get; } = AiModelName.Llama2;
+    public IAiRequestModel RequestModel { get; set; }
+
+    public async Task<string> BuildPrompt(string userId, Guid goalId)
+    {
+        return await promptBuilderService.CreatePrompt(userId, goalId);
+    }
+
+    public async Task<AiResponseModel> GetPromptResponse(string prompt)
+    {
+        return await aiModelApiClient.GetPromptResponse(this, 
+        new { model = Name, prompt = prompt, stream = false });
+    }
+
+    public List<GoalTaskResource> ProcessModelResponse(
+        AiResponseModel responseModel
+    )
+    {
+        return JsonSerializer.Deserialize<List<GoalTaskResource>>(
+            responseModel.response
+        ) ?? throw new InvalidOperationException();
+    }
+}
+\end{lstlisting}
+Klasa Llama2Model jest konkretną implementacją interfejsu IAiModel dla modelu AI o nazwie "Llama2". Przechowuje nazwę modelu, URL API do komunikacji, oraz metody umożliwiające tworzenie promptów (BuildPrompt), wysyłanie żądań (GetPromptResponse) i przetwarzanie odpowiedzi (ProcessModelResponse). Wykorzystuje serwis do budowania promptów oraz klienta API aiModelApiClient do komunikacji z modelem AI. Dzięki interfejsowi IAiModel zapewnia spójny sposób integracji z różnymi modelami AI, co ułatwia zarządzanie, testowanie i rozwijanie funkcjonalności sztucznej inteligencji\linebreak w aplikacji.
 
 \subsection{Zastosowane praktyki bezpieczeństwa}
-W ramach zastosowanych praktyk bezpieczeństwa wykorzystano pipeline'y do automatyzacji procesów testowania i wdrażania, co zapewnia ciągłość i spójność dostarczania oprogramowania. Użycie narzędzia Terraform umożliwiło zarządzanie infrastrukturą jako kodem, zwiększając kontrolę i przejrzystość konfiguracji systemu. Dodatkowo, zaimplementowano rozwiązania takie jak Azure KeyVault do bezpiecznego przechowywania i zarządzania sekretami, co znacząco podnosi poziom zabezpieczeń. Wszelkie poufne dane, takie jak hasła czy klucze API, są przechowywane jako sekrety i zmienne środowiskowe, co ogranicza ryzyko ich wykorzystania przez nieuprawnione osoby i zapewnia lepszą kontrolę dostępu do wrażliwych zasobów.
+W ramach zastosowanych praktyk bezpieczeństwa wykorzystano pipeline'y do automatyzacji procesów testowania i wdrażania, co zapewnia ciągłość i spójność dostarczania oprogramowania. Użycie narzędzia Terraform umożliwiło zarządzanie infrastrukturą jako kodem, zwiększając kontrolę\linebreak i przejrzystość konfiguracji systemu. Dodatkowo, zaimplementowano rozwiązania takie jak Azure KeyVault do bezpiecznego przechowywania i zarządzania sekretami, co znacząco podnosi poziom zabezpieczeń. Wszelkie poufne dane, takie jak hasła czy klucze API, są przechowywane jako sekrety i zmienne środowiskowe, co ogranicza ryzyko ich wykorzystania przez nieuprawnione osoby i zapewnia lepszą kontrolę dostępu do wrażliwych zasobów.

@@ -1,13 +1,13 @@
 \section{Faza analizy}
 \subsection{Wstęp}
 
-W dobie dynamicznego rozwoju technologii informatycznych, sztuczna inteligencja (AI) oraz uczenie maszynowe (ML) odgrywają coraz większą rolę w różnorodnych dziedzinach życia. Jednym z najnowszych osiągnięć w tej dziedzinie są modele językowe dużej skali (LLM), które potrafią generować tekst na wysokim poziomie zrozumienia i spójności. Modele te, takie jak Chat-GPT, LLama czy Zephyr, znajdują szerokie zastosowanie w wielu branżach, od tworzenia treści po automatyzację obsługi klienta.
+W dobie dynamicznego rozwoju technologii informatycznych, sztuczna inteligencja (AI) oraz uczenie maszynowe (ML) odgrywają coraz większą rolę w różnorodnych dziedzinach życia. Jednym z najnowszych osiągnięć\linebreak w tej dziedzinie są modele językowe dużej skali (LLM), które potrafią generować tekst na wysokim poziomie zrozumienia i spójności. Modele te, takie jak Chat-GPT, LLama czy Zephyr, znajdują szerokie zastosowanie w wielu branżach, od tworzenia treści po automatyzację obsługi klienta.
 
-Niniejsza praca magisterska ma na celu stworzenie aplikacji webowej, która wykorzystując modele LLM, będzie w stanie generować plany działania prowadzące do osiągnięcia określonych celów, takich jak np. przebiegnięcie maratonu czy nauka programowania. Aplikacja ma wspierać użytkowników w realizacji tych celów poprzez dostarczanie zadań i harmonogramów działania. W ramach pracy porównane zostaną różne modele LLM pod kątem jakości generowanych planów oraz ich efektywności.
+Projekt ma na celu stworzenie aplikacji webowej, która wykorzystując modele LLM, będzie w stanie generować plany działania prowadzące do osiągnięcia określonych celów, takich jak np. przebiegnięcie maratonu czy nauka programowania. Aplikacja ma wspierać użytkowników w realizacji tych celów poprzez dostarczanie zadań i harmonogramów działania. W ramach pracy porównane zostaną różne modele LLM pod kątem jakości generowanych planów oraz ich efektywności.
 
-Aplikacja zostanie zbudowana w oparciu o nowoczesne technologie frontendowe i backendowe. Interfejs użytkownika zostanie zaprojektowany z wykorzystaniem biblioteki React, natomiast backend aplikacji będzie oparty na języku C\# oraz frameworku ASP.NET Core. Kluczowym elementem projektu będzie również implementacja architektury mikroserwisowej w chmurze Azure, co zapewni skalowalność i niezawodność systemu.
+Aplikacja została zbudowana w oparciu o nowoczesne technologie frontendowe i backendowe. Interfejs użytkownika został zaprojektowany\linebreak z wykorzystaniem biblioteki React, natomiast backend aplikacji jest oparty na języku C\# oraz frameworku ASP.NET Core. Kluczowym elementem projektu będzie również implementacja architektury mikroserwisowej w chmurze Azure, co zapewni skalowalność i niezawodność systemu.
 
-Wierzę, że niniejsza praca magisterska dostarczy wartościowych informacji i praktycznych rozwiązań w zakresie wykorzystania modeli LLM do wspomagania realizacji celów użytkowników, a także przyczyni się do dalszego rozwoju aplikacji webowych wykorzystujących nowoczesne technologie informatyczne.
+Niniejsza praca dostarczy wartościowych informacji i praktycznych rozwiązań w zakresie wykorzystania modeli LLM do wspomagania realizacji celów użytkowników, a także przyczyni się do dalszego rozwoju aplikacji webowych wykorzystujących nowoczesne technologie informatyczne.
 
 \clearpage
 
@@ -15,14 +15,14 @@ Wierzę, że niniejsza praca magisterska dostarczy wartościowych informacji i p
 
 \noindent{\bf Cel główny:}
 
-Celem głównym niniejszej pracy magisterskiej jest zaprojektowanie i implementacja aplikacji webowej, która wykorzystując modele językowe dużej skali (LLM), będzie w stanie generować plany działania prowadzące do osiągnięcia określonych celów, takich jak przebiegnięcie maratonu czy nauka programowania. Aplikacja ma wspierać użytkowników w realizacji tych celów poprzez dostarczanie zadań i harmonogramów na kilka tygodni w przód.
+Zaprojektowanie i implementacja aplikacji webowej, która wykorzystując modele językowe dużej skali (LLM), będzie w stanie generować plany działania prowadzące do osiągnięcia określonych przez użytkownika celów, takich jak przebiegnięcie maratonu czy nauka programowania. Aplikacja ma wspierać, korzystające z niej osoby w realizacji tych celów poprzez dostarczanie zadań i harmonogramów w określonym przedziale czasowym, który najbardziej odpowiada użytkownikowi.
 \\
 
 \noindent{\bf Cele szczegółowe: }
 \begin{enumerate}
     \item {\bf Analiza i porównanie różnych modeli LLM:}
         \begin{itemize}
-            \item[*] Przeprowadzenie badań nad dostępnymi modelami LLM, takimi jak CHAT GPT, LLAMA, Zephyr Stable, i ich zdolnościami do generowania zadań.
+            \item[*] Przeprowadzenie badań nad dostępnymi modelami LLM, takimi jak Chat GPT, LLAMA, Zephyr Stable, i ich zdolnościami do generowania zadań.
             \item[*] Porównanie wybranych modeli pod kątem jakości generowanych planów, efektywności oraz zasobów obliczeniowych.
        \end{itemize}
     
@@ -40,8 +40,8 @@ Celem głównym niniejszej pracy magisterskiej jest zaprojektowanie i implementa
     
     \item {\bf Budowa architektury mikroserwisowej w chmurze Azure:}
         \begin{itemize}
-            \item[*] Zdefiniowanie mikroserwisów odpowiadających za różne funkcjonalności aplikacji (np. zarządzanie użytkownikami, komunikacja z LLM, harmonogramowanie zadań).
-            \item[*] Implementacja i wdrożenie mikroserwisów w środowisku chmurowym Azure z użyciem takich technologii jak Kubernetes, Azure KeyVault.
+            \item[*] Zdefiniowanie mikroserwisów odpowiadających za różne funkcjonalności aplikacji (np. zarządzanie użytkownikami, komunikacja z LLM, tworzenie harmonogramów zadań).
+            \item[*] Implementacja i wdrożenie mikroserwisów w środowisku chmurowym Azure z użyciem takich technologii jak Docker, Kubernetes, Azure Container Instances, Azure KeyVault, Terraform, Github Actions.
        \end{itemize}
     
     \item {\bf Testowanie i walidacja:}
@@ -52,7 +52,7 @@ Celem głównym niniejszej pracy magisterskiej jest zaprojektowanie i implementa
     \item {\bf Dokumentacja i raportowanie wyników:}
         \begin{itemize}
             \item[*] Opracowanie pełnej dokumentacji technicznej projektu, obejmującej zarówno kod źródłowy, jak i szczegółowe opisy architektury i integracji.
-            \item[*] Sporządzenie raportu z wyników porównania modeli LLM oraz wydajności i skalowalności aplikacji.
+            \item[*] Sporządzenie raportu z wyników porównania modeli LLM oraz.
        \end{itemize}
 
 \end{enumerate}
@@ -71,12 +71,12 @@ Celem głównym niniejszej pracy magisterskiej jest zaprojektowanie i implementa
     
     \item {\bf Bezpieczeństwo danych:}
         \begin{itemize}
-            \item[*] Wszelkie dane użytkowników, w tym dane osobowe oraz informacje o celach i zadaniach, muszą być przechowywane i przetwarzane zgodnie z najlepszymi praktykami w zakresie bezpieczeństwa i ochrony danych.
+            \item[*] Wszelkie dane użytkowników, w tym dane osobowe oraz informacje\linebreak o celach i zadaniach, muszą być przechowywane i przetwarzane zgodnie z najlepszymi praktykami w zakresie bezpieczeństwa i ochrony danych.
        \end{itemize}
     
     \item {\bf Elastyczność modelu:}
         \begin{itemize}
-            \item[*] Aplikacja powinna być elastyczna i pozwalać na łatwe dodawanie nowych modeli LLM oraz aktualizacje istniejących, w miarę jak nowe technologie będą dostępne.
+            \item[*] Aplikacja powinna być elastyczna i pozwalać na łatwe dodawanie nowych modeli LLM oraz aktualizacje istniejących.
        \end{itemize}
     
     \item {\bf Użycie technologii chmurowych:}
@@ -88,46 +88,67 @@ Celem głównym niniejszej pracy magisterskiej jest zaprojektowanie i implementa
 \subsection{Podstawa teoretyczna}
 \begin{enumerate}
     
-    \item {\bf Model językowy} - Model językowy w dziedzinie informatyki i sztucznej inteligencji to system komputerowy zaprojektowany do rozumienia, interpretowania i generowania ludzkiego języka naturalnego. Opiera się on na algorytmach uczenia maszynowego, głównie uczenia głębokiego, które uczą się struktury, semantyki i kontekstu języka przez analizę i przetwarzanie ogromnych zbiorów tekstów.
+    \item {\bf Model językowy} - Model językowy w dziedzinie informatyki i sztucznej inteligencji to system komputerowy zaprojektowany do zrozumienia, interpretowania i generowania ludzkiego języka naturalnego. Opiera się on na algorytmach uczenia maszynowego, głównie uczenia głębokiego, które uczą się struktury, semantyki i kontekstu języka przez analizę i przetwarzanie ogromnych zbiorów tekstów.
 
     Takie modele składają się z wielowarstwowych sieci neuronowych, z których każda warstwa przetwarza różne aspekty języka, od rozpoznawania słów po interpretację znaczeń. Centralnym elementem jest algorytm "transformer", który efektywnie przetwarza długie sekwencje tekstu, zachowując kontekst i znaczenie.
     
     Modele językowe są trenowane na dużych zbiorach tekstowych, zawierających różnorodne formy języka. Proces treningu polega na dostosowywaniu parametrów sieci neuronowej, aby jak najlepiej odwzorować naturalne użycie języka. W wyniku tego treningu, modele te są zdolne do tworzenia nowych, koherentnych wypowiedzi, reagowania na zapytania i analizy języka na wysokim poziomie.
     \\
-    \item {\bf Model GPT} - Modele GPT (Generative Pre-trained Transformer) to rodzaj zaawansowanych modeli językowych opracowanych przez firmę OpenAI wykorzystujących architekturę transformer w dziedzinie sztucznej inteligencji. Zostały one zaprojektowane do generowania tekstu, interpretacji języka naturalnego oraz wykonywania różnorodnych zadań związanych z przetwarzaniem języka. Ich główną cechą jest zdolność do generowania spójnego i kontekstualnie odpowiedniego tekstu na podstawie dostarczonych informacji wejściowych.
+    \item {\bf Model GPT} - Modele GPT (Generative Pre-trained Transformer) to rodzaj zaawansowanych modeli językowych opracowanych przez firmę OpenAI wykorzystujących architekturę "transformer" w dziedzinie sztucznej inteligencji. Zostały one zaprojektowane do generowania tekstu, interpretacji języka naturalnego oraz wykonywania różnorodnych zadań związanych z przetwarzaniem języka. Ich główną cechą jest zdolność do generowania spójnego i kontekstualnie odpowiedniego tekstu na podstawie dostarczonych informacji wejściowych.
 
     GPT opiera się na technice uczenia głębokiego, gdzie modele są trenowane na ogromnych zbiorach tekstowych w celu nauki struktury języka, jego semantyki oraz różnorodnych kontekstów. Model GPT, wykorzystując architekturę transformer, skutecznie przetwarza i analizuje długie sekwencje tekstu, co pozwala na zachowanie złożonego kontekstu i generowanie koherentnych odpowiedzi.
     
     Kluczowym aspektem modeli GPT jest ich pre-trening, czyli wstępne szkolenie na szerokiej gamie danych tekstowych. Dzięki temu modele te rozwijają ogólną zdolność do rozumienia i generowania języka, którą następnie można dostosować do konkretnych zastosowań (tzw. fine-tuning).
     
-    Modele GPT są wykorzystywane w różnych aplikacjach, od automatycznego generowania tekstu, przez tworzenie odpowiedzi w systemach dialogowych, po zaawansowane analizy językowe. Ich zdolność do generowania naturalnego, spójnego i kontekstowo odpowiedniego języka sprawia, że znajdują one zastosowanie w wielu dziedzinach, w tym w rozrywce, edukacji oraz biznesie.
+    Modele GPT są wykorzystywane w różnych aplikacjach, od automatycznego generowania tekstu, przez tworzenie odpowiedzi w systemach dialogowych, po zaawansowane analizy językowe. Ich zdolność do generowania naturalnego, spójnego i kontekstowo odpowiedniego języka sprawia, że znajdują one zastosowanie w wielu dziedzinach np. rozrywce, edukacji oraz biznesie.
     \\
      
  \end{enumerate}
+\subsection{Analiza rynku oraz podobnych rozwiązań}
+
+\subsubsection{Rys historyczny}
+Początki samorozwoju online sięgają wczesnych lat 2000, kiedy to pojawiły się pierwsze serwisy oferujące kursy online, takie jak Coursera i Udemy. Te platformy umożliwiały dostęp do materiałów edukacyjnych z różnych dziedzin, co zapoczątkowało erę zdalnej edukacji i samodzielnego uczenia się. W środkowych latach 2010 rozwinęły się aplikacje mobilne do śledzenia nawyków i celów, takie jak Habitica i Strides, które pomagały użytkownikom w utrzymywaniu codziennych nawyków poprzez mechanizmy grywalizacji\linebreak i śledzenia postępów.
+Pod koniec lat 2010 rozwój sztucznej inteligencji (AI) i uczenia maszynowego (ML) przyczynił się do powstania aplikacji, które wykorzystują AI do personalizacji doświadczeń użytkowników. Przykładem takiej aplikacji jest Duolingo, które dostosowuje poziom trudności lekcji do postępów użytkownika. W latach 2020 i później pojawiły się aplikacje, takie jak Fabulous czy Remente, integrujące techniki samorozwoju z AI, oferując spersonalizowane plany i zadania. Również aplikacje coachingu personalnego, jak BetterUp, zaczęły wykorzystywać AI do personalizacji sesji coachingu, co zwiększyło ich skuteczność.
+
+\subsubsection{Przegląd Istniejących lub Podobnych Rozwiązań}
+Jednym z popularnych rozwiązań jest "Habitica", aplikacja do śledzenia nawyków w formie gry RPG. Użytkownicy zdobywają punkty i nagrody za wykonywanie zadań, co motywuje ich do utrzymania regularności. "Habitica" jest chwalona za motywację poprzez grywalizację oraz społeczność użytkowników, jednak brakuje jej zaawansowanej personalizacji zadań przy użyciu AI.
+Innym przykładem jest "Fabulous", aplikacja koncentrująca się na tworzeniu zdrowych nawyków poprzez prowadzenie użytkownika przez codzienne rutyny. "Fabulous" oferuje świetny interfejs użytkownika oraz podejście naukowe do formowania nawyków, ale personalizacja jest ograniczona do ogólnych profili użytkowników.
+"Remente" to aplikacja do zarządzania celami i samorozwoju z elementami coachingu. Posiada bogate zasoby edukacyjne i narzędzia do planowania celów, ale brakuje jej personalizacji opartej na zaawansowanych algorytmach AI. "BetterUp" natomiast oferuje sesje coachingu personalnego wspierane przez AI, co pozwala na personalizację sesji. Jednakże, jest to rozwiązanie bardziej ukierunkowane na korporacje i może być kosztowne.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Obrazy/habitcaSignIn.png}
+    \caption{Strona główna portalu "Habitca"}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsubsection{Analiza rynku}
+Analiza rynku pokazuje, że istnieje rosnące zainteresowanie poprawianiem zdrowia psychicznego i fizycznego. Również można zauważyć trend gdzie występuje personalizacja doświadczeń użytkowników, wynikająca z integracjii sztucznej inteligencji w aplikacjach użytku codziennego. Aplikacje konkurencyjne obejmują tworzenie planu samorozwoju i coachingu personalnego, posiadających różne stopnie personalizacji. Potencjalnymi klientami są osoby szukające narzędzi do zarządzania swoimi celami i nawykami, profesjonalni coachowie szukający wsparcia narzędziowego oraz firmy inwestujące\linebreak w rozwój osobisty swoich pracowników.
+To wszystko sprawia, że aplikacja ma potencjał na zrewolucjonizowanie rynku narzędzi do samorozwoju, oferując użytkownikom ciekawą alternatywę do istinejących już narzędzi.
 
 \subsection{Prompt engineering}
 
 \subsubsection{Opis modeli językowych}
 
 \begin{enumerate}
- \item {\bf ChatGPT} - to specjalistyczna wersja modelu językowego opracowana przez firmę OpenAI, zaprojektowana głównie do prowadzenia konwersacji w formie tekstowej. Jest to aplikacja modelu GPT skoncentrowana na interakcjach dialogowych, zdolna do generowania naturalnie brzmiących, spójnych i kontekstualnie adekwatnych odpowiedzi w czasie rzeczywistym.
+\item {\bf ChatGPT} - to specjalistyczna wersja modelu językowego opracowana przez firmę OpenAI, zaprojektowana głównie z myślą do prowadzenia konwersacji w formie tekstowej. Jest to aplikacja modelu GPT skoncentrowana na interakcjach dialogowych, zdolna do generowania naturalnie brzmiących, spójnych i kontekstualnie adekwatnych odpowiedzi w czasie rzeczywistym.
 
-    Podstawą działania ChatGPT jest zaawansowany model językowy oparty na architekturze transformer, który został wytrenowany na ogromnych zbiorach danych tekstowych, w tym na dialogach i rozmowach. Dzięki temu ChatGPT wykazuje zdolność do zrozumienia zapytań w kontekście konwersacji i generowania płynnych, spójnych odpowiedzi.
+Podstawą działania ChatGPT jest zaawansowany model językowy oparty na architekturze transformer, który został wytrenowany na ogromnych zbiorach danych tekstowych, w tym na dialogach i rozmowach. Dzięki temu ChatGPT wykazuje zdolność do zrozumienia zapytań w kontekście konwersacji i generowania płynnych, spójnych odpowiedzi.
     
-    ChatGPT wyróżnia się zdolnością do utrzymania spójnego kontekstu rozmowy, co pozwala na prowadzenie dłuższych interakcji, które wydają się naturalne i są bardziej angażujące dla użytkownika. Może on odpowiadać na pytania, prowadzić dyskusje na różne tematy, oferować pomoc lub informacje, a także angażować się w bardziej twórcze zadania, takie jak pisanie opowiadań czy wierszy.
+ChatGPT wyróżnia się zdolnością do utrzymania spójnego kontekstu rozmowy, co pozwala na prowadzenie dłuższych interakcji, które wydają się naturalne i są bardziej angażujące dla użytkownika. Może on odpowiadać na pytania, prowadzić dyskusje na różne tematy, oferować pomoc lub informacje, a także angażować się w bardziej twórcze zadania, takie jak pisanie opowiadań czy wierszy.
     
-    Model ten jest często wykorzystywany w aplikacjach do obsługi klienta, asystentach cyfrowych, edukacji, a także jako narzędzie do interakcji i angażowania użytkowników na platformach internetowych. Zdolność ChatGPT do naturalnej interakcji językowej sprawia, że znajduje on zastosowanie w różnorodnych środowiskach, gdzie istotna jest zdolność do prowadzenia płynnej, ludzko brzmiącej konwersacji.
-    \\
-    \item {\bf LLAMA} - LLAMA (Lifelong Language Model Agent) to model językowy opracowany przez firmę Meta, zaprojektowany został do wydajnej pracy z mniejszą ilością danych niż jego konkurenci. Wykorzystuje on technikę zwaną retreningiem, dzięki której jest w stanie dostosować się i uczyć na podstawie nowych informacji przez cały okres swojego działania, co znacznie poprawia jego skuteczność w zadaniach NLP (Natural Language Processing). LLAMA jest także zoptymalizowanym modelem językowym pod kątem wielozadaniowości, dzięki czemu sprawnie radzi sobie z różnorodnymi zadaniami językowymi, zapewniając przy tym efektywność w użyciu zasobów obliczeniowych.
-    \\
-    \item {\bf Zephyr Stable} - Zephyr Stable LLM to narzędzie do przetwarzania języka naturalnego, które bazuje na modelach uczenia maszynowego. Jest skoncentrowane na stabilności i niezawodności w czasie długotrwałego działania. Jego architektura jest zaprojektowana tak, aby zapewniać równowagę między dokładnością odpowiedzi a zachowaniem spójności i adekwatności w trakcie interakcji z użytkownikiem. Model ten jest szczególnie przydatny w aplikacjach, które wymagają trwałej i efektywnej komunikacji maszyna-człowiek, jak chatboty czy asystenci głosowi, gdzie niezmienna jakość i precyzja są kluczowe.
-    \\
+Model ten jest często wykorzystywany w aplikacjach do obsługi klienta, asystentach cyfrowych, edukacji, a także jako narzędzie do interakcji i angażowania użytkowników na platformach internetowych. Zdolność ChatGPT do naturalnej interakcji językowej sprawia, że znajduje on zastosowanie w różnorodnych środowiskach, gdzie istotna jest zdolność do prowadzenia płynnej, ludzko brzmiącej konwersacji.
+\\
+\item {\bf LLAMA} - LLAMA (Lifelong Language Model Agent) to model językowy opracowany przez firmę Meta, zaprojektowany został do wydajnej pracy z mniejszą ilością danych niż jego konkurenci. Wykorzystuje on technikę zwaną retreningiem, dzięki której jest w stanie dostosować się i uczyć na podstawie nowych informacji przez cały okres swojego działania, co znacznie poprawia jego skuteczność w zadaniach NLP (Natural Language Processing). LLAMA jest także zoptymalizowanym modelem językowym pod kątem wielozadaniowości, dzięki czemu sprawnie radzi sobie z różnorodnymi zadaniami językowymi, zapewniając przy tym efektywność\linebreak w użyciu zasobów obliczeniowych.
+\\
+\item {\bf Zephyr Stable} - Zephyr Stable LLM to narzędzie do przetwarzania języka naturalnego, które bazuje na modelach uczenia maszynowego. Jest skoncentrowane na stabilności i niezawodności w czasie długotrwałego działania. Jego architektura jest zaprojektowana tak, aby zapewniać równowagę między dokładnością odpowiedzi a zachowaniem spójności i adekwatności w trakcie interakcji z użytkownikiem. Model ten jest szczególnie przydatny w aplikacjach, które wymagają trwałej i efektywnej komunikacji maszyna-człowiek, jak chatboty czy asystenci głosowi, gdzie niezmienna jakość i precyzja są kluczowe.
+\\
 
 \end{enumerate}
 
 \subsubsection{Analiza przypdaków użycia modeli językowych}
 
-Rozwój modeli językowych, szczególnie za sprawą zaawansowanych technologii opartych na sztucznej inteligencji, wprowadził nowe możliwości w dziedzinie przetwarzania języka naturalnego. Jednym z kluczowych obszarów wykorzystania tych modeli jest prompt engineering, czyli kształtowanie i dostosowywanie zapytań (promptów) w celu uzyskania pożądanych odpowiedzi od modeli językowych. Niniejszy rozdział skupia się na analizie konkretnych przypadków użycia modeli językowych w kontekście prompt engineeringu.
+Rozwój modeli językowych, szczególnie za sprawą zaawansowanych technologii opartych na sztucznej inteligencji, wprowadził nowe możliwości\linebreak w dziedzinie przetwarzania języka naturalnego. Jednym z kluczowych obszarów wykorzystania tych modeli jest prompt engineering, czyli kształtowanie i dostosowywanie zapytań (promptów) w celu uzyskania pożądanych odpowiedzi od modeli językowych. Niniejszy rozdział skupia się na analizie konkretnych przypadków użycia modeli językowych w kontekście prompt engineeringu.
 
 Przed przystąpieniem do analizy przypadków użycia istotne jest określenie modeli językowych, które będą poddane ocenie. W ramach niniejszej pracy magisterskiej skupimy się na modelach opartych na architekturze GPT (Generative Pre-trained Transformer), a w szczególności na, GPT-3.5,GPT-4. Wybór tych modeli wynika z ich doskonałej zdolności do zrozumienia kontekstu, elastyczności w generowaniu tekstów oraz szerokiej gamy zastosowań w dziedzinie języka naturalnego.
  
@@ -137,7 +158,7 @@ Analiza przypadków użycia rozpocznie się od szczegółowego zrozumienia proce
 
 \noindent\textbf{Wprowadzenie}
 
-Projektowanie prompt'ów jest kluczowym aspektem w tworzeniu efektywnych interakcji z modelami językowymi. Precyzyjne i dobrze sformułowane pytania mają decydujący wpływ na jakość generowanych odpowiedzi. W tym rozdziale skoncentrujemy się na procesie projektowania prompt'ów, w tym na strategiach wyboru słów kluczowych, formatowaniu zapytań oraz eksperymentach z różnymi rodzajami promptów.
+Projektowanie promptów jest kluczowym aspektem w tworzeniu efektywnych interakcji z modelami językowymi. Precyzyjne i dobrze sformułowane pytania mają decydujący wpływ na jakość generowanych odpowiedzi. W tym rozdziale skoncentrujemy się na procesie projektowania promptów, w tym na strategiach wyboru słów kluczowych, formatowaniu zapytań oraz eksperymentach z różnymi rodzajami promptów.
 \\
 
 \noindent\textbf{Analiza celu naszego prompta}
@@ -148,10 +169,10 @@ Aplikacja jest podzielona na wiele etapów gdzie użytkownik otrzymuje specjalni
 
 \noindent\textbf{Wybór Słów Kluczowych}
 
-Pierwszym etapem projektowania prompt'ów jest staranne dobranie słów kluczowych. Te słowa stanowią istotny element, który kieruje modelem językowym w odpowiednim kierunku. Analiza semantyczna i kontekstualna danego zadania jest kluczowa w identyfikacji słów, które mają kluczowe znaczenie dla uzyskania precyzyjnych odpowiedzi. W tym kontekście eksperymenty z różnymi formułowaniami pytań mogą prowadzić do odkrycia najbardziej efektywnych kombinacji słów kluczowych.
+Pierwszym etapem projektowania promptów jest staranne dobranie słów kluczowych. Te słowa stanowią istotny element, który kieruje modelem językowym w odpowiednim kierunku. Analiza semantyczna i kontekstualna danego zadania jest kluczowa w identyfikacji słów, które mają kluczowe znaczenie dla uzyskania precyzyjnych odpowiedzi. W tym kontekście eksperymenty z różnymi formułowaniami pytań mogą prowadzić do odkrycia najbardziej efektywnych kombinacji słów kluczowych.
 \\
 
-\noindent\textbf{Struktura Prompt'ów}
+\noindent\textbf{Struktura Promptów}
 
 Struktura promptów odgrywa istotną rolę w wydobywaniu pożądanych informacji z modeli językowych. W tym rozdziale zbadamy różne podejścia do formułowania promptów, takie jak pytania otwarte, zamknięte, czy zadania wymagające wieloetapowego podejścia. Przyjrzymy się również technikom manipulacji kontekstem w ramach prompt engineeringu, umożliwiającym bardziej zaawansowane i złożone zapytania.
 
@@ -159,48 +180,47 @@ Struktura promptów odgrywa istotną rolę w wydobywaniu pożądanych informacji
 
 {\bf Czym jest bezpieczeństwo promptów?}
 
-\noindent Bezpieczeństwo promptów dotyczy ochrony przed złośliwym wykorzystaniem duzych modeli językowych (LLM) poprzez manipulowanie promptami, czyli wejściami dostarczanymi modelowi. Ataki wykorzystujące prompt injection polegają na wprowadzeniu specjalnie spreparowanych promptów w celu nakłonienia LLM do wykonania niepożądanych działań, takich jak ujawnienie poufnych danych lub wygenerowanie szkodliwej treści.
+\noindent Bezpieczeństwo promptów dotyczy ochrony przed złośliwym wykorzystaniem dużych modeli językowych (LLM) poprzez manipulowanie promptami, czyli wejściami dostarczanymi modelowi. Ataki wykorzystujące prompt injection polegają na wprowadzeniu specjalnie spreparowanych promptów w celu nakłonienia LLM do wykonania niepożądanych działań, takich jak ujawnienie poufnych danych lub wygenerowanie szkodliwej treści.
 \\
 
-\noindent {\bf Rodzaje ataków związane z prompt security:}
+\noindent {\bf Zagrożenia:}
 
 \begin{enumerate}
 \item {\bf Wstrzyknięcie promptu (Prompt Injection)}
-    - Podobnie do wstrzykiwania kodu SQL w aplikacjach webowych, ataki typu prompt injection polegają na przemyceniu złośliwych poleceń w prompcie. Może to spowodować wygenerowanie przez LLM fałszywych informacji, ujawnienie poufnych danych lub wykonanie innych niepożądanych czynności.
+- Podobnie do wstrzykiwania kodu SQL w aplikacjach webowych, ataki typu prompt injection polegają na przemyceniu złośliwych poleceń w prompcie. Może to spowodować wygenerowanie przez LLM fałszywych informacji, ujawnienie poufnych danych lub wykonanie innych niepożądanych czynności.
 \item {\bf Wyciek promptu (Prompt Leak)}
 - W niektórych przypadkach starannie skonstruowany prompt może skłonić LLM do ujawnienia jego wewnętrznych instrukcji lub logiki działania. Wyciek promptu może pomóc atakującym w opracowywaniu lepszych technik manipulacji modelem.
 \end{enumerate}
 
 {\bf Znaczenie bezpieczeństwa promptów}
 
-\noindent Bezpieczeństwo promptów jest kluczowe dla zapewnienia odpowiedzialnego rozwoju i wdrażania technologii GenAI. Chroni ono przed nadużyciami, które mogą mieć poważne konsekwencje, takie jak:
+\noindent Bezpieczeństwo promptów jest kluczowe dla zapewnienia odpowiedzialnego rozwoju i wdrażania technologii opartej na LLM. Chroni ono przed nadużyciami, które mogą mieć poważne konsekwencje, takie jak:
 
 \begin{enumerate}
-    \item {\bf Utrata danych poufnych}
-    - Wstrzyknięcie promptu może zmusić LLM do ujawnienia poufnych informacji, takich jak dane finansowe lub dane osobowe.
-    \item {\bf Dezinformacja i propaganda}
-    - Ataki mogą być wykorzystywane do generowania fałszywych wiadomości lub propagandy, która może wpływać na opinię publiczną.
-    \item {\bf Spam i phishing}
-    - Generatywne AI mogą być wykorzystywane do tworzenia masowych wiadomości spamowych lub realistycznych wiadomości phishingowych służących wyłudzaniu informacji.
+\item {\bf Utrata danych poufnych}
+- Wstrzyknięcie promptu może zmusić LLM do ujawnienia poufnych informacji, takich jak dane finansowe lub dane osobowe.
+\item {\bf Dezinformacja i propaganda}
+- Ataki mogą być wykorzystywane do generowania fałszywych wiadomości lub propagandy, która może wpływać na opinię publiczną.
+\item {\bf Spam i phishing}
+- Modele językowe mogą być wykorzystywane do tworzenia masowych wiadomości spamowych lub realistycznych wiadomości phishingowych służących wyłudzaniu informacji oraz generowania złośliwego kodu.
 \end{enumerate}
-
 
 {\bf Rozwiązania bezpieczeństwa promptów}
 
-\noindent Firmy zajmujące się bezpieczeństwem cybernetycznym opracowują narzędzia i techniki wykrywania i zapobiegania atakom na prompt security. Niektóre z rozwiązań obejmują:
+\noindent Firmy zajmujące się bezpieczeństwem cybernetycznym opracowują narzędzia i techniki wykrywania i zapobiegania atakom na prompt security. Niektóre\linebreak z rozwiązań obejmują:
 
 \begin{enumerate}
-    \item {\bf Analizę i monitorowanie promptów} - Wykrywanie podejrzanych wzorców w promptach wprowadzanych do LLM.
-    \item {\bf Weryfikację danych wyjściowych} - Sprawdzanie, czy wygenerowane przez LLM dane są zgodne z oczekiwaniami i nie zawierają szkodliwych informacji.
-    \item {\bf Szkolenie LLM w zakresie bezpieczeństwa} - Opracowywanie modeli odpornych na manipulacje poprzez odpowiednie ich szkolenie.
+\item {\bf Analizę i monitorowanie promptów} - Wykrywanie podejrzanych wzorców w promptach wprowadzanych do LLM.
+\item {\bf Weryfikację danych wyjściowych} - Sprawdzanie, czy wygenerowane przez LLM dane są zgodne z oczekiwaniami i nie zawierają szkodliwych informacji.
+\item {\bf Szkolenie LLM w zakresie bezpieczeństwa} - Opracowywanie modeli odpornych na manipulacje poprzez odpowiednie ich szkolenie i zwracanie uwagi na kluczowe parametry.
 \end{enumerate}
 
 \noindent{\bf Wnioski}
 
-\noindent Bezpieczeństwo promptów to ważny, ale często pomijany aspekt rozwoju i wdrażania generatywnej sztucznej inteligencji. Wraz z ciągłym rozwojem technologii GenAI, konieczne jest opracowanie solidnych mechanizmów bezpieczeństwa w celu ochrony przed potencjalnymi zagrożeniami. Rozwiązania te zapewnią, że GenAI będzie wykorzystywana w sposób odpowiedzialny i przyniesie korzyści społeczeństwu.
+\noindent Bezpieczeństwo promptów to ważny, ale często pomijany aspekt rozwoju i wdrażania generatywnej sztucznej inteligencji. Wraz z ciągłym rozwojem technologii sztucznej inteligencji, konieczne jest opracowanie solidnych mechanizmów bezpieczeństwa w celu ochrony przed potencjalnymi zagrożeniami. Rozwiązania te zapewnią, że technologia ta będzie wykorzystywana\linebreak w sposób odpowiedzialny i przyniesie korzyści społeczeństwu.
 
 \subsubsection{Fine-tuning}
-Jest to modyfikowanie istniejących modeli językowych w celu dostosowania ich do konkretnego zadania lub zbioru danych, odgrywa kluczową rolę w dziedzinie uczenia maszynowego i przetwarzania języka naturalnego. Proces ten polega na dalszym trenowaniu modeli na specyficznych danych lub zadaniach, co pozwala na poprawę ich wydajności i skuteczności w konkretnych zastosowaniach. Fine-tuning modeli LLM może być stosowany do różnorodnych zadań, takich jak tłumaczenie maszynowe, generowanie tekstu, analiza sentymentu czy wykrywanie fraz kluczowych. W ten sposób możliwe jest dostosowanie ogólnych modeli językowych do specyficznych potrzeb użytkowników i zastosowań, co przyczynia się do poprawy jakości rezultatów oraz dostosowania modeli do konkretnego kontekstu biznesowego lub naukowego.
+Jest to modyfikowanie istniejących modeli językowych w celu dostosowania ich do konkretnego zadania lub zbioru danych, odgrywa kluczową rolę w dziedzinie uczenia maszynowego i przetwarzania języka naturalnego. Proces ten polega na dalszym trenowaniu modeli na specyficznych danych lub zadaniach, co pozwala na poprawę ich wydajności i skuteczności w konkretnych zastosowaniach. Fine-tuning modeli LLM może być stosowany do różnorodnych zadań, takich jak tłumaczenie maszynowe, generowanie tekstu, analiza kodu czy wykrywanie fraz kluczowych. W ten sposób możliwe jest dostosowanie ogólnych modeli językowych do specyficznych potrzeb użytkowników i zastosowań, co przyczynia się do poprawy jakości rezultatów oraz dostosowania modeli do konkretnego kontekstu biznesowego lub naukowego.
 
 \subsubsection{Halucynacje sztucznej inteligencji}
 Halucynacje sztucznej inteligencji to zjawisko, w którym modele językowe generują odpowiedzi, które nie mają podstaw w rzeczywistych danych, na których zostały przeszkolone.
@@ -209,7 +229,7 @@ Halucynacje to potencjalnie nieprawidłowe, niezamierzone i nierealistyczne wyni
 
 Głównymi przyczynami halucynacji mogą być ograniczone dane treningowe. Jeśli zestaw zbiorów danych jest niewystarczający lub brakuje różnorodności, model może mieć trudności z uchwyceniem złożoności języka, co prowadzi do tak zwanych halucynacji.
 
-Kolejnym ważnym aspektem mogą byc, błędy w danych treningowych, jeśli zawierają luki lub błędne informacje modele mogą włączyć i wzmocnić te uprzedzenia, powodując halucynacje utrwalające fałszywe informacje.
+Kolejnym ważnym aspektem mogą być, błędy w danych treningowych, jeśli zawierają luki lub błędne informacje modele mogą włączyć\linebreak i wzmocnić te uprzedzenia, utrwalające fałszywe informacje.
 
 Również dużą rolę w jakości informacji odgrywa szum danych wejściowych. Niekompletne lub zaszumione dane wejściowe utrudniają modelom dokładne przewidywanie, co prowadzi do zwrócenia błędnych odpowiedzi przez model językowy.
 
@@ -219,7 +239,7 @@ Badania wykazały, że niektóre popularne chatboty, takie jak ChatGPT, Bard i B
 
 Firmy takie jak OpenAI podejmują wysiłki, aby zminimalizować halucynacje, stosując techniki takie jak "nadzór procesu" - monitorowanie procesu generowania odpowiedzi w celu wykrycia i skorygowania potencjalnych halucynacji.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/chatgpt_trick.jpg}
     \caption{Kreatywny sposób na oszukanie chatbota w celu rozwiązania captcha }
@@ -229,58 +249,73 @@ Firmy takie jak OpenAI podejmują wysiłki, aby zminimalizować halucynacje, sto
 \subsubsection{Zagrożenia}
 Sztuczna inteligencja (AI) może być potencjalnie wykorzystywana do nieetycznych celów na wiele sposobów. 
 
-Jeśli dane treningowe dla modeli AI zawierają uprzedzenia lub wzorce dyskryminacji, algorytmy mogą je utrwalać i skalować na dużą skalę. Może to prowadzić do niesprawiedliwych decyzji i nierównego traktowania niektórych grup społecznych. Zaawansowane systemy AI mogą być wykorzystywane do masowej inwigilacji, śledzenia i gromadzenia danych osobowych bez zgody i wiedzy osób, naruszając ich prawo do prywatności.
+Jeśli dane treningowe dla modeli AI zawierają uprzedzenia lub wzorce dyskryminacji, algorytmy mogą je utrwalać i powielać na dużą skalę. Może to prowadzić do niesprawiedliwych decyzji i nierównego traktowania niektórych grup społecznych. Zaawansowane systemy AI mogą być wykorzystywane do masowej inwigilacji, śledzenia i gromadzenia danych osobowych bez zgody i wiedzy osób, naruszając ich prawo do własności intelektualnej.
 
-Modele językowe mogą być użyte do tworzenia fałszywych treści, takich jak deepfake'i w postaci fałszywych nagrań, sfabrykowanych wiadomości.
+Modele językowe mogą być użyte do tworzenia fałszywych treści, takich jak deepfake' w postaci fałszywych nagrań, zdjęć przedstawiających wydarzenia nieprawdziwe lub wiadomości.
 
 Nieodpowiednio wykorzystane zdolności sztucznej inteligencji mogą być wykorzystywane przez hakerów do tworzenia zaawansowanych wirusów, botnetów i innych form szkodliwego oprogramowania, które są trudniejsze do wykrycia i zwalczania.
 
 \subsubsection{Large Language Models}
-Duże modele językowe (LLM) to zaawansowane algorytmy sztucznej inteligencji, które wykorzystują techniki głębokiego uczenia się i obszerne zbiory danych do generowania, podsumowywania i przewidywania nowych treści w języku naturalnym. Modele te, opierają się głównie na transformatorach, są zaprojektowane tak, aby rozumieć relacje między słowami i frazami, umożliwiając im równoległe przetwarzanie całych sekwencji tekstu. Szkolenie odbywa się na ogromnych ilościach danych, zazwyczaj z miliardami parametrów, co pozwala im na dostarczanie dokładnych i szybkich odpowiedzi. Modele językowe wiążą się również z wyzwaniami, takimi jak wysokie koszty rozwoju i operacyjne, potencjalna stronniczość danych szkoleniowych, brak możliwości wyjaśnienia wyników, ryzyko halucynacji (dostarczanie niedokładnych odpowiedzi) oraz złożoność ze względu na dużą liczbę parametrów.
+Duże modele językowe (LLM) to zaawansowane algorytmy sztucznej inteligencji, które wykorzystują techniki głębokiego uczenia się i obszerne zbiory danych do generowania, podsumowywania i przewidywania nowych treści w języku naturalnym. Modele te, opierają się głównie na transformatorach, są zaprojektowane tak, aby rozumieć relacje między słowami\linebreak i frazami, umożliwiając im równoległe przetwarzanie całych sekwencji tekstu. Szkolenie odbywa się na ogromnych ilościach danych, zazwyczaj z miliardami parametrów, co pozwala im na dostarczanie dokładnych i szybkich odpowiedzi. Modele językowe wiążą się również z wyzwaniami, takimi jak wysokie koszty rozwoju i operacyjne, potencjalna stronniczość danych szkoleniowych, ryzyko halucynacji (dostarczanie niedokładnych odpowiedzi) oraz złożoność ze względu na dużą liczbę parametrów.
 
 \subsubsection{Ranking Modeli}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/llms_benchmark.png}
     \caption{Benchmark modeli LLM}
     \label{fig:my_label}
 \end{figure}
 
+Ranking modeli został przeprowadzony na środowisku lokalnym\linebreak z kartą graficzną NVIDIA GeForce GTX 1060. Na podanej wyżej tabeli zaznaczono nazwy modeli kolorem zielonym, które są modelami open source i można je skonfigurować do pracy na środowisku lokalnym. W rankingu uwzględniono liczbę parametrów danego modelu wyrażnoną w miliardach. Następnie czas odpowiedzi na ten sam prompt dotyczący prośby o wygenerowanie planu treningowego dla użytkownika aplikacji. Dołączone zostały również koszty jakie trzeba ponieść aby dany model językowy mógł funkcjonować, pomijając koszty winikające z opłat energii elektrycznej i innych czynników zewnętrznych. Szybko można zauważyć dość oczywistą zależność, że płatne modele Chat GPT odpowiadają szybciej niż te na lokalnej maszynie. Dedykowane środowiska oraz konfiguracje zapewnione przez firmę OpenAI powodują, że model językowy odpowiada w sposób niemal natychmiastowy, nie trzeba oczekiwać na kolejne generowane słowa długo. Czas jest jednym z kluczowych aspektów podczas budowania aplikacji, użytkownik nie powinien być zmuszony do długiego oczekiwania na efekt końcowy. Żeby modele lokalne nie odbiegały prędkością odpowiedzi swojemu płatnemu odpowiednikowi, należałoby zainwestować w lepszą kartę graficzną bądź skorzystać z dedykowanego chmurowego rozwiązania z profesjonalnym chipem, zoptymalizowanym pod sztuczą inteligencję. Niestety budżet naszego projektu nie był na tyle duży, aby podjąć się takiego przedsięwzięcia.
+\\
+
+\noindent Modele zostały ocenione w 6 stopniowej skali oceniania w kategoriach:
+\begin{enumerate}
+    \item zrozumiałość zwróconego tekstu
+    \item poprawność formatu odpowiedzi
+    \item ocena odpowiedzi pod względem umiejętności dopasowania generowanych danych dla użytkownika końcowego
+\end{enumerate}
+
+\paragraph{} Tutaj modele OpenAI ponownie dominują nad swoją konkurencją. Nie tylko lepiej dostosowywują się do zadanego prompta, ale też łatwiej dodać ich efekty operacji do finalnej aplikacji.
+Plany oraz zadania były znacznie wyższej jakości niż darmowych odpowiedników. Przyglądając się liczbie parametrów można założyć tezę, że model firmy Meta z  ok. 8B parametrów poradzi sobie lepiej niż ChatGPT, jednak znany chatbot poradził sobie lepiej z generowaniem treści.
 
 \subsubsection{Etyka}
 Wraz z bardzo szybkim rozwojem sztucznej inteligencji, pojawia się wiele dylematów natury etycznej związanych zarówno z prawami autorskimi trenowanych danych oraz faktycznych rezultatów stworzonych przez AI. Istnieje ryzyko, że modele mogą przekazywać błędne informacje, szerzyć dezinformację, lub być źródłem treści szkodliwych często nielegalnych. Dlatego ważne jest, aby organizacje i twórcy tych modeli dbali o uczciwość, transparentność, oraz brali odpowiedzialność za generowane treści.
-
-\clearpage
 
 \subsection{Platformy chmurowe}
 Platformy chmurowe to zaawansowane systemy, które umożliwiają firmom i organizacjom dostęp do zasobów obliczeniowych przez Internet, bez konieczności posiadania i zarządzania własną infrastrukturą IT.
 
 Platforma chmurowa to komponenty składające się z systemów operacyjnych, serwerów w centrum danych skonfigurowanych pod personalne potrzeby klientów. Umożliwiają one organizacjom wynajmowanie dostępu do zasobów obliczeniowych, takich jak serwery, bazy danych, magazyny danych, analityk, sieci wirtualnych. Model biznesowy dostawców usług chmurowych opiera się na zasadzie "pay as you go" (z .ang) płać za te zasoby, które zużyjesz.
+\\
 
-Usługi chmurowe możemy podzielić na trzy kluczowe rodzaje:
+\noindent{\bf Usługi chmurowe możemy podzielić na trzy kluczowe rodzaje:}
 
-1. Chmura Publiczna: Usługi świadczone przez zewnętrznych dostawców, dostępne dla wielu klientów przez Internet. Przykłady to Amazon Web Services (AWS), Google Cloud Platform, Microsoft Azure, Alibaba Cloud i IBM Cloud.
-2. Chmura Prywatna: Dedykowana dla jednej organizacji, może być zarządzana wewnętrznie lub przez zewnętrznego dostawcę. Oferuje większą kontrolę nad zasobami i bezpieczeństwem.
-3. Chmura Hybrydowa: Kombinacja chmury publicznej i prywatnej, umożliwiająca przenoszenie danych i aplikacji między nimi, co zapewnia większą elastyczność i optymalizację infrastruktury.
+\begin{enumerate}
+    \item {\bf Chmura Publiczna:} Usługi świadczone przez zewnętrznych dostawców, dostępne dla wielu klientów przez Internet. Przykłady to Amazon Web Services (AWS), Google Cloud Platform, Microsoft Azure, Alibaba Cloud i IBM Cloud.
+    \item {\bf  Chmura Prywatna:} Dedykowana dla jednej organizacji, może być zarządzana wewnętrznie lub przez zewnętrznego dostawcę. Oferuje większą kontrolę nad zasobami i bezpieczeństwem.
+    \item {\bf Chmura Hybrydowa:} Chmura Hybrydowa: Kombinacja chmury publicznej i prywatnej, umożliwiająca przenoszenie danych i aplikacji między nimi, co zapewnia większą elastyczność i optymalizację infrastruktury.
+\end{enumerate} 
 
-Korzyści z Używania Platform Chmurowych:
-
-1. Elastyczność: Możliwość szybkiego skalowania zasobów w górę lub w dół w zależności od potrzeb biznesowych, co pozwala uniknąć nadmiernego lub niedostatecznego przydziału zasobów obliczeniowych.
-2. Redukcja Kosztów: Eliminacja kosztów kapitałowych związanych z budową i utrzymaniem własnych centrów danych oraz płatność tylko za faktycznie używane zasoby.
-3. Wydajność: Dostęp do dużej mocy obliczeniowej i magazynowej na żądanie, co pozwala unikać wąskich gardeł i zapewnia lepszą wydajność aplikacji.
-4. Szybkość Wdrożenia: Możliwość szybkiego wdrażania technologii na całym świecie, co skraca czas wprowadzenia produktów na rynek.
-5. Zwiększona Produktywność: Zespoły IT są zwolnione z zarządzania, utrzymania i aktualizacji sprzętu i oprogramowania na miejscu, co pozwala im skupić się na bardziej strategicznych zadaniach.
-6. Bezpieczeństwo: Dostawcy chmurowi inwestują znaczne środki w technologie zabezpieczające, co często zapewnia wyższy poziom bezpieczeństwa niż w przypadku własnych centrów danych.
-7. Niezawodność: Platformy chmurowe są bardziej odporne dzięki rozproszonej infrastrukturze, co zapewnia szybsze odzyskiwanie danych po awariach systemów.
-
+\noindent{\bf Korzyści z Używania Platform Chmurowych:}
+\begin{enumerate}
+    \item {\bf Elastyczność:}  Możliwość szybkiego skalowania zasobów w górę lub w dół w zależności od potrzeb biznesowych, co pozwala uniknąć nadmiernego lub niedostatecznego przydziału zasobów obliczeniowych.
+    \item {\bf Redukcja Kosztów:}  Eliminacja kosztów kapitałowych związanych z budową i utrzymaniem własnych centrów danych oraz płatność tylko za faktycznie używane zasoby.
+    \item {\bf Wydajność:} Dostęp do dużej mocy obliczeniowej i magazynowej na żądanie, co pozwala unikać wąskich gardeł i zapewnia lepszą wydajność aplikacji.
+    \item {\bf Szybkość Wdrożenia:} Możliwość szybkiego wdrażania technologii na całym świecie, co skraca czas wprowadzenia produktów na rynek.
+    \item {\bf Zwiększona Produktywność:} Zespoły IT są zwolnione z zarządzania, utrzymania i aktualizacji sprzętu i oprogramowania na miejscu, co pozwala im skupić się na bardziej strategicznych zadaniach.
+    \item {\bf Bezpieczeństwo:} Dostawcy chmurowi inwestują znaczne środki w technologie zabezpieczające, co często zapewnia wyższy poziom bezpieczeństwa niż w przypadku własnych centrów danych.
+    \item {\bf Niezawodność:} Platformy chmurowe są bardziej odporne dzięki rozproszonej infrastrukturze, co zapewnia szybsze odzyskiwanie danych po awariach systemów.
+    
+\end{enumerate}
 Platformy chmurowe odgrywają kluczową rolę w nowoczesnych strategiach IT, umożliwiając firmom szybkie i efektywne skalowanie swoich operacji oraz wprowadzanie innowacji.
+
 \subsubsection{Opis platform}
 Platformy chmurowe to zintegrowane zestawy technologii umożliwiające użytkownikom zdalne korzystanie z szerokiej gamy zasobów komputerowych przez Internet. Te cyfrowe ekosystemy oferują skalowalne rozwiązania IT, takie jak serwery, pamięć, bazy danych oraz oprogramowanie, wszystko dostępne jako usługa. Główne kategorie tych usług to: Infrastructure as a Service (IaaS), Platform as a Service (PaaS) oraz Software as a Service (SaaS).
 
-Korzystanie z platform chmurowych przynosi wiele korzyści. Elastyczność i skalowalność pozwalają na szybkie dostosowywanie zasobów do aktualnych potrzeb, bez konieczności inwestycji w drogie sprzęty i infrastrukturę. Oszczędności kosztów wynikają z modelu opłat "pay as you go", co oznacza, że płaci się tylko za te zasoby, które są faktycznie wykorzystywane. Bezpieczeństwo danych jest również kluczowym aspektem, z zaawansowanymi rozwiązaniami chroniącymi przed utratą danych i cyberatakami.
+Korzystanie z platform chmurowych przynosi wiele korzyści. Elastyczność i skalowalność pozwalają na szybkie dostosowywanie zasobów do aktualnych potrzeb, bez konieczności inwestycji w drogi sprzęt i infrastrukturę. Oszczędności kosztów wynikają z modelu opłat "pay as you go", co oznacza, że płaci się tylko za te zasoby, które są faktycznie wykorzystywane. Bezpieczeństwo danych jest również kluczowym aspektem, z zaawansowanymi rozwiązaniami chroniącymi przed utratą danych i cyberatakami.
+
 \subsubsection{Wybór - Plaforma Microsoft Azure}
-\clearpage
 Platfroma Azure została wybrana do naszego projektu ze względu na to,że nasz zespół miał już doświadczenie zarówno prywatne jak i komercyjne w tej technologi. Kolejnym atutem rozwiązania firmy z Redmond, jest bogata oferta serwisów oraz technologii potrzebnych do zbudowania do aplikacji opartej o architekturę mikroserwisów.
 W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mikroserwisów dzięki usługom takim jak Azure Kubernetes Service, który upraszcza zarządzanie kontenerami, oraz Azure Container Instances. Platforma oferuje również integracje z narzędziami deweloperskimi oraz CI/CD.
 
@@ -303,7 +338,7 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \subsubsection{Diagram przypadków użycia}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{Obrazy/diagrams/use_case_diagram.png}
     \caption{Diagram przypadków użycia}
@@ -312,7 +347,7 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \subsubsection{Scenariusze przypadków użycia}
 
-{\noindent \bf{\large 1. Rejestracja użytkownika\par}}
+{\noindent \bf{\small 1. Rejestracja użytkownika\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Rejestracja użytkownika w systemie\\
 {\bf Poziom: } Cel użytkownika\\
@@ -339,7 +374,7 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \noindent\rule{14cm}{0.1pt} % długość i grubość linii
 
-{\noindent \bf{\large 2. Logowanie użytkownika\par}}
+{\noindent \bf{\small 2. Logowanie użytkownika\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Logowanie użytkownika do systemu\\
 {\bf Poziom: } Cel użytkownika\\
@@ -366,7 +401,9 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \noindent\rule{14cm}{0.1pt} % długość i grubość linii
 
-{\noindent \bf{\large 3. Dodaj cel\par}}
+\clearpage
+
+{\noindent \bf{\small 3. Dodaj cel\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Dodawanie nowego celu przez użytkownika\\
 {\bf Poziom: } Cel użytkownika\\
@@ -393,7 +430,7 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \noindent\rule{14cm}{0.1pt} % długość i grubość linii
 
-{\noindent \bf{\large 4. Wyświetl stronę startową\par}}
+{\noindent \bf{\small 4. Wyświetl stronę startową\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Wyświetlanie strony startowej aplikacji\\
 {\bf Poziom: } Cel użytkownika\\
@@ -412,7 +449,9 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \noindent\rule{14cm}{0.1pt} % długość i grubość linii
 
-{\noindent \bf{\large 5. Wyświetl cele\par}}
+\clearpage
+
+{\noindent \bf{\small 5. Wyświetl cele\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Wyświetlanie listy celów użytkownika\\
 {\bf Poziom: } Cel użytkownika\\
@@ -431,7 +470,7 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \noindent\rule{14cm}{0.1pt} % długość i grubość linii
 
-{\noindent \bf{\large 6. Wyświetl szczegóły celu\par}}
+{\noindent \bf{\small 6. Wyświetl szczegóły celu\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Wyświetlanie szczegółów wybranego celu\\
 {\bf Poziom: } Cel użytkownika\\
@@ -450,7 +489,9 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \noindent\rule{14cm}{0.1pt} % długość i grubość linii
 
-{\noindent \bf{\large 7. Wyświetl wszystkie zadania\par}}
+\clearpage
+
+{\noindent \bf{\small 7. Wyświetl wszystkie zadania\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Wyświetlanie listy wszystkich zadań\\
 {\bf Poziom: } Cel użytkownika\\
@@ -469,7 +510,7 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \noindent\rule{14cm}{0.1pt} % długość i grubość linii
 
-{\noindent \bf{\large 8. Wyświetl szczegóły zadania\par}}
+{\noindent \bf{\small 8. Wyświetl szczegóły zadania\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Wyświetlanie szczegółów wybranego zadania\\
 {\bf Poziom: } Cel użytkownika\\
@@ -488,7 +529,9 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 
 \noindent\rule{14cm}{0.1pt} % długość i grubość linii
 
-{\noindent \bf{\large 9. Edytuj szczegóły konta\par}}
+\clearpage
+
+{\noindent \bf{\small 9. Edytuj szczegóły konta\par}}
 \vspace{0.5cm}
 {\noindent \bf Kontekst użycia: } Edytowanie szczegółów konta użytkownika\\
 {\bf Poziom: } Cel użytkownika\\
@@ -497,22 +540,17 @@ W tym kontekście, Azure okazuje się być idealną platformą do rozwijania mik
 {\bf Gwarancja powodzenia: } Szczegóły konta zostały poprawnie zaktualizowane\\
 {\bf Wyzwalacz: } Użytkownik\\
 {\bf Główny scenariusz powodzenia: }
-\begin{center}
-    \begin{enumerate}
-        \item Użytkownik (aktor) uruchamia przypadek użycia
-        \item System ładuje formularz edycji szczegółów konta
-        \item Użytkownik wypełnia formularz i zapisuje zmiany
-        \item System zapisuje zaktualizowane dane użytkownika
-        \item Aplikacja kończy przypadek użycia
-    \end{enumerate}
-\end{center}
+\begin{enumerate}
+    \item Użytkownik (aktor) uruchamia przypadek użycia
+    \item System ładuje formularz edycji szczegółów konta
+    \item Użytkownik wypełnia formularz i zapisuje zmiany
+    \item System zapisuje zaktualizowane dane użytkownika
+    \item Aplikacja kończy przypadek użycia
+\end{enumerate}
 {\noindent \bf Rozszerzenia: }
-\begin{center}
-    \begin{description}
-        \item{4a.} Formularz zawiera nieprawidłowe dane, edycja nie powiodła się
-    \end{description}
-\end{center}
-
+\begin{description}
+    \item[4a.] Formularz zawiera nieprawidłowe dane, edycja nie powiodła się
+\end{description}
 
 \subsubsection{Sposób przechowywania danych}
 Dane użytkowników są przechowywane w bazie danych PostgreSQL, co zapewnia efektywne zarządzanie dużymi zbiorami danych oraz wysoki poziom bezpieczeństwa. PostgreSQL, jako zaawansowany system zarządzania relacyjnymi bazami danych, oferuje szerokie możliwości skalowania i optymalizacji, co jest kluczowe przy obsłudze danych wrażliwych i osobowych.
@@ -522,12 +560,14 @@ Dane użytkowników są przechowywane w bazie danych PostgreSQL, co zapewnia efe
 \subsubsection{Diagramy}
 
 {\noindent \bf Diagram aktywności dodania celu: }
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/diagrams/add_goal_activity_diagram.png}
     \caption{Diagram Aktywności dla przypadku dodanie celu}
     \label{fig:my_label}
 \end{figure}
+
+\noindent Powyższy diagram aktywności przedstawia cały proces dodawania celu od momentu rozpoczęcia do zakończenia. Uwzględnia on interakcje użytkownika z systemem, walidację danych, zapis do bazy danych oraz aktualizację interfejsu użytkownika. Jest to pomocne narzędzie do zrozumienia przepływu pracy oraz identyfikacji potencjalnych punktów poprawy w procesie.
 
 \clearpage
 
@@ -542,42 +582,42 @@ Dane użytkowników są przechowywane w bazie danych PostgreSQL, co zapewnia efe
 \subsection{Opis prototypów}
 Prototypy opracowane na etapie planowania całej aplikacji okazały się niezwykle pomocne w ustaleniu funkcjonalności oraz ogólnego zarysu aplikacji. Jednakże, po dokładnej analizie trendów dotyczących UX/UI oraz tematyki aplikacji, konieczne było wykonanie nowego aspektu wizualnego. Zmieniono kolorystykę oraz doprecyzowano wygląd poszczególnych komponentów, aby spełnić wymagania standardów UX/UI oraz zapewnić użytkownikom maksymalny komfort podczas korzystania z aplikacji. Ważnym celem było stworzenie projektu przyjaznego i intuicyjnego, a także spełnienie wymogów dotyczących dostępności. Wszystkie te aspekty zostały uwzględnione podczas projektowania i implementacji aplikacji.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/prototypy/logowanie.png}
     \caption{Prototyp ekranu logowania}
     \label{fig:my_label}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/prototypy/personalizacja_konta.png}
     \caption{Prototyp ekranu personalizacji konta}
     \label{fig:my_label}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/prototypy/strona_startowa.png}
     \caption{Prototyp strony startowej}
     \label{fig:my_label}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/prototypy/panel_zadania.png}
     \caption{Prototyp panelu zadania}
     \label{fig:my_label}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/prototypy/kalendarz.png}
     \caption{Prototyp kalendarza}
     \label{fig:my_label}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Obrazy/prototypy/profil_uzytkownika.png}
     \caption{Prototyp profilu użytkownika}
