@@ -1,5 +1,5 @@
 # docker compose --env-file .env -f docker-compose-local.yml up --build
-version: '3.7'
+version: '3.8'
 
 services:
 
@@ -80,17 +80,15 @@ services:
 
   grafana:
     container_name: grafana
-    build:
-      context: ./Monitoring/Grafana
-      dockerfile: Dockerfile.local
+    image: grafana/grafana:latest
     restart: always
     volumes:
-      - ./Monitoring/Grafana/lib:/var/lib/grafana
+      - ./Monitoring/Grafana/lib:/etc/grafana/provisioning/datasources
     ports:
       - "3002:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=admin=${GF_SECURITY_ADMIN_PASSWORD}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
 
   loki:
     container_name: loki
@@ -125,14 +123,13 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - prometheus_data:/prometheus
       - ./Monitoring/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
     command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-      - --web.external-url=http://localhost:80/prometheus/
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
 
   node-exporter:
     container_name: node-exporter
@@ -243,7 +240,6 @@ services:
         limits:
           cpus: '0.5'
           memory: 500M
-
 
 volumes:
   azurite_data:
