@@ -24,6 +24,6 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ##### * Creating frontend
 ##### * UX/UI
 ##### * API management
-##### Prompt Engineering
+##### * Prompt Engineering
 # Tech Stack
 C# , React, Typescript, Powershell, Docker, LLAMA2, Kubernetes, Terraform
