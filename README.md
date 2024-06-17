@@ -5,8 +5,8 @@ Masters Degree project for Polish Japanese Institute of Technology in Warsaw.
 Application for self-improvement that uses various AI tools and API's.  
 We strive to provide personal AI assistant that will help user to schedule his/her tasks and create personal plans.  
 
-# Team members
-## Adam Bączkowski (DevOps)  
+# Team members:
+### Adam Bączkowski (DevOps)  
 ##### * Creating Pipelines
 ##### * Writing Dockerfiles and docker compose
 ##### * Terraform infrastructure management
@@ -15,12 +15,14 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ##### * API management
 ##### * Prompt Engineering
 ##### * Secrets Management
-## Mateusz Młodochowski (Backend)
+##### * Database management
+### Mateusz Młodochowski (Backend)
 ##### * Creating .Net containers and sevices
 ##### * API management
 ##### * API management
 ##### * Prompt Engineering
-## Grzegorz Święcicki (Frontend)
+##### * Database management
+### Grzegorz Święcicki (Frontend)
 ##### * Creating frontend
 ##### * UX/UI
 ##### * API management
