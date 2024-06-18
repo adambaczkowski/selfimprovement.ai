@@ -52,3 +52,6 @@ docker compose --env-file .env -f docker-compose-local.yml up --build
 
 ### Calendar page:
 ![alt text](images/3.png "Calendar page")
+
+### Goals page:
+![alt text](images/4.png "Goals page")
