@@ -16,6 +16,7 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ##### * Prompt Engineering
 ##### * Secrets Management
 ##### * Database management
+##### * Documentation and README files management
 ### Mateusz Młodochowski (Backend)
 ##### * Creating .Net containers and sevices
 ##### * API management
@@ -27,5 +28,6 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ##### * UX/UI
 ##### * API management
 ##### * Prompt Engineering
+##### * LateX file moderation
 # Tech Stack
 C# , React, Typescript, Powershell, Docker, LLAMA2, Kubernetes, Terraform
