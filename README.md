@@ -46,3 +46,9 @@ docker compose --env-file .env -f docker-compose-local.yml up --build
 
 ### Login screen:
 ![alt text](images/1.png "Login Screen")
+
+### Main page:
+![alt text](images/2.png "Main page")
+
+### Calendar page:
+![alt text](images/3.png "Calendar page")
