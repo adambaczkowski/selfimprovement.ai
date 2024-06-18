@@ -34,3 +34,12 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ##### * LateX file moderation
 # Tech Stack
 C# , React, Typescript, Powershell, Docker, LLAMA2, Kubernetes, Terraform
+
+### Build app localy with docker compose:
+You will need to create your own .env file matching variables names in docker-compose-local.yml
+```
+docker compose --env-file .env -f docker-compose-local.yml up --build
+```
+
+### Login screen:
+![alt text](images/1.png "Login Screen")
