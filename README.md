@@ -19,7 +19,7 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ### Mateusz Młodochowski (Backend)
 ##### * Creating .Net containers and sevices
 ##### * API management
-##### * API management
+##### * Writing Dockerfiles and docker compose
 ##### * Prompt Engineering
 ##### * Database management
 ### Grzegorz Święcicki (Frontend)
