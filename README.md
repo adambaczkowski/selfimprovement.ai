@@ -25,6 +25,7 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ##### * Prompt Engineering
 ##### * Database management
 ##### * Creating benchmarks for LLMs
+##### * RabbitMq management
 ### Grzegorz Święcicki (Frontend)
 ##### * Creating frontend
 ##### * UX/UI
