@@ -41,5 +41,8 @@ You will need to create your own .env file matching variables names in docker-co
 docker compose --env-file .env -f docker-compose-local.yml up --build
 ```
 
+### System overview:
+![alt text](images/architecture.png "Architecture")
+
 ### Login screen:
 ![alt text](images/1.png "Login Screen")
