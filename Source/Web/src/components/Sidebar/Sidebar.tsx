@@ -42,7 +42,8 @@ function Sidebar() {
     <div className={styles.sidebar_background_container}>
       <div className={styles.image_container}>
         <Link to={"/profileCreation/edit"} className={styles.image} title='Edit profile'>
-          <img src="https://assets.vogue.com/photos/6327939f06377e01c5304296/master/w_1920,c_limit/Fc9-RcUXgAEgljY.jpeg" alt="Your Image" className={styles.image} />
+          {/* <img src="https://assets.vogue.com/photos/6327939f06377e01c5304296/master/w_1920,c_limit/Fc9-RcUXgAEgljY.jpeg" alt="Your Image" className={styles.image} /> */}
+          <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="Your Image" className={styles.image} />
         </Link>
         <h1 className={styles.sidebar_header}>{username}</h1>
       </div>
