@@ -17,12 +17,14 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ##### * Secrets Management
 ##### * Database management
 ##### * Documentation and README files management
+##### * Creating benchmarks for LLMs
 ### Mateusz Młodochowski (Backend)
 ##### * Creating .Net containers and sevices
 ##### * API management
 ##### * Writing Dockerfiles and docker compose
 ##### * Prompt Engineering
 ##### * Database management
+##### * Creating benchmarks for LLMs
 ### Grzegorz Święcicki (Frontend)
 ##### * Creating frontend
 ##### * UX/UI
