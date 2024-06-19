@@ -523,11 +523,84 @@ Plany oraz zadania były znacznie wyższej jakości niż darmowych odpowiednikó
 
 \clearpage
 
+\subsubsection{Analiza Wydajności Modeli}
+
+Ważnym aspektem w projektowaniu aplikacji, której zawartość oraz treść jest generowana przez model sztucznej inteligencji jest wydajność. Przeprowadzono analizę porównawczą wydajności różnych modeli językowych w kontekście generowania treści na zadany temat. Wykorzystano to samo pytanie, jak i rozszerzonego kontekstu, pozwalający na dokładniejszą ocenę, jak modele radzą sobie z różnymi typami zapytań.
+
+Program ten realizuje proces generowania planu treningowego dla amatora, który chce przebiec maraton w ciągu roku, oraz analizuje wydajność różnych modeli językowych użytych do tego celu. W tym celu wykorzystuje pytanie dotyczące stworzenia planu treningowego oraz kontekst, który informuje, że zadaniem modelu jest dostarczenie treści do aplikacji internetowej.
+
+\begin{lstlisting}[language=python, caption=Krok generowania planu treningowego]
+# question
+q = '''
+Imagine that you are amateur person that wants to run 
+a marathon in one year. This person about 10 hours to 
+practice during week. Create plan that will last one year. 
+Today is 23 April 2024 Create goal for every month. 
+Include full name of every month and full date in format 
+dd-mm-yyyy. Try to explain every task as precisely as you can.
+'''
+
+# context
+cntx = '''
+Your job will be play a role as content provider 
+to the web application. You will get a task 
+description and your job is to prepare plan for certain goal
+'''
+
+# models
+models = ['llama2','llama3','stablelm-zephyr']
+\end{lstlisting}
+
+Program testuje trzy modele językowe: llama2, llama3 oraz stablelm-zephyr. Dla każdego z tych modeli najpierw generuje odpowiedzi na podstawie samego pytania, a następnie na podstawie pytania rozszerzonego o kontekst. Czas trwania generowania odpowiedzi jest mierzony i zapisywany.
+
+Wyniki generowania treści, w tym metryki wydajności, są przechowywane i analizowane za pomocą biblioteki pandas. Metryki te obejmują całkowity czas trwania, czas ładowania, liczbę ocenianych podpowiedzi, liczbę ocen, czas oceny podpowiedzi oraz czas oceny. Program oblicza również dodatkowe parametry, takie jak czas obliczeń, szybkość przetwarzania podpowiedzi oraz szybkość ocen.
+
+Dane te są następnie wizualizowane za pomocą wykresów słupkowych, które przedstawiają czas ładowania, szybkość przetwarzania podpowiedzi oraz szybkość ocen dla każdego modelu. Wykresy te pozwalają na łatwe porównanie wydajności różnych modeli językowych i oceny ich przydatności do określonego zadania.
+
+Program ma na celu nie tylko wygenerowanie planu treningowego, ale także przeprowadzenie analizy porównawczej wydajności różnych modeli językowych w kontekście generowania treści na zadany temat. Wykorzystanie zarówno samego pytania, jak i rozszerzonego kontekstu, pozwala na dokładniejszą ocenę, jak modele radzą sobie z różnymi typami zapytań. Poniżej przedstawiono wyniki przeprowadzone lokalnie na karcie graficznej NVIDIA GTX 1060.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/results.png}
+    \caption{Analiza Wydajności Modeli}
+    \label{fig:my_label}
+\end{figure}
+
+Analizując wyniki przetwarzania trzech modeli językowych razem bez konstektsu oraz z kontekstem (ctx): llama2, llama3, stablelm-zephyr, llama2+ctx, llama3+ctx i stablelm-zephyr+ctx, można zauważyć znaczne różnice w ich wydajności i efektywności.
+
+
+\noindent Zmierzono trzy kluczowe atrybuty:
+\begin{enumerate}
+    \item calc\_duration: Czas obliczeń jako różnicę między całkowitym czasem trwania a czasem ładowania.
+    \item prompt\_rate: Szybkość przetwarzania podpowiedzi, czyli liczba ocenianych podpowiedzi na jednostkę czasu (tk/s).
+    \item eval\_rate: Szybkość ocen, czyli liczba ocen na jednostkę czasu (tk/s).
+\end{enumerate}
+
+Model stablelm-zephyr+ctx osiągnął najkrótszy czas przetwarzania wynoszący 184.62 sekundy, co czyni go najbardziej efektywnym pod względem całkowitego czasu trwania. W przeciwieństwie do niego, model llama2+ctx miał najdłuższy czas przetwarzania, wynoszący aż 2160.26 sekund, co może wskazywać na problemy z optymalizacją lub nadmierne obciążenie obliczeniowe tego modelu.
+
+Czas ładowania modeli również wykazuje różnice. Model llama2 charakteryzuje się najkrótszym czasem ładowania wynoszącym 3.01 sekundy, podczas gdy model llama3 potrzebował na to 35.13 sekund, co jest najdłuższym czasem ładowania spośród wszystkich analizowanych modeli.
+
+Pod względem liczby ocenianych podpowiedzi (prompt\_eval\_count), model llama2+ctx ocenił najwięcej, bo aż 139 podpowiedzi, natomiast model llama3 ocenił ich najmniej, bo jedynie 87. Liczba ocen przeprowadzonych przez modele również była zróżnicowana. Najwięcej ocen, bo aż 1668, przeprowadził model llama2+ctx, a najmniej – 517 – model llama3+ctx.
+
+Czas oceny podpowiedzi (prompt\_eval\_duration) był najdłuższy dla modelu llama2+ctx, wynosząc 21.32 sekundy, co kontrastuje z najkrótszym czasem oceny podpowiedzi modelu llama2, który wynosił zaledwie 0.88 sekund. Podobne różnice zauważalne są w czasie oceny (eval\_duration), gdzie model llama2+ctx potrzebował 2108.58 sekundy, a model stablelm-zephyr+ctx jedynie 174.21 sekundy.
+
+Czas obliczeń (calc\_duration) dla modeli również wykazywał znaczne różnice. Najdłuższy czas obliczeń miał model llama2+ctx, wynosząc 2129.91 sekundy, podczas gdy model stablelm-zephyr+ctx osiągnął najkrótszy czas obliczeń, wynoszący 177.46 sekundy.
+
+Analizując szybkość przetwarzania podpowiedzi (prompt\_rate), model llama2 osiągnął najwyższą szybkość wynoszącą 120.38, co kontrastuje z najniższą szybkością modelu llama2+ctx, która wynosiła 6.52. Szybkość oceny (eval\_rate) była najwyższa w przypadku modelu stablelm-zephyr+ctx, wynosząc 4.30, a najniższa u modelu llama2+ctx, wynosząc jedynie 0.79.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Obrazy/benchmark_excel.png}
+    \caption{Podsumowanie wyników}
+    \label{fig:my_label}
+\end{figure}
+
+Warto pamiętać, że w komercyjnych i profesjonalnych warunkach wyniki wyglądałyby zupełnie inaczej. Do zapewnienia w aplikacji szybkiej analizy danych oraz czasu odpowiedzi potrzeba odpowiedniej mocy obliczeniowej, która często jest nie dostępna dla przeciętnego użytkownika. Kolejnym czynnikiem są parametry na których model był trenowany, im większa ilość parametrów tym czas odpowiedzi będzie dłuższy. Model taki jak zephyr miałby lepsze zastosowanie jako model odpowiedzialny np. za prostą komunikację z klientem, gdzie trzeba wygenerować prostą odpowiedź w jak najkrótszym czasie. Natomiast llama3 lepiej sprawdzi się do głębszej analizy danych.
+
 \subsection{Platformy chmurowe}
 Platformy chmurowe to zaawansowane systemy, które umożliwiają firmom i organizacjom dostęp do zasobów obliczeniowych przez Internet, bez konieczności posiadania i zarządzania własną infrastrukturą IT.
 
 Platforma chmurowa to komponenty składające się z systemów operacyjnych, serwerów w centrum danych skonfigurowanych pod personalne potrzeby klientów. Umożliwiają one organizacjom wynajmowanie dostępu do zasobów obliczeniowych, takich jak serwery, bazy danych, magazyny danych, analityk, sieci wirtualnych. Model biznesowy dostawców usług chmurowych opiera się na zasadzie "pay as you go" (z .ang) płać za te zasoby, które zużyjesz.[20]
-\\
 
 \noindent{\bf Usługi chmurowe możemy podzielić na trzy kluczowe rodzaje:}
 
@@ -614,7 +687,6 @@ Diagram przypadków użycia przedstawia interakcje użytkownika \linebreak z sys
 \end{itemize}
 
 Diagram przypadków użycia pomaga zrozumieć, jakie funkcjonalności są dostępne w systemie i w jaki sposób użytkownicy mogą z nimi wchodzić w interakcję. Jest to kluczowe narzędzie w procesie projektowania i rozwijania aplikacji, które zapewnia klarowność i precyzję w definiowaniu wymagań systemu.
-
 
 \subsubsection{Scenariusze przypadków użycia}
 
