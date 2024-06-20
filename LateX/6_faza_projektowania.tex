@@ -27,10 +27,10 @@ W odpowiedzi na te problemy, architektura mikroserwisowa została zaprojektowana
 
 Architektura ta pozwala również na lepsze wykorzystanie zasobów sprzętowych poprzez niezależne skalowanie poszczególnych mikroserwisów\linebreak w zależności od obciążenia, co prowadzi do lepszej wydajności i oszczędności kosztów operacyjnych. Dodatkowo, ułatwia ona wprowadzanie zmian \linebreak i aktualizacji w aplikacji poprzez możliwość modyfikacji jednego komponentu bez wpływu na pozostałe.
 
-Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury obliczeniowej, umożliwiają efektywne zarządzanie i wdrażanie mikrousług, co stanowi kluczowy element nowoczesnych środowisk biznesowych.
+Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury obliczeniowej, umożliwiają efektywne zarządzanie i wdrażanie mikrousług, co stanowi kluczowy element nowoczesnych środowisk biznesowych.[24]
 
 \subsubsection{GitOps}
-Podczas procesu wytwarzania oprogramowania zastosowaliśmy powszechne praktyki zgodne z kulturą i praktykami DevOps. Jedną z nich jest GitOps, czyli podejście do zarządzania infrastrukturą i aplikacjami, które traktuje kod źródłowy jako jedyną prawdę w procesie CI/CD. Wykorzystuje narzędzia takie jak Git do automatyzacji procesów wdrożeniowych, zapewniając przy tym spójność i przejrzystość konfiguracji dzięki wersjonowaniu\linebreak i kodowi źródłowemu.
+Podczas procesu wytwarzania oprogramowania zastosowaliśmy powszechne praktyki zgodne z kulturą i praktykami DevOps. Jedną z nich jest GitOps, czyli podejście do zarządzania infrastrukturą i aplikacjami, które traktuje kod źródłowy jako jedyną prawdę w procesie CI/CD. Wykorzystuje narzędzia takie jak Git do automatyzacji procesów wdrożeniowych, zapewniając przy tym spójność i przejrzystość konfiguracji dzięki wersjonowaniu\linebreak i kodowi źródłowemu.[25]
 
 \subsubsection{Github}
 Naszym repozytorium kodu została platforma Github, a narzędziem CI/CD "Github Actions", wybór rozwiązania wynikał głównie z dwóch czynników. Pierwszym czynnikiem było wcześniejsze nawyki oraz preferencje całego zespołu pracy z repozytorium kodu. Drugim integracja ze środowiskiem chmurowym Azure, ponieważ Github i jego wszystkie elementy należą do firmy Microsoft.
@@ -317,7 +317,7 @@ Nginx jest znany ze swojej efektywności w obsłudze równoczesnych połączeń 
 
 \item {\bf Reverse proxy:}
 Nginx może działać jako reverse proxy, siedząc przed serwerami WWW, aby obsłużyć przychodzące żądania klientów. Może rozprowadzać te żądania do wielu serwerów backendowych na podstawie różnych kryteriów, takich jak algorytmy równoważenia obciążenia, stan serwera lub lokalizacja geograficzna.
-Serwery tego typu mogą mieć wiele zastosowań m.in. odciążanie serwerów docelowych, cachowanie, czy ukrywanie serwerów docelowych. Charakteryzują się tym, że są przygotowywane pod konkretny serwer lub serwery docelowe. Mogą znajdować się zarówno w tej samej serwerowni co serwer docelowy, ale mogą również stanowić element sieci dostawczej (CDN) rozrzuconej na dużym obszarze. 
+Serwery tego typu mogą mieć wiele zastosowań m.in. odciążanie serwerów docelowych, cachowanie, czy ukrywanie serwerów docelowych. Charakteryzują się tym, że są przygotowywane pod konkretny serwer lub serwery docelowe. Mogą znajdować się zarówno w tej samej serwerowni co serwer docelowy, ale mogą również stanowić element sieci dostawczej (CDN) rozrzuconej na dużym obszarze.
 
 \item {\bf Load balancer: }
 Nginx obejmuje możliwości równoważenia obciążenia, pozwalając na rozprowadzenie przychodzącego ruchu na wiele serwerów w celu poprawy niezawodności, skalowalności i wydajności.
@@ -342,12 +342,12 @@ Nginx umożliwia ograniczenie liczby żądań z danego adresu IP lub dla określ
 
 \end{enumerate}
 
-Nginx jest powszechnie używany przez programistów internetowych, administratorów systemów i specjalistów DevOps do budowy skalowalnych, wysoko wydajnych aplikacji internetowych i usług. Jest znany z lekkiej architektury, niskiego zużycia zasobów i łatwości konfiguracji, co czyni go popularnym wyborem dla szerokiego zakresu zastosowań, od małych witryn do rozległych rozproszonych systemów.
+Nginx jest powszechnie używany przez programistów internetowych, administratorów systemów i specjalistów DevOps do budowy skalowalnych, wysoko wydajnych aplikacji internetowych i usług. Jest znany z lekkiej architektury, niskiego zużycia zasobów i łatwości konfiguracji, co czyni go popularnym wyborem dla szerokiego zakresu zastosowań, od małych witryn do rozległych rozproszonych systemów.[26]
 
 \subsection{Model C4}
 Model C4 to narzędzie służące do opisywania i komunikowania architektury aplikacji. W niniejszym rozdziale omówimy jego zastosowanie\linebreak w kontekście naszej aplikacji selfimprovement.ai. Przedstawimy składniki naszej aplikacji, ich wzajemne powiązania oraz integrację z zewnętrznymi systemami.\\
 
-Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Component oraz Code. Poziom Context prezentuje kontekst, w jakim działa aplikacja oraz jej relacje z otoczeniem. Poziom Container obejmuje kontenery, w których znajdują się poszczególne komponenty aplikacji. Poziom Component opisuje komponenty aplikacji, ich interfejsy oraz wzajemne zależności. Poziom Code prezentuje implementację kodu poszczególnych komponentów. W dalszej części rozdziału przedstawimy każdy z tych poziomów abstrakcji na przykładzie naszej aplikacji.
+Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Component oraz Code. Poziom Context prezentuje kontekst, w jakim działa aplikacja oraz jej relacje z otoczeniem. Poziom Container obejmuje kontenery, w których znajdują się poszczególne komponenty aplikacji. Poziom Component opisuje komponenty aplikacji, ich interfejsy oraz wzajemne zależności. Poziom Code prezentuje implementację kodu poszczególnych komponentów. W dalszej części rozdziału przedstawimy każdy z tych poziomów abstrakcji na przykładzie naszej aplikacji.[27]
 
 \clearpage
 
@@ -735,12 +735,12 @@ C\# to wszechstronny język programowania stworzony przez Microsoft, cechujący 
 
 Kolejnym istotnym aspektem back-endu jest zapewnienie bezpieczeństwa aplikacji. C\# i .NET Core oferują szeroki wachlarz wbudowanych mechanizmów zabezpieczeń, takich jak autoryzacja, uwierzytelnianie i zarządzanie sesjami, które pomagają chronić dane użytkowników. 
 
-Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każdej aplikacji webowej, umożliwiając efektywne zarządzanie danymi, zapewniając bezpieczeństwo i skalowalność, co przekłada się na niezawodność działania i zadowolenie użytkowników [26][27].
+Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każdej aplikacji webowej, umożliwiając efektywne zarządzanie danymi, zapewniając bezpieczeństwo i skalowalność, co przekłada się na niezawodność działania i zadowolenie użytkowników [28][29].
 \subsubsection{Opis bibliotek i frameworków}
 
 \begin{enumerate}
 
-\item {\bf .Net} - to platforma programistyczna stworzona przez firmę Microsoft, która umożliwia tworzenie aplikacji na różne systemy operacyjne, zarówno serwerowe, desktopowe, jak i mobilne. Dzięki wsparciu dla wielu języków programowania oraz bogatej bibliotece klas, .NET jest wyjątkowo elastyczny i popularny wśród programistów, oferując zarówno wydajność, jak i bezpieczeństwo aplikacji.
+\item {\bf .Net} - to platforma programistyczna stworzona przez firmę Microsoft, która umożliwia tworzenie aplikacji na różne systemy operacyjne, zarówno serwerowe, desktopowe, jak i mobilne. Dzięki wsparciu dla wielu języków programowania oraz bogatej bibliotece klas, .NET jest wyjątkowo elastyczny i popularny wśród programistów, oferując zarówno wydajność, jak i bezpieczeństwo aplikacji.[30][31]
 
 \item {\bf Entity Framework} - to obiektowo-relacyjny mapper (ORM) dla platformy .NET, który umożliwia programistom pracę z bazą danych przy użyciu obiektów domeny specyficznej aplikacji, eliminując konieczność pisania większości kodu dostępu do danych. EF pozwala na mapowanie relacyjnych baz danych na modele obiektowe, co znacząco ułatwia zarządzanie danymi w aplikacjach .NET.
 
@@ -819,7 +819,7 @@ Aplikacja backendowa składa się z trzech różnych mikroserwisów oraz sześci
 \item {\bf LS.ServiceClient} - biblioteka zawierająca implementację klienta RESTowego do komunikacji między mikroserwisami. Umożliwia wysyłanie zapytań typu GET, POST, PUT i DELETE.
 \item {\bf LS.Startup} - blioteka zawierająca rozszerzenia ułatwiające inicjalizację mikroserwisu, takie jak konfiguracja Swaggera, CORS oraz narzędzia do sprawdzania stanu mikroserwisu.
 \item {\bf GoalApi} - mikroserwis odpowiedzialny za zarządzanie celami użytkowników. Zapewnia funkcje do tworzenia, edycji i pobierania celów oraz zadań przypisanych do użytkownika.
-\item {\bf IdentityApi} - mikroserwis zarządzający użytkownikami platformy. Obejmuje autentykację, autoryzację oraz generowanie tokenów JWT dla użytkowników, umożliwiających dostęp do platformy. Zapewnia również logikę zarządzania profilem użytkownika [28].
+\item {\bf IdentityApi} - mikroserwis zarządzający użytkownikami platformy. Obejmuje autentykację, autoryzację oraz generowanie tokenów JWT dla użytkowników, umożliwiających dostęp do platformy. Zapewnia również logikę zarządzania profilem użytkownika [32].
 \item {\bf PromptApi} - mikroserwis odpowiedzialny za tworzenie promptów, komunikację z modelami AI oraz przetwarzanie odpowiedzi uzyskanych\linebreak z tych modeli.
 \end{enumerate}
 
@@ -887,7 +887,7 @@ W naszym projekcie wszystkie mikroserwisy dzielą jedną bazę danych jest to ta
 Diagram ER (Entity-Relationship) jest graficznym przedstawieniem struktur danych i zależności między nimi, używanym w projektowaniu baz danych. Rys.22 zawiera przedstawienie struktury bazy danych naszej aplikacji.
 
 \subsubsection{Komunikacja pomiędzy mikroserwisami}
-W naszym projekcie, komunikacja między mikroserwisami może odbywać się na różne sposoby, przy użyciu brokera wiadomości RabbitMQ oraz klienta HTTP. Każde z tych podejść ma swoje zalety i wady oraz jest odpowiednie w różnych scenariuszach [29].
+W naszym projekcie, komunikacja między mikroserwisami może odbywać się na różne sposoby, przy użyciu brokera wiadomości RabbitMQ oraz klienta HTTP. Każde z tych podejść ma swoje zalety i wady oraz jest odpowiednie w różnych scenariuszach [33].
 
 \paragraph {Komunikacja za pomocą Event Bus (RabbitMQ)}
    
