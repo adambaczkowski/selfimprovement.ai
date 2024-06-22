@@ -107,8 +107,8 @@ Zaprojektowanie i implementacja aplikacji webowej, która wykorzystując modele 
 \subsection{Analiza rynku oraz podobnych rozwiązań}
 
 \subsubsection{Rys historyczny}
-Początki samorozwoju online sięgają wczesnych lat 2000, kiedy to pojawiły się pierwsze serwisy oferujące kursy online, takie jak Coursera i Udemy. Te platformy umożliwiały dostęp do materiałów edukacyjnych z różnych dziedzin, co zapoczątkowało erę zdalnej edukacji i samodzielnego uczenia się. W środkowych latach 2010 rozwinęły się aplikacje mobilne do śledzenia nawyków i celów, takie jak Habitica i Strides, które pomagały użytkownikom w utrzymywaniu codziennych nawyków poprzez mechanizmy grywalizacji\linebreak i śledzenia postępów[11].
-Pod koniec lat 2010 rozwój sztucznej inteligencji (AI) i uczenia maszynowego (ML) przyczynił się do powstania aplikacji, które wykorzystują AI do personalizacji doświadczeń użytkowników. Przykładem takiej aplikacji jest Duolingo, które dostosowuje poziom trudności lekcji do postępów użytkownika. W latach 2020 i później pojawiły się aplikacje, takie jak Fabulous czy Remente, integrujące techniki samorozwoju z AI, oferując spersonalizowane plany i zadania. Również aplikacje coachingu personalnego, jak BetterUp, zaczęły wykorzystywać AI do personalizacji sesji coachingu, co zwiększyło ich skuteczność.
+Początki samorozwoju online sięgają wczesnych lat 2000, kiedy to pojawiły się pierwsze serwisy oferujące kursy online, takie jak "Coursera" i "Udemy". Te platformy umożliwiały dostęp do materiałów edukacyjnych z różnych dziedzin, co zapoczątkowało erę zdalnej edukacji i samodzielnego uczenia się. W środkowych latach 2010 rozwinęły się aplikacje mobilne do śledzenia nawyków i celów, takie jak "Habitica" i "Strides", które pomagały użytkownikom w utrzymywaniu codziennych nawyków poprzez mechanizmy grywalizacji\linebreak i śledzenia postępów[11].
+Pod koniec lat 2010 rozwój sztucznej inteligencji (AI) i uczenia maszynowego (ML) przyczynił się do powstania aplikacji, które wykorzystują AI do personalizacji doświadczeń użytkowników. Przykładem takiej aplikacji jest Duolingo, które dostosowuje poziom trudności lekcji do postępów użytkownika. W latach 2020 i później pojawiły się aplikacje, takie jak "Fabulous" czy "Remente", integrujące techniki samorozwoju z AI, oferując spersonalizowane plany i zadania. Również aplikacje coachingu personalnego, jak "BetterUp", zaczęły wykorzystywać AI do personalizacji sesji coachingu, co zwiększyło ich skuteczność.
 
 \subsubsection{Przegląd Istniejących lub Podobnych Rozwiązań}
 Jednym z popularnych rozwiązań jest "Habitica", aplikacja do śledzenia nawyków w formie gry RPG. Użytkownicy zdobywają punkty i nagrody za wykonywanie zadań, co motywuje ich do utrzymania regularności. "Habitica" jest chwalona za motywację poprzez grywalizację oraz społeczność użytkowników, jednak brakuje jej zaawansowanej personalizacji zadań przy użyciu AI.
@@ -118,7 +118,7 @@ Innym przykładem jest "Fabulous", aplikacja koncentrująca się na tworzeniu zd
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{Obrazy/habitcaSignIn.png}
-    \caption{Strona główna portalu "Habitca"}
+    \caption{Strona główna portalu "Habitica"}
     \label{fig:enter-label}
 \end{figure}
 
@@ -350,7 +350,7 @@ ONLY JSON IS ALLOWED as an answer.
 No explanation or other text is allowed.
 \end{lstlisting}
 
-Niestety nie wszystkie modele były w stanie zawsze odpowiadać w formacie JSON. Chat Gpt 3.5 był jedynym modelem, który za każdym razem był w stanie przekazać odpowiedź jako pojedyńczy JSON. Pozostałe modele nie zawsze odpowiadały w oczekiwanym formacie jest to spory problem ponieważ model używany do aplikacji powinien generować niezawodne odpowiedzi. W momencie gdy oprócz JSON'a model dodawał tekst do odpowiedzi pojawiały się problemy z przetwarzaniem odpowiedzi.
+Niestety nie wszystkie modele były w stanie zawsze odpowiadać w formacie JSON. Chat Gpt 3.5 był jedynym modelem, który za każdym razem był w stanie przekazać odpowiedź jako pojedyńczy JSON. Pozostałe modele nie zawsze odpowiadały w oczekiwanym formacie, jest to spory problem ponieważ model używany do aplikacji powinien generować niezawodne odpowiedzi. W momencie gdy oprócz JSON'a model dodawał tekst do odpowiedzi pojawiały się problemy z przetwarzaniem odpowiedzi.
 
 W miarę postępów naszych badań oraz analizowania wyników generowanych przez różne modele, podjęliśmy decyzję o zmianie podstawowego promptu, aby uzyskać dokładniejsze i lepsze odpowiedzi. Nowa wersja promptu została zaprojektowana tak, aby zawierać bardziej precyzyjne instrukcje oraz klarowniejsze wytyczne dotyczące oczekiwanego formatu odpowiedzi.
 
@@ -590,9 +590,8 @@ Analizując szybkość przetwarzania podpowiedzi (prompt\_rate), model llama2 os
 
 \begin{figure}[H]
     \centering
+    \textbf{Tabela 1.} Podsumowanie wyników \\[4ex]
     \includegraphics[width=1\textwidth]{Obrazy/benchmark_excel.png}
-    \caption{Podsumowanie wyników}
-    \label{fig:my_label}
 \end{figure}
 
 Warto pamiętać, że w komercyjnych i profesjonalnych warunkach wyniki wyglądałyby zupełnie inaczej. Do zapewnienia w aplikacji szybkiej analizy danych oraz czasu odpowiedzi potrzeba odpowiedniej mocy obliczeniowej, która często jest nie dostępna dla przeciętnego użytkownika. Kolejnym czynnikiem są parametry na których model był trenowany, im większa ilość parametrów tym czas odpowiedzi będzie dłuższy. Model taki jak zephyr miałby lepsze zastosowanie jako model odpowiedzialny np. za prostą komunikację z klientem, gdzie trzeba wygenerować prostą odpowiedź w jak najkrótszym czasie. Natomiast llama3 lepiej sprawdzi się do głębszej analizy danych.
