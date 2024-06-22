@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using GoalApi.Goal.Dtos;
 using GoalApi.Goal.Queries.GetSingleGoal;
@@ -7,7 +7,7 @@ using MediatR;
 
 namespace GoalApi.Goal.Queries.GetUserDoneToOverallTasksRatio;
 
-public abstract class GetUserDoneToOverallTasksRatioQuery : IRequest<UserTasksRatioDto>
+public class GetUserDoneToOverallTasksRatioQuery : IRequest<UserTasksRatioDto>
 {
     public string UserId { get; set; }
 }

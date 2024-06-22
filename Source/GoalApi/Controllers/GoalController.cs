@@ -16,12 +16,11 @@ namespace GoalApi.Controllers;
 [Route("api/Goal")]
 public class GoalController(IMediator mediator, ICurrentUserService currentUserService) : Controller
 {
-    [Authorize]
     [Route("/")]
     [HttpPost]
     public Task<GoalDto> CreateGoal([FromBody] CreateGoalCommand command)
     {
-        command.UserId = currentUserService.UserId;
+        //command.UserId = currentUserService.UserId;
         return mediator.Send(command);
     }
     

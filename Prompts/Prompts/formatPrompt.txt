@@ -3,7 +3,7 @@ Always answer in the following json format:
 "GoalId": %GoalId%,
 "Title": title of the task,
 "Content": content of the task,
-"EstimatedDuration": estimated duration of the task,
-"Date": date of the task,
+"EstimatedDuration": estimated duration of the task in minutes as integer,
+"Date": date of the task in format yyyy-mm-dd,
 "IsCompleted": false}] or []
 ONLY JSON IS ALLOWED as an answer. No explanation or other text is allowed.
