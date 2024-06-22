@@ -1,5 +1,10 @@
 import styles from './AchievementsComponent.module.scss';
+import { useState } from 'react';
+import { useQuery } from "react-query";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { getDoneToOverallTasksRatio } from "../../utils/services/goalService";
+import { fetchUser } from "../../utils/services/userService";
+import { UserTasksRatioDto } from "../../utils/api/goal";
 import { styled } from '@mui/material/styles';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -46,7 +51,19 @@ const getAchievementClass = (completed: number, achievement_number: number, scss
 };
 
 function AchievementsComponent() {
-  const completed = 10;
+  const [completed, setCompleted] = useState<UserTasksRatioDto>();
+
+  useQuery({
+    queryKey: ["getCompleted"],
+    queryFn: async () => {
+      const completed = await getDoneToOverallTasksRatio();
+      if (completed != null) {
+        setCompleted(completed);
+      }
+      return completed;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className={styles.achievements}>
@@ -60,7 +77,7 @@ function AchievementsComponent() {
         <div className={styles.achievement_items_container}>
           <div className={styles.achievement_item}>
             <div className={getAchievementClass(
-              completed, 
+              completed?.completedTasksCount || 0, 
               achievementsNumbers.bronze_achievement,
               "achievement_circle_brown"
             )}>
@@ -68,12 +85,12 @@ function AchievementsComponent() {
             </div>
             <h1 className={styles.achievement_header}>Bronze</h1>
             <p className={styles.achievements_score}>
-              {completed}/{achievementsNumbers.bronze_achievement}
+              {completed?.completedTasksCount || 0}/{achievementsNumbers.bronze_achievement}
             </p>
           </div>
           <div className={styles.achievement_item}>
             <div className={getAchievementClass(
-              completed, 
+              completed?.completedTasksCount || 0, 
               achievementsNumbers.silver_achievement,
               "achievement_circle_silver"
             )}>
@@ -81,12 +98,12 @@ function AchievementsComponent() {
             </div>
             <h1 className={styles.achievement_header}>Silver</h1>
             <p className={styles.achievements_score}>
-              {completed}/{achievementsNumbers.silver_achievement}
+              {completed?.completedTasksCount || 0}/{achievementsNumbers.silver_achievement}
             </p>
           </div>
           <div className={styles.achievement_item}>
             <div className={getAchievementClass(
-              completed, 
+              completed?.completedTasksCount || 0, 
               achievementsNumbers.gold_achievement,
               "achievement_circle_gold"
             )}>
@@ -94,12 +111,12 @@ function AchievementsComponent() {
             </div>
             <h1 className={styles.achievement_header}>Gold</h1>
             <p className={styles.achievements_score}>
-              {completed}/{achievementsNumbers.gold_achievement}
+              {completed?.completedTasksCount || 0}/{achievementsNumbers.gold_achievement}
             </p>
           </div>
         </div>
         <div className={styles.progress_bar}>
-          <BorderLinearProgress variant="determinate" value={calculateProgress(completed)} />
+          <BorderLinearProgress variant="determinate" value={calculateProgress(completed?.completedTasksCount || 0)} />
         </div>
       </div>
     </div>

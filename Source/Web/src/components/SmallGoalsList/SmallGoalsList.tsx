@@ -17,7 +17,6 @@ function SmallGoalsList() {
   const done_2 = 10;
   const all = 10
 
-
   useQuery({
     queryKey: ["getGoals"],
     queryFn: async () => {
