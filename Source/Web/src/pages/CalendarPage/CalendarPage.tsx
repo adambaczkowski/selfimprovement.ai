@@ -26,7 +26,7 @@ function CalendarPage() {
       if (tasks != null) {
         const mappedEvents: Event[] = tasks.map((task) => {
           const startDate = task.date ? new Date(task.date) : new Date();
-          startDate.setMonth(startDate.getMonth() + 1);
+          startDate.setMonth(startDate.getMonth());
           const endDate = new Date(startDate);
 
           return {

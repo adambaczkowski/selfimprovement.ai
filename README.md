@@ -16,16 +16,42 @@ We strive to provide personal AI assistant that will help user to schedule his/h
 ##### * Prompt Engineering
 ##### * Secrets Management
 ##### * Database management
+##### * Documentation and README files management
+##### * Creating benchmarks for LLMs
 ### Mateusz Młodochowski (Backend)
 ##### * Creating .Net containers and sevices
 ##### * API management
-##### * API management
+##### * Writing Dockerfiles and docker compose
 ##### * Prompt Engineering
 ##### * Database management
+##### * Creating benchmarks for LLMs
+##### * RabbitMq management
 ### Grzegorz Święcicki (Frontend)
 ##### * Creating frontend
 ##### * UX/UI
 ##### * API management
 ##### * Prompt Engineering
+##### * LateX file moderation
 # Tech Stack
 C# , React, Typescript, Powershell, Docker, LLAMA2, Kubernetes, Terraform
+
+### Build app localy with docker compose:
+You will need to create your own .env file matching variables names in docker-compose-local.yml
+```
+docker compose --env-file .env -f docker-compose-local.yml up --build
+```
+
+### System overview:
+![alt text](images/architecture.png "Architecture")
+
+### Login screen:
+![alt text](images/1.png "Login Screen")
+
+### Main page:
+![alt text](images/2.png "Main page")
+
+### Calendar page:
+![alt text](images/3.png "Calendar page")
+
+### Goals page:
+![alt text](images/4.png "Goals page")

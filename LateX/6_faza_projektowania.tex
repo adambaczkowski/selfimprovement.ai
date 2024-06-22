@@ -13,7 +13,7 @@ Aby ułatwić zrozumienie budowy naszego systemu stworzyliśmy również dodatko
 \subsection{Ogólny opis architektury}
 Selfimprovement.ai to platforma internetowa, która umożliwia użytkownikom tworzenie spersonalizowanych planów na podstawie ich potrzeb oraz celów, takich jak plany treningowe, które pomagają użytkownikom zrealizować plan rozwoju w optymalnie zaplanowanym czasie. Aplikacja składa się z dwóch głównych części: front-endu i back-endu.
 
-Front-end aplikacji selfimprovement.ai został napisany w React.js. Jest to popularne rozwiązanie do tworzenia aplikacji internetowych, które pozwala na budowanie szybkich, responsywnych i dynamicznie generowanych stron. W aplikacji selfimprovement.ai front-end odpowiada za prezentację danych oraz interakcję z użytkownikiem. Cała interakcja użytkownika z front-endem jest realizowana przy użyciu React.js, co umożliwia dynamiczne generowanie zawartości, takie jak strony do tworzenia celów, przeglądanie ich w kalendarzu czy analiza postępów. Dodatkowo, aplikacja wykorzystuje architekturę mikroserwisów, co pozwala na elastyczne i skalowalne zarządzanie różnymi funkcjonalnościami systemu.
+Front-end aplikacji selfimprovement.ai został napisany w React.js. Jest to popularne rozwiązanie do tworzenia aplikacji internetowych, które pozwala na budowanie szybkich, responsywnych i dynamicznie generowanych stron. W aplikacji selfimprovement.ai front-end odpowiada za prezentację danych oraz interakcję z użytkownikiem. Cała interakcja użytkownika \linebreak z front-endem jest realizowana przy użyciu React.js, co umożliwia dynamiczne generowanie zawartości, takie jak strony do tworzenia celów, przeglądanie ich w kalendarzu czy analiza postępów. Dodatkowo, aplikacja wykorzystuje architekturę mikroserwisów, co pozwala na elastyczne i skalowalne zarządzanie różnymi funkcjonalnościami systemu.
 
 \subsubsection{Mikroserwisy}
 
@@ -25,12 +25,12 @@ Monolity na początku oferowały wygodę w zakresie rozwoju, wdrażania i utrzym
 
 W odpowiedzi na te problemy, architektura mikroserwisowa została zaprojektowana jako alternatywa. W tym podejściu każda funkcja aplikacji jest implementowana jako oddzielny mikroserwis, komunikujący się ze sobą poprzez interfejsy programistyczne (API), co umożliwia niezależne wdrażanie, skalowanie i rozwijanie poszczególnych części aplikacji. Dzięki temu, nawet największe i najbardziej złożone aplikacje stają się bardziej elastyczne, skalowalne i łatwiejsze w utrzymaniu.
 
-Architektura ta pozwala również na lepsze wykorzystanie zasobów sprzętowych poprzez niezależne skalowanie poszczególnych mikroserwisów\linebreak w zależności od obciążenia, co prowadzi do lepszej wydajności i oszczędności kosztów operacyjnych. Dodatkowo, ułatwia ona wprowadzanie zmian i aktualizacji w aplikacji poprzez możliwość modyfikacji jednego komponentu bez wpływu na pozostałe.
+Architektura ta pozwala również na lepsze wykorzystanie zasobów sprzętowych poprzez niezależne skalowanie poszczególnych mikroserwisów\linebreak w zależności od obciążenia, co prowadzi do lepszej wydajności i oszczędności kosztów operacyjnych. Dodatkowo, ułatwia ona wprowadzanie zmian \linebreak i aktualizacji w aplikacji poprzez możliwość modyfikacji jednego komponentu bez wpływu na pozostałe.
 
-Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury obliczeniowej, umożliwiają efektywne zarządzanie i wdrażanie mikrousług, co stanowi kluczowy element nowoczesnych środowisk biznesowych.
+Współczesne narzędzia, takie jak Docker czy Kubernetes, oraz platformy chmury obliczeniowej, umożliwiają efektywne zarządzanie i wdrażanie mikrousług, co stanowi kluczowy element nowoczesnych środowisk biznesowych.[24]
 
 \subsubsection{GitOps}
-Podczas procesu wytwarzania oprogramowania zastosowaliśmy powszechne praktyki zgodne z kulturą i praktykami DevOps. Jedną z nich jest GitOps, czyli podejście do zarządzania infrastrukturą i aplikacjami, które traktuje kod źródłowy jako jedyną prawdę w procesie CI/CD. Wykorzystuje narzędzia takie jak Git do automatyzacji procesów wdrożeniowych, zapewniając przy tym spójność i przejrzystość konfiguracji dzięki wersjonowaniu\linebreak i kodowi źródłowemu.
+Podczas procesu wytwarzania oprogramowania zastosowaliśmy powszechne praktyki zgodne z kulturą i praktykami DevOps. Jedną z nich jest GitOps, czyli podejście do zarządzania infrastrukturą i aplikacjami, które traktuje kod źródłowy jako jedyną prawdę w procesie CI/CD. Wykorzystuje narzędzia takie jak Git do automatyzacji procesów wdrożeniowych, zapewniając przy tym spójność i przejrzystość konfiguracji dzięki wersjonowaniu\linebreak i kodowi źródłowemu.[25]
 
 \subsubsection{Github}
 Naszym repozytorium kodu została platforma Github, a narzędziem CI/CD "Github Actions", wybór rozwiązania wynikał głównie z dwóch czynników. Pierwszym czynnikiem było wcześniejsze nawyki oraz preferencje całego zespołu pracy z repozytorium kodu. Drugim integracja ze środowiskiem chmurowym Azure, ponieważ Github i jego wszystkie elementy należą do firmy Microsoft.
@@ -39,10 +39,10 @@ Naszym repozytorium kodu została platforma Github, a narzędziem CI/CD "Github 
 Pipeline w kontekście GitHub Actions to zautomatyzowany proces, który składa się z serii zadań (jobs), które są wykonywane po każdym zdarzeniu w repozytorium, takim jak push czy pull request. Każde zadanie może zawierać kroki (steps), które wykonują specyficzne akcje, takie jak kompilacja kodu, testy, aż do wdrożenia aplikacji, co pozwala na ciągłą integrację\linebreak i dostarczanie oprogramowania.
 
 \subsubsection{Monitoring}
-Architektura mikroserwisów potrzebuje dobrego systemu monitoringu, ponieważ system w prównaniu do monolitu jest bardziej zdecentralizowany i potrzebuje dokładnej analizy różnych metryk takich jak: natężenie ruchu sieciowego, liczba wolnej pamięci RAM zużywanej przez dany serwis itp.
+Architektura mikroserwisów potrzebuje dobrego systemu monitoringu, ponieważ system w porównaniu do monolitu jest bardziej zdecentralizowany i potrzebuje dokładnej analizy różnych metryk takich jak: natężenie ruchu sieciowego, liczba wolnej pamięci RAM zużywanej przez dany serwis itp.
 
 \subsubsection{Prometheus i Grafana}
-Narzędzia takie jak Prometheus oraz Grafana są bardzo powszechne we współczesnych aplikacjach chmurowych. Prometheus to system monitoringu i alertowania, który zbiera i przechowuje metryki w czasie rzeczywistym w formie serii czasowych. Dane są zbierane za pomocą protokołu HTTP\linebreak z różnych źródeł, takich jak serwery czy aplikacje, a następnie wyświetlane w programie Grafna, która umożliwia ich analizę i wizualizację za pomocą zapytań i grafów.
+Narzędzia takie jak Prometheus oraz Grafana są bardzo powszechne we współczesnych aplikacjach chmurowych. Prometheus to system monitoringu i alertowania, który zbiera i przechowuje metryki w czasie rzeczywistym w formie serii czasowych. Dane są zbierane za pomocą protokołu HTTP\linebreak z różnych źródeł, takich jak serwery czy aplikacje, a następnie wyświetlane w programie Grafana, która umożliwia ich analizę i wizualizację za pomocą zapytań i grafów.
 
 \subsubsection{RabbitMq}
 Ważnym czynnikiem jest jak poszczególne komponenty aplikacji komunikują się ze sobą, ze względu na izolację zasobów muszą one się komunikować za pomocą wspólnego dla nich mechanizmu. RabbitMQ to popularny open-source'owy broker wiadomości, który umożliwia asynchroniczną komunikację między komponentami oprogramowania poprzez wymianę wiadomości. Umożliwia to tworzenie rozproszonych systemów, które są bardziej skalowalne i odporne na błędy, dzięki wykorzystaniu różnorodnych wzorców komunikacyjnych, takich jak publikowanie/subskrypcja czy kolejki.
@@ -69,7 +69,7 @@ Nasze mikroserwisy opierają się o cztery autorskie kontenery, napisane w techn
 \item {\bf Konteneryzacja}
    - Wykorzystanie technologii konteneryzacji, na przykład Docker, umożliwiającej pakowanie oprogramowania w izolowane jednostki, co ułatwia przenośność i wdrażanie aplikacji.
 
-\item {\bf Infrastruktura Jako Kod (IaaC)}
+\item {\bf Infrastruktura Jako Kod (IaC)}
    - Traktowanie infrastruktury jak kodu programistycznego, co umożliwia jej zarządzanie, wdrażanie i skalowanie przy użyciu praktyk znanym z programowania.
 
 \item {\bf Kultura i Współpraca}
@@ -317,7 +317,7 @@ Nginx jest znany ze swojej efektywności w obsłudze równoczesnych połączeń 
 
 \item {\bf Reverse proxy:}
 Nginx może działać jako reverse proxy, siedząc przed serwerami WWW, aby obsłużyć przychodzące żądania klientów. Może rozprowadzać te żądania do wielu serwerów backendowych na podstawie różnych kryteriów, takich jak algorytmy równoważenia obciążenia, stan serwera lub lokalizacja geograficzna.
-Serwery tego typu mogą mieć wiele zastosowań m.in. odciążanie serwerów docelowych, cachowanie, czy ukrywanie serwerów docelowych. Charakteryzują się tym, że są przygotowywane pod konkretny serwer lub serwery docelowe. Mogą znajdować się zarówno w tej samej serwerowni co serwer docelowy, ale mogą również stanowić element sieci dostawczej (CDN) rozrzuconej na dużym obszarze. 
+Serwery tego typu mogą mieć wiele zastosowań m.in. odciążanie serwerów docelowych, cachowanie, czy ukrywanie serwerów docelowych. Charakteryzują się tym, że są przygotowywane pod konkretny serwer lub serwery docelowe. Mogą znajdować się zarówno w tej samej serwerowni co serwer docelowy, ale mogą również stanowić element sieci dostawczej (CDN) rozrzuconej na dużym obszarze.
 
 \item {\bf Load balancer: }
 Nginx obejmuje możliwości równoważenia obciążenia, pozwalając na rozprowadzenie przychodzącego ruchu na wiele serwerów w celu poprawy niezawodności, skalowalności i wydajności.
@@ -342,12 +342,12 @@ Nginx umożliwia ograniczenie liczby żądań z danego adresu IP lub dla określ
 
 \end{enumerate}
 
-Nginx jest powszechnie używany przez programistów internetowych, administratorów systemów i specjalistów DevOps do budowy skalowalnych, wysoko wydajnych aplikacji internetowych i usług. Jest znany z lekkiej architektury, niskiego zużycia zasobów i łatwości konfiguracji, co czyni go popularnym wyborem dla szerokiego zakresu zastosowań, od małych witryn do rozległych rozproszonych systemów.
+Nginx jest powszechnie używany przez programistów internetowych, administratorów systemów i specjalistów DevOps do budowy skalowalnych, wysoko wydajnych aplikacji internetowych i usług. Jest znany z lekkiej architektury, niskiego zużycia zasobów i łatwości konfiguracji, co czyni go popularnym wyborem dla szerokiego zakresu zastosowań, od małych witryn do rozległych rozproszonych systemów.[26]
 
 \subsection{Model C4}
-Model C4 to narzędzie służące do opisywania i komunikowania architektury aplikacji. W niniejszym rozdziale omówimy jego zastosowanie\linebreak w kontekście naszej aplikacji selfimprovement.ai. Przedstawimy składniki naszej aplikacji, ich wzajemne powiązania oraz integracje z zewnętrznymi systemami.\\
+Model C4 to narzędzie służące do opisywania i komunikowania architektury aplikacji. W niniejszym rozdziale omówimy jego zastosowanie\linebreak w kontekście naszej aplikacji selfimprovement.ai. Przedstawimy składniki naszej aplikacji, ich wzajemne powiązania oraz integrację z zewnętrznymi systemami.\\
 
-Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Component oraz Code. Poziom Context prezentuje kontekst, w jakim działa aplikacja oraz jej relacje z otoczeniem. Poziom Container obejmuje kontenery, w których znajdują się poszczególne komponenty aplikacji. Poziom Component opisuje komponenty aplikacji, ich interfejsy oraz wzajemne zależności. Poziom Code prezentuje implementację kodu poszczególnych komponentów. W dalszej części rozdziału przedstawimy każdy z tych poziomów abstrakcji na przykładzie naszej aplikacji.
+Model C4 składa się z czterech poziomów abstrakcji: Context, Container, Component oraz Code. Poziom Context prezentuje kontekst, w jakim działa aplikacja oraz jej relacje z otoczeniem. Poziom Container obejmuje kontenery, w których znajdują się poszczególne komponenty aplikacji. Poziom Component opisuje komponenty aplikacji, ich interfejsy oraz wzajemne zależności. Poziom Code prezentuje implementację kodu poszczególnych komponentów. W dalszej części rozdziału przedstawimy każdy z tych poziomów abstrakcji na przykładzie naszej aplikacji.[27]
 
 \clearpage
 
@@ -403,7 +403,7 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
 
     \item {\bf React Query} - to biblioteka JavaScript dla aplikacji React, która upraszcza zarządzanie i synchronizację danych pochodzących z zewnętrznych źródeł. Jest szczególnie przydatna w aplikacjach, które intensywnie korzystają z danych i potrzebują efektywnego zarządzania zapytaniami HTTP.
     
-    \item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować\linebreak w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika w aplikacjach webowych.
+    \item {\bf MUI} - to popularna biblioteka komponentów interfejsu użytkownika dla aplikacji internetowych, oparta na zasadach Material Design. Zawiera zestaw gotowych i stylowych komponentów, takich jak przyciski, formularze, paski nawigacyjne i wiele innych, które można łatwo integrować\linebreak w projekcie. MUI zapewnia nie tylko estetyczny wygląd, ale także zapewnia spójność wizualną i użytkową między różnymi częściami aplikacji. Ponadto, Material-UI oferuje elastyczność i konfigurowalność komponentów, co pozwala programistom dostosować interfejs do indywidualnych potrzeb projektu. Dzięki dużej popularności i aktywnej społeczności wsparcia, Material-UI stał się jednym z najczęściej wybieranych narzędzi przy tworzeniu nowoczesnych i atrakcyjnych interfejsów użytkownika \linebreak w aplikacjach webowych.
     
     \item {\bf SCSS} - jest preprocesorem CSS, który wprowadza dodatkowe funkcje\linebreak i możliwości do standardowego języka CSS. Dzięki SCSS można pisać bardziej czytelny i łatwiejszy do zarządzania kod CSS poprzez zastosowanie zmiennych, zagnieżdżania, mixinów oraz funkcji. Zmienne pozwalają na definiowanie wartości, które mogą być wielokrotnie używane w kodzie, co ułatwia utrzymanie spójności wizualnej i szybką zmianę wyglądu całej aplikacji. Zagnieżdżanie umożliwia definiowanie stylów dla zagnieżdżonych elementów HTML, co sprawia, że kod jest bardziej zorganizowany\linebreak i czytelny. Mixiny pozwalają na zdefiniowanie zestawów stylów, które mogą być używane wielokrotnie, co eliminuje powtarzalność kodu i ułatwia jego utrzymanie. Dodatkowo, SCSS oferuje możliwość korzystania z zaawansowanych funkcji matematycznych oraz logiki, co czyni go bardziej elastycznym i potężnym narzędziem przy tworzeniu zaawansowanych stylów CSS. Dzięki swojej popularności i wsparciu przez wiele narzędzi deweloperskich, SCSS stał się standardem w pracy nad projektami front-endowymi, umożliwiając programistom bardziej efektywne i produktywne tworzenie stylów dla aplikacji internetowych.
     
@@ -413,18 +413,20 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
 
 \end{enumerate}
 
+\clearpage
+
 \subsubsection{Struktura aplikacji}
 
 \noindent{\bf Architektura komponentów}
 
-\noindent W naszej aplikacji webowej przyjęliśmy modularne podejście do tworzenia komponentów, co pozwala na łatwiejsze zarządzanie kodem, jego ponowne wykorzystanie oraz lepszą skalowalność projektu. Struktura naszej aplikacji składa się z dwóch głównych części: components oraz pages. Oprócz tego struktura zawiera folder utils gdzie znajdują się serwisy do komunikacji\linebreak z zewnętrznym api oraz różnego rodzaju helpery czy elementy stylistyczne.
+\noindent W naszej aplikacji webowej przyjęliśmy modularne podejście do tworzenia komponentów, co pozwala na łatwiejsze zarządzanie kodem, jego ponowne wykorzystanie oraz lepszą skalowalność projektu. Struktura naszej aplikacji składa się z dwóch głównych części: components oraz pages. Oprócz tego struktura zawiera folder utils gdzie znajdują się serwisy do komunikacji\linebreak z zewnętrznym api oraz różnego rodzaju helpery czy elementy stylistyczne [24][25].
 
 \noindent{\bf Komponenty}
 
 \noindent Folder components zawiera zbiór wielokrotnego użytku komponentów, które są podstawowymi elementami budującymi interfejs użytkownika. Każdy komponent jest umieszczony w oddzielnym folderze, co ułatwia jego rozwój i utrzymanie. Na przykład:
 \begin{enumerate}
-    \item {\bf AchievementComponent:} Komponent wyświetlający list osiągnieć.
-    \item {\bf ItemsGrid:} Komponent służący do wyświtlania siatki z zadaniami.
+    \item {\bf AchievementComponent:} Komponent wyświetlający list osiągnięć.
+    \item {\bf ItemsGrid:} Komponent służący do wyświetlania siatki z zadaniami.
     \item {\bf Formik:} Komponenty związane z zarządzaniem formularzami za pomocą biblioteki Formik.
     \item {\bf GoalItem i GoalsList:} Komponenty do wyświetlania poszczególnych celów oraz listy celów.
     \item {\bf Sidebar:} Komponent nawigacyjny bocznego paska.
@@ -457,7 +459,7 @@ W niniejszym rozdziale przyjrzymy się bliżej procesowi tworzenia frontendu w a
     \item {\bf Testowalność:} Modułowa budowa ułatwia pisanie testów jednostkowych oraz integracyjnych dla poszczególnych komponentów.
 \end{enumerate}
 
-\noindent Dzięki takiemu podejściu, nasza aplikacja jest bardziej przejrzysta, łatwiejsza w zarządzaniu oraz gotowa do przyszłych rozbudów.
+\noindent Dzięki takiemu podejściu, nasza aplikacja jest bardziej przejrzysta, łatwiejsza w zarządzaniu oraz gotowa na przyszłe rozbudowy.
 
 \subsubsection{Przykłady implementacji}
 
@@ -731,14 +733,14 @@ Back-end jest fundamentalnym elementem aplikacji webowych, odpowiedzialnym za re
 
 C\# to wszechstronny język programowania stworzony przez Microsoft, cechujący się silnym typowaniem, programowaniem obiektowym i nowoczesnymi funkcjami, które usprawniają tworzenie efektywnych aplikacji. W połączeniu z .NET Core, C\# umożliwia budowanie aplikacji działających na różnych systemach operacyjnych dzięki swojej wieloplatformowości. Entity Framework natomiast upraszcza operacje na bazach danych, pozwalając programistom na pracę z danymi za pomocą obiektów zamiast tradycyjnych zapytań SQL.
 
-Kolejnym istotnym aspektem back-endu jest zapewnienie bezpieczeństwa aplikacji. C\# i .NET Core oferują szeroki wachlarz wbudowanych mechanizmów zabezpieczeń, takich jak autoryzacja, uwierzytelnianie i zarządzanie sesjami, które pomagają chronić dane użytkowników. Regularne testowanie i monitorowanie aplikacji jest niezbędne dla zapewnienia jej niezawodności i wysokiej wydajności.
+Kolejnym istotnym aspektem back-endu jest zapewnienie bezpieczeństwa aplikacji. C\# i .NET Core oferują szeroki wachlarz wbudowanych mechanizmów zabezpieczeń, takich jak autoryzacja, uwierzytelnianie i zarządzanie sesjami, które pomagają chronić dane użytkowników. 
 
-Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każdej aplikacji webowej, umożliwiając efektywne zarządzanie danymi, zapewniając bezpieczeństwo i skalowalność, co przekłada się na niezawodność działania i zadowolenie użytkowników.
+Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każdej aplikacji webowej, umożliwiając efektywne zarządzanie danymi, zapewniając bezpieczeństwo i skalowalność, co przekłada się na niezawodność działania i zadowolenie użytkowników [28][29].
 \subsubsection{Opis bibliotek i frameworków}
 
 \begin{enumerate}
 
-\item {\bf .Net} - Jest platformą programistyczną stworzoną przez firmę Microsoft, która umożliwia tworzenie aplikacji na różne systemy operacyjne, zarówno serwerowe, desktopowe, jak i mobilne. Dzięki wsparciu dla wielu języków programowania oraz bogatej bibliotece klas, .NET jest wyjątkowo elastyczny i popularny wśród programistów, oferując zarówno wydajność, jak i bezpieczeństwo aplikacji.
+\item {\bf .Net} - to platforma programistyczna stworzona przez firmę Microsoft, która umożliwia tworzenie aplikacji na różne systemy operacyjne, zarówno serwerowe, desktopowe, jak i mobilne. Dzięki wsparciu dla wielu języków programowania oraz bogatej bibliotece klas, .NET jest wyjątkowo elastyczny i popularny wśród programistów, oferując zarówno wydajność, jak i bezpieczeństwo aplikacji.[30][31]
 
 \item {\bf Entity Framework} - to obiektowo-relacyjny mapper (ORM) dla platformy .NET, który umożliwia programistom pracę z bazą danych przy użyciu obiektów domeny specyficznej aplikacji, eliminując konieczność pisania większości kodu dostępu do danych. EF pozwala na mapowanie relacyjnych baz danych na modele obiektowe, co znacząco ułatwia zarządzanie danymi w aplikacjach .NET.
 
@@ -746,11 +748,11 @@ Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każd
 
 \item {\bf Fluent Validation} - to popularna biblioteka do walidacji danych w aplikacjach .NET, która umożliwia definiowanie reguł walidacji w sposób deklaratywny i czytelny. Dzięki FluentValidation można tworzyć kompleksowe reguły walidacji dla modeli danych, zapewniając, że dane wejściowe są poprawne zanim trafią do dalszego przetwarzania.
 
-\item {\bf Swashbuckle} - Swashbuckle to biblioteka, która integruje narzędzie Swagger z aplikacjami ASP.NET Core. Swagger to framework umożliwiający automatyczne generowanie dokumentacji API w formacie interaktywnej strony, która zawiera opis endpointów, parametrów i schematów odpowiedzi. Dzięki Swashbuckle możliwe jest generowanie API.
+\item {\bf Swashbuckle} - to biblioteka, która integruje narzędzie Swagger z aplikacjami ASP.NET Core. Swagger to framework umożliwiający automatyczne generowanie dokumentacji API w formacie interaktywnej strony, która zawiera opis endpointów, parametrów i schematów odpowiedzi. Dzięki Swashbuckle możliwe jest generowanie API.
 
 \item {\bf Polly} -  to biblioteka .NET do obsługi odporności i wykrywania błędów, która umożliwia implementację strategii zarządzania błędami, takich jak retry, circuit breaker, timeout, bulkhead isolation itp. Dzięki Polly można poprawić niezawodność aplikacji poprzez automatyczne reagowanie na błędy i nieoczekiwane problemy z dostępem do zasobów zewnętrznych.
 
-\item {\bf Automapper} -  to narzędzie do mapowania obiektów w aplikacjach .NET, które automatyzuje proces kopiowania danych między obiektami o różnych typach. Jest szczególnie przydatne, gdy dane muszą być przenoszone między warstwami aplikacji, na przykład między warstwą danych a warstwą prezentacji. Automapper zmniejsza ilość kodu potrzebnego do mapowania danych\linebreak i poprawia czytelność aplikacji.
+\item {\bf Automapper} -  to narzędzie do mapowania obiektów w aplikacjach .NET, które automatyzuje proces kopiowania danych między obiektami o różnych typach. Jest szczególnie przydatne, gdy dane muszą być przenoszone między warstwami aplikacji, na przykład między warstwą danych \linebreak a warstwą prezentacji. Automapper zmniejsza ilość kodu potrzebnego do mapowania danych i poprawia czytelność aplikacji.
 
 \item {\bf RabbitMq} - to popularny broker wiadomości, który umożliwia wymianę wiadomości między różnymi systemami i komponentami za pośrednictwem kolejek. Jest szeroko stosowany w architekturach opartych na mikrousługach do implementacji komunikacji asynchronicznej i zapewnia niezawodność oraz skalowalność przesyłania wiadomości.
 
@@ -758,9 +760,11 @@ Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każd
 
 \end{enumerate}
 
+\clearpage
+
 \subsubsection{Wzorce projektowe}
 
-\subparagraph{MediatR} - jest to wzorzec, który pozwala na dekompozycję dużych monolitycznych systemów na mniejsze, bardziej zarządzalne komponenty. Wzorzec mediator pozwala na zarządzanie interakcjami między obiektami poprzez centralny punkt komunikacji(mediatora), eliminując bezpośrednie zależności między komponentami. Dzięki temu system staje się bardziej modularny, elastyczny i łatwiejszy w utrzymaniu. 
+\subparagraph{MediatR} - jest to wzorzec, który pozwala na dekompozycję dużych monolitycznych systemów na mniejsze, bardziej zarządzalne komponenty. Wzorzec mediator pozwala na zarządzanie interakcjami między obiektami poprzez centralny punkt komunikacji(mediatora), eliminując bezpośrednie zależności między komponentami. Dzięki temu system staje się bardziej modularny, elastyczny i łatwiejszy w utrzymaniu.
 
 \begin{figure}[H]
     \centering
@@ -770,6 +774,7 @@ Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każd
 \end{figure}
 
 \subparagraph{CQRS (Command Query Responsibility Segregation)} - to wzorzec architektoniczny, który oddziela operacje modyfikujące dane (komendy) od operacji odczytujących dane (zapytania). W tradycyjnych podejściach do projektowania systemów, te operacje są często obsługiwane przez te same modele i metody. CQRS proponuje użycie oddzielnych modeli dla zapytań\linebreak i komend, co pozwala na optymalizację każdego z nich pod kątem różnych wymagań. Modele zapytań mogą być dostosowane do szybkiego odczytu danych, natomiast modele komend mogą skupić się na walidacji i przetwarzaniu logiki biznesowej. CQRS często jest stosowany w połączeniu z Event Sourcingiem, gdzie zmiany stanu aplikacji są reprezentowane jako sekwencje zdarzeń.
+
 
 \begin{figure}[H]
     \centering
@@ -797,9 +802,9 @@ Back-end zbudowany w oparciu o C\# i .NET Core stanowi stabilną podstawę każd
 \end{figure}
 
 \subsubsection{Struktura projektu}
-Aplikacja backendowa składa się z trzech różnych mikroserwisów oraz sześciu bibliotek zawierających logikę dzieloną pomiędzy mikroserwisami. 
+Aplikacja backendowa składa się z trzech różnych mikroserwisów oraz sześciu bibliotek zawierających logikę dzieloną pomiędzy mikroserwisami. (Rys. 19)
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{Obrazy/BackendStruktura.png}
     \caption{Ułożenie mikroserwisów w projekcie}
@@ -814,7 +819,7 @@ Aplikacja backendowa składa się z trzech różnych mikroserwisów oraz sześci
 \item {\bf LS.ServiceClient} - biblioteka zawierająca implementację klienta RESTowego do komunikacji między mikroserwisami. Umożliwia wysyłanie zapytań typu GET, POST, PUT i DELETE.
 \item {\bf LS.Startup} - blioteka zawierająca rozszerzenia ułatwiające inicjalizację mikroserwisu, takie jak konfiguracja Swaggera, CORS oraz narzędzia do sprawdzania stanu mikroserwisu.
 \item {\bf GoalApi} - mikroserwis odpowiedzialny za zarządzanie celami użytkowników. Zapewnia funkcje do tworzenia, edycji i pobierania celów oraz zadań przypisanych do użytkownika.
-\item {\bf IdentityApi} - mikroserwis zarządzający użytkownikami platformy. Obejmuje autentykację, autoryzację oraz generowanie tokenów JWT dla użytkowników, umożliwiających dostęp do platformy. Zapewnia również logikę zarządzania profilem użytkownika.
+\item {\bf IdentityApi} - mikroserwis zarządzający użytkownikami platformy. Obejmuje autentykację, autoryzację oraz generowanie tokenów JWT dla użytkowników, umożliwiających dostęp do platformy. Zapewnia również logikę zarządzania profilem użytkownika [32].
 \item {\bf PromptApi} - mikroserwis odpowiedzialny za tworzenie promptów, komunikację z modelami AI oraz przetwarzanie odpowiedzi uzyskanych\linebreak z tych modeli.
 \end{enumerate}
 
@@ -879,8 +884,10 @@ W naszym projekcie wszystkie mikroserwisy dzielą jedną bazę danych jest to ta
     \label{fig:enter-label}
 \end{figure}
 
+Diagram ER (Entity-Relationship) jest graficznym przedstawieniem struktur danych i zależności między nimi, używanym w projektowaniu baz danych. Rys.22 zawiera przedstawienie struktury bazy danych naszej aplikacji.
+
 \subsubsection{Komunikacja pomiędzy mikroserwisami}
-W naszym projekcie, komunikacja między mikroserwisami może odbywać się na różne sposoby, przy użyciu brokera wiadomości RabbitMQ oraz klienta HTTP. Każde z tych podejść ma swoje zalety i wady oraz jest odpowiednie w różnych scenariuszach.
+W naszym projekcie, komunikacja między mikroserwisami może odbywać się na różne sposoby, przy użyciu brokera wiadomości RabbitMQ oraz klienta HTTP. Każde z tych podejść ma swoje zalety i wady oraz jest odpowiednie w różnych scenariuszach [33].
 
 \paragraph {Komunikacja za pomocą Event Bus (RabbitMQ)}
    
@@ -1071,6 +1078,8 @@ W naszym projekcie, komunikacja między mikroserwisami może odbywać się na r�
 \item {\bf Łatwe debugowanie} - łatwiejsze do monitorowania i debugowania\linebreak w porównaniu do asynchronicznej komunikacji.
 \end{enumerate}
 
+\clearpage
+
 \subparagraph{Wady}
 
 \begin{enumerate}
@@ -1080,15 +1089,17 @@ W naszym projekcie, komunikacja między mikroserwisami może odbywać się na r�
 
 \end{enumerate}
 
-\subsubsection{Automatyczne generowanie serwisów do komunikacji z backendem}
+\subsubsection{Automatyczne generowanie serwisów do komunikacji \linebreak z backendem}
 Automatyczne generowanie serwisów frontendowych na podstawie specyfikacji OpenAPI polega na tworzeniu gotowego kodu klienta, który umożliwia komunikację z backendowym API. Specyfikacja OpenAPI opisuje wszystkie endpointy API, ich parametry, odpowiedzi, typy danych i inne szczegóły. Narzędzie openapi-typescript-codegen wykorzystuje tę specyfikację do wygenerowania kodu klienta w TypeScript, który można bezpośrednio wykorzystać w projekcie frontendowym.
 
 \subparagraph{Specyfikacja OpenAPI} - jest zawsze w formacie JSON lub YAML. Tę specyfikację można wygenerować automatycznie za pomocą Swashbuckle\linebreak w ASP.NET Core, co zostało opisane wcześniej.
 
+\clearpage
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{Obrazy/swaggerExample.png}
-    \caption{Wycinek pliku swagger.json}
+    \caption{Wycinek pliku ze specyfikacją OpenAPI}
     \label{fig:enter-label}
 \end{figure}
 

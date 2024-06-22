@@ -1,6 +1,6 @@
 #
 .env
-
+.venv
 # Ignore Visual Studio Code settings
 .vscode/
 
