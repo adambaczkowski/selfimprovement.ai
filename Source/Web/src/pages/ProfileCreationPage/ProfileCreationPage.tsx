@@ -48,6 +48,7 @@ function ProfileCreationPage() {
       await createUser(values); 
       setIsProfileCreationSuccess(true);
       navigate(`/`);
+      window.location.reload();
     } catch (error) {
       console.error('Error editing profile:', error);
       // Handle error if needed

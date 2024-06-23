@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useQuery } from "react-query";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { getDoneToOverallTasksRatio } from "../../utils/services/goalService";
-import { fetchUser } from "../../utils/services/userService";
 import { UserTasksRatioDto } from "../../utils/api/goal";
 import { styled } from '@mui/material/styles';
 

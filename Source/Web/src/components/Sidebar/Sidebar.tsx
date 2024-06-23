@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -6,6 +7,7 @@ import { menu, signOutIcon} from "./../../utils/enums/sidebarMenu";
 import styles from './Sidebar.module.scss';
 import { UserProfileDto } from "../../utils/api/identity";
 import { jwtDecode } from 'jwt-decode';
+import { fetchUser } from "../../utils/services/userService";
 
 interface JwtPayload {
   unique_name: string;
@@ -15,6 +17,38 @@ function Sidebar() {
   const [user, setUser] = useState<UserProfileDto | null>(null);
   const pathname = useLocation().pathname;
   const navigate = useNavigate();
+
+  useQuery({
+    queryKey: ["getUser"],
+    queryFn: async () => {
+      const user = await fetchUser();
+      if (user) {
+        setUser(user);
+        handleBase64ToImage(user?.profileImageData || "", 'yourImageElementId');
+      }
+      return user;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  const handleBase64ToImage = (base64: string, imgElementId: string) => {
+    // Convert base64 string to a Blob
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'image/jpeg' }); // Adjust the MIME type if necessary
+  
+    // Create a URL for the Blob and set it as the image source
+    const imageUrl = URL.createObjectURL(blob);
+    const imgElement = document.getElementById(imgElementId) as HTMLImageElement;
+  
+    if (imgElement) {
+      imgElement.src = imageUrl;
+      imgElement.alt = "Converted Image"; // Optional: set the alt text
+    } else {
+      console.error(`Image element with ID ${imgElementId} not found.`);
+    }
+  };
 
   function getUsernameFromToken(token: string): string | null {
     try {
@@ -43,7 +77,8 @@ function Sidebar() {
       <div className={styles.image_container}>
         <Link to={"/profileCreation/edit"} className={styles.image} title='Edit profile'>
           {/* <img src="https://assets.vogue.com/photos/6327939f06377e01c5304296/master/w_1920,c_limit/Fc9-RcUXgAEgljY.jpeg" alt="Your Image" className={styles.image} /> */}
-          <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="Your Image" className={styles.image} />
+          {/* <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="Your Image" className={styles.image} /> */}
+          <img id="yourImageElementId" alt="Your Image" className={styles.image} />
         </Link>
         <h1 className={styles.sidebar_header}>{username}</h1>
       </div>
