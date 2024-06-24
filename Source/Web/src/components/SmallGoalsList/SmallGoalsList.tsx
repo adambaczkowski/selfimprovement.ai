@@ -6,21 +6,16 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { squareCheckSolidIcon, squareCheckRegularIcon} from "./../../utils/enums/sidebarMenu";
 import styles from './SmallGoalsList.module.scss';
 import { shortenString } from '../../utils/helpers/shortenString';
-import { fetchGoals } from "../../utils/services/goalService";
-import { GoalDto } from "../../utils/api/goal";
+import { fetchHomeGoals } from "../../utils/services/goalService";
+import { GoalHomeDto } from "../../utils/api/goal";
 
 function SmallGoalsList() {
-  const [goals, setGoals] = useState<GoalDto[]>([]);
-
-  const x = true;
-  const done_1 = 8;
-  const done_2 = 10;
-  const all = 10
-
+  const [goals, setGoals] = useState<GoalHomeDto[]>([]);
+  
   useQuery({
-    queryKey: ["getGoals"],
+    queryKey: ["fetchHomeGoals"],
     queryFn: async () => {
-      const goals = await fetchGoals();
+      const goals = await fetchHomeGoals();
       if (goals != null) {
         setGoals(goals);
       }
@@ -44,11 +39,10 @@ function SmallGoalsList() {
               {shortenString(goal.name, 30).toLowerCase()}
             </p>
             <p className={styles.goal_counter}>
-              {/* {goal.tasks?.length}/{goal.tasks?.length}  */}
-              {done_1}/{all} 
+              {goal?.completedTasksCount}/{goal?.allTasksCount}
             </p>
             <div className={styles.goal_item_checkbox}>
-              {Number(done_1) === Number(all) ? 
+              {Number(goal?.completedTasksCount) === Number(goal?.allTasksCount) ? 
                 <FontAwesomeIcon icon={squareCheckSolidIcon as IconProp} style={{ color: "#32ff54"}}/> : 
                 <FontAwesomeIcon icon={squareCheckRegularIcon as IconProp} style={{ color: "#6b6b6b"}} />}
             </div>
