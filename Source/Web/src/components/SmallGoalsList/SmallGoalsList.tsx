@@ -39,7 +39,7 @@ function SmallGoalsList() {
       </div>
       <div className={styles.goal_items_container}>
         {goals.map((goal: any) => (
-          <Link to={`/tasks`} className={styles.goal_item}>
+          <Link to={`/goal/${goal.id}`} className={styles.goal_item}>
             <p className={styles.goal_header}>
               {shortenString(goal.name, 30).toLowerCase()}
             </p>

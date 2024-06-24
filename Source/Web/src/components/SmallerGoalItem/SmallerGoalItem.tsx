@@ -19,7 +19,7 @@ function Smaller({ id, category, name, timeAvailability, startDate, endDate, exp
       <div className={styles.goal_header}>
         {/* <h1>{category}</h1> */}
         <h1>{name}</h1>
-        <p className={styles.description}><span>Category: </span>{category}</p>
+        <p className={styles.description_category}><span>Category: </span>{category}</p>
       </div>
       <div className={styles.goal_description}>
         <p className={styles.description}><span>Start date: </span>{dayjs(startDate).format("MM-DD-YYYY")}</p>
