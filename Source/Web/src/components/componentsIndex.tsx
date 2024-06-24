@@ -2,6 +2,7 @@ import Sidebar from "./Sidebar/Sidebar"
 import TextInput from "./TextInput/TextInput"
 import TaskItem from "./TaskItem/TaskItem"
 import GoalItem from "./GoalItem/GoalItem"
+import SmallerGoalItem from "./SmallerGoalItem/SmallerGoalItem"
 import LoadingCircle from "./LoadingCircle/LoadingCircle"
 import CustomButton from "./CustomButton/Button";
 import FormTextInput from "./Formik/FormTextInput/FormTextInput"
@@ -21,6 +22,7 @@ export {
     TextInput,
     TaskItem,
     GoalItem,
+    SmallerGoalItem,
     LoadingCircle,
     CustomButton,
     FormTextInput,

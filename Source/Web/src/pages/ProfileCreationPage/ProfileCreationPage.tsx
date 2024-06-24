@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { Form, Formik } from "formik";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { FormTextInput, FormSelectInput, FormImageInput } from "../../components/componentsIndex";
+import { FormTextInput, FormSelectInput, FormImageInput, GoBackButton } from "../../components/componentsIndex";
 import { ProfileCreationFormValidation } from "./ProfileCreationFormValidation";
 import styles from "./ProfileCreationPage.module.scss";
 import { Sex, Education, UserProfileDto } from "../../utils/api/identity";
@@ -88,9 +88,7 @@ function ProfileCreationPage() {
   }
 
   const goBackButton = mode !== "new" ? (
-      <Link className={styles.go_back_button} to="/tasks">
-        <ArrowBackIcon />
-      </Link>
+    <GoBackButton />
     ) : null;
 
   return (

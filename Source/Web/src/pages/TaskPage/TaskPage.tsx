@@ -1,32 +1,19 @@
 import {useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { Typography } from '@mui/material';
-import { LoadingCircle, GoBackButton } from "../../components/componentsIndex"
-import { GoalTaskDto } from "../../utils/api/goal";
+import { LoadingCircle, GoBackButton, SmallerGoalItem } from "../../components/componentsIndex"
+import { GoalTaskDto, GoalDetailsDto } from "../../utils/api/goal";
 import { fetchTask } from "../../utils/services/goalTaskService";
+import { fetchGoal } from "../../utils/services/goalService";
 import styles from './TaskPage.module.scss';
-import { DailyTask } from './types/DailyTask';
 import dayjs from 'dayjs';
 
 type Props = {};
 
 function TaskPage({}: Props) {
   const { id } = useParams();
-  const [dailyTask, setDailyTask] = useState<DailyTask | null>();
   const [task, setTask] = useState<GoalTaskDto>();
-
-  // useEffect(() => {
-  //   setDailyTask({
-  //     weekTitle: "Week 1: January 17-21, 2024",
-  //     date: "January 17, 2024",
-  //     tasks: [
-  //       "Set Up Development Environment",
-  //       "Install Python and a Code Editor (e.g., VS Code)",
-  //       "Explore basic features of the chosen code editor Explore basic features of the chosen code editor Explore basic features of the chosen code editor",
-  //     ]
-  //   });
-  // }, []);
+  const [goal, setGoal] = useState<GoalDetailsDto>();
 
   useQuery({
     queryKey: ["getTask"],
@@ -34,8 +21,26 @@ function TaskPage({}: Props) {
       const task = await fetchTask(id || "");
       if (task != null) {
         setTask(task);
+        const goal = await fetchGoal(task?.goalId || "");
+        if (goal != null) {
+          setGoal(goal);
+          console.log(goal);
+        }
       }
       return task;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  useQuery({
+    queryKey: ["getGoal"],
+    queryFn: async () => {
+      const goal = await fetchGoal(task?.goalId || "");
+      if (goal != null) {
+        setGoal(goal);
+        console.log(goal);
+      }
+      return goal;
     },
     refetchOnWindowFocus: false,
   });
@@ -51,18 +56,27 @@ function TaskPage({}: Props) {
   return (
     <div className={styles.background_container}>
       <GoBackButton />
-      <div className={styles.center_container}>
-        <div className={styles.glass_container}>
-          <Typography variant="h5" className={styles.info_heading}>
-            {dayjs(task.date).format("MM-DD-YYYY")}
-          </Typography>
-          <Typography className={styles.info_subheading}>
-            {task.content}:
-          </Typography>
+      <div className={styles.task_item}>
+        <div className={styles.task_header}>
+          <h1>{task.title}</h1>
+          <p className={styles.task_date}><span>Date: </span>{dayjs(task.date).format("MM-DD-YYYY")}</p>
         </div>
-        {/* <DailyTaskList items={task.content} /> */}
-        <p>{task.content}</p>
+        <div className={styles.task_description}>
+          <p className={styles.description}><span>Description: </span>{task.content}</p>
+        </div>
       </div>
+      <p className={styles.go_to_goals}>Go to goals page <span>↓</span></p>
+      <SmallerGoalItem
+        key={goal?.id}
+        id={goal?.id || ""}
+        name={goal?.name || ""}
+        category={goal?.category || ""}
+        timeAvailability={goal?.timeAvailabilityPerDay || ""}
+        startDate={goal?.startDate || ""}
+        endDate={goal?.endDate || ""}
+        experience={goal?.userAdvancement || ""}
+        learningType={goal?.learningType || ""}
+      />
     </div>
   );
 }
