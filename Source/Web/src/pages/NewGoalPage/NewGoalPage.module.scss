@@ -25,19 +25,68 @@
   text-align: center;
 }
 
+.stepper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 5rem;
+  width: 100%;
+}
+
+.prev_button {
+  margin-right: auto;
+  margin-left: 17%;
+}
+
+.next_button, .create_button {
+  margin-left: auto;
+  margin-right: 17%;
+}
+
+.prev_button, .next_button{
+  text-decoration: none;
+  background-color: $incompleted-button;
+  color: rgb(219, 219, 219);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  width: 5rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: lighten($incompleted-button, 5%)
+  }
+}
+
 .create_button {
   text-decoration: none;
   background-color: $completed-button;
   color: $completed-button-text;
   border: none;
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.2rem 0.5rem;
   cursor: pointer;
+  width: 5rem;
   transition: background-color 0.3s;
-  margin-top: 1rem;
 
   &:hover {
     transform: scale(1.05);
     background-color: lighten($completed-button, 5%)
   }
 }
+//   text-decoration: none;
+//   background-color: $completed-button;
+//   color: $completed-button-text;
+//   border: none;
+//   border-radius: 0.5rem;
+//   padding: 0.5rem 1rem;
+//   cursor: pointer;
+//   transition: background-color 0.3s;
+
+//   &:hover {
+//     transform: scale(1.05);
+//     background-color: lighten($completed-button, 5%)
+//   }
+// }

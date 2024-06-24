@@ -16,7 +16,8 @@ interface Props {}
 const NewGoalPage = ({}: Props) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [currentStep, setCurrentStep] = useState(1);
+
   const goalInitialValues: CreateGoalCommand = {
     name: undefined,
     category: undefined,
@@ -41,6 +42,7 @@ const NewGoalPage = ({}: Props) => {
 
   const handleCreateGoal = async (values: CreateGoalCommand) => {
     setIsLoading(true);
+    console.log(values);
     try {
       const goal = await createGoal(values); 
       const goalId = goal?.id;
@@ -51,6 +53,14 @@ const NewGoalPage = ({}: Props) => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const nextStep = () => {
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
+
+  const prevStep = () => {
+    setCurrentStep((prevStep) => prevStep - 1);
   };
 
   return (
@@ -68,19 +78,42 @@ const NewGoalPage = ({}: Props) => {
             validateOnChange={false}
             validateOnBlur={false}
           >
-            <Form className={styles.form_items_container}>
-              <h1 className={styles.heading}>New Goal</h1>
-              <FormTextInput label="Goal name" name="name" placeholderText="Marathon"/>
-              <FormSelectInput label="Category" name="category" options={enumToArrayOfOptions(GoalCategories)} />
-              <FormSelectInput label="Specific category" name="goalFriendlyName" options={enumToArrayOfOptions(Goals)} />
-              <FormSelectInput label="Time availability per day" name="timeAvailabilityPerDay" options={enumToArrayOfOptions(TimeAvailabilityPerDay)} />
-              <FormSelectInput label="Time availability per week" name="timeAvailabilityPerWeek" options={enumToArrayOfOptions(TimeAvailabilityPerWeek)} />
-              <FormNumberInput label="Duration" name="duration" />
-              <FormSelectInput label="Experience" name="experience" options={enumToArrayOfOptions(Experience)} />
-              <FormSelectInput label="Learning type" name="learningType" options={enumToArrayOfOptions(LearningType)} />
-              <FormTextInput label="Your more specific description ;)" name="userInput" placeholderText="Marathon"/>
-              <button className={styles.create_button}>Create</button>
-            </Form>
+            {() => (
+              <Form className={styles.form_items_container}>
+                <h1 className={styles.heading}>New Goal</h1>
+
+                {currentStep === 1 && (
+                  <>
+                    <FormTextInput label="Goal name" name="name" placeholderText="Marathon"/>
+                    <FormSelectInput label="Category" name="category" options={enumToArrayOfOptions(GoalCategories)} />
+                    <FormSelectInput label="Specific category" name="goalFriendlyName" options={enumToArrayOfOptions(Goals)} />
+                  </>
+                )}
+
+                {currentStep === 2 && (
+                  <>
+                    <FormSelectInput label="Time availability per day" name="timeAvailabilityPerDay" options={enumToArrayOfOptions(TimeAvailabilityPerDay)} />
+                    <FormSelectInput label="Time availability per week" name="timeAvailabilityPerWeek" options={enumToArrayOfOptions(TimeAvailabilityPerWeek)} />
+                    <FormNumberInput label="Duration" name="duration" />
+                  </>
+                )}
+
+                {currentStep === 3 && (
+                  <>
+                    <FormSelectInput label="Experience" name="experience" options={enumToArrayOfOptions(Experience)} />
+                    <FormSelectInput label="Learning type" name="learningType" options={enumToArrayOfOptions(LearningType)} />
+                    <FormTextInput label="Your more specific description ;)" name="userInput" placeholderText="Marathon"/>
+                  </>
+                )}
+
+                <div className={styles.stepper}>
+                  {currentStep === 1 ? null : <button type="button" onClick={prevStep} className={styles.prev_button}>Previous</button>}
+                  {currentStep === 3 ? null : <button type="button" onClick={nextStep} className={styles.next_button}>Next</button>}
+                  {currentStep !== 3 ? null : <button type="submit" className={styles.create_button}>Create</button>}
+                </div>
+
+              </Form>
+            )}
           </Formik>
         </div>
       )}
