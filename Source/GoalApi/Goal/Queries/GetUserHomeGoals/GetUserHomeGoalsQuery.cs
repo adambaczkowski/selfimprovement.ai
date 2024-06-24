@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoalApi.Goal.Queries.GetUserHomeGoals;
 
-public abstract class GetUserHomeGoalsQuery : IRequest<List<GoalHomeDto>>
+public class GetUserHomeGoalsQuery : IRequest<List<GoalHomeDto>>
 {
     public string UserId { get; set; }
 }
