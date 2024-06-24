@@ -49,6 +49,44 @@
     justify-content: center;
     align-items: start;
     height: 100%;
+
+    button {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      align-self: end;
+      margin-right: 2rem;
+  
+      i {
+        font-size: 1.4rem;
+      }
+  
+      &:hover {
+        transform: scale(1.02);
+        background-color: lighten($incompleted-button, 5%)
+      }
+    }
+
+    .complete_button,
+    .incomplete_button {
+      justify-content: end;
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      font-weight: bold;
+      background: $incompleted-button;
+      border-radius: 30px;
+      color : $completed-button-text;
+      &:hover {
+        background-color: lighten($incompleted-button, 5%)
+      }
+    }
+
+    .complete_button {
+      background:  $completed-button;
+      &:hover {
+        background-color: lighten($completed-button, 5%)
+      }
+    }
   }
 
   .description {
@@ -89,33 +127,3 @@
     font-weight: 900;
   }
 }
-
-
-// .center_container {
-//   justify-content: center;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 2rem;
-//   margin-top: 0.8rem;
-//   margin-bottom: 1rem;
-// }
-
-// .info_heading,
-// .info_subheading {
-//   color: $header-container-text;
-//   text-align: center;
-// }
-
-// .info_subheading {
-//   font-size: 1.2rem;
-//   color: $body-container-text;
-// }
-
-// .glass_container {
-//   border-radius: 1rem;
-//   background-color: $container-background;
-//   box-shadow: 0 4px 30px $box-shadow;
-//   padding: 1.2rem 1rem;
-//   width: fit-content;
-//   margin: 0 auto; /* Center the container horizontally */
-// }

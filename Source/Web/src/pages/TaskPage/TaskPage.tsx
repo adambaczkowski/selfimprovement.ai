@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { LoadingCircle, GoBackButton, SmallerGoalItem } from "../../components/componentsIndex"
 import { GoalTaskDto, GoalDetailsDto } from "../../utils/api/goal";
-import { fetchTask } from "../../utils/services/goalTaskService";
+import { fetchTask, completeTask } from "../../utils/services/goalTaskService";
 import { fetchGoal } from "../../utils/services/goalService";
 import styles from './TaskPage.module.scss';
 import dayjs from 'dayjs';
@@ -12,6 +12,8 @@ type Props = {};
 
 function TaskPage({}: Props) {
   const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isProfileCreationSuccess, setIsProfileCreationSuccess] = useState<boolean>(false);
   const [task, setTask] = useState<GoalTaskDto>();
   const [goal, setGoal] = useState<GoalDetailsDto>();
 
@@ -24,7 +26,6 @@ function TaskPage({}: Props) {
         const goal = await fetchGoal(task?.goalId || "");
         if (goal != null) {
           setGoal(goal);
-          console.log(goal);
         }
       }
       return task;
@@ -38,12 +39,24 @@ function TaskPage({}: Props) {
       const goal = await fetchGoal(task?.goalId || "");
       if (goal != null) {
         setGoal(goal);
-        console.log(goal);
       }
       return goal;
     },
     refetchOnWindowFocus: false,
   });
+
+  const updateTask = async () => {
+    setIsLoading(true);
+    try {
+      await completeTask(task?.id || ""); 
+      setIsProfileCreationSuccess(true);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error editing profile:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   
   if (!task) {
     return (
@@ -63,6 +76,23 @@ function TaskPage({}: Props) {
         </div>
         <div className={styles.task_description}>
           <p className={styles.description}><span>Description: </span>{task.content}</p>
+          {task?.isCompleted ? (
+          <button 
+            className={styles.complete_button}
+          >
+            Completed
+          </button>
+        ) : (
+          <button
+            className={styles.incomplete_button}
+            onClick={() => {
+              console.log("completed");
+              updateTask();
+            }}
+          >
+            Incomplete
+          </button>
+        )}
         </div>
       </div>
       <p className={styles.go_to_goals}>Go to goals page <span>↓</span></p>

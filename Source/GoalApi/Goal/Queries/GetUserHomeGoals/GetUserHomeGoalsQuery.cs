@@ -21,6 +21,7 @@ public class GetUserHomeGoalsQueryHandler(IGenericRepository<Models.Goal> goalRe
             .Where(x => x.UserId == request.UserId)
             .Select(x => new GoalHomeDto()
             {
+                Id = x.Id,
                 Name = x.Name,
                 CompletedTasksCount = x.Tasks.Count(y => y.IsCompleted),
                 AllTasksCount = x.Tasks.Count()
