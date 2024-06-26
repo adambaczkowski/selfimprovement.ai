@@ -5,24 +5,39 @@
   background-color: $container-background;
   box-shadow: 0 4px 30px $box-shadow;
   padding: 1rem;
-  width: fit-content;
+  width: 70rem;
   min-width: 25rem;
+  height: 30rem;
   margin: 0 auto; /* Center the container horizontally */
   margin-top: 3rem;
 }
 
-.form_items_container{ 
+.form_items_container { 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
 }
 
 .heading {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: $header-container-text;
   text-align: center;
+}
+
+.form_grid_items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  gap: 10px;
+}
+
+.form_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
 }
 
 .create_button {
@@ -34,7 +49,7 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 
   &:hover {
     transform: scale(1.05);

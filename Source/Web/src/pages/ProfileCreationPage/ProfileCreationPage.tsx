@@ -104,12 +104,16 @@ function ProfileCreationPage() {
         >
           <Form className={styles.form_items_container}>
             <h1 className={styles.heading}>{pageTitle}</h1>
-            <FormTextInput label="Weight" name="weight" />
-            <FormTextInput label="Height" name="height" />
-            <FormTextInput label="Age" name="age" />
-            <FormSelectInput label="Education level" name="educationLevel" options={enumToArrayOfOptions(Education)} />
-            <FormSelectInput label="Sex" name="sex" options={enumToArrayOfOptions(Sex)} />
-            <FormImageInput label="Profile Image" name="profileImageData" />
+            <div className={styles.form_grid}>
+              <div className={styles.form_grid_items}>
+                <FormTextInput label="Weight" name="weight" />
+                <FormTextInput label="Height" name="height" />
+                <FormTextInput label="Age" name="age" />
+                <FormSelectInput label="Education level" name="educationLevel" options={enumToArrayOfOptions(Education)} />
+                <FormSelectInput label="Sex" name="sex" options={enumToArrayOfOptions(Sex)} />
+              </div>
+              <FormImageInput label="Profile Image" name="profileImageData" />
+            </div>
             <button type="submit" className={styles.create_button}>{mode === "edit" ? "Edit" : "Create"}</button>
           </Form>
         </Formik>
