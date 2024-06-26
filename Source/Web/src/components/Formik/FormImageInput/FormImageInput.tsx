@@ -36,7 +36,7 @@ const FormImageUpload = (props: Props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <FormControl style={{ width: '16rem' }} variant="outlined">
+      <FormControl style={{ width: '25rem' }} variant="outlined">
         <InputLabel shrink htmlFor={name}>{label}</InputLabel>
         <input
           id={name}

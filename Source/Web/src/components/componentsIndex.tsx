@@ -6,6 +6,7 @@ import SmallerGoalItem from "./SmallerGoalItem/SmallerGoalItem"
 import LoadingCircle from "./LoadingCircle/LoadingCircle"
 import CustomButton from "./CustomButton/Button";
 import FormTextInput from "./Formik/FormTextInput/FormTextInput"
+import FormTextBoxInput from "./Formik/FormTextBoxInput/FormTextBoxInput"
 import FormSelectInput from "./Formik/FormSelectImput/FormSelectInput"
 import FormImageInput from "./Formik/FormImageInput/FormImageInput"
 import DailyTaskList from "./NumberListBox/NumberListBox"
@@ -26,6 +27,7 @@ export {
     LoadingCircle,
     CustomButton,
     FormTextInput,
+    FormTextBoxInput,
     FormSelectInput,
     FormImageInput,
     DailyTaskList,

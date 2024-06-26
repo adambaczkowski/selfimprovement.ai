@@ -7,6 +7,7 @@ import { CreateGoalCommand, Experience, GoalCategories, Goals, LearningType, Tim
 import { enumToArrayOfOptions } from "../../utils/helpers/enumToArrayOfOptions";
 import FormNumberInput from "../../components/Formik/FormNumberInput/FormNumberInput";
 import FormTextInput from "../../components/Formik/FormTextInput/FormTextInput";
+import FormTextBoxInput from "../../components/Formik/FormTextBoxInput/FormTextBoxInput";
 import { useMutation } from "react-query";
 import { createGoal } from "../../utils/services/goalService";
 import { useState } from 'react';
@@ -42,7 +43,6 @@ const NewGoalPage = ({}: Props) => {
 
   const handleCreateGoal = async (values: CreateGoalCommand) => {
     setIsLoading(true);
-    console.log(values);
     try {
       const goal = await createGoal(values); 
       const goalId = goal?.id;
@@ -102,7 +102,7 @@ const NewGoalPage = ({}: Props) => {
                   <>
                     <FormSelectInput label="Experience" name="experience" options={enumToArrayOfOptions(Experience)} />
                     <FormSelectInput label="Learning type" name="learningType" options={enumToArrayOfOptions(LearningType)} />
-                    <FormTextInput label="Your more specific description ;)" name="userInput" placeholderText="Marathon"/>
+                    <FormTextBoxInput label="Your more specific description ;)" name="userInput" placeholderText="Marathon"/>
                   </>
                 )}
 

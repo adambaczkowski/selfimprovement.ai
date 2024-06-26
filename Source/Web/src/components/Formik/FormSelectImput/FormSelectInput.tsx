@@ -28,7 +28,7 @@ const FormSelectInput = (props: Props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <FormControl style={{ width: "16rem" }} variant="outlined">
+      <FormControl style={{ width: "25rem" }} variant="outlined">
         <InputLabel htmlFor={name}>{label}</InputLabel>
         <Select
           labelId={`${name}-label`}
