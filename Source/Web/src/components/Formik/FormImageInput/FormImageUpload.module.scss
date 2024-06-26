@@ -1,0 +1,47 @@
+@import './../../../styles/componentsStylingIndex.scss';
+
+.dropzone {
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+
+  width: 100%;
+  height: 22rem;
+  border: 2px dashed $secondary-background; // indigo-400
+  border-radius: 1rem; // rounded-md
+  appearance: none;
+  cursor: pointer;
+}
+
+.dropzone_inside{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  height: 5rem;
+
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.dropzone_icon {
+  color: $secondary-background;
+  width: 4rem;
+}
+
+.dropzone_text {
+  color: $secondary-background;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.image {
+  height: 14rem;
+  max-width: 19rem;
+  border-radius: 1rem;
+}

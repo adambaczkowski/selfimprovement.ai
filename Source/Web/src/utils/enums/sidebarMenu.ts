@@ -1,4 +1,15 @@
-import { signOut, check, squareCheckSolid, squareCheckRegular, home, calendarSolid, calendarRegular, todo, goals } from "./icons";
+import { 
+  signOut,
+  check, 
+  squareCheckSolid, 
+  squareCheckRegular,
+  home,
+  calendarSolid, 
+  calendarRegular, 
+  todo, 
+  goals,
+  upload
+ } from "./icons";
 
 const menu = [
   {
@@ -39,3 +50,4 @@ export { squareCheckRegular as squareCheckRegularIcon }
 export { calendarSolid as calendarSolid }
 export { calendarRegular as calendarRegular }
 export { menu };
+export { upload };

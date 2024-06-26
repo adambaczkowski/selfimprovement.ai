@@ -64,3 +64,6 @@ docker compose --env-file .env -f docker-compose-local.yml up --build
 
 ### New goal page:
 ![alt text](images/7.png "New goal page")
+
+### Profile creation page:
+![alt text](images/8.png "Profile creation page")

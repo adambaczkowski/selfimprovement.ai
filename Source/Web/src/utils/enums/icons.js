@@ -6,7 +6,8 @@ import {
     faHome,
     faSquarePlus,
     faBullseye,
-    faArrowRightFromBracket
+    faArrowRightFromBracket,
+    faCloudArrowUp
 } from '@fortawesome/free-solid-svg-icons'
 
 import { 
@@ -24,3 +25,4 @@ export const goals = faBullseye
 export const home = faHome
 export const todo = faSquarePlus
 export const signOut = faArrowRightFromBracket
+export const upload = faCloudArrowUp
