@@ -70,15 +70,13 @@ jobs:
 
       - name: Retrieve STORAGE_ACCOUNT_NAME
         run: |
-          echo "STORAGE_ACCOUNT_NAME=\"${{ secrets.STORAGE_ACCOUNT_NAME }}\"" >> .env
+          storage_acc_name=${{ secrets.STORAGE_ACCOUNT_NAME }}
+          echo "STORAGE_ACCOUNT_NAME=\"${storage_acc_name}\"" >> .env
 
-      - name: Retrieve STORAGE_ACCOUNT_KEY}
+      - name: Retrieve STORAGE_ACCOUNT_KEY
         run: |
-          echo "STORAGE_ACCOUNT_KEY=\"${{ secrets.STORAGE_KEY }}\"" >> .env
-
-      # - name: Create File Shares for CoreDNS
-      #   run: |
-      #     az storage share create --name coredns --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+          storage_key=${{ secrets.STORAGE_KEY }}
+          echo "STORAGE_ACCOUNT_KEY=\"${storage_key}\"" >> .env
 
       - name: Create File Shares for RabbitMq
         run: |
